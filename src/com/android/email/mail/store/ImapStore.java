@@ -81,6 +81,7 @@ public class ImapStore extends Store {
 
     private static final Flag[] PERMANENT_FLAGS = { Flag.DELETED, Flag.SEEN, Flag.FLAGGED };
 
+    private String mHost;
     private Transport mRootTransport;
     private String mUsername;
     private String mPassword;
@@ -144,6 +145,8 @@ public class ImapStore extends Store {
             connectionSecurity = Transport.CONNECTION_SECURITY_TLS;
         }
         boolean trustCertificates = scheme.contains(STORE_SECURITY_TRUST_CERTIFICATES);
+
+	mHost = uri.getHost();
 
         mRootTransport = new MailTransport("IMAP");
         mRootTransport.setUri(uri, defaultPort);
@@ -1172,6 +1175,11 @@ public class ImapStore extends Store {
                 }
 
                 try {
+		    if (mHost.endsWith("yahoo.com")) {
+                        if (Email.LOGD)
+                            Log.v(Email.LOG_TAG, "Found Yahoo! account.  Sending proprietary commands.");
+                        executeSimpleCommand("ID (\"GUID\" \"1\")");
+                    }
                     // TODO eventually we need to add additional authentication
                     // options such as SASL
                     executeSimpleCommand(mLoginPhrase, true);
