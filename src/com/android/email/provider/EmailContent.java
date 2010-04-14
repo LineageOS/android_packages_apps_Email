@@ -766,6 +766,8 @@ public abstract class EmailContent {
         public static final String PROTOCOL_VERSION = "protocolVersion";
         // The number of new messages (reported by the sync/download engines
         public static final String NEW_MESSAGE_COUNT = "newMessageCount";
+        // The signature to append to each email
+		public static final String SIGNATURE = "signature";
     }
 
     public static final class Account extends EmailContent implements AccountColumns, Parcelable {
@@ -803,6 +805,7 @@ public abstract class EmailContent {
         public String mRingtoneUri;
         public String mProtocolVersion;
         public int mNewMessageCount;
+        public String mSignature;
 
         // Convenience for creating an account
         public transient HostAuth mHostAuthRecv;
@@ -823,6 +826,7 @@ public abstract class EmailContent {
         public static final int CONTENT_RINGTONE_URI_COLUMN = 12;
         public static final int CONTENT_PROTOCOL_VERSION_COLUMN = 13;
         public static final int CONTENT_NEW_MESSAGE_COUNT_COLUMN = 14;
+        public static final int CONTENT_SIGNATURE_COLUMN = 15;
 
         public static final String[] CONTENT_PROJECTION = new String[] {
             RECORD_ID, AccountColumns.DISPLAY_NAME,
@@ -831,7 +835,7 @@ public abstract class EmailContent {
             AccountColumns.HOST_AUTH_KEY_SEND, AccountColumns.FLAGS, AccountColumns.IS_DEFAULT,
             AccountColumns.COMPATIBILITY_UUID, AccountColumns.SENDER_NAME,
             AccountColumns.RINGTONE_URI, AccountColumns.PROTOCOL_VERSION,
-            AccountColumns.NEW_MESSAGE_COUNT
+            AccountColumns.NEW_MESSAGE_COUNT, AccountColumns.SIGNATURE
         };
 
         public static final int CONTENT_MAILBOX_TYPE_COLUMN = 1;
@@ -922,6 +926,8 @@ public abstract class EmailContent {
             mRingtoneUri = cursor.getString(CONTENT_RINGTONE_URI_COLUMN);
             mProtocolVersion = cursor.getString(CONTENT_PROTOCOL_VERSION_COLUMN);
             mNewMessageCount = cursor.getInt(CONTENT_NEW_MESSAGE_COUNT_COLUMN);
+            if (cursor.getColumnCount() > CONTENT_SIGNATURE_COLUMN)
+            	mSignature = cursor.getString(CONTENT_SIGNATURE_COLUMN);
             return this;
         }
 
@@ -959,6 +965,20 @@ public abstract class EmailContent {
             mEmailAddress = emailAddress;
         }
 
+        /**
+         * @return the signature for this account
+         */
+        public String getSignature() {
+            return mSignature;
+        }
+
+        /**
+         * Set the signature for this account.  Be sure to call save() to commit to database.
+         * @param signature the signature for this account
+         */
+        public void setSignature(String signature) {
+            mSignature = signature;
+        }
         /**
          * @return the sender's name for this account
          */
@@ -1341,6 +1361,7 @@ public abstract class EmailContent {
             values.put(AccountColumns.RINGTONE_URI, mRingtoneUri);
             values.put(AccountColumns.PROTOCOL_VERSION, mProtocolVersion);
             values.put(AccountColumns.NEW_MESSAGE_COUNT, mNewMessageCount);
+            values.put(AccountColumns.SIGNATURE, mSignature);
             return values;
         }
 
@@ -1399,6 +1420,8 @@ public abstract class EmailContent {
             } else {
                 dest.writeByte((byte)0);
             }
+            
+            dest.writeString(mSignature);
         }
 
         /**
@@ -1431,6 +1454,8 @@ public abstract class EmailContent {
             if (in.readByte() == 1) {
                 mHostAuthSend = new EmailContent.HostAuth(in);
             }
+
+            mSignature = in.readString();
         }
 
         /**

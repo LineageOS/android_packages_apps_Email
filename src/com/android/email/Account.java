@@ -61,6 +61,7 @@ public class Account {
     String mDescription;
     String mName;
     String mEmail;
+    String mSignature;
     int mAutomaticCheckIntervalMinutes;
     long mLastAutomaticCheckTime;
     boolean mNotifyNewMail;
@@ -131,6 +132,7 @@ public class Account {
         mDescription = preferences.mSharedPreferences.getString(mUuid + ".description", null);
         mName = preferences.mSharedPreferences.getString(mUuid + ".name", mName);
         mEmail = preferences.mSharedPreferences.getString(mUuid + ".email", mEmail);
+        mSignature = preferences.mSharedPreferences.getString(mUuid + ".signature", mSignature);
         mAutomaticCheckIntervalMinutes = preferences.mSharedPreferences.getInt(mUuid
                 + ".automaticCheckIntervalMinutes", -1);
         mLastAutomaticCheckTime = preferences.mSharedPreferences.getLong(mUuid
@@ -211,6 +213,14 @@ public class Account {
         this.mEmail = email;
     }
 
+    public String getSignature() {
+        return mSignature;
+    }
+
+    public void setSignature(String signature) {
+        this.mSignature = signature;
+    }
+
     public boolean isVibrate() {
         return mVibrate;
     }
@@ -248,6 +258,7 @@ public class Account {
         editor.remove(mUuid + ".description");
         editor.remove(mUuid + ".name");
         editor.remove(mUuid + ".email");
+        editor.remove(mUuid + ".signature");
         editor.remove(mUuid + ".automaticCheckIntervalMinutes");
         editor.remove(mUuid + ".lastAutomaticCheckTime");
         editor.remove(mUuid + ".notifyNewMail");
@@ -313,6 +324,7 @@ public class Account {
         editor.putString(mUuid + ".description", mDescription);
         editor.putString(mUuid + ".name", mName);
         editor.putString(mUuid + ".email", mEmail);
+        editor.putString(mUuid + ".signature", mSignature);
         editor.putInt(mUuid + ".automaticCheckIntervalMinutes", mAutomaticCheckIntervalMinutes);
         editor.putLong(mUuid + ".lastAutomaticCheckTime", mLastAutomaticCheckTime);
         editor.putBoolean(mUuid + ".notifyNewMail", mNotifyNewMail);

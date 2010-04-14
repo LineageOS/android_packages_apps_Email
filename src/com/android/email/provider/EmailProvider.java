@@ -62,7 +62,8 @@ public class EmailProvider extends ContentProvider {
     // Version 4: Database wipe required; changing AccountManager interface w/Exchange
     // Version 5: Database wipe required; changing AccountManager interface w/Exchange
     // Version 6: Adding Message.mServerTimeStamp column
-    public static final int DATABASE_VERSION = 6;
+    // Version 7: Adding Account.mSignature column
+	public static final int DATABASE_VERSION = 7;
 
     // Any changes to the database format *must* include update-in-place code.
     // Original version: 2
@@ -384,6 +385,7 @@ public class EmailProvider extends ContentProvider {
             + AccountColumns.RINGTONE_URI + " text, "
             + AccountColumns.PROTOCOL_VERSION + " text, "
             + AccountColumns.NEW_MESSAGE_COUNT + " integer"
+            + AccountColumns.SIGNATURE + " text, "
             + ");";
         db.execSQL("create table " + Account.TABLE_NAME + s);
         // Deleting an account deletes associated Mailboxes and HostAuth's
@@ -614,6 +616,16 @@ public class EmailProvider extends ContentProvider {
                 }
                 oldVersion = 6;
             }
+            if (oldVersion == 6) {
+            	try {
+                    db.execSQL("alter table " + Account.TABLE_NAME
+                            + " add column " + AccountColumns.SIGNATURE + " text" + ";");
+                } catch (SQLException e) {
+                    // Shouldn't be needed unless we're debugging and interrupt the process
+                    Log.w(TAG, "Exception upgrading EmailProvider.db from v6 to v7", e);
+                }
+                oldVersion = 7;
+            }            
         }
 
         @Override
