@@ -321,6 +321,12 @@ public class MessageCompose extends Activity implements OnClickListener, OnFocus
                 // But we DO need to set mMessageLoaded to indicate the message can be sent
                 mMessageLoaded = true;
                 mSourceMessageProcessed = true;
+                
+                // Add the signature to the new message
+                final String sig = mAccount.getSignature();
+                if (sig != null && sig.length() > 0) {
+                	mMessageContentView.setText("\n\n" + sig);
+                }
             }
         }
 
