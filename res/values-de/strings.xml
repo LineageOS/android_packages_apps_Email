@@ -220,6 +220,7 @@
     <string name="account_settings_add_account_label" msgid="63971622405360050">"Konto hinzufügen"</string>
     <string name="account_settings_description_label" msgid="8894815221204511715">"Kontoname"</string>
     <string name="account_settings_name_label" msgid="8186406122590008449">"Ihr Name"</string>
+    <string name="account_settings_signature_label">Signatur</string>
     <string name="account_settings_notifications" msgid="1042620094281375043">"Benachrichtigungseinstellungen"</string>
     <string name="account_settings_sync_contacts_enable" msgid="1369272986009573218">"Kontakte synchronisieren"</string>
     <string name="account_settings_sync_contacts_summary" msgid="8901452720940015928">"Kontakte dieses Kontos ebenfalls synchronisieren"</string>
