@@ -384,8 +384,8 @@ public class EmailProvider extends ContentProvider {
             + AccountColumns.SENDER_NAME + " text, "
             + AccountColumns.RINGTONE_URI + " text, "
             + AccountColumns.PROTOCOL_VERSION + " text, "
-            + AccountColumns.NEW_MESSAGE_COUNT + " integer"
-            + AccountColumns.SIGNATURE + " text, "
+            + AccountColumns.NEW_MESSAGE_COUNT + " integer, "
+            + AccountColumns.SIGNATURE + " text"
             + ");";
         db.execSQL("create table " + Account.TABLE_NAME + s);
         // Deleting an account deletes associated Mailboxes and HostAuth's
