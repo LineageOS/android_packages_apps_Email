@@ -20,6 +20,7 @@ package com.android.exchange.adapter;
 import com.android.email.mail.Address;
 import com.android.email.mail.internet.MimeMessage;
 import com.android.email.mail.internet.MimeBodyPart;
+import com.android.email.mail.internet.MimeUtility;
 import com.android.email.mail.internet.TextBody;
 import com.android.email.mail.internet.BinaryTempFileBody;
 import com.android.email.mail.Multipart;
@@ -51,8 +52,6 @@ import android.webkit.MimeTypeMap;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.StringWriter;
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -261,11 +260,10 @@ public class EmailSyncAdapter extends AbstractSyncAdapter {
             com.android.email.mail.Body b = m.getBody();
             if (b instanceof TextBody || b instanceof BinaryTempFileBody) {
                 String type = m.getContentType();
-                String text = getBodyContent(b);
                 if (type.contains("text/html"))
-                    msg.mHtml = text;
+                    msg.mHtml = MimeUtility.getTextFromPart(m);
                 else
-                    msg.mText = text;
+                    msg.mText = MimeUtility.getTextFromPart(m);
 
             } else if (b instanceof Multipart) {
                 Multipart mp = (Multipart) b;
@@ -273,9 +271,9 @@ public class EmailSyncAdapter extends AbstractSyncAdapter {
                 if (p != null) {
                     String type = p.getContentType();
                     if (type.contains("text/html")) {
-                        msg.mHtml = getBodyContent(p.getBody());
+                        msg.mHtml = MimeUtility.getTextFromPart(p);
                     } else {
-                        msg.mText = getBodyContent(p.getBody());
+                        msg.mText = MimeUtility.getTextFromPart(p);
                     }
                 } else {
                     msg.mText = "Unable to find message body";
@@ -310,27 +308,6 @@ public class EmailSyncAdapter extends AbstractSyncAdapter {
                 return getMultipartContent(multipart);
             }
             return null;
-        }
-
-        private String getBodyContent(com.android.email.mail.Body body)
-        throws IOException, MessagingException {
-            if (body instanceof TextBody) {
-                return ((TextBody)body).getText();
-            } else if (body instanceof BinaryTempFileBody) {
-                BinaryTempFileBody b = (BinaryTempFileBody) body;
-                InputStreamReader isr = new InputStreamReader(b.getInputStream());
-                StringWriter out = new StringWriter();
-                char[] buf = new char[8192];
-                int r;
-                while ((r = isr.read(buf, 0, 8192)) != -1) {
-                    out.write(buf, 0, r);
-                }
-
-                isr.close();
-                return out.toString();
-            } else {
-                return body.getClass().getName();
-            }
         }
 
         private void attachmentsParser(ArrayList<Attachment> atts, Message msg) throws IOException {
