@@ -104,12 +104,12 @@ public class SecurityPolicyTests extends ProviderTestCase2<EmailProvider> {
             fail("Illegal password mode allowed");
         } catch (IllegalArgumentException e) {
         }
-        PolicySet ps = new PolicySet(0, PolicySet.PASSWORD_MODE_NONE, 0,
-                PolicySet.SCREEN_LOCK_TIME_MAX + 1, false);
-        assertEquals(PolicySet.SCREEN_LOCK_TIME_MAX, ps.getMaxScreenLockTime());
-        ps = new PolicySet(0, PolicySet.PASSWORD_MODE_NONE,
-                PolicySet.PASSWORD_MAX_FAILS_MAX + 1, 0, false);
-        assertEquals(PolicySet.PASSWORD_MAX_FAILS_MAX, ps.getMaxPasswordFails());
+        try {
+            new PolicySet(0, PolicySet.PASSWORD_MODE_NONE, 0,
+                    PolicySet.SCREEN_LOCK_TIME_MAX + 1, false);
+            fail("Too-long screen lock time allowed");
+        } catch (IllegalArgumentException e) {
+        }
     }
 
     /**
