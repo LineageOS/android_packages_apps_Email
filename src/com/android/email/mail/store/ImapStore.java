@@ -1419,6 +1419,7 @@ public class ImapStore extends Store {
                         if (Email.LOGD)
                             Log.v(Email.LOG_TAG, "Found Yahoo! account. Sending proprietary commands.");
                         executeSimpleCommand("ID (\"GUID\" \"1\")");
+                   }
 
                     // TODO eventually we need to add additional authentication
                     // options such as SASL
