@@ -63,6 +63,7 @@ import android.provider.ContactsContract.StatusUpdates;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -1697,4 +1698,21 @@ public class MessageView extends Activity implements OnClickListener {
             }
         }
     }
+    
+    
+    @Override
+    public boolean onKeyDown(int keycode, KeyEvent event) {
+    	switch (keycode) {
+    	    case KeyEvent.KEYCODE_VOLUME_DOWN:
+    	    	moveToOlder();
+    	    	break;
+    	    case KeyEvent.KEYCODE_VOLUME_UP:
+    	    	moveToNewer();
+    	    	break;
+    	    default:
+    	    	return super.onKeyDown(keycode, event);
+    	}
+    	return true;
+    }
+    
 }
