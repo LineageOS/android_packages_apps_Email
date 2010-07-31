@@ -281,9 +281,8 @@ public class MessageList extends ListActivity implements OnItemClickListener, On
             mLoadMessagesTask.execute();
             addFooterView(mMailboxId, -1, -1);
         } else {
-            int mailboxType = intent.getIntExtra(EXTRA_MAILBOX_TYPE, Mailbox.TYPE_INBOX);
+        	int mailboxType = intent.getIntExtra(EXTRA_MAILBOX_TYPE, Mailbox.TYPE_INBOX);
             Uri uri = intent.getData();
-            // TODO Possible ANR.  getAccountIdFromShortcutSafeUri accesses DB.
             long accountId = (uri == null) ? -1
                     : Account.getAccountIdFromShortcutSafeUri(this, uri);
 
@@ -1216,12 +1215,7 @@ public class MessageList extends ListActivity implements OnItemClickListener, On
             // the position;
             restoreListPosition();
             autoRefreshStaleMailbox();
-            // Reset the "new messages" count in the service, since we're seeing them now
-            if (mMailboxKey == Mailbox.QUERY_ALL_INBOXES) {
-                MailService.resetNewMessageCount(MessageList.this, -1);
-            } else if (mMailboxKey >= 0 && mAccountKey != -1) {
-                MailService.resetNewMessageCount(MessageList.this, mAccountKey);
-            }
+            MailService.resetNewMessageCount(MessageList.this, -1);
         }
     }
 
