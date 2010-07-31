@@ -78,8 +78,7 @@ public class Email extends Application {
      * the chooser is only opened with the first item in the list.
      */
     public static final String[] ACCEPTABLE_ATTACHMENT_SEND_UI_TYPES = new String[] {
-        "image/*",
-        "video/*",
+        "*/*",
     };
 
     /**
@@ -99,7 +98,7 @@ public class Email extends Application {
      * The MIME type(s) of attachments we're willing to download to SD.
      */
     public static final String[] ACCEPTABLE_ATTACHMENT_DOWNLOAD_TYPES = new String[] {
-        "image/*",
+        "*/*",
     };
 
     /**

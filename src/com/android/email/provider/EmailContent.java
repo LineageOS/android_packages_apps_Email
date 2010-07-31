@@ -837,6 +837,7 @@ public abstract class EmailContent {
         public static final int FLAGS_INCOMPLETE = 16;
         public static final int FLAGS_SECURITY_HOLD = 32;
         public static final int FLAGS_VIBRATE_WHEN_SILENT = 64;
+        public static final int FLAGS_MSG_LIST_ON_DELETE = 128;
 
         public static final int DELETE_POLICY_NEVER = 0;
         public static final int DELETE_POLICY_7DAYS = 1;        // not supported
@@ -886,6 +887,7 @@ public abstract class EmailContent {
         public static final int CONTENT_SECURITY_FLAGS_COLUMN = 15;
         public static final int CONTENT_SECURITY_SYNC_KEY_COLUMN = 16;
         public static final int CONTENT_SIGNATURE_COLUMN = 17;
+        public static final int CONTENT_IS_EAS_COLUMN = 18;
 
         public static final String[] CONTENT_PROJECTION = new String[] {
             RECORD_ID, AccountColumns.DISPLAY_NAME,
