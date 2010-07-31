@@ -197,6 +197,8 @@
     <string name="account_setup_options_mail_window_1week" msgid="5639718031108023741">"Una settimana"</string>
     <string name="account_setup_options_mail_window_2weeks" msgid="4567049268124213035">"Due settimane"</string>
     <string name="account_setup_options_mail_window_1month" msgid="5846359669750047081">"Un mese"</string>
+    <!-- In account setup options & account settings screens (exchange), sync window length  -->
+    <string name="account_setup_options_mail_window_all">Tutte le email</string>
     <string name="account_setup_failed_dlg_auth_message" msgid="42827150104879570">"Nome utente o password errata."</string>
     <string name="account_setup_failed_dlg_auth_message_fmt" msgid="8598560266430207606">"Nome utente o password errata."\n"(<xliff:g id="ERROR">%s</xliff:g>)"</string>
     <string name="account_setup_failed_dlg_certificate_message" msgid="961843413600482906">"Impossibile connettersi correttamente al server."</string>
