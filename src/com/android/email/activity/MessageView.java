@@ -1715,4 +1715,16 @@ public class MessageView extends Activity implements OnClickListener {
     	return true;
     }
     
+    // get rid of volume rocker default sound effect
+    @Override
+    public boolean onKeyUp(int keycode, KeyEvent event) {
+    	switch (keycode) {
+	    case KeyEvent.KEYCODE_VOLUME_DOWN:
+	    case KeyEvent.KEYCODE_VOLUME_UP:
+	    	break;
+	    default:
+	    	return super.onKeyUp(keycode, event);
+	}
+    	return true;
+    }
 }
