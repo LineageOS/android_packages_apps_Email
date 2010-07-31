@@ -33,8 +33,6 @@
     <!-- Do Not Translate.  Unused string. -->
     <string name="account_setup_exchange_domain_label"></string>
     <!-- Do Not Translate.  Unused string. -->
-    <string name="account_setup_options_mail_window_all"></string>
-    <!-- Do Not Translate.  Unused string. -->
     <string name="accounts_context_menu_title"></string>
     <!-- Do Not Translate.  Unused string. -->
     <string name="accounts_title"></string>
@@ -110,6 +108,8 @@
     <string name="add_account_action">Add account</string>
     <!-- Menu item -->
     <string name="deselect_all_action">Deselect all</string>
+    <!-- Menu item -->
+    <string name="select_all_action">Select all</string>
     <!-- Menu item -->
     <string name="compose_action">Compose</string>
     <!-- Menu item/button name -->
@@ -491,6 +491,8 @@ save attachment.</string>
     <string name="account_setup_options_mail_window_2weeks">Two weeks</string>
     <!-- In account setup options & account settings screens (exchange), sync window length  -->
     <string name="account_setup_options_mail_window_1month">One month</string>
+    <!-- In account setup options & account settings screens (exchange), sync window length  -->
+    <string name="account_setup_options_mail_window_all">All emails</string>
 
     <!-- "Setup could not finish" dialog text; e.g., Username or password incorrect -->
     <string name="account_setup_failed_dlg_auth_message">Username or password incorrect.</string> 
@@ -604,6 +606,11 @@ save attachment.</string>
     <string name="account_settings_ringtone">Select ringtone</string>
     <!-- On Settings screen, section heading -->
     <string name="account_settings_servers">Server settings</string>
+
+    <!-- On Settings screen, miscellaneous settings-->
+    <string name="misc_settings_label">Miscellaneous settings</string>
+    <string name="account_settings_msg_list_on_delete">Return to message list</string>
+    <string name="account_settings_msg_list_on_delete_summary">Return to message folder after deleting the message you\'re viewing.</string>
     <!-- Title of Remove account confirmation dialog box -->
     <string name="account_delete_dlg_title">Remove account</string>
     <!-- Message of Remove account confirmation dialog box -->
@@ -710,4 +717,15 @@ save attachment.</string>
          always a larger value because it represents the limit of displayed results.  -->
     <string name="gal_completed_limited_fmt">First <xliff:g id="results" example="20">%1$d</xliff:g>
         results from <xliff:g id="domain">%2$s</xliff:g></string>
+
+    <string name="sync_action">Toggle sync</string>
+    <string name="hide_action">Toggle visibility</string>
+    <string name="show_hidden_action">Show hidden folders</string>
+    <string name="hide_hidden_action">Hide hidden folders</string>
+    <string name="toast_folder_sync_on">Now syncing folder:</string>
+    <string name="toast_folder_sync_off">No longer syncing folder:</string>
+    <string name="toast_folder_sync_invalid">Invalid folder for syncing</string>
+    <string name="toast_folder_hide_on">Hiding folder:</string>
+    <string name="toast_folder_hide_off">Unhiding folder:</string>
+    <string name="toast_folder_hide_invalid">Cannot hide this folder!</string>
 </resources>
