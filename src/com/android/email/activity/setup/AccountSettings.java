@@ -59,6 +59,7 @@ public class AccountSettings extends PreferenceActivity {
     private static final String PREFERENCE_OUTGOING = "outgoing";
     private static final String PREFERENCE_SYNC_CONTACTS = "account_sync_contacts";
     private static final String PREFERENCE_SYNC_CALENDAR = "account_sync_calendar";
+    private static final String PREFERENCE_MSG_LIST_ON_DELETE = "msg_list_on_delete";
 
     // These strings must match account_settings_vibrate_when_* strings in strings.xml
     private static final String PREFERENCE_VALUE_VIBRATE_WHEN_ALWAYS = "always";
@@ -88,6 +89,7 @@ public class AccountSettings extends PreferenceActivity {
     private RingtonePreference mAccountRingtone;
     private CheckBoxPreference mSyncContacts;
     private CheckBoxPreference mSyncCalendar;
+    private CheckBoxPreference mMsgListOnDelete;
 
     /**
      * Display (and edit) settings for a specific account
@@ -221,6 +223,9 @@ public class AccountSettings extends PreferenceActivity {
             topCategory.addPreference(mSyncWindow);
         }
 
+        mMsgListOnDelete = (CheckBoxPreference) findPreference(PREFERENCE_MSG_LIST_ON_DELETE);
+        mMsgListOnDelete.setChecked(0 != (mAccount.getFlags() & Account.FLAGS_MSG_LIST_ON_DELETE));
+                
         mAccountDefault = (CheckBoxPreference) findPreference(PREFERENCE_DEFAULT);
         mAccountDefault.setChecked(mAccount.mId == Account.getDefaultAccountId(this));
 
@@ -345,14 +350,15 @@ public class AccountSettings extends PreferenceActivity {
 
     private void saveSettings() {
         int newFlags = mAccount.getFlags() &
-                ~(Account.FLAGS_NOTIFY_NEW_MAIL |
-                        Account.FLAGS_VIBRATE_ALWAYS | Account.FLAGS_VIBRATE_WHEN_SILENT);
+                ~(Account.FLAGS_NOTIFY_NEW_MAIL | Account.FLAGS_VIBRATE_ALWAYS |
+                		Account.FLAGS_VIBRATE_WHEN_SILENT | Account.FLAGS_MSG_LIST_ON_DELETE);
 
         mAccount.setDefaultAccount(mAccountDefault.isChecked());
         mAccount.setDisplayName(mAccountDescription.getText());
         mAccount.setSenderName(mAccountName.getText());
         mAccount.setSignature(mAccountSignature.getText());
         newFlags |= mAccountNotify.isChecked() ? Account.FLAGS_NOTIFY_NEW_MAIL : 0;
+        newFlags |= mMsgListOnDelete.isChecked() ? Account.FLAGS_MSG_LIST_ON_DELETE : 0;
         mAccount.setSyncInterval(Integer.parseInt(mCheckFrequency.getValue()));
         if (mSyncWindow != null) {
             mAccount.setSyncLookback(Integer.parseInt(mSyncWindow.getValue()));

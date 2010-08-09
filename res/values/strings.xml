@@ -602,6 +602,11 @@
     <string name="account_settings_ringtone">Select ringtone</string>
     <!-- On Settings screen, section heading -->
     <string name="account_settings_servers">Server settings</string>
+    
+    <!-- On Settings screen, miscellaneous settings-->
+    <string name="misc_settings_label">Miscellaneous settings</string>
+    <string name="account_settings_msg_list_on_delete">Return to message list</string>
+    <string name="account_settings_msg_list_on_delete_summary">Return to message folder after deleting the message you\'re viewing.</string>
     <!-- Title of Remove account confirmation dialog box -->
     <string name="account_delete_dlg_title">Remove account</string>
     <!-- Message of Remove account confirmation dialog box -->
