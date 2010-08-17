@@ -713,4 +713,11 @@
          always a larger value because it represents the limit of displayed results.  -->
     <string name="gal_completed_limited_fmt">First <xliff:g id="results" example="20">%1$d</xliff:g>
         results from <xliff:g id="domain">%2$s</xliff:g></string>
+        
+        
+    <string name="sync_action">Toggle sync</string>
+    <string name="toast_folder_sync_on">Now syncing folder: </string>
+    <string name="toast_folder_sync_off">No longer syncing folder: </string>
+    <string name="toast_folder_sync_invalid">Invalid folder for syncing</string>
+        
 </resources>

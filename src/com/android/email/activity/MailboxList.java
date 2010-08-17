@@ -58,6 +58,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class MailboxList extends ListActivity implements OnItemClickListener, OnClickListener {
@@ -261,6 +262,7 @@ public class MailboxList extends ListActivity implements OnItemClickListener, On
 
         menu.setHeaderTitle(folderName);
         getMenuInflater().inflate(R.menu.mailbox_list_context, menu);
+        
     }
 
     @Override
@@ -275,6 +277,9 @@ public class MailboxList extends ListActivity implements OnItemClickListener, On
             case R.id.open:
                 onOpenMailbox(info.id);
                 break;
+            case R.id.sync:
+            	onToggleSync(info.id);
+            	break;
         }
         return super.onContextItemSelected(item);
     }
@@ -304,6 +309,14 @@ public class MailboxList extends ListActivity implements OnItemClickListener, On
 
     private void onOpenMailbox(long mailboxId) {
         MessageList.actionHandleMailbox(this, mailboxId);
+    }
+    
+    private void onToggleSync(long mailboxId) {
+    	Controller controller = Controller.getInstance(getApplication());
+        mHandler.progress(true);
+        if (mailboxId >= 0) {
+            controller.toggleSyncFolder(mAccountId, mailboxId, mControllerCallback);
+        } 
     }
 
     private void onCompose() {

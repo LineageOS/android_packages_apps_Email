@@ -19,4 +19,6 @@
         android:title="@string/open_action" />
     <item android:id="@+id/refresh"
         android:title="@string/refresh_action" />
+    <item android:id="@+id/sync"
+        android:title="@string/sync_action" />
 </menu>
