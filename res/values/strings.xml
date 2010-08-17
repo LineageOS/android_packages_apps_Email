@@ -716,8 +716,9 @@
         
         
     <string name="sync_action">Toggle sync</string>
-    <string name="toast_folder_sync_on">Now syncing folder: </string>
-    <string name="toast_folder_sync_off">No longer syncing folder: </string>
+    <string name="toast_folder_sync_on">Now syncing folder:</string>
+    <string name="toast_folder_sync_off">No longer syncing folder:</string>
     <string name="toast_folder_sync_invalid">Invalid folder for syncing</string>
+    <string name="toast_folder_sync_reboot">\nReboot or restart of app required</string>
         
 </resources>

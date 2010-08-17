@@ -370,26 +370,27 @@ public class Controller {
     public void toggleSyncFolder(final long accountId, final long mailboxId, final Result callback) {
 
     	Mailbox box = new Mailbox();
+    	ContentValues cv = new ContentValues();
     	box = Mailbox.restoreMailboxWithId(mContext,mailboxId);
         Account account = EmailContent.Account.restoreAccountWithId(mContext,accountId);
         String name = box.mDisplayName;
         int type = box.mType;
-        
+        String toastSuffix = " " + name + mContext.getString(R.string.toast_folder_sync_reboot); 
         switch (type) {
             case Mailbox.TYPE_MAIL:
             case Mailbox.TYPE_SENT:
             case Mailbox.TYPE_TRASH:
                 if (box.mSyncInterval == EmailContent.Account.CHECK_INTERVAL_NEVER) {
-                	box.mSyncInterval = account.mSyncInterval;	
-        	        Toast.makeText(this, getString(R.string.toast_folder_sync_on)+name, Toast.LENGTH_LONG).show();
+                	cv.put(Mailbox.SYNC_INTERVAL, account.mSyncInterval);		
+        	        Toast.makeText(mContext, mContext.getString(R.string.toast_folder_sync_on) + toastSuffix, Toast.LENGTH_LONG).show();
                 } else {
-        	        box.mSyncInterval = EmailContent.Account.CHECK_INTERVAL_NEVER;	
-                	Toast.makeText(this, getString(R.string.toast_folder_sync_off)+name, Toast.LENGTH_LONG).show();
+                	cv.put(Mailbox.SYNC_INTERVAL, EmailContent.Account.CHECK_INTERVAL_NEVER);
+                	Toast.makeText(mContext, mContext.getString(R.string.toast_folder_sync_off) + toastSuffix, Toast.LENGTH_LONG).show();
                 }
-                box.save(mProviderContext);
+                box.update(mProviderContext, cv);
                 break;
             default:
-            	Toast.makeText(this, getString(R.string.toast_folder_sync_invalid), Toast.LENGTH_LONG).show();
+            	Toast.makeText(mContext, mContext.getString(R.string.toast_folder_sync_invalid), Toast.LENGTH_LONG).show();
             	break;
         }
         
