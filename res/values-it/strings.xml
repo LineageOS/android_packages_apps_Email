@@ -243,6 +243,11 @@
     <string name="account_settings_vibrate_when_dlg_title" msgid="308167729046312952">"Vibrazione"</string>
     <string name="account_settings_ringtone" msgid="7922187231467500404">"Seleziona suoneria"</string>
     <string name="account_settings_servers" msgid="4925493817981624242">"Impostazioni server"</string>
+
+    <!-- On Settings screen, miscellaneous settings-->
+    <string name="misc_settings_label">Impostazioni varie</string>
+    <string name="account_settings_msg_list_on_delete">Ritorna a elenco messaggi</string>
+    <string name="account_settings_msg_list_on_delete_summary">Ritorna alla cartella messaggi dopo eliminazione messaggio.</string>
     <string name="account_delete_dlg_title" msgid="6806087520856396608">"Rimuovi account"</string>
     <string name="account_delete_dlg_instructions_fmt" msgid="8236846322040271280">"L\'account \"<xliff:g id="ACCOUNT">%s</xliff:g>\" verrà rimosso da Email."</string>
     <string name="upgrade_accounts_title" msgid="5444140226380754014">"Esegui l\'upgrade degli account"</string>
@@ -273,4 +278,11 @@
     <item quantity="other" msgid="7816121892960632123">"<xliff:g id="RESULTS">%1$d</xliff:g> risultati da <xliff:g id="DOMAIN">%2$s</xliff:g>"</item>
   </plurals>
     <string name="gal_completed_limited_fmt" msgid="2343791690766047585">"Primi <xliff:g id="RESULTS">%1$d</xliff:g> risultati da <xliff:g id="DOMAIN">%2$s</xliff:g>"</string>
+
+    <string name="sync_action">Attiva/disattiva sync</string>
+    <string name="toast_folder_sync_on">Sincronizzando cartella:</string>
+    <string name="toast_folder_sync_off">Cartella non più sincronizzata:</string>
+    <string name="toast_folder_sync_invalid">Cartella non valida per sync</string>
+    <string name="toast_folder_sync_reboot">\nRiavvio app o dispositivo richiesto</string>
+
 </resources>
