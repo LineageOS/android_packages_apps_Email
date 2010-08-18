@@ -279,5 +279,11 @@
     <string name="account_settings_msg_list_on_delete">"メッセージリストに戻る"</string>
     <string name="account_settings_msg_list_on_delete_summary">"表示しているメッセージを削除したらメッセージリストに戻る"</string>
 
+    <string name="sync_action">"同期の切替"</string>
+    <string name="toast_folder_sync_on">"同期中のフォルダ:"</string>
+    <string name="toast_folder_sync_off">"同期無効中のフォルダ:"</string>
+    <string name="toast_folder_sync_invalid">"同期できないフォルダです"</string>
+    <string name="toast_folder_sync_reboot">"\n再起動かアプリの再スタートが必要です"</string>
+
 
 </resources>
