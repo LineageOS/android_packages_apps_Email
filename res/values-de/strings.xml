@@ -241,6 +241,12 @@
     <string name="account_settings_vibrate_when_dlg_title" msgid="308167729046312952">"Vibration"</string>
     <string name="account_settings_ringtone" msgid="7922187231467500404">"Klingelton auswählen"</string>
     <string name="account_settings_servers" msgid="4925493817981624242">"Servereinstellungen"</string>
+
+    <!-- On Settings screen, miscellaneous settings-->
+    <string name="misc_settings_label">Verschiedene Einstellungen</string>
+    <string name="account_settings_msg_list_on_delete">Zur Liste zurück</string>
+    <string name="account_settings_msg_list_on_delete_summary">Zur Nachrichtenliste zurückkehren nachdem die aktuelle Nachricht gelöscht wurde.</string>
+
     <string name="account_delete_dlg_title" msgid="6806087520856396608">"Konto entfernen"</string>
     <string name="account_delete_dlg_instructions_fmt" msgid="8236846322040271280">"Das Konto \"<xliff:g id="ACCOUNT">%s</xliff:g>\" wird aus Email entfernt."</string>
     <string name="upgrade_accounts_title" msgid="5444140226380754014">"Upgrade für Konten"</string>
