@@ -43,6 +43,7 @@
     <string name="refresh_action" msgid="5951383001436708175">"Aggiorna"</string>
     <string name="add_account_action" msgid="8835736309476033727">"Aggiungi account"</string>
     <string name="deselect_all_action" msgid="253663239459688238">"Deseleziona tutto"</string>
+    <string name="select_all_action">Seleziona tutto</string>
     <string name="compose_action" msgid="4045702519637388045">"Scrivi"</string>
     <string name="search_action" msgid="6325101454876682308">"Ricerca"</string>
     <string name="open_action" msgid="936766723989190816">"Apri"</string>
@@ -280,9 +281,15 @@
     <string name="gal_completed_limited_fmt" msgid="2343791690766047585">"Primi <xliff:g id="RESULTS">%1$d</xliff:g> risultati da <xliff:g id="DOMAIN">%2$s</xliff:g>"</string>
 
     <string name="sync_action">Attiva/disattiva sync</string>
+    <string name="hide_action">Attiva/disattiva visibilità</string>
+    <string name="show_hidden_action">Mostra cartelle invisibili</string>
+    <string name="hide_hidden_action">Nascondi cartelle invisibili</string>
     <string name="toast_folder_sync_on">Sincronizzando cartella:</string>
     <string name="toast_folder_sync_off">Cartella non più sincronizzata:</string>
     <string name="toast_folder_sync_invalid">Cartella non valida per sync</string>
-    <string name="toast_folder_sync_reboot">\nRiavvio app o dispositivo richiesto</string>
+    <string name="toast_folder_hide_on">Nascondendo cartella:</string>
+    <string name="toast_folder_hide_off">Cartella non più nascosta:</string>
+    <string name="toast_folder_hide_invalid">Non è possibile nascondere questa cartella!</string>
+    
 
 </resources>
