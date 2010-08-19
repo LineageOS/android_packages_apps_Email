@@ -375,7 +375,7 @@ public class Controller {
         Account account = EmailContent.Account.restoreAccountWithId(mContext,accountId);
         String name = box.mDisplayName;
         int type = box.mType;
-        String toastSuffix = " " + name + mContext.getString(R.string.toast_folder_sync_reboot); 
+        String toastSuffix = " " + name; 
         switch (type) {
             case Mailbox.TYPE_MAIL:
             case Mailbox.TYPE_SENT:
@@ -396,7 +396,48 @@ public class Controller {
         
     }
 
+    /**
+     * Return service for this account - basically a check if it exists or not
+     * If not, we know it's not an exchange account
+     * @hide
+     */
     
+    public IEmailService getService(long accountId) {
+    	return getServiceForAccount(accountId);
+    }
+        
+    /**
+     * Toggle folder visibility on or off for a particular folder
+     * @hide
+     */
+    public void toggleHideFolder(final long accountId, final long mailboxId, final Result callback) {
+
+    	Mailbox box = new Mailbox();
+    	ContentValues cv = new ContentValues();
+    	box = Mailbox.restoreMailboxWithId(mContext,mailboxId);
+        Account account = EmailContent.Account.restoreAccountWithId(mContext,accountId);
+        String name = box.mDisplayName;
+        int type = box.mType;
+        String toastSuffix = " " + name; 
+        switch (type) {
+            case Mailbox.TYPE_MAIL:
+            case Mailbox.TYPE_SENT:
+            case Mailbox.TYPE_TRASH:
+                if (box.mFlagVisible) {
+                	cv.put(Mailbox.FLAG_VISIBLE, false);		
+        	        Toast.makeText(mContext, mContext.getString(R.string.toast_folder_hide_on) + toastSuffix, Toast.LENGTH_LONG).show();
+                } else {
+                	cv.put(Mailbox.FLAG_VISIBLE, true);
+                	Toast.makeText(mContext, mContext.getString(R.string.toast_folder_hide_off) + toastSuffix, Toast.LENGTH_LONG).show();
+                }
+                box.update(mProviderContext, cv);
+                break;
+            default:
+            	Toast.makeText(mContext, mContext.getString(R.string.toast_folder_hide_invalid), Toast.LENGTH_LONG).show();
+            	break;
+        }
+        
+    }
     
     /**
      * Send a message:

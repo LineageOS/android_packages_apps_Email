@@ -43,6 +43,7 @@
     <string name="refresh_action" msgid="5951383001436708175">"Aktualisieren"</string>
     <string name="add_account_action" msgid="8835736309476033727">"Konto hinzufügen"</string>
     <string name="deselect_all_action" msgid="253663239459688238">"Auswahl für alle aufheben"</string>
+    <string name="select_all_action">Alle auswählen</string>
     <string name="compose_action" msgid="4045702519637388045">"Schreiben"</string>
     <string name="search_action" msgid="6325101454876682308">"Suche"</string>
     <string name="open_action" msgid="936766723989190816">"Offen"</string>
@@ -282,8 +283,14 @@
     <string name="gal_completed_limited_fmt" msgid="2343791690766047585">"Erste <xliff:g id="RESULTS">%1$d</xliff:g> Ergebnisse von <xliff:g id="DOMAIN">%2$s</xliff:g>"</string>
 
     <string name="sync_action">Synchronisation umschalten</string>
+    <string name="hide_action">Sichtbarkeit wechseln</string>
+    <string name="show_hidden_action">Verteckte Ordner zeigen</string>
+    <string name="hide_hidden_action">Versteckte Ordner verstecken</string>
     <string name="toast_folder_sync_on">Synchronisiere Ordner:</string>
     <string name="toast_folder_sync_off">Wird nicht mehr synchronisiert:</string>
     <string name="toast_folder_sync_invalid">Ungültiger Ordner für Synchronisation</string>
-    <string name="toast_folder_sync_reboot">\nNeustart des Gerätes oder der App erforderlich</string>
+
+    <string name="toast_folder_hide_on">Verstecke Ordner:</string>
+    <string name="toast_folder_hide_off">Zeige Ordner:</string>
+    <string name="toast_folder_hide_invalid">Dieser Ordner kann nicht versteckt werden!</string>
 </resources>

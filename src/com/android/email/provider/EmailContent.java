@@ -887,6 +887,7 @@ public abstract class EmailContent {
         public static final int CONTENT_SECURITY_FLAGS_COLUMN = 15;
         public static final int CONTENT_SECURITY_SYNC_KEY_COLUMN = 16;
         public static final int CONTENT_SIGNATURE_COLUMN = 17;
+        public static final int CONTENT_IS_EAS_COLUMN = 18;
 
         public static final String[] CONTENT_PROJECTION = new String[] {
             RECORD_ID, AccountColumns.DISPLAY_NAME,
