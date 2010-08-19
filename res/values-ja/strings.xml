@@ -43,6 +43,7 @@
     <string name="refresh_action" msgid="5951383001436708175">"更新"</string>
     <string name="add_account_action" msgid="8835736309476033727">"アカウントを追加"</string>
     <string name="deselect_all_action" msgid="253663239459688238">"選択をすべて解除"</string>
+    <string name="select_all_action">"すべて選択"</string>
     <string name="compose_action" msgid="4045702519637388045">"作成"</string>
     <string name="search_action" msgid="6325101454876682308">"検索"</string>
     <string name="open_action" msgid="936766723989190816">"開く"</string>
@@ -280,10 +281,14 @@
     <string name="account_settings_msg_list_on_delete_summary">"表示しているメッセージを削除したらメッセージリストに戻る"</string>
 
     <string name="sync_action">"同期の切替"</string>
+    <string name="hide_action">"表示の切替"</string>
+    <string name="show_hidden_action">"隠しフォルダの表示"</string>
+    <string name="hide_hidden_action">"隠しフォルダを表示しない"</string>
     <string name="toast_folder_sync_on">"同期中のフォルダ:"</string>
     <string name="toast_folder_sync_off">"同期無効中のフォルダ:"</string>
+    <string name="toast_folder_hide_on">"非表示フォルダ:"</string>
+    <string name="toast_folder_hide_off">"表示フォルダ:"</string>
+    <string name="toast_folder_hide_invalid">"このフォルダを非表示にできません!"</string>
     <string name="toast_folder_sync_invalid">"同期できないフォルダです"</string>
-    <string name="toast_folder_sync_reboot">"\n再起動かアプリの再スタートが必要です"</string>
-
 
 </resources>
