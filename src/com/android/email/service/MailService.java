@@ -72,6 +72,8 @@ public class MailService extends Service {
     private static final String EXTRA_DEBUG_WATCHDOG = "com.android.email.intent.extra.WATCHDOG";
     private static final String EXTRA_MAILBOX_ID = "com.android.email.intent.extra.MAILBOX_ID";
     private static final int WATCHDOG_DELAY = 10 * 60 * 1000;   // 10 minutes
+    private static final int SYNC_RETRY_DELAY = 5 * 60 * 1000; // 5 minutes - if no data/wifi to sync with it will retry this often
+    // instead of continuously and killing battery
 
     private static final String[] NEW_MESSAGE_COUNT_PROJECTION =
         new String[] {AccountColumns.NEW_MESSAGE_COUNT};
@@ -320,8 +322,8 @@ public class MailService extends Service {
                 long nextSyncTime = report.nextSyncTime;
 
                 // select next account to sync
-                if ((prevSyncTime == 0) || (nextSyncTime < timeNow)) {  // never checked, or overdue
-                    nextCheckTime = 0;
+                if ((nextSyncTime < timeNow) || (prevSyncTime == 0)) {  // never checked, or overdue
+                    nextCheckTime = SYNC_RETRY_DELAY;
                     nextAccount = report;
                 } else if (nextSyncTime < nextCheckTime) {              // next to be checked
                     nextCheckTime = nextSyncTime;
