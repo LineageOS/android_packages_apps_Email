@@ -99,6 +99,7 @@ import java.net.URLEncoder;
 import java.security.cert.CertificateException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class EasSyncService extends AbstractSyncService {
     // DO NOT CHECK IN SET TO TRUE
@@ -1127,7 +1128,13 @@ public class EasSyncService extends AbstractSyncService {
     }
 
     private ClientConnectionManager getClientConnectionManager() {
-        return SyncManager.getClientConnectionManager();
+        String uuid;
+        if (mAccount == null) {
+            uuid = null;
+        } else {
+            uuid = mAccount.getUuid();
+        }
+        return SyncManager.getClientConnectionManager(uuid);
     }
 
     private HttpClient getHttpClient(int timeout) {

@@ -31,22 +31,32 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Parcelable;
 import android.os.RemoteException;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 
+import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.security.KeyStore;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Provides generic setup for Exchange accounts.  The following fields are supported:
@@ -92,8 +102,11 @@ public class AccountSetupExchange extends Activity implements OnClickListener,
     private static final String EXTRA_MAKE_DEFAULT = "makeDefault";
     private static final String EXTRA_EAS_FLOW = "easFlow";
     /*package*/ static final String EXTRA_DISABLE_AUTO_DISCOVER = "disableAutoDiscover";
+    private static final String TAG = "AccountSetupExchange";
 
     private final static int DIALOG_DUPLICATE_ACCOUNT = 1;
+
+    private final static int DIALOG_CLIENT_CERTIFICATE = 2;
 
     private EditText mUsernameView;
     private EditText mPasswordView;
@@ -101,11 +114,14 @@ public class AccountSetupExchange extends Activity implements OnClickListener,
     private CheckBox mSslSecurityView;
     private CheckBox mTrustCertificatesView;
 
+    private Button mSetupCertificateButton;
     private Button mNextButton;
     private Account mAccount;
     private boolean mMakeDefault;
     private String mCacheLoginCredential;
     private String mDuplicateAccountName;
+    private KeyStore mKeyStore;
+    private File mImportedKeyStoreFile;
 
     public static void actionIncomingSettings(Activity fromActivity, Account account,
             boolean makeDefault, boolean easFlowMode, boolean allowAutoDiscover) {
@@ -150,6 +166,9 @@ public class AccountSetupExchange extends Activity implements OnClickListener,
         mSslSecurityView = (CheckBox) findViewById(R.id.account_ssl);
         mSslSecurityView.setOnCheckedChangeListener(this);
         mTrustCertificatesView = (CheckBox) findViewById(R.id.account_trust_certificates);
+
+        mSetupCertificateButton = (Button)findViewById(R.id.setup_certificate);
+        mSetupCertificateButton.setOnClickListener(this);
 
         mNextButton = (Button)findViewById(R.id.next);
         mNextButton.setOnClickListener(this);
@@ -242,6 +261,33 @@ public class AccountSetupExchange extends Activity implements OnClickListener,
                         }
                     })
                     .create();
+
+            case DIALOG_CLIENT_CERTIFICATE:
+                final Dialog dialog = new Dialog(this);
+                dialog.setContentView(R.layout.client_certificate_dialog);
+                dialog.setTitle(R.string.account_client_certificate);
+                ((Button)dialog.findViewById(R.id.import_certificate))
+                        .setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mKeyStore = importKeyStore(dialog);
+                                if (mKeyStore == null) {
+                                    Toast.makeText(AccountSetupExchange.this,
+                                            R.string.account_client_certificate_import_error,
+                                            Toast.LENGTH_LONG).show();
+                                } else {
+                                    dialog.dismiss();
+                                }
+                            }
+                        });
+                ((Button)dialog.findViewById(R.id.cancel_certificate))
+                        .setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                            }
+                        });
+                return dialog;
         }
         return null;
     }
@@ -259,6 +305,15 @@ public class AccountSetupExchange extends Activity implements OnClickListener,
                             mDuplicateAccountName));
                 }
                 break;
+
+            case DIALOG_CLIENT_CERTIFICATE:
+                Spinner certificateSpinner = (Spinner)dialog.findViewById(R.id.certificate_spinner);
+                List<File> certificateFiles = getCertificateFiles();
+                ArrayAdapter<File> spinnerAdapter = new ArrayAdapter<File>(this,
+                        android.R.layout.simple_spinner_item, certificateFiles);
+                spinnerAdapter
+                        .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                certificateSpinner.setAdapter(spinnerAdapter);
         }
     }
 
@@ -383,6 +438,20 @@ public class AccountSetupExchange extends Activity implements OnClickListener,
      */
     private void doActivityResultValidateNewAccount(int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
+            if (mKeyStore != null) {
+                // The account has a keystore associated with. It needs to be
+                // saved
+                String uuid = mAccount.getUuid();
+                try {
+                    mKeyStore.store(openFileOutput(uuid, MODE_PRIVATE), SyncManager.getPassword(
+                            uuid).toCharArray());
+                    mImportedKeyStoreFile.delete();
+                } catch (Exception e) {
+                    Log.e(TAG, "Failed to store keystore", e);
+                    throw new Error(e);
+                }
+            }
+
             // Go directly to next screen
             doOptions();
         } else if (resultCode == AccountSetupCheckSettings.RESULT_SECURITY_REQUIRED_USER_CANCEL) {
@@ -477,13 +546,57 @@ public class AccountSetupExchange extends Activity implements OnClickListener,
             throw new Error(use);
         }
 
+        SyncManager.setValidationKeyStore(mKeyStore);
+        Log.d(TAG, "Setting keystore " + mKeyStore + " temporarily on SyncManager");
         AccountSetupCheckSettings.actionValidateSettings(this, mAccount, true, false);
+    }
+
+    private KeyStore importKeyStore(Dialog certificateDialog) {
+        try {
+            mImportedKeyStoreFile = (File)((Spinner)certificateDialog
+                    .findViewById(R.id.certificate_spinner)).getSelectedItem();
+            String ksPassword = ((EditText)certificateDialog
+                    .findViewById(R.id.certificate_password_edit_text)).getText().toString();
+            KeyStore keyStore = KeyStore.Builder.newInstance("pkcs12", null, mImportedKeyStoreFile,
+                    new KeyStore.PasswordProtection(ksPassword.toCharArray())).getKeyStore();
+            return keyStore;
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to load keystore", e);
+            return null;
+        }
+    }
+
+    private List<File> getCertificateFiles() {
+        List<File> certificateFiles = new ArrayList<File>();
+        FileFilter fileFilter = new FileFilter() {
+            @Override
+            public boolean accept(File pathname) {
+                return pathname.getPath().endsWith("p12");
+            }
+        };
+        File fatRoot = Environment.getExternalStorageDirectory();
+        File[] rootFiles = fatRoot.listFiles(fileFilter);
+        for (File file : rootFiles) {
+            certificateFiles.add(file);
+        }
+        File downloadDir = new File(fatRoot, "download");
+        if (downloadDir.exists() && downloadDir.isDirectory()) {
+            File[] downloadFiles = downloadDir.listFiles(fileFilter);
+            for (File file : downloadFiles) {
+                certificateFiles.add(file);
+            }
+        }
+        return certificateFiles;
     }
 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.next:
                 onNext();
+                break;
+
+            case R.id.setup_certificate:
+                showDialog(DIALOG_CLIENT_CERTIFICATE);
                 break;
         }
     }

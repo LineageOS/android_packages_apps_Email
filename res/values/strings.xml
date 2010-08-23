@@ -726,4 +726,10 @@
     <string name="toast_folder_hide_on">Hiding folder:</string>
     <string name="toast_folder_hide_off">Unhiding folder:</string>
     <string name="toast_folder_hide_invalid">Cannot hide this folder!</string>
+
+    <!-- Externalized texts for client certificate dialog -->
+    <string name="account_client_certificate">Client Certificate</string>
+    <string name="account_client_certificate_file">Certificate File</string>
+    <string name="account_client_certificate_password">Certificate Password</string>
+    <string name="account_client_certificate_import_error">Error importing certificate using the given password</string>
 </resources>
