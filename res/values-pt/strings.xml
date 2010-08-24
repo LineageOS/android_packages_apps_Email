@@ -284,4 +284,10 @@
     <string name="toast_folder_hide_off">Exibindo pasta:</string>  
     <string name="toast_folder_hide_invalid">Esta pasta não pode ser oculta!</string>
 
+   <!-- Externalized texts for client certificate dialog -->
+    <string name="account_client_certificate">Certificado do cliente</string>
+    <string name="account_client_certificate_file">Arquivo do certificado</string>
+    <string name="account_client_certificate_password">Senha do certificado</string>
+    <string name="account_client_certificate_import_error">Falha na importação do certificado usando a senha fornecida</string>
+
 </resources>
