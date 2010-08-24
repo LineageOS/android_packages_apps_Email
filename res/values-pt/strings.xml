@@ -248,7 +248,7 @@
     <!-- On Settings screen, miscellaneous settings-->
     <string name="misc_settings_label">Outras configurações</string>
     <string name="account_settings_msg_list_on_delete">Retornar para lista de mensagens</string>
-    <string name="account_settings_msg_list_on_delete_summary">Retornar para pasta de mensagens após deletar mensagem em visualização./string>
+    <string name="account_settings_msg_list_on_delete_summary">Retornar para pasta de mensagens após deletar mensagem em visualização.</string>
 
     <string name="account_delete_dlg_title" msgid="6806087520856396608">"Remover conta"</string>
     <string name="account_delete_dlg_instructions_fmt" msgid="8236846322040271280">"A conta \"<xliff:g id="ACCOUNT">%s</xliff:g>\" será removida deste e-mail."</string>
