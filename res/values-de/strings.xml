@@ -293,4 +293,10 @@
     <string name="toast_folder_hide_on">Verstecke Ordner:</string>
     <string name="toast_folder_hide_off">Zeige Ordner:</string>
     <string name="toast_folder_hide_invalid">Dieser Ordner kann nicht versteckt werden!</string>
+
+    <!-- Externalized texts for client certificate dialog -->
+    <string name="account_client_certificate">Client-Zertifikat</string>
+    <string name="account_client_certificate_file">Zertifikat-Datei</string>
+    <string name="account_client_certificate_password">Zertifikat-Passwort</string>
+    <string name="account_client_certificate_import_error">Fehler beim Importieren des Zertifikats mit dem angegebenen Passwort</string>
 </resources>
