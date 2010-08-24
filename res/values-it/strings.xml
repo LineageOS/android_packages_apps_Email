@@ -290,6 +290,10 @@
     <string name="toast_folder_hide_on">Nascondendo cartella:</string>
     <string name="toast_folder_hide_off">Cartella non più nascosta:</string>
     <string name="toast_folder_hide_invalid">Non è possibile nascondere questa cartella!</string>
-    
 
+    <!-- Externalized texts for client certificate dialog -->
+    <string name="account_client_certificate">Certificato Client</string>
+    <string name="account_client_certificate_file">File Certificato</string>
+    <string name="account_client_certificate_password">Password Certificato</string>
+    <string name="account_client_certificate_import_error">Errore nell\'importare il certificato usando la password fornita</string>
 </resources>
