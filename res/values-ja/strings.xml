@@ -291,4 +291,9 @@
     <string name="toast_folder_hide_invalid">"このフォルダを非表示にできません!"</string>
     <string name="toast_folder_sync_invalid">"同期できないフォルダです"</string>
 
+    <string name="account_client_certificate">"クライアント証明書"</string>
+    <string name="account_client_certificate_file">"証明書ファイル"</string>
+    <string name="account_client_certificate_password">"証明書パスワード"</string>
+    <string name="account_client_certificate_import_error">"与えられたパスワードでの証明書インポートに失敗しました。"</string>
+
 </resources>
