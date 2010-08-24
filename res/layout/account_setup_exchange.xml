@@ -87,6 +87,14 @@
                 android:paddingLeft="3dip"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="?android:attr/textColorTertiary" />
+             <Button
+             	android:id="@+id/setup_certificate"
+                android:text="@string/account_client_certificate"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:minWidth="@dimen/button_minWidth"
+                android:layout_alignParentLeft="true"
+             />
         </LinearLayout>
 
         <RelativeLayout

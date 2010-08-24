@@ -17,26 +17,17 @@
 
 package com.android.exchange;
 
-import com.android.email.AccountBackupRestore;
-import com.android.email.Email;
-import com.android.email.SecurityPolicy;
-import com.android.email.Utility;
-import com.android.email.mail.MessagingException;
-import com.android.email.mail.transport.SSLUtils;
-import com.android.email.provider.EmailContent;
-import com.android.email.provider.EmailContent.Account;
-import com.android.email.provider.EmailContent.Attachment;
-import com.android.email.provider.EmailContent.HostAuth;
-import com.android.email.provider.EmailContent.HostAuthColumns;
-import com.android.email.provider.EmailContent.Mailbox;
-import com.android.email.provider.EmailContent.MailboxColumns;
-import com.android.email.provider.EmailContent.Message;
-import com.android.email.provider.EmailContent.SyncColumns;
-import com.android.email.service.EmailServiceStatus;
-import com.android.email.service.IEmailService;
-import com.android.email.service.IEmailServiceCallback;
-import com.android.exchange.adapter.CalendarSyncAdapter;
-import com.android.exchange.utility.FileLogger;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.security.KeyStore;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.params.ConnManagerPNames;
@@ -45,6 +36,7 @@ import org.apache.http.conn.routing.HttpRoute;
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
+import org.apache.http.impl.conn.SingleClientConnManager;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
@@ -76,7 +68,6 @@ import android.os.Debug;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager;
-import android.os.Process;
 import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 import android.os.PowerManager.WakeLock;
@@ -86,15 +77,26 @@ import android.provider.Calendar.Calendars;
 import android.provider.Calendar.Events;
 import android.util.Log;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import com.android.email.AccountBackupRestore;
+import com.android.email.Email;
+import com.android.email.SecurityPolicy;
+import com.android.email.Utility;
+import com.android.email.mail.MessagingException;
+import com.android.email.mail.transport.SSLUtils;
+import com.android.email.provider.EmailContent;
+import com.android.email.provider.EmailContent.Account;
+import com.android.email.provider.EmailContent.Attachment;
+import com.android.email.provider.EmailContent.HostAuth;
+import com.android.email.provider.EmailContent.HostAuthColumns;
+import com.android.email.provider.EmailContent.Mailbox;
+import com.android.email.provider.EmailContent.MailboxColumns;
+import com.android.email.provider.EmailContent.Message;
+import com.android.email.provider.EmailContent.SyncColumns;
+import com.android.email.service.EmailServiceStatus;
+import com.android.email.service.IEmailService;
+import com.android.email.service.IEmailServiceCallback;
+import com.android.exchange.adapter.CalendarSyncAdapter;
+import com.android.exchange.utility.FileLogger;
 
 /**
  * The SyncManager handles all aspects of starting, maintaining, and stopping the various sync
@@ -216,8 +218,6 @@ public class SyncManager extends Service implements Runnable {
     private static Thread sServiceThread = null;
     // Cached unique device id
     private static String sDeviceId = null;
-    // ConnectionManager that all EAS threads can use
-    private static ClientConnectionManager sClientConnectionManager = null;
     // Count of ClientConnectionManager shutdowns
     private static volatile int sClientConnectionManagerShutdownCount = 0;
 
@@ -237,6 +237,9 @@ public class SyncManager extends Service implements Runnable {
     private IEmailServiceCallback mCallback;
     private RemoteCallbackList<IEmailServiceCallback> mCallbackList =
         new RemoteCallbackList<IEmailServiceCallback>();
+    
+    private static Map<String, ClientConnectionManager> clientConnectionManagerMap = new HashMap<String, ClientConnectionManager>();
+    private static KeyStore validationKeyStore;
 
     /**
      * Proxy that can be used by various sync adapters to tie into SyncManager's callback system.
@@ -290,6 +293,8 @@ public class SyncManager extends Service implements Runnable {
             try {
                 AbstractSyncService.validate(EasSyncService.class, host, userName, password, port,
                         ssl, trustCertificates, SyncManager.this);
+                //Validation keystore is for one-time use
+                setValidationKeyStore(null);
                 return MessagingException.NO_ERROR;
             } catch (MessagingException e) {
                 return e.getExceptionType();
@@ -1180,41 +1185,83 @@ public class SyncManager extends Service implements Runnable {
         }
     };
 
-    static public synchronized ClientConnectionManager getClientConnectionManager() {
-        if (sClientConnectionManager == null) {
-            // After two tries, kill the process.  Most likely, this will happen in the background
-            // The service will restart itself after about 5 seconds
-            if (sClientConnectionManagerShutdownCount > MAX_CLIENT_CONNECTION_MANAGER_SHUTDOWNS) {
-                alwaysLog("Shutting down process to unblock threads");
-                Process.killProcess(Process.myPid());
-            }
-            // Create a registry for our three schemes; http and https will use built-in factories
-            SchemeRegistry registry = new SchemeRegistry();
-            registry.register(new Scheme("http",
-                    PlainSocketFactory.getSocketFactory(), 80));
-            registry.register(new Scheme("https", SSLSocketFactory.getSocketFactory(), 443));
+    static public synchronized ClientConnectionManager getClientConnectionManager(String accountUUID) {
 
+        Log.d(TAG, "Requesting SSL factory for account UUID: " + accountUUID);
+        if (accountUUID == null && validationKeyStore != null) {
+            // Validating account, use temporarily provided keystore
+            Log.d(TAG, "Create SSL factory with validation keystore");
+            SchemeRegistry registry = new SchemeRegistry();
+            registry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
+            try {
+                registry.register(new Scheme("https", new SSLSocketFactory(validationKeyStore, ""),
+                        443));
+            } catch (Exception e) {
+                throw new Error(e);
+            }
             // Use "insecure" socket factory.
             SSLSocketFactory sf = new SSLSocketFactory(SSLUtils.getSSLSocketFactory(true));
             sf.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
             // Register the httpts scheme with our factory
             registry.register(new Scheme("httpts", sf, 443));
-            // And create a ccm with our registry
             HttpParams params = new BasicHttpParams();
-            params.setIntParameter(ConnManagerPNames.MAX_TOTAL_CONNECTIONS, 25);
-            params.setParameter(ConnManagerPNames.MAX_CONNECTIONS_PER_ROUTE, sConnPerRoute);
-            sClientConnectionManager = new ThreadSafeClientConnManager(params, registry);
+            params.setIntParameter(ConnManagerPNames.MAX_TOTAL_CONNECTIONS, 3);
+            params.setParameter(ConnManagerPNames.MAX_CONNECTIONS_PER_ROUTE, 3);
+            return new SingleClientConnManager(params, registry);
         }
-        // Null is a valid return result if we get an exception
-        return sClientConnectionManager;
+
+        ClientConnectionManager clientConnectionManager = clientConnectionManagerMap
+                .get(accountUUID);
+        if (clientConnectionManager == null) {
+            try {
+                // Create a registry for our three schemes; http and https will
+                // use built-in factories
+                // And create a ccm with our registry
+                SchemeRegistry registry = new SchemeRegistry();
+                registry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
+
+                if (accountUUID != null && INSTANCE.getFileStreamPath(accountUUID).exists()) {
+                    Log.d(TAG, "Create SSL factory with keystore");
+                    KeyStore.PasswordProtection protection = new KeyStore.PasswordProtection(
+                            getPassword(accountUUID).toCharArray());
+                    KeyStore keyStore = KeyStore.Builder.newInstance("pkcs12", null,
+                            INSTANCE.getFileStreamPath(accountUUID), protection).getKeyStore();
+                    registry.register(new Scheme("https", new SSLSocketFactory(keyStore,
+                            getPassword(accountUUID)), 443));
+                } else {
+                    Log.d(TAG, "Create regular SSL factory");
+                    registry
+                            .register(new Scheme("https", SSLSocketFactory.getSocketFactory(), 443));
+                }
+                // Use "insecure" socket factory.
+                SSLSocketFactory sf = new SSLSocketFactory(SSLUtils.getSSLSocketFactory(true));
+                sf.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+                // Register the httpts scheme with our factory
+                registry.register(new Scheme("httpts", sf, 443));
+
+                HttpParams params = new BasicHttpParams();
+                params.setIntParameter(ConnManagerPNames.MAX_TOTAL_CONNECTIONS, 25);
+                params.setParameter(ConnManagerPNames.MAX_CONNECTIONS_PER_ROUTE,
+                        SyncManager.sConnPerRoute);
+                clientConnectionManager = new ThreadSafeClientConnManager(params, registry);
+                clientConnectionManagerMap.put(accountUUID, clientConnectionManager);
+            } catch (Exception e) {
+                Log.e(TAG, "Error with keystore or something related!", e);
+                throw new IllegalStateException(e);
+            }
+        }
+        return clientConnectionManager;
     }
 
     static private synchronized void shutdownConnectionManager() {
-        if (sClientConnectionManager != null) {
+        if ((!clientConnectionManagerMap.isEmpty())) {
             alwaysLog("Shutting down ClientConnectionManager");
-            sClientConnectionManager.shutdown();
+            for (ClientConnectionManager clientConnectionManager : clientConnectionManagerMap
+                    .values()) {
+                clientConnectionManager.shutdown();
+            }
             sClientConnectionManagerShutdownCount++;
-            sClientConnectionManager = null;
+            clientConnectionManagerMap.clear();
         }
     }
 
@@ -2383,5 +2430,13 @@ public class SyncManager extends Service implements Runnable {
 
     static public Context getContext() {
         return INSTANCE;
+    }
+    
+    public static String getPassword(String uuid) {
+        return uuid.substring((uuid.length() / 2));
+    }
+
+    public static void setValidationKeyStore(KeyStore keyStore) {
+        validationKeyStore = keyStore;
     }
 }
