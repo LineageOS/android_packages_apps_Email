@@ -1221,7 +1221,7 @@ public class CalendarUtilities {
 
         // TODO Coordinate account colors w/ Calendar, if possible
         // Make Email account color opaque
-        cv.put(Calendars.COLOR, 0xFF000000 | Email.getAccountColor(account.mId));
+        cv.put(Calendars.COLOR, 0xFF000000 | account.getAccountColor());       
         cv.put(Calendars.TIMEZONE, Time.getCurrentTimezone());
         cv.put(Calendars.ACCESS_LEVEL, Calendars.OWNER_ACCESS);
         cv.put(Calendars.OWNER_ACCOUNT, account.mEmailAddress);

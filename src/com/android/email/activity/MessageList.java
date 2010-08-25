@@ -283,8 +283,9 @@ public class MessageList extends ListActivity implements OnItemClickListener, On
             mLoadMessagesTask.execute();
             addFooterView(mMailboxId, -1, -1);
         } else {
-        	int mailboxType = intent.getIntExtra(EXTRA_MAILBOX_TYPE, Mailbox.TYPE_INBOX);
+            int mailboxType = intent.getIntExtra(EXTRA_MAILBOX_TYPE, Mailbox.TYPE_INBOX);
             Uri uri = intent.getData();
+            // TODO Possible ANR.  getAccountIdFromShortcutSafeUri accesses DB.
             long accountId = (uri == null) ? -1
                     : Account.getAccountIdFromShortcutSafeUri(this, uri);
 
@@ -1293,9 +1294,9 @@ public class MessageList extends ListActivity implements OnItemClickListener, On
             // the position;
             restoreListPosition();
             autoRefreshStaleMailbox();
-            MailService.resetNewMessageCount(MessageList.this, -1);
+                MailService.resetNewMessageCount(MessageList.this, -1);
+            }
         }
-    }
 
     private class SetTitleTask extends AsyncTask<Void, Void, Object[]> {
 
@@ -1783,7 +1784,9 @@ public class MessageList extends ListActivity implements OnItemClickListener, On
 
             // Load the UI
             View chipView = view.findViewById(R.id.chip);
-            chipView.setBackgroundResource(Email.getAccountColorResourceId(itemView.mAccountId));
+            
+            EmailContent.Account acc = EmailContent.Account.restoreAccountWithId(mContext, itemView.mAccountId); 
+            chipView.setBackgroundColor(acc.getAccountColor());
 
             TextView fromView = (TextView) view.findViewById(R.id.from);
             String text = cursor.getString(COLUMN_DISPLAY_NAME);

@@ -81,7 +81,8 @@ public class EmailProvider extends ContentProvider {
     // Version 10: Add meeting info to message table
     // Version 11: Add content and flags to attachment table
     // Version 12: Add content_bytes to attachment table. content is deprecated.
-    public static final int DATABASE_VERSION = 12;
+    // version 13: Add accountColor field to the Account table
+    public static final int DATABASE_VERSION = 13;
 
     // Any changes to the database format *must* include update-in-place code.
     // Original version: 2
@@ -90,7 +91,7 @@ public class EmailProvider extends ContentProvider {
     // Version 5: Database wipe required; changing AccountManager interface w/Exchange
     // Version 6: Adding Body.mIntroText column
     public static final int BODY_DATABASE_VERSION = 6;
-
+    
     public static final String EMAIL_AUTHORITY = "com.android.email.provider";
 
     private static final int ACCOUNT_BASE = 0;
@@ -417,7 +418,8 @@ public class EmailProvider extends ContentProvider {
             + AccountColumns.NEW_MESSAGE_COUNT + " integer, "
             + AccountColumns.SECURITY_FLAGS + " integer, "
             + AccountColumns.SECURITY_SYNC_KEY + " text, "
-            + AccountColumns.SIGNATURE + " text "
+            + AccountColumns.SIGNATURE + " text, "
+            + AccountColumns.ACCOUNT_COLOR + "integer"
             + ");";
         db.execSQL("create table " + Account.TABLE_NAME + s);
         // Deleting an account deletes associated Mailboxes and HostAuth's
@@ -430,7 +432,7 @@ public class EmailProvider extends ContentProvider {
                 " where " + EmailContent.RECORD_ID + "=old." + AccountColumns.HOST_AUTH_KEY_SEND +
         "; end");
     }
-
+    
     static void resetAccountTable(SQLiteDatabase db, int oldVersion, int newVersion) {
         try {
             db.execSQL("drop table " +  Account.TABLE_NAME);
@@ -438,7 +440,7 @@ public class EmailProvider extends ContentProvider {
         }
         createAccountTable(db);
     }
-
+    
     static void createHostAuthTable(SQLiteDatabase db) {
         String s = " (" + EmailContent.RECORD_ID + " integer primary key autoincrement, "
             + HostAuthColumns.PROTOCOL + " text, "
@@ -680,6 +682,36 @@ public class EmailProvider extends ContentProvider {
             createHostAuthTable(db);
             createAccountTable(db);
         }
+        
+        void preserveAccountColors (SQLiteDatabase db)
+        {       	
+        	String [] cols = {AccountColumns.ID};
+        	Cursor c = db.query(Account.TABLE_NAME, cols, null, null, null, null, null);
+        	int count = c.getCount();
+        	try {
+        		if (0 == count) return;	// nothing to update
+        	
+        		Log.i(TAG, "Attempting to preserve account colors for " + count + " accounts");
+
+        		while (c.moveToNext())
+            	{
+        			long id = c.getLong(0);
+        			int oldColor = Email.getOldAccountColor(id);
+        			
+        			String sql_query = "update " + Account.TABLE_NAME + " set " + AccountColumns.ACCOUNT_COLOR + "=" + oldColor + " where " + AccountColumns.ID + "=" + id + ";";
+        			
+        	    	try {
+        	    		db.execSQL(sql_query);
+    	    			Log.i(TAG, "Preserved color 0x" + Integer.toHexString(oldColor) + " for account with id " + id);
+        	    	}
+        	    	catch (Exception e){
+        	    		Log.i(TAG, "Failed to preserve color 0x" + Integer.toHexString(oldColor) + " for account with id " + id);
+        	    	}
+            	}
+        	} finally {
+        		c.close();
+        	}
+        }
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -781,6 +813,23 @@ public class EmailProvider extends ContentProvider {
                     Log.w(TAG, "Exception upgrading EmailProvider.db from 11 to 12 " + e);
                 }
                 oldVersion = 12;
+            }
+            if (oldVersion == 12)
+            {
+    	    	// add the color column to the table
+    	    	try {
+    	    		db.execSQL("alter table " + Account.TABLE_NAME
+    	                    + " add column " + AccountColumns.ACCOUNT_COLOR + " integer;");
+    	    		
+    	    		Log.i(TAG, "EmailProvider.db upgraded from version 12 to 13 ");
+    	    	} catch (SQLException e) {
+    	    		Log.w(TAG, "Exception upgrading EmailProvider.db from 12 to 13 " + e);
+    	    	}
+	    		
+    	    	// attempt to preserve the colors
+    	    	preserveAccountColors (db);
+    	    	
+	    		oldVersion = 13;    	
             }
         }
 

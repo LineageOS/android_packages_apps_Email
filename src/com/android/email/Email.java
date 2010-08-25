@@ -179,12 +179,21 @@ public class Email extends Application {
         return Math.abs((int) (accountId - 1) % ACCOUNT_COLOR_CHIP_RES_IDS.length);
     }
 
-    public static int getAccountColorResourceId(long accountId) {
+    public static int getOldAccountColorResourceId(long accountId) {
         return ACCOUNT_COLOR_CHIP_RES_IDS[getColorIndexFromAccountId(accountId)];
     }
-
-    public static int getAccountColor(long accountId) {
+    
+    public static int getOldAccountColor(long accountId) {
         return ACCOUNT_COLOR_CHIP_RGBS[getColorIndexFromAccountId(accountId)];
+    }
+    
+    public static int getAccountColorResourceId(long accountId) {
+    	return R.drawable.chip_mask;
+    }
+    
+    @Deprecated
+    public static int getAccountColor(long accountId) {
+        return 0x00ffffff;
     }
 
     public static void setTempDirectory(Context context) {
