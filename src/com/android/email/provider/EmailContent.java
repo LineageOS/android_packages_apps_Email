@@ -791,6 +791,8 @@ public abstract class EmailContent {
         public static final String DISPLAY_NAME = "displayName";
         // The email address corresponding to this account
         public static final String EMAIL_ADDRESS = "emailAddress";
+        // The color associated with this account
+        public static final String ACCOUNT_COLOR = "accountColor";
         // A server-based sync key on an account-wide basis (EAS needs this)
         public static final String SYNC_KEY = "syncKey";
         // The default sync lookback period for this account
@@ -864,6 +866,7 @@ public abstract class EmailContent {
         public int mSecurityFlags;
         public String mSecuritySyncKey;
         public String mSignature;
+        public int mAccountColor;
 
         // Convenience for creating an account
         public transient HostAuth mHostAuthRecv;
@@ -887,7 +890,7 @@ public abstract class EmailContent {
         public static final int CONTENT_SECURITY_FLAGS_COLUMN = 15;
         public static final int CONTENT_SECURITY_SYNC_KEY_COLUMN = 16;
         public static final int CONTENT_SIGNATURE_COLUMN = 17;
-        public static final int CONTENT_IS_EAS_COLUMN = 18;
+        public static final int CONTENT_COLOR_COLUMN = 18;
 
         public static final String[] CONTENT_PROJECTION = new String[] {
             RECORD_ID, AccountColumns.DISPLAY_NAME,
@@ -897,7 +900,8 @@ public abstract class EmailContent {
             AccountColumns.COMPATIBILITY_UUID, AccountColumns.SENDER_NAME,
             AccountColumns.RINGTONE_URI, AccountColumns.PROTOCOL_VERSION,
             AccountColumns.NEW_MESSAGE_COUNT, AccountColumns.SECURITY_FLAGS,
-            AccountColumns.SECURITY_SYNC_KEY, AccountColumns.SIGNATURE
+            AccountColumns.SECURITY_SYNC_KEY, AccountColumns.SIGNATURE, 
+            AccountColumns.ACCOUNT_COLOR
         };
 
         public static final int CONTENT_MAILBOX_TYPE_COLUMN = 1;
@@ -956,7 +960,7 @@ public abstract class EmailContent {
 
         /**
          * Refresh an account that has already been loaded.  This is slightly less expensive
-         * that generating a brand-new account object.
+         * than generating a brand-new account object.
          */
         public void refresh(Context context) {
             Cursor c = context.getContentResolver().query(this.getUri(), Account.CONTENT_PROJECTION,
@@ -993,6 +997,7 @@ public abstract class EmailContent {
             mSecurityFlags = cursor.getInt(CONTENT_SECURITY_FLAGS_COLUMN);
             mSecuritySyncKey = cursor.getString(CONTENT_SECURITY_SYNC_KEY_COLUMN);
             mSignature = cursor.getString(CONTENT_SIGNATURE_COLUMN);
+            mAccountColor = cursor.getInt(CONTENT_COLOR_COLUMN);
             return this;
         }
 
@@ -1029,7 +1034,24 @@ public abstract class EmailContent {
         public void setEmailAddress(String emailAddress) {
             mEmailAddress = emailAddress;
         }
+        
+        /**
+         * @return the color associated with this account
+         */
+        public int getAccountColor () 
+        {
+        	return mAccountColor;
+        }
 
+        /**
+         * Associate a color with this account
+         * @param col the new color for this account
+         */
+        public void setAccountColor (int col)
+        {
+        	mAccountColor = col;
+        }
+        
         /**
          * @return the sender's name for this account
          */
@@ -1507,6 +1529,7 @@ public abstract class EmailContent {
             values.put(AccountColumns.SECURITY_FLAGS, mSecurityFlags);
             values.put(AccountColumns.SECURITY_SYNC_KEY, mSecuritySyncKey);
             values.put(AccountColumns.SIGNATURE, mSignature);
+            values.put(AccountColumns.ACCOUNT_COLOR, mAccountColor);
             return values;
         }
 
@@ -1554,6 +1577,7 @@ public abstract class EmailContent {
             dest.writeInt(mSecurityFlags);
             dest.writeString(mSecuritySyncKey);
             dest.writeString(mSignature);
+            dest.writeInt(mAccountColor);
 
             if (mHostAuthRecv != null) {
                 dest.writeByte((byte)1);
@@ -1593,6 +1617,7 @@ public abstract class EmailContent {
             mSecurityFlags = in.readInt();
             mSecuritySyncKey = in.readString();
             mSignature = in.readString();
+            mAccountColor = in.readInt();
 
             mHostAuthRecv = null;
             if (in.readByte() == 1) {
