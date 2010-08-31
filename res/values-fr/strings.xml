@@ -43,6 +43,7 @@
     <string name="refresh_action" msgid="5951383001436708175">"Actualiser"</string>
     <string name="add_account_action" msgid="8835736309476033727">"Ajouter un compte"</string>
     <string name="deselect_all_action" msgid="253663239459688238">"Tout désélectionner"</string>
+    <string name="select_all_action">Tout sélectionner</string>
     <string name="compose_action" msgid="4045702519637388045">"Composer"</string>
     <string name="search_action" msgid="6325101454876682308">"Rechercher"</string>
     <string name="open_action" msgid="936766723989190816">"Ouvrir"</string>
@@ -197,6 +198,7 @@
     <string name="account_setup_options_mail_window_1week" msgid="5639718031108023741">"Une semaine"</string>
     <string name="account_setup_options_mail_window_2weeks" msgid="4567049268124213035">"Deux semaines"</string>
     <string name="account_setup_options_mail_window_1month" msgid="5846359669750047081">"Un mois"</string>
+    <string name="account_setup_options_mail_window_all">Tout</string>
     <string name="account_setup_failed_dlg_auth_message" msgid="42827150104879570">"Nom d\'utilisateur ou mot de passe incorrect."</string>
     <string name="account_setup_failed_dlg_auth_message_fmt" msgid="8598560266430207606">"Nom d\'utilisateur ou mot de passe incorrect."\n"(<xliff:g id="ERROR">%s</xliff:g>)"</string>
     <string name="account_setup_failed_dlg_certificate_message" msgid="961843413600482906">"Impossible d\'établir une connexion sécurisée avec le serveur."</string>
@@ -241,6 +243,9 @@
     <string name="account_settings_vibrate_when_dlg_title" msgid="308167729046312952">"Vibreur"</string>
     <string name="account_settings_ringtone" msgid="7922187231467500404">"Sélectionner la sonnerie"</string>
     <string name="account_settings_servers" msgid="4925493817981624242">"Paramètres du serveur"</string>
+    <string name="misc_settings_label">Paramètres divers</string>
+    <string name="account_settings_msg_list_on_delete">Retour aux messages</string>
+    <string name="account_settings_msg_list_on_delete_summary">Revenir au dossier du message ayant été supprimé</string>
     <string name="account_delete_dlg_title" msgid="6806087520856396608">"Supprimer le compte"</string>
     <string name="account_delete_dlg_instructions_fmt" msgid="8236846322040271280">"Le compte \"<xliff:g id="ACCOUNT">%s</xliff:g>\" va être supprimé de votre messagerie."</string>
     <string name="upgrade_accounts_title" msgid="5444140226380754014">"Mettre les comptes à niveau"</string>
@@ -271,4 +276,18 @@
     <item quantity="other" msgid="7816121892960632123">"<xliff:g id="RESULTS">%1$d</xliff:g> résultats de <xliff:g id="DOMAIN">%2$s</xliff:g>"</item>
   </plurals>
     <string name="gal_completed_limited_fmt" msgid="2343791690766047585">"<xliff:g id="RESULTS">%1$d</xliff:g> premiers résultats de <xliff:g id="DOMAIN">%2$s</xliff:g>"</string>
+    <string name="sync_action">Commuter synchronisation</string>
+    <string name="hide_action">Commuter visibilité</string>
+    <string name="show_hidden_action">Afficher dossiers cachés</string>
+    <string name="hide_hidden_action">Masquer dossiers cachés</string>
+    <string name="toast_folder_sync_on">Synchronisation du dossier :</string>
+    <string name="toast_folder_sync_off">Ne synchronisera plus le dossier :</string>
+    <string name="toast_folder_sync_invalid">Dossier invalide pour la synchronisation</string>
+    <string name="toast_folder_hide_on">Masquage du dossier :</string>
+    <string name="toast_folder_hide_off">Affichage du dossier :</string>
+    <string name="toast_folder_hide_invalid">Impossible de masquer ce dossier !</string>
+    <string name="account_client_certificate">Certificat client</string>
+    <string name="account_client_certificate_file">Fichier du certificat</string>
+    <string name="account_client_certificate_password">Mot de passe du certificat</string>
+    <string name="account_client_certificate_import_error">Erreur durant l\'importation du certificat avec le mot de passe fourni</string>
 </resources>
