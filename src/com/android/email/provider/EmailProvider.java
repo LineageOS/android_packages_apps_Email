@@ -419,7 +419,7 @@ public class EmailProvider extends ContentProvider {
             + AccountColumns.SECURITY_FLAGS + " integer, "
             + AccountColumns.SECURITY_SYNC_KEY + " text, "
             + AccountColumns.SIGNATURE + " text, "
-            + AccountColumns.ACCOUNT_COLOR + "integer"
+            + AccountColumns.ACCOUNT_COLOR + " integer"
             + ");";
         db.execSQL("create table " + Account.TABLE_NAME + s);
         // Deleting an account deletes associated Mailboxes and HostAuth's
