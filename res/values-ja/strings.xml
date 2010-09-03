@@ -296,4 +296,7 @@
     <string name="account_client_certificate_password">"証明書パスワード"</string>
     <string name="account_client_certificate_import_error">"与えられたパスワードでの証明書インポートに失敗しました。"</string>
 
+    <string name="account_setup_color_title">アカウントカラー</string>
+    <string name="account_settings_color_label">アカウントカラー</string>
+    <string name="sample_account_name">サンプルアカウント</string>
 </resources>
