@@ -16,8 +16,10 @@
 
 package com.android.email.activity.setup;
 
+import com.android.email.Controller;
 import com.android.email.Email;
 import com.android.email.R;
+import com.android.email.activity.AccountFolderList;
 import com.android.email.activity.Welcome;
 import com.android.email.mail.MessagingException;
 import com.android.email.mail.Sender;
@@ -418,6 +420,10 @@ public class AccountSettings extends PreferenceActivity {
 
         }
         AccountSettingsUtils.commitSettings(this, mAccount);
+        try {
+            Controller.getInstance(getApplication()).updateMailboxList(
+                    mAccountId, null);
+        } catch (Exception e) { }
         Email.setServicesEnabled(this);
     }
 

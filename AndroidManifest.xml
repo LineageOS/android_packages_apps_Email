@@ -88,6 +88,11 @@
             >
         </activity>
         <activity
+            android:name=".activity.setup.AccountSetupColor"
+            android:label="@string/account_setup_color_title"
+            >
+        </activity>
+        <activity
             android:name=".activity.setup.AccountSetupIncoming"
             android:label="@string/account_setup_incoming_title"
             >

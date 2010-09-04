@@ -1209,7 +1209,6 @@ public class CalendarUtilities {
     static public long createCalendar(EasSyncService service, Account account, Mailbox mailbox) {
         // Create a Calendar object
         ContentValues cv = new ContentValues();
-        // TODO How will this change if the user changes his account display name?
         cv.put(Calendars.DISPLAY_NAME, account.mDisplayName);
         cv.put(Calendars._SYNC_ACCOUNT, account.mEmailAddress);
         cv.put(Calendars._SYNC_ACCOUNT_TYPE, Email.EXCHANGE_ACCOUNT_MANAGER_TYPE);
@@ -1218,14 +1217,11 @@ public class CalendarUtilities {
         cv.put(Calendars.HIDDEN, 0);
         // Don't show attendee status if we're the organizer
         cv.put(Calendars.ORGANIZER_CAN_RESPOND, 0);
-
-        // TODO Coordinate account colors w/ Calendar, if possible
         // Make Email account color opaque
-        cv.put(Calendars.COLOR, 0xFF000000 | account.getAccountColor());       
+        cv.put(Calendars.COLOR, 0xFF000000 | account.getAccountColor());
         cv.put(Calendars.TIMEZONE, Time.getCurrentTimezone());
         cv.put(Calendars.ACCESS_LEVEL, Calendars.OWNER_ACCESS);
         cv.put(Calendars.OWNER_ACCOUNT, account.mEmailAddress);
-
         Uri uri = service.mContentResolver.insert(Calendars.CONTENT_URI, cv);
         // We save the id of the calendar into mSyncStatus
         if (uri != null) {
@@ -1234,6 +1230,25 @@ public class CalendarUtilities {
             return Long.parseLong(stringId);
         }
         return -1;
+    }
+
+    /**
+     * Update calendar object customizable settings - display name and account color
+     * @param calendar the exchange calendar we're updating
+     * @param service the sync service requesting Calendar creation
+     * @param account the account being synced
+     * @param mailbox the Exchange mailbox for the calendar
+     * @hide
+     */
+
+    static public void updateCalendar(long calendarId, EasSyncService service, Account account) {
+    // Update Calendar object
+    ContentValues cv = new ContentValues();
+    Uri uri = ContentUris.withAppendedId(Calendars.CONTENT_URI, calendarId);
+    cv.put(Calendars.DISPLAY_NAME, account.mDisplayName);
+    cv.put(Calendars.COLOR, 0xFF000000 | account.getAccountColor());
+    service.mContentResolver.update(uri, cv, null, null);
+    service.mContentResolver.notifyChange(uri, null, true);
     }
 
     /**
