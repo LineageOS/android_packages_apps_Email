@@ -185,11 +185,10 @@
         <incoming uri="pop3://incoming.verizon.net" username="$user" />
         <outgoing uri="smtp://outgoing.verizon.net" username="$user" />
     </provider>
-    <provider id="yahoo" label="Yahoo Plus" domain="yahoo.com" note="@string/provider_note_yahoo">
-        <incoming uri="pop3+ssl+://plus.pop.mail.yahoo.com" username="$user" />
-        <outgoing uri="smtp+ssl+://plus.smtp.mail.yahoo.com" username="$user" />
+    <provider id="yahoo" label="Yahoo" domain="yahoo.com" note="@string/provider_note_yahoo">
+        <incoming uri="imap://imap.next.mail.yahoo.com" username="$user" />
+        <outgoing uri="smtp://smtp.mobile.mail.yahoo.com" username="$user" />
     </provider>
-    
     <!-- UK -->
     <provider id="aol-uk" label="AOL" domain="aol.co.uk">
         <incoming uri="imap+ssl+://imap.uk.aol.com" label="IMAP" username="$user" />
