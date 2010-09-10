@@ -367,6 +367,8 @@ public class AccountSetupExchange extends Activity implements OnClickListener,
                 URI uri = getUri();
             } catch (URISyntaxException use) {
                 enabled = false;
+            } catch (NullPointerException use) {
+                enabled = false;
             }
         }
         mNextButton.setEnabled(enabled);
@@ -492,7 +494,7 @@ public class AccountSetupExchange extends Activity implements OnClickListener,
      * a problem with the user input.
      * @return a URI built from the account setup fields
      */
-    private URI getUri() throws URISyntaxException {
+    private URI getUri() throws URISyntaxException, NullPointerException {
         boolean sslRequired = mSslSecurityView.isChecked();
         boolean trustCertificates = mTrustCertificatesView.isChecked();
         String scheme = (sslRequired)
