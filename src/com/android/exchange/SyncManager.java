@@ -1033,7 +1033,7 @@ public class SyncManager extends Service implements Runnable {
         return sDeviceId;
     }
 
-    static private String getDeviceIdInternal(Context context) throws IOException {
+    static public String getDeviceIdInternal(Context context) throws IOException {
         if (INSTANCE == null && context == null) {
             throw new IOException("No context for getDeviceId");
         } else if (context == null) {

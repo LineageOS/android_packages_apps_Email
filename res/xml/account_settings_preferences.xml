@@ -127,6 +127,38 @@
             android:title="@string/account_settings_msg_list_on_delete"
             android:summary="@string/account_settings_msg_list_on_delete_summary"
             android:defaultValue="false"/>
+        <CheckBoxPreference
+            android:key="default_folder_list"
+            android:title="@string/account_settings_default_folder_list_title"
+            android:summaryOn="@string/account_settings_default_folder_list_summary_on"
+            android:summaryOff="@string/account_settings_default_folder_list_summary_off"/>
+        <CheckBoxPreference
+            android:key="signature_replies_forwards"
+            android:title="@string/signature_replies_forwards_title"
+            android:summaryOn="@string/signature_replies_forwards_summary_on"
+            android:summaryOff="@string/signature_replies_forwards_summary_off"
+            android:defaultValue="false"/>
     </PreferenceCategory>
-
+    <PreferenceCategory
+        android:key="global"
+        android:title="@string/global_settings_label">
+        <CheckBoxPreference
+            android:key="show_all_folders_unread"
+            android:title="@string/show_all_folders_unread_title"
+            android:summaryOn="@string/show_all_folders_unread_summary_on"
+            android:summaryOff="@string/show_all_folders_unread_summary_off"
+            android:defaultValue="false"/>
+        <CheckBoxPreference
+            android:key="show_all_mailboxes_combined"
+            android:title="@string/show_all_mailboxes_combined_title"
+            android:summaryOn="@string/show_all_mailboxes_combined_summary_on"
+            android:summaryOff="@string/show_all_mailboxes_combined_summary_off"
+            android:defaultValue="false"/>
+        <CheckBoxPreference
+            android:key="show_only_unread_combined"
+            android:title="@string/show_only_unread_combined_title"
+            android:summaryOn="@string/show_only_unread_combined_summary_on"
+            android:summaryOff="@string/show_only_unread_combined_summary_off"
+            android:defaultValue="false"/>
+    </PreferenceCategory>
 </PreferenceScreen>

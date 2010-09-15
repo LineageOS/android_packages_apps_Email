@@ -20,6 +20,7 @@ import com.android.email.AccountBackupRestore;
 import com.android.email.Controller;
 import com.android.email.Email;
 import com.android.email.R;
+import com.android.email.Utility;
 import com.android.email.activity.MessageList;
 import com.android.email.mail.MessagingException;
 import com.android.email.provider.EmailContent.Account;
@@ -674,14 +675,14 @@ public class MailService extends Service {
             reportString = getResources().getQuantityString(
                     R.plurals.notification_new_one_account_fmt, numNewMessages,
                     numNewMessages, reportName);
-            intent = MessageList.createIntent(this, accountId, mailboxId, -1);
+            intent = MessageList.createIntent(this, accountId, mailboxId, -1, 0);
         } else {
             // Prepare a report for multiple accounts
             // "4 accounts"
             reportString = getResources().getQuantityString(
                     R.plurals.notification_new_multi_account_fmt, accountsWithNewMessages,
                     accountsWithNewMessages);
-             intent = MessageList.createIntent(this, mailboxId, Mailbox.QUERY_ALL_INBOXES, -1);
+             intent = MessageList.createIntent(this, mailboxId, Mailbox.QUERY_ALL_INBOXES, -1, 0);
         }
 
         // prepare appropriate pending intent, set up notification, and send
@@ -713,6 +714,7 @@ public class MailService extends Service {
         NotificationManager notificationManager =
             (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(NOTIFICATION_ID_NEW_MESSAGES, notification);
+        Controller.getInstance(getApplication()).updateWidget();
     }
     
 }

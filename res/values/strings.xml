@@ -736,8 +736,38 @@
     <string name="account_client_certificate_file">Certificate File</string>
     <string name="account_client_certificate_password">Certificate Password</string>
     <string name="account_client_certificate_import_error">Error importing certificate using the given password</string>
-        
+
     <string name="sample_account_name" >Sample Account Name</string>
     <string name="default_rgb_value" >255</string>
     <string name="default_html_color_code" >0xFFFFFFFF</string>
+
+    <string name="widget_name">Email</string>
+
+    <string name="show_all_folders_unread_title">Show total unread count</string>
+    <string name="show_all_folders_unread_summary_on">Unread counts on account list page will show count for ALL mail folders</string>
+    <string name="show_all_folders_unread_summary_off">Unread counts on account list page will only show unread for Inbox</string>
+
+    <string name="account_settings_default_folder_list_title">Folder/Message list</string>
+    <string name="account_settings_default_folder_list_summary_on">Default to folder list when opening an account</string>
+    <string name="account_settings_default_folder_list_summary_off">Default to message list when opening an account</string>
+
+    <string name="move_message_dialog">Select folder to move to:</string>
+    <string name="move_action">Move...</string>
+    <string name="shortcut_target_description">Go to folder list instead of Inbox</string>
+    <string name="global_settings_label">Global Preferences/Combined Inbox</string>
+
+    <string name="signature_replies_forwards_title">Attach signature always</string>
+    <string name="signature_replies_forwards_summary_on">Attach signature to forwards and replies also</string>
+    <string name="signature_replies_forwards_summary_off">Attach signature only to new messages</string>
+    <plurals name="message_moved_toast">
+        <item quantity="one">Message moved.</item>
+        <item quantity="other">Messages moved.</item>
+    </plurals>
+
+    <string name="show_all_mailboxes_combined_title">Show all messages</string>
+    <string name="show_all_mailboxes_combined_summary_on">Show messages from ALL mailboxes in Combined Inbox view</string>
+    <string name="show_all_mailboxes_combined_summary_off">Only show messages from Inboxes in Combined Inbox view</string>
+    <string name="show_only_unread_combined_title">Show unread only</string>
+    <string name="show_only_unread_combined_summary_on">Show only unread messages in Combined Inbox view</string>
+    <string name="show_only_unread_combined_summary_off">Show all messages in Combined Inbox view</string>
 </resources>

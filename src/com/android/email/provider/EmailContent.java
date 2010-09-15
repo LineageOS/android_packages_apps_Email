@@ -29,14 +29,26 @@ import android.os.Environment;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.RemoteException;
+import android.telephony.TelephonyManager;
+import android.util.Base64;
+import android.util.Log;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+
+import com.android.email.service.IEmailService;
+import com.android.exchange.SyncManager;
+import com.android.exchange.utility.DesEncrypter;
+import com.android.email.Controller;
 
 /**
  * EmailContent is the superclass of the various classes of content stored by EmailProvider.
@@ -840,6 +852,8 @@ public abstract class EmailContent {
         public static final int FLAGS_SECURITY_HOLD = 32;
         public static final int FLAGS_VIBRATE_WHEN_SILENT = 64;
         public static final int FLAGS_MSG_LIST_ON_DELETE = 128;
+        public static final int FLAGS_DEFAULT_FOLDER_LIST = 256;
+        public static final int FLAGS_SIGNATURE_TOGGLE = 512;
 
         public static final int DELETE_POLICY_NEVER = 0;
         public static final int DELETE_POLICY_7DAYS = 1;        // not supported
@@ -866,7 +880,7 @@ public abstract class EmailContent {
         public int mSecurityFlags;
         public String mSecuritySyncKey;
         public String mSignature;
-        public int mAccountColor;
+        public int mAccountColor = 0xFFFFFFFF;
 
         // Convenience for creating an account
         public transient HostAuth mHostAuthRecv;
@@ -1034,13 +1048,13 @@ public abstract class EmailContent {
         public void setEmailAddress(String emailAddress) {
             mEmailAddress = emailAddress;
         }
-        
+
         /**
          * @return the color associated with this account
          */
-        public int getAccountColor () 
+        public int getAccountColor ()
         {
-        	return mAccountColor;
+            return mAccountColor;
         }
 
         /**
@@ -1049,9 +1063,9 @@ public abstract class EmailContent {
          */
         public void setAccountColor (int col)
         {
-        	mAccountColor = col;
+            mAccountColor = col;
         }
-        
+
         /**
          * @return the sender's name for this account
          */
@@ -2184,6 +2198,7 @@ public abstract class EmailContent {
         public String mLogin;
         public String mPassword;
         public String mDomain;
+        private static Context mContext;
         public long mAccountKey;        // DEPRECATED - Will not be set or stored
 
         public static final int CONTENT_ID_COLUMN = 0;
@@ -2223,7 +2238,7 @@ public abstract class EmailContent {
             Uri u = ContentUris.withAppendedId(EmailContent.HostAuth.CONTENT_URI, id);
             Cursor c = context.getContentResolver().query(u, HostAuth.CONTENT_PROJECTION,
                     null, null, null);
-
+            mContext = context;
             try {
                 if (c.moveToFirst()) {
                     return getContent(c, HostAuth.class);
@@ -2238,6 +2253,8 @@ public abstract class EmailContent {
         @Override
         @SuppressWarnings("unchecked")
         public EmailContent.HostAuth restore(Cursor cursor) {
+            String id = getDevId();
+            mAccountKey = cursor.getLong(CONTENT_ACCOUNT_KEY_COLUMN);
             mBaseUri = CONTENT_URI;
             mId = cursor.getLong(CONTENT_ID_COLUMN);
             mProtocol = cursor.getString(CONTENT_PROTOCOL_COLUMN);
@@ -2246,23 +2263,43 @@ public abstract class EmailContent {
             mFlags = cursor.getInt(CONTENT_FLAGS_COLUMN);
             mLogin = cursor.getString(CONTENT_LOGIN_COLUMN);
             mPassword = cursor.getString(CONTENT_PASSWORD_COLUMN);
+            String temppw = new DesEncrypter(id).decrypt(mPassword);
+            if (temppw != null) {
+                mPassword = temppw;
+            }
             mDomain = cursor.getString(CONTENT_DOMAIN_COLUMN);
-            mAccountKey = cursor.getLong(CONTENT_ACCOUNT_KEY_COLUMN);
             return this;
         }
 
         @Override
         public ContentValues toContentValues() {
+            String id = getDevId();
             ContentValues values = new ContentValues();
             values.put(HostAuthColumns.PROTOCOL, mProtocol);
             values.put(HostAuthColumns.ADDRESS, mAddress);
             values.put(HostAuthColumns.PORT, mPort);
             values.put(HostAuthColumns.FLAGS, mFlags);
             values.put(HostAuthColumns.LOGIN, mLogin);
-            values.put(HostAuthColumns.PASSWORD, mPassword);
+            String temppw = new DesEncrypter(id).encrypt(mPassword);
+            if (temppw != null) {
+                mPassword = temppw;
+                values.put(HostAuthColumns.PASSWORD, mPassword);
+            } else {
+                values.put(HostAuthColumns.PASSWORD, mPassword);
+            }
             values.put(HostAuthColumns.DOMAIN, mDomain);
             values.put(HostAuthColumns.ACCOUNT_KEY, mAccountKey);
             return values;
+        }
+
+        // device id will be the secret key for passwords
+
+        public String getDevId() {
+            try {
+                return SyncManager.getDeviceIdInternal(mContext);
+            } catch (IOException e) {
+                return "1324354657687980";
+            }
         }
 
         /**

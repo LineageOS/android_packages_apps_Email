@@ -162,6 +162,7 @@ public class MessageCompose extends Activity implements OnClickListener, OnFocus
     private AsyncTask mLoadAttachmentsTask;
     private AsyncTask mSaveMessageTask;
     private AsyncTask mLoadMessageTask;
+    private boolean mAddSig;
 
     private EmailAddressAdapter mAddressAdapterTo;
     private EmailAddressAdapter mAddressAdapterCc;
@@ -290,6 +291,7 @@ public class MessageCompose extends Activity implements OnClickListener, OnFocus
             mAddressAdapterTo.setAccount(account);
             mAddressAdapterCc.setAccount(account);
             mAddressAdapterBcc.setAccount(account);
+            mAddSig = (0 != (mAccount.getFlags() & Account.FLAGS_SIGNATURE_TOGGLE));
         }
     }
 
@@ -1237,7 +1239,7 @@ public class MessageCompose extends Activity implements OnClickListener, OnFocus
         }
         if (!TextUtils.isEmpty(signature)) {
             if (textLength == 0 || text.charAt(textLength - 1) != '\n') {
-                mMessageContentView.append("\n");
+                mMessageContentView.append("\n\n");
             }
             mMessageContentView.append(signature);
         }
@@ -1507,10 +1509,14 @@ public class MessageCompose extends Activity implements OnClickListener, OnFocus
                 mSubjectView.setText(subject);
             }
             displayQuotedText(message.mText, message.mHtml);
+            if (mAddSig)
+                setInitialComposeText(null, (mAccount != null) ? mAccount.mSignature : null);
         } else if (ACTION_FORWARD.equals(mAction)) {
             mSubjectView.setText(subject != null && !subject.toLowerCase().startsWith("fwd:") ?
                     "Fwd: " + subject : subject);
             displayQuotedText(message.mText, message.mHtml);
+            if (mAddSig)
+                setInitialComposeText(null, (mAccount != null) ? mAccount.mSignature : null);
                 // TODO: re-enable loadAttachments below
 //                 if (!loadAttachments(message, 0)) {
 //                     mHandler.sendEmptyMessage(MSG_SKIPPED_ATTACHMENTS);
@@ -1528,7 +1534,6 @@ public class MessageCompose extends Activity implements OnClickListener, OnFocus
                 addAddresses(mBccView, bcc);
                 mBccView.setVisibility(View.VISIBLE);
             }
-
             mMessageContentView.setText(message.mText);
             // TODO: re-enable loadAttachments
             // loadAttachments(message, 0);

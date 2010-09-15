@@ -27,20 +27,24 @@ import com.android.email.provider.EmailContent.Mailbox;
 import com.android.email.provider.EmailContent.MailboxColumns;
 import com.android.email.provider.EmailContent.Message;
 import com.android.email.provider.EmailContent.MessageColumns;
+import com.android.email.provider.UnreadWidgetProvider;
 import com.android.email.service.EmailServiceStatus;
 import com.android.email.service.IEmailService;
 import com.android.email.service.IEmailServiceCallback;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.RemoteException;
 import android.util.Log;
+import android.widget.RemoteViews;
 import android.widget.Toast;
-
 import java.io.File;
 import java.util.HashSet;
 
@@ -369,9 +373,9 @@ public class Controller {
      */
     public void toggleSyncFolder(final long accountId, final long mailboxId, final Result callback) {
 
-    	Mailbox box = new Mailbox();
-    	ContentValues cv = new ContentValues();
-    	box = Mailbox.restoreMailboxWithId(mContext,mailboxId);
+        Mailbox box = new Mailbox();
+        ContentValues cv = new ContentValues();
+        box = Mailbox.restoreMailboxWithId(mContext,mailboxId);
         Account account = EmailContent.Account.restoreAccountWithId(mContext,accountId);
         String name = box.mDisplayName;
         int type = box.mType;
@@ -381,17 +385,17 @@ public class Controller {
             case Mailbox.TYPE_SENT:
             case Mailbox.TYPE_TRASH:
                 if (box.mSyncInterval == EmailContent.Account.CHECK_INTERVAL_NEVER) {
-                	cv.put(Mailbox.SYNC_INTERVAL, account.mSyncInterval);		
-        	        Toast.makeText(mContext, mContext.getString(R.string.toast_folder_sync_on) + toastSuffix, Toast.LENGTH_LONG).show();
+                    cv.put(Mailbox.SYNC_INTERVAL, account.mSyncInterval);
+                    Toast.makeText(mContext, mContext.getString(R.string.toast_folder_sync_on) + toastSuffix, Toast.LENGTH_LONG).show();
                 } else {
-                	cv.put(Mailbox.SYNC_INTERVAL, EmailContent.Account.CHECK_INTERVAL_NEVER);
-                	Toast.makeText(mContext, mContext.getString(R.string.toast_folder_sync_off) + toastSuffix, Toast.LENGTH_LONG).show();
+                    cv.put(Mailbox.SYNC_INTERVAL, EmailContent.Account.CHECK_INTERVAL_NEVER);
+                    Toast.makeText(mContext, mContext.getString(R.string.toast_folder_sync_off) + toastSuffix, Toast.LENGTH_LONG).show();
                 }
                 box.update(mProviderContext, cv);
                 break;
             default:
-            	Toast.makeText(mContext, mContext.getString(R.string.toast_folder_sync_invalid), Toast.LENGTH_LONG).show();
-            	break;
+                Toast.makeText(mContext, mContext.getString(R.string.toast_folder_sync_invalid), Toast.LENGTH_LONG).show();
+            break;
         }
         
     }
@@ -412,9 +416,9 @@ public class Controller {
      */
     public void toggleHideFolder(final long accountId, final long mailboxId, final Result callback) {
 
-    	Mailbox box = new Mailbox();
-    	ContentValues cv = new ContentValues();
-    	box = Mailbox.restoreMailboxWithId(mContext,mailboxId);
+        Mailbox box = new Mailbox();
+        ContentValues cv = new ContentValues();
+        box = Mailbox.restoreMailboxWithId(mContext,mailboxId);
         Account account = EmailContent.Account.restoreAccountWithId(mContext,accountId);
         String name = box.mDisplayName;
         int type = box.mType;
@@ -424,19 +428,18 @@ public class Controller {
             case Mailbox.TYPE_SENT:
             case Mailbox.TYPE_TRASH:
                 if (box.mFlagVisible) {
-                	cv.put(Mailbox.FLAG_VISIBLE, false);		
-        	        Toast.makeText(mContext, mContext.getString(R.string.toast_folder_hide_on) + toastSuffix, Toast.LENGTH_LONG).show();
+                    cv.put(Mailbox.FLAG_VISIBLE, false);
+                    Toast.makeText(mContext, mContext.getString(R.string.toast_folder_hide_on) + toastSuffix, Toast.LENGTH_LONG).show();
                 } else {
-                	cv.put(Mailbox.FLAG_VISIBLE, true);
-                	Toast.makeText(mContext, mContext.getString(R.string.toast_folder_hide_off) + toastSuffix, Toast.LENGTH_LONG).show();
+                    cv.put(Mailbox.FLAG_VISIBLE, true);
+                    Toast.makeText(mContext, mContext.getString(R.string.toast_folder_hide_off) + toastSuffix, Toast.LENGTH_LONG).show();
                 }
                 box.update(mProviderContext, cv);
                 break;
             default:
-            	Toast.makeText(mContext, mContext.getString(R.string.toast_folder_hide_invalid), Toast.LENGTH_LONG).show();
-            	break;
+                Toast.makeText(mContext, mContext.getString(R.string.toast_folder_hide_invalid), Toast.LENGTH_LONG).show();
+                break;
         }
-        
     }
     
     /**
@@ -708,6 +711,52 @@ public class Controller {
     }
 
     /**
+     * Allows user to move a message to another folder
+     * (this is available only in regular mailboxes, junk, and trash)
+     * @Hide
+     */
+
+    public void moveMessage(long messageId, long accountId, long targetfolder) {
+
+        ContentResolver resolver = mProviderContext.getContentResolver();
+        // Look up acct# for message we're moving
+        if (accountId == -1) {
+            accountId = lookupAccountForMessage(messageId);
+        }
+        if (accountId == -1) {
+            return;
+        }
+        long sourceMailboxId = -1;
+     // get mailbox id of this message
+        Cursor c = resolver.query(EmailContent.Message.CONTENT_URI,
+                MESSAGEID_TO_MAILBOXID_PROJECTION, EmailContent.RECORD_ID + "=?",
+                new String[] { Long.toString(messageId) }, null);
+        try {
+            sourceMailboxId = c.moveToFirst()
+                ? c.getLong(MESSAGEID_TO_MAILBOXID_COLUMN_MAILBOXID)
+                : -1;
+        } finally {
+            c.close();
+        }
+
+        Uri uri = ContentUris.withAppendedId(EmailContent.Message.SYNCED_CONTENT_URI, messageId);
+        ContentValues cv = new ContentValues();
+        cv.put(EmailContent.MessageColumns.MAILBOX_KEY, targetfolder);
+        resolver.update(uri, cv, null, null);
+        // Service runs automatically, MessagingController needs a kick
+        Account account = Account.restoreAccountWithId(mProviderContext, accountId);
+        if (isMessagingController(account)) {
+            final long syncAccountId = accountId;
+            new Thread() {
+                @Override
+                public void run() {
+                    mLegacyController.processPendingActions(syncAccountId);
+                }
+            }.start();
+        }
+    }
+
+    /**
      * Set/clear the unread status of a message
      *
      * TODO db ops should not be in this thread. queue it up.
@@ -887,6 +936,18 @@ public class Controller {
         String scheme = info.mScheme;
 
         return ("pop3".equals(scheme) || "imap".equals(scheme));
+    }
+
+    /**
+     * Called from MessageList and the Mail service to update any homescreen
+     * widget unread counts.  The Mail service broadcasts when it triggers a
+     * notification, and the MessageList triggers on onPause()
+     * @Hide
+     */
+
+    public void updateWidget() {
+        Intent widgetIntent = new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        mContext.sendBroadcast(widgetIntent);
     }
 
     /**

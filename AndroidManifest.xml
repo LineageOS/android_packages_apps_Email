@@ -165,6 +165,10 @@
         <activity
             android:name=".activity.MailboxList"
             android:theme="@style/ThemeNoTitleBar">
+            <intent-filter>
+                <!-- This action is only to allow an entry point for launcher shortcuts -->
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
         </activity>
         
         <activity
@@ -270,7 +274,21 @@
             android:enabled="false"
             >
         </service>
-        
+
+        <receiver
+            android:name=".provider.UnreadWidgetProvider" android:label="@string/widget_name">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/unread_widget_info" />
+        </receiver>
+
+        <service
+            android:name="com.android.email.provider.UnreadWidgetProvider$UpdateWidgetService">
+        </service>
+
         <!--EXCHANGE-REMOVE-SECTION-START-->
         <!--Required stanza to register the ContactsSyncAdapterService with SyncManager -->
         <service 

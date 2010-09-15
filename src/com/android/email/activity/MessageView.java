@@ -1149,8 +1149,8 @@ public class MessageView extends Activity implements OnClickListener {
 
         @Override
         protected Cursor doInBackground(Void... params) {
-            String selection =
-                Utility.buildMailboxIdSelection(getContentResolver(), mLocalMailboxId);
+            String selection = Utility.buildMailboxIdSelection(getContentResolver(),
+                    mLocalMailboxId, getBaseContext());
             Cursor c = getContentResolver().query(EmailContent.Message.CONTENT_URI,
                     EmailContent.ID_PROJECTION,
                     selection, null,

@@ -20,6 +20,7 @@ import com.android.email.R;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.RelativeLayout;
 
@@ -44,10 +45,16 @@ public class MessageListItem extends RelativeLayout {
     private boolean mCachedViewPositions;
     private int mCheckRight;
     private int mStarLeft;
+    private int firstX;
+    private boolean firstRecorded;
+    private boolean magicMb;
+    private long parentId;
 
     // Padding to increase clickable areas on left & right of each list item
     private final static float CHECKMARK_PAD = 10.0F;
     private final static float STAR_PAD = 10.0F;
+    private static final int SWIPE_LEFT = 75;
+
 
     public MessageListItem(Context context) {
         super(context);
@@ -67,10 +74,12 @@ public class MessageListItem extends RelativeLayout {
      * @param adapter the adapter that creates this view
      * @param allowBatch true if multi-select is enabled for this list
      */
-    public void bindViewInit(MessageList.MessageListAdapter adapter, boolean allowBatch) {
+    public void bindViewInit(MessageList.MessageListAdapter adapter, boolean allowBatch, long mbid) {
         mAdapter = adapter;
         mAllowBatch = allowBatch;
         mCachedViewPositions = false;
+        magicMb = mbid < -1;
+        parentId = mbid;
     }
 
     /**
@@ -94,7 +103,11 @@ public class MessageListItem extends RelativeLayout {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 mDownEvent = true;
-                if ((mAllowBatch && touchX < mCheckRight) || touchX > mStarLeft) {
+                if ((mAllowBatch && touchX < mCheckRight)) {
+                    handled = true;
+                } else if (touchX > mStarLeft) {
+                    firstX = touchX;
+                    firstRecorded = true;
                     handled = true;
                 }
                 break;
@@ -115,6 +128,14 @@ public class MessageListItem extends RelativeLayout {
                         handled = true;
                     }
                 }
+                firstRecorded = false;
+                break;
+            case MotionEvent.ACTION_MOVE:
+                if (!magicMb)
+                    break;
+                if (touchX < (firstX - SWIPE_LEFT) && firstRecorded) {
+                    MessageList.actionHandleMailboxFromMagic(mContext, this.mMailboxId, parentId);
+                    }
                 break;
         }
 

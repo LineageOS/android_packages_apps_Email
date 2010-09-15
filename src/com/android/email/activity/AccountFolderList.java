@@ -19,6 +19,7 @@ package com.android.email.activity;
 import com.android.email.AccountBackupRestore;
 import com.android.email.Controller;
 import com.android.email.Email;
+import com.android.email.Preferences;
 import com.android.email.R;
 import com.android.email.SecurityPolicy;
 import com.android.email.Utility;
@@ -38,6 +39,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ListActivity;
 import android.app.NotificationManager;
+import android.appwidget.AppWidgetManager;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -50,6 +52,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -94,7 +97,7 @@ public class AccountFolderList extends ListActivity implements OnItemClickListen
     private DeleteAccountTask mDeleteAccountTask;
     private MessageListHandler mHandler;
     private ControllerResults mControllerCallback;
-
+    private static boolean includeAllMailboxesUnread;
     /**
      * Reduced mailbox projection used by AccountsAdapter
      */
@@ -130,10 +133,20 @@ public class AccountFolderList extends ListActivity implements OnItemClickListen
         MailboxColumns.ACCOUNT_KEY + " =?" + " AND " + MailboxColumns.TYPE +" = "
         + Mailbox.TYPE_INBOX;
 
+    private static final String MAILBOX_ALL_SELECTION =
+        MailboxColumns.ACCOUNT_KEY + " =?" + " AND (" +
+        MailboxColumns.TYPE + " = " + Mailbox.TYPE_INBOX + " OR " +
+        MailboxColumns.TYPE + " = " + Mailbox.TYPE_MAIL + ") AND " +
+        MailboxColumns.FLAG_VISIBLE + "=1";
+
     private static final int MAILBOX_UNREAD_COUNT_COLUMN_UNREAD_COUNT = 0;
     private static final String[] MAILBOX_UNREAD_COUNT_PROJECTION = new String [] {
         MailboxColumns.UNREAD_COUNT
     };
+
+    private static final String ALL_UNREAD_COUNT_FOLDERS = "(" +
+        MailboxColumns.TYPE + " = " + Mailbox.TYPE_INBOX + " OR " +
+        MailboxColumns.TYPE + " = " + Mailbox.TYPE_MAIL + ")";
 
     /**
      * Start the Accounts list activity.  Uses the CLEAR_TOP flag which means that other stacked
@@ -153,7 +166,7 @@ public class AccountFolderList extends ListActivity implements OnItemClickListen
         setContentView(R.layout.account_folder_list);
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,
                 R.layout.list_title);
-
+        includeAllMailboxesUnread = Preferences.getPreferences(this).getShowUnreadCountAll();
         mHandler = new MessageListHandler();
         mControllerCallback = new ControllerResults();
         mProgressIcon = (ProgressBar) findViewById(R.id.title_progress_icon);
@@ -183,7 +196,8 @@ public class AccountFolderList extends ListActivity implements OnItemClickListen
     @Override
     public void onPause() {
         super.onPause();
-        Controller.getInstance(getApplication()).removeResultCallback(mControllerCallback);
+        Controller controller = Controller.getInstance(getApplication());
+        controller.removeResultCallback(mControllerCallback);
     }
 
     @Override
@@ -229,7 +243,11 @@ public class AccountFolderList extends ListActivity implements OnItemClickListen
         if (mListAdapter.isMailbox(position)) {
             MessageList.actionHandleMailbox(this, id);
         } else if (mListAdapter.isAccount(position)) {
-            MessageList.actionHandleAccount(this, id, Mailbox.TYPE_INBOX); 
+            boolean folder = (0 != (Account.restoreAccountWithId(this, id).getFlags() & Account.FLAGS_DEFAULT_FOLDER_LIST));
+            if (folder)
+                MailboxList.actionHandleAccount(this, id);
+            else
+                MessageList.actionHandleAccount(this, id, Mailbox.TYPE_INBOX);
         }
     }
 
@@ -243,6 +261,21 @@ public class AccountFolderList extends ListActivity implements OnItemClickListen
         try {
             if (c.moveToFirst()) {
                 return c.getInt(0);
+            }
+        } finally {
+            c.close();
+        }
+        return count;
+    }
+
+    private static int getUnreadCountAllFolders(Context context) {
+        int count = 0;
+        Cursor c = context.getContentResolver().query(Mailbox.CONTENT_URI,
+                MAILBOX_SUM_OF_UNREAD_COUNT_PROJECTION, ALL_UNREAD_COUNT_FOLDERS, null, null);
+        try {
+            c.moveToPosition(-1);
+            while (c.moveToNext()) {
+                count = count + c.getInt(0);
             }
         } finally {
             c.close();
@@ -293,8 +326,9 @@ public class AccountFolderList extends ListActivity implements OnItemClickListen
         MatrixCursor childCursor = new MatrixCursor(MAILBOX_PROJECTION);
         int count;
         RowBuilder row;
-        // TYPE_INBOX
-        count = getUnreadCountByMailboxType(this, Mailbox.TYPE_INBOX);
+        // INBOX only unread count or ALL mailboxes?
+        count = includeAllMailboxesUnread ? getUnreadCountAllFolders(this):
+                getUnreadCountByMailboxType(this, Mailbox.TYPE_INBOX);
         row = childCursor.newRow();
         row.add(Long.valueOf(Mailbox.QUERY_ALL_INBOXES));   // MAILBOX_COLUMN_ID = 0;
         row.add(getString(R.string.account_folder_list_summary_inbox)); // MAILBOX_DISPLAY_NAME
@@ -840,16 +874,24 @@ public class AccountFolderList extends ListActivity implements OnItemClickListen
             }
 
             int unreadMessageCount = 0;
-            Cursor c = context.getContentResolver().query(Mailbox.CONTENT_URI,
+            Cursor c;
+            if (includeAllMailboxesUnread) {
+            c = context.getContentResolver().query(Mailbox.CONTENT_URI,
+                    MAILBOX_UNREAD_COUNT_PROJECTION,
+                    MAILBOX_ALL_SELECTION,
+                    new String[] { String.valueOf(accountId) }, null); }
+            else {
+            c = context.getContentResolver().query(Mailbox.CONTENT_URI,
                     MAILBOX_UNREAD_COUNT_PROJECTION,
                     MAILBOX_INBOX_SELECTION,
                     new String[] { String.valueOf(accountId) }, null);
-
+            }
             try {
-                if (c.moveToFirst()) {
+                c.move(-1);
+                while (c.moveToNext()) {
                     String count = c.getString(MAILBOX_UNREAD_COUNT_COLUMN_UNREAD_COUNT);
                     if (count != null) {
-                        unreadMessageCount = Integer.valueOf(count);
+                        unreadMessageCount += Integer.valueOf(count);
                     }
                 }
             } finally {
@@ -983,5 +1025,3 @@ public class AccountFolderList extends ListActivity implements OnItemClickListen
         }
     }
 }
-
-

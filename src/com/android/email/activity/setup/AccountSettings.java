@@ -18,6 +18,7 @@ package com.android.email.activity.setup;
 
 import com.android.email.Controller;
 import com.android.email.Email;
+import com.android.email.Preferences;
 import com.android.email.R;
 import com.android.email.activity.AccountFolderList;
 import com.android.email.activity.Welcome;
@@ -63,6 +64,13 @@ public class AccountSettings extends PreferenceActivity {
     private static final String PREFERENCE_SYNC_CONTACTS = "account_sync_contacts";
     private static final String PREFERENCE_SYNC_CALENDAR = "account_sync_calendar";
     private static final String PREFERENCE_MSG_LIST_ON_DELETE = "msg_list_on_delete";
+    private static final String PREFERENCE_SHOW_ALL_FOLDERS_UNREAD = "show_all_folders_unread";
+    private static final String PREFERENCE_DEFAULT_FOLDER_LIST = "default_folder_list";
+    private static final String PREFERENCE_SIGNATURE_REPLIES_FORWARDS =
+            "signature_replies_forwards";
+    private static final String PREFERENCE_SHOW_ALL_MAILBOXES_COMBINED =
+            "show_all_mailboxes_combined";
+    private static final String PREFERENCE_SHOW_ONLY_UNREAD_COMBINED = "show_only_unread_combined";
 
     // These strings must match account_settings_vibrate_when_* strings in strings.xml
     private static final String PREFERENCE_VALUE_VIBRATE_WHEN_ALWAYS = "always";
@@ -93,8 +101,14 @@ public class AccountSettings extends PreferenceActivity {
     private CheckBoxPreference mSyncContacts;
     private CheckBoxPreference mSyncCalendar;
     private CheckBoxPreference mMsgListOnDelete;
+    private CheckBoxPreference mUnreadCountAll;
+    private CheckBoxPreference mDefaultFolderList;
     private ColorPreference mColor;
+    private CheckBoxPreference mSignatureToggle;
+    private CheckBoxPreference mShowAllMailboxesCombined;
+    private CheckBoxPreference mShowOnlyUnreadCombined;
 
+    SharedPreferences mSharedPrefs;
     /**
      * Display (and edit) settings for a specific account
      */
@@ -109,6 +123,7 @@ public class AccountSettings extends PreferenceActivity {
         super.onCreate(savedInstanceState);
 
         Intent i = getIntent();
+        mSharedPrefs = getPreferenceManager().getSharedPreferences();
         if (ACTION_ACCOUNT_MANAGER_ENTRY.equals(i.getAction())) {
             // This case occurs if we're changing account settings from Settings -> Accounts
             setAccountIdFromAccountManagerIntent();
@@ -239,15 +254,35 @@ public class AccountSettings extends PreferenceActivity {
             topCategory.addPreference(mSyncWindow);
         }
 
-        mMsgListOnDelete = (CheckBoxPreference) findPreference(PREFERENCE_MSG_LIST_ON_DELETE);
-        mMsgListOnDelete.setChecked(0 != (mAccount.getFlags() & Account.FLAGS_MSG_LIST_ON_DELETE));
-                
+        mSignatureToggle = (CheckBoxPreference)
+                findPreference(PREFERENCE_SIGNATURE_REPLIES_FORWARDS);
+        mSignatureToggle.setChecked(0 != (mAccount.getFlags() &
+                Account.FLAGS_SIGNATURE_TOGGLE));
+
+        mUnreadCountAll = (CheckBoxPreference)
+                findPreference(PREFERENCE_SHOW_ALL_FOLDERS_UNREAD);
+        mUnreadCountAll.setChecked(Preferences.getPreferences(this)
+                .getShowUnreadCountAll());
+        mMsgListOnDelete = (CheckBoxPreference)
+                findPreference(PREFERENCE_MSG_LIST_ON_DELETE);
+        mMsgListOnDelete.setChecked(0 != (mAccount.getFlags() &
+                Account.FLAGS_MSG_LIST_ON_DELETE));
+        mDefaultFolderList = (CheckBoxPreference)
+                findPreference(PREFERENCE_DEFAULT_FOLDER_LIST);
+        mDefaultFolderList.setChecked(0 != (mAccount.getFlags() &
+                Account.FLAGS_DEFAULT_FOLDER_LIST));
+        mShowAllMailboxesCombined = (CheckBoxPreference)
+                findPreference(PREFERENCE_SHOW_ALL_MAILBOXES_COMBINED);
+        mShowAllMailboxesCombined.setChecked(Preferences.getPreferences(this)
+                .getShowAllMailboxesCombined());
+        mShowOnlyUnreadCombined = (CheckBoxPreference)
+                findPreference(PREFERENCE_SHOW_ONLY_UNREAD_COMBINED);
+        mShowOnlyUnreadCombined.setChecked(Preferences.getPreferences(this)
+                .getShowOnlyUnreadCombined());
         mAccountDefault = (CheckBoxPreference) findPreference(PREFERENCE_DEFAULT);
         mAccountDefault.setChecked(mAccount.mId == Account.getDefaultAccountId(this));
-
         mAccountNotify = (CheckBoxPreference) findPreference(PREFERENCE_NOTIFY);
         mAccountNotify.setChecked(0 != (mAccount.getFlags() & Account.FLAGS_NOTIFY_NEW_MAIL));
-
         mAccountRingtone = (RingtonePreference) findPreference(PREFERENCE_RINGTONE);
 
         // XXX: The following two lines act as a workaround for the RingtonePreference
@@ -372,7 +407,8 @@ public class AccountSettings extends PreferenceActivity {
     private void saveSettings() {
         int newFlags = mAccount.getFlags() &
                 ~(Account.FLAGS_NOTIFY_NEW_MAIL | Account.FLAGS_VIBRATE_ALWAYS |
-                		Account.FLAGS_VIBRATE_WHEN_SILENT | Account.FLAGS_MSG_LIST_ON_DELETE);
+                Account.FLAGS_VIBRATE_WHEN_SILENT | Account.FLAGS_MSG_LIST_ON_DELETE) |
+                Account.FLAGS_DEFAULT_FOLDER_LIST | Account.FLAGS_SIGNATURE_TOGGLE;
 
         mAccount.setDefaultAccount(mAccountDefault.isChecked());
         mAccount.setDisplayName(mAccountDescription.getText());
@@ -380,6 +416,8 @@ public class AccountSettings extends PreferenceActivity {
         mAccount.setSignature(mAccountSignature.getText());
         newFlags |= mAccountNotify.isChecked() ? Account.FLAGS_NOTIFY_NEW_MAIL : 0;
         newFlags |= mMsgListOnDelete.isChecked() ? Account.FLAGS_MSG_LIST_ON_DELETE : 0;
+        newFlags |= mDefaultFolderList.isChecked() ? Account.FLAGS_DEFAULT_FOLDER_LIST : 0;
+        newFlags |= mSignatureToggle.isChecked() ? Account.FLAGS_SIGNATURE_TOGGLE : 0;
         mAccount.setSyncInterval(Integer.parseInt(mCheckFrequency.getValue()));
         if (mSyncWindow != null) {
             mAccount.setSyncLookback(Integer.parseInt(mSyncWindow.getValue()));
@@ -408,6 +446,12 @@ public class AccountSettings extends PreferenceActivity {
                     mAccountId, null);
         } catch (Exception e) { }
         Email.setServicesEnabled(this);
+        Preferences.getPreferences(this)
+                .setShowUnreadCountAll(mUnreadCountAll.isChecked());
+        Preferences.getPreferences(this)
+                .setShowAllMailboxesCombined(mShowAllMailboxesCombined.isChecked());
+        Preferences.getPreferences(this)
+                .setShowOnlyUnreadCombined(mShowOnlyUnreadCombined.isChecked());
     }
 
     @Override
@@ -419,11 +463,11 @@ public class AccountSettings extends PreferenceActivity {
     }
 
     private void onColorSettings () {
-    	try {
-    		java.lang.reflect.Method m = AccountSetupColor.class.getMethod("actionEditColorSettings",
+        try {
+            java.lang.reflect.Method m = AccountSetupColor.class.getMethod("actionEditColorSettings",
                     android.app.Activity.class, Account.class);
             m.invoke(null, this, mAccount);
-            mAccountDirty = true;            
+            mAccountDirty = true;
         } catch (Exception e) {
             Log.d(Email.LOG_TAG, "Error while trying to invoke store settings.", e);
         }

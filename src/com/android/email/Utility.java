@@ -51,8 +51,16 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
+
 public class Utility {
     public static final Charset UTF_8 = Charset.forName("UTF-8");
+
+    // Added to replace Mailbox.TYPEs so I could have multiple or single args
+    // in buildMailboxIdSelection()
+    private static final String IN_ALL_MAILBOXES = "IN (0,1)";
+    private static final String IN_INBOX = "IN (0)";
+    private static final String IN_DRAFTS = "IN (3)";
+    private static final String IN_OUTBOX = "IN (4)";
 
     public final static String readInputStream(InputStream in, String encoding) throws IOException {
         InputStreamReader reader = new InputStreamReader(in, encoding);
@@ -248,8 +256,10 @@ public class Utility {
     }
 
     // TODO: unit test this
-    public static String buildMailboxIdSelection(ContentResolver resolver, long mailboxId) {
+    public static String buildMailboxIdSelection(ContentResolver resolver, long mailboxId, Context context) {
         // Setup default selection & args, then add to it as necessary
+        boolean allmail = Preferences.getPreferences(context).getShowAllMailboxesCombined();
+        boolean unreadonly = Preferences.getPreferences(context).getShowOnlyUnreadCombined();
         StringBuilder selection = new StringBuilder(
                 MessageColumns.FLAG_LOADED + " IN ("
                 + Message.FLAG_LOADED_PARTIAL + "," + Message.FLAG_LOADED_COMPLETE
@@ -258,19 +268,23 @@ public class Utility {
             || mailboxId == Mailbox.QUERY_ALL_DRAFTS
             || mailboxId == Mailbox.QUERY_ALL_OUTBOX) {
             // query for all mailboxes of type INBOX, DRAFTS, or OUTBOX
-            int type;
+            String type = null;
             if (mailboxId == Mailbox.QUERY_ALL_INBOXES) {
-                type = Mailbox.TYPE_INBOX;
+                if (allmail) {
+                    type = IN_ALL_MAILBOXES;
+                } else {
+                    type = IN_INBOX;
+                }
             } else if (mailboxId == Mailbox.QUERY_ALL_DRAFTS) {
-                type = Mailbox.TYPE_DRAFTS;
+                type = IN_DRAFTS;
             } else {
-                type = Mailbox.TYPE_OUTBOX;
+                type = IN_OUTBOX;
             }
             StringBuilder inboxes = new StringBuilder();
             Cursor c = resolver.query(Mailbox.CONTENT_URI,
                         EmailContent.ID_PROJECTION,
-                        MailboxColumns.TYPE + "=? AND " + MailboxColumns.FLAG_VISIBLE + "=1",
-                        new String[] { Integer.toString(type) }, null);
+                        MailboxColumns.TYPE + " " + type + " AND " + MailboxColumns.FLAG_VISIBLE + "=1",
+                        null, null);
             // build an IN (mailboxId, ...) list
             // TODO do this directly in the provider
             while (c.moveToNext()) {
@@ -282,6 +296,9 @@ public class Utility {
             c.close();
             selection.append(MessageColumns.MAILBOX_KEY + " IN ");
             selection.append("(").append(inboxes).append(")");
+            if (unreadonly) {
+                selection.append(" AND " + Message.FLAG_READ + "=0");
+            }
         } else  if (mailboxId == Mailbox.QUERY_ALL_UNREAD) {
             selection.append(Message.FLAG_READ + "=0");
         } else if (mailboxId == Mailbox.QUERY_ALL_FAVORITES) {

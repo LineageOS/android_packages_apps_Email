@@ -20,6 +20,8 @@ import com.android.email.Controller;
 import com.android.email.Email;
 import com.android.email.R;
 import com.android.email.Utility;
+import com.android.email.service.IEmailService;
+
 import com.android.email.activity.setup.AccountSecurity;
 import com.android.email.activity.setup.AccountSettings;
 import com.android.email.mail.AuthenticationFailedException;
@@ -33,12 +35,16 @@ import com.android.email.provider.EmailContent.MailboxColumns;
 import com.android.email.provider.EmailContent.Message;
 import com.android.email.provider.EmailContent.MessageColumns;
 import com.android.email.service.MailService;
+import com.android.internal.util.ArrayUtils;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.app.NotificationManager;
+import android.appwidget.AppWidgetManager;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
@@ -74,6 +80,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -86,12 +94,17 @@ public class MessageList extends ListActivity implements OnItemClickListener, On
     private static final String EXTRA_ACCOUNT_ID = "com.android.email.activity._ACCOUNT_ID";
     private static final String EXTRA_MAILBOX_TYPE = "com.android.email.activity.MAILBOX_TYPE";
     private static final String EXTRA_MAILBOX_ID = "com.android.email.activity.MAILBOX_ID";
+    private static final String EXTRA_MAGIC_ID = "com.android.email.activity.MAGIC_ID";
     private static final String STATE_SELECTED_ITEM_TOP =
         "com.android.email.activity.MessageList.selectedItemTop";
     private static final String STATE_SELECTED_POSITION =
         "com.android.email.activity.MessageList.selectedPosition";
     private static final String STATE_CHECKED_ITEMS =
         "com.android.email.activity.MessageList.checkedItems";
+    private static final String STATE_FOLDER_LIST_NAMES =
+        "com.android.email.activity.MessageList.foldernames";
+    private static final String STATE_FOLDER_LIST_VALS =
+        "com.android.email.activity.MessageList.foldervals";
 
     private static final int REQUEST_SECURITY = 0;
 
@@ -101,6 +114,7 @@ public class MessageList extends ListActivity implements OnItemClickListener, On
     private Button mReadUnreadButton;
     private Button mFavoriteButton;
     private Button mDeleteButton;
+    private Button mMoveButton;
     private View mListFooterView;
     private TextView mListFooterText;
     private View mListFooterProgress;
@@ -122,7 +136,7 @@ public class MessageList extends ListActivity implements OnItemClickListener, On
 
     // DB access
     private ContentResolver mResolver;
-    private long mMailboxId;
+    private long mMailboxId = -1;
     private LoadMessagesTask mLoadMessagesTask;
     private FindMailboxTask mFindMailboxTask;
     private SetTitleTask mSetTitleTask;
@@ -156,6 +170,16 @@ public class MessageList extends ListActivity implements OnItemClickListener, On
     private int mFirstSelectedItemPosition = -1;
     private int mFirstSelectedItemHeight = -1;
     private boolean mCanAutoRefresh = false;
+    private long targetFolderId;
+    private long moveMessageId;
+    private long moveAccountId;
+    private GetFolderListTask mGetFolderListTask;
+    private ArrayList<String> mFolderName = new ArrayList<String>();
+    private ArrayList<Long> mFolderId = new ArrayList<Long>();
+    private Context mContext;
+    private long prevMagicId;
+    private boolean ranFolderListTask = false;
+    public long mAccountId;
 
     /* package */ static final String[] MESSAGE_PROJECTION = new String[] {
         EmailContent.RECORD_ID, MessageColumns.MAILBOX_KEY, MessageColumns.ACCOUNT_KEY,
@@ -174,8 +198,31 @@ public class MessageList extends ListActivity implements OnItemClickListener, On
      * @param id mailbox key
      */
     public static void actionHandleMailbox(Context context, long id) {
-        context.startActivity(createIntent(context, -1, id, -1));
+        context.startActivity(createIntent(context, -1, id, -1, 0));
     }
+
+    /**
+     * Open a specific mailbox.
+     * Same as above except it references the previous mailbox id
+     * so when/if the user hits back, if he/she had swiped from a magic mailbox, we can
+     * return to that magic mailbox
+     * @Hide
+     */
+
+    public static void actionHandleMailboxFromMagic(Context context, long id, long previd) {
+        context.startActivity(createIntent(context, -1, id, -1, previd));
+    }
+
+    /**
+     * Open specific mailbox
+     * uses intent creator that will flag as a new task
+     * @Hide
+     */
+
+    public static void actionRestoreMagicMailbox(Context context, long id) {
+        context.startActivity(createDupeIntent(context, -1, id, -1, 0));
+    }
+
 
     /**
      * Open a specific mailbox by account & type
@@ -185,7 +232,7 @@ public class MessageList extends ListActivity implements OnItemClickListener, On
      * @param mailboxType the type of mailbox to open (e.g. @see EmailContent.Mailbox.TYPE_INBOX)
      */
     public static void actionHandleAccount(Context context, long accountId, int mailboxType) {
-        context.startActivity(createIntent(context, accountId, -1, mailboxType));
+        context.startActivity(createIntent(context, accountId, -1, mailboxType, 0));
     }
 
     /**
@@ -193,7 +240,7 @@ public class MessageList extends ListActivity implements OnItemClickListener, On
      * (Android <= 1.6) desktop shortcut intents.
      */
     public static void actionOpenAccountInboxUuid(Context context, String accountUuid) {
-        Intent i = createIntent(context, -1, -1, Mailbox.TYPE_INBOX);
+        Intent i = createIntent(context, -1, -1, Mailbox.TYPE_INBOX, 0);
         i.setData(Account.getShortcutSafeUriFromUuid(accountUuid));
         context.startActivity(i);
     }
@@ -207,12 +254,30 @@ public class MessageList extends ListActivity implements OnItemClickListener, On
      * @param mailboxType the type of mailbox to open (e.g. @see Mailbox.TYPE_INBOX) or -1
      */
     public static Intent createIntent(Context context, long accountId, long mailboxId,
-            int mailboxType) {
+            int mailboxType, long prevmb) {
         Intent intent = new Intent(context, MessageList.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         if (accountId != -1) intent.putExtra(EXTRA_ACCOUNT_ID, accountId);
         if (mailboxId != -1) intent.putExtra(EXTRA_MAILBOX_ID, mailboxId);
         if (mailboxType != -1) intent.putExtra(EXTRA_MAILBOX_TYPE, mailboxType);
+        intent.putExtra(EXTRA_MAGIC_ID, prevmb);
+        return intent;
+    }
+
+    /**
+     * Special intent creator for backup up to a magic mailbox from a regular mailbox
+     * set flag_activity_new_task
+     * @Hide
+     */
+    public static Intent createDupeIntent(Context context, long accountId, long mailboxId,
+            int mailboxType, long prevmb) {
+        Intent intent = new Intent(context, MessageList.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        if (accountId != -1) intent.putExtra(EXTRA_ACCOUNT_ID, accountId);
+        if (mailboxId != -1) intent.putExtra(EXTRA_MAILBOX_ID, mailboxId);
+        if (mailboxType != -1) intent.putExtra(EXTRA_MAILBOX_TYPE, mailboxType);
+        intent.putExtra(EXTRA_MAGIC_ID, prevmb);
         return intent;
     }
 
@@ -226,7 +291,7 @@ public class MessageList extends ListActivity implements OnItemClickListener, On
      */
     public static Intent createAccountIntentForShortcut(Context context, Account account,
             int mailboxType) {
-        Intent i = createIntent(context, -1, -1, mailboxType);
+        Intent i = createIntent(context, -1, -1, mailboxType, 0);
         i.setData(account.getShortcutSafeUri());
         return i;
     }
@@ -235,7 +300,7 @@ public class MessageList extends ListActivity implements OnItemClickListener, On
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.message_list);
-
+        mContext = MessageList.this.getBaseContext();
         mHandler = new MessageListHandler();
         mControllerCallback = new ControllerResults();
         mCanAutoRefresh = true;
@@ -244,6 +309,7 @@ public class MessageList extends ListActivity implements OnItemClickListener, On
         mReadUnreadButton = (Button) findViewById(R.id.btn_read_unread);
         mFavoriteButton = (Button) findViewById(R.id.btn_multi_favorite);
         mDeleteButton = (Button) findViewById(R.id.btn_multi_delete);
+        mMoveButton = (Button) findViewById(R.id.btn_multi_move);
         mLeftTitle = (TextView) findViewById(R.id.title_left_text);
         mProgressIcon = (ProgressBar) findViewById(R.id.title_progress_icon);
         mErrorBanner = (TextView) findViewById(R.id.connection_error_text);
@@ -251,6 +317,8 @@ public class MessageList extends ListActivity implements OnItemClickListener, On
         mReadUnreadButton.setOnClickListener(this);
         mFavoriteButton.setOnClickListener(this);
         mDeleteButton.setOnClickListener(this);
+        mMoveButton.setOnClickListener(this);
+
         ((Button) findViewById(R.id.account_title_button)).setOnClickListener(this);
 
         mListView.setOnItemClickListener(this);
@@ -273,6 +341,8 @@ public class MessageList extends ListActivity implements OnItemClickListener, On
      */
     private void selectAccountAndMailbox(Intent intent) {
         mMailboxId = intent.getLongExtra(EXTRA_MAILBOX_ID, -1);
+        prevMagicId = intent.getLongExtra(EXTRA_MAGIC_ID, 0);
+        long accountId = -1;
         if (mMailboxId != -1) {
             // Specific mailbox ID was provided - go directly to it
             mSetTitleTask = new SetTitleTask(mMailboxId);
@@ -284,7 +354,7 @@ public class MessageList extends ListActivity implements OnItemClickListener, On
             int mailboxType = intent.getIntExtra(EXTRA_MAILBOX_TYPE, Mailbox.TYPE_INBOX);
             Uri uri = intent.getData();
             // TODO Possible ANR.  getAccountIdFromShortcutSafeUri accesses DB.
-            long accountId = (uri == null) ? -1
+            accountId = (uri == null) ? -1
                     : Account.getAccountIdFromShortcutSafeUri(this, uri);
 
             if (accountId != -1) {
@@ -300,12 +370,22 @@ public class MessageList extends ListActivity implements OnItemClickListener, On
             addFooterView(-1, accountId, mailboxType);
         }
         // TODO set title to "account > mailbox (#unread)"
+        // Load up a folder list array of name/id so we can supply it to move messages
+        // Only run this at startup of this activity, and on the 'refresh stale mailboxes'
+        // schedule
+        if (!ranFolderListTask) {
+            updateFolderList(accountId);
+            ranFolderListTask = true;
+        }
+        mAccountId = accountId;
     }
 
     @Override
     public void onPause() {
         super.onPause();
         mController.removeResultCallback(mControllerCallback);
+        mController.updateWidget();
+        ranFolderListTask = false;
     }
 
     @Override
@@ -341,7 +421,8 @@ public class MessageList extends ListActivity implements OnItemClickListener, On
         mSetTitleTask = null;
         Utility.cancelTaskInterrupt(mSetFooterTask);
         mSetFooterTask = null;
-
+        Utility.cancelTaskInterrupt(mGetFolderListTask);
+        mGetFolderListTask = null;
         mListAdapter.changeCursor(null);
     }
 
@@ -416,10 +497,20 @@ public class MessageList extends ListActivity implements OnItemClickListener, On
             case R.id.btn_multi_delete:
                 onMultiDelete(mListAdapter.getSelectedSet());
                 break;
+            case R.id.btn_multi_move:
+                onMultiMove();
+                break;
             case R.id.account_title_button:
                 onAccounts();
                 break;
         }
+    }
+
+    public void onBackPressed() {
+        if (prevMagicId < -1) {
+            MessageList.actionRestoreMagicMailbox(mContext, prevMagicId);
+        } else
+            super.onBackPressed();
     }
 
     public void onAnimationEnd(Animation animation) {
@@ -518,6 +609,9 @@ public class MessageList extends ListActivity implements OnItemClickListener, On
                 if (itemView.mRead) {
                     menu.findItem(R.id.mark_as_read).setTitle(R.string.mark_as_unread_action);
                 }
+                IEmailService sv = mController.getService(mAccountId);
+                if (mMailboxId < -1 || sv == null)
+                    menu.findItem(R.id.move).setVisible(false);
                 break;
         }
     }
@@ -547,6 +641,10 @@ public class MessageList extends ListActivity implements OnItemClickListener, On
             case R.id.mark_as_read:
                 onSetMessageRead(info.id, !itemView.mRead);
                 break;
+            case R.id.move:
+                moveMessageId = info.id;
+                moveAccountId = itemView.mMailboxId;
+                onMoveMessage();
         }
         return super.onContextItemSelected(item);
     }
@@ -557,8 +655,14 @@ public class MessageList extends ListActivity implements OnItemClickListener, On
             Mailbox mailbox = Mailbox.restoreMailboxWithId(this, mMailboxId);
             if (mailbox != null) {
                 mController.updateMailbox(mailbox.mAccountKey, mMailboxId, mControllerCallback);
+                updateFolderList(mailbox.mAccountKey);
             }
         }
+    }
+
+    private void updateFolderList(long accountId) {
+        mGetFolderListTask = new GetFolderListTask(accountId);
+        mGetFolderListTask.execute();
     }
 
     private void onFolders() {
@@ -614,11 +718,11 @@ public class MessageList extends ListActivity implements OnItemClickListener, On
         mListView.invalidateViews();
         showMultiPanel(false);
     }
-    
+
     private void onSelectAll() {
-    	int nummsgs = mListAdapter.getCount();
-    	if (nummsgs == 0) { return; }
-    	Cursor c = mListAdapter.getCursor();
+        int nummsgs = mListAdapter.getCount();
+        if (nummsgs == 0) { return; }
+        Cursor c = mListAdapter.getCursor();
         c.moveToPosition(-1);
         while (c.moveToNext()) {
             long id = c.getInt(MessageListAdapter.COLUMN_ID);
@@ -626,16 +730,14 @@ public class MessageList extends ListActivity implements OnItemClickListener, On
         }
         onRefresh();
         showMultiPanel(true);
-   	}	
-      	
-    	
+    }
+
     private void onOpenMessage(long messageId, long mailboxId) {
         // TODO: Should not be reading from DB in UI thread
         EmailContent.Mailbox mailbox = EmailContent.Mailbox.restoreMailboxWithId(this, mailboxId);
         if (mailbox == null) {
             return;
         }
-
         if (mailbox.mType == EmailContent.Mailbox.TYPE_DRAFTS) {
             MessageCompose.actionEditDraft(this, messageId);
         } else {
@@ -699,6 +801,50 @@ public class MessageList extends ListActivity implements OnItemClickListener, On
 
     private void onSetMessageFavorite(long messageId, boolean newFavorite) {
         mController.setMessageFavorite(messageId, newFavorite);
+    }
+
+    private void onMoveMessage() {
+        String[] fn = new String[mFolderName.size()];
+        fn = mFolderName.toArray(fn);
+        AlertDialog dialog = new AlertDialog.Builder(this)
+        .setTitle(R.string.move_message_dialog)
+        .setItems(fn, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                if (which == DialogInterface.BUTTON_NEGATIVE)
+                    return;
+                targetFolderId = mFolderId.get(which);
+                mController.moveMessage(moveMessageId, moveAccountId, targetFolderId);
+                Toast.makeText(MessageList.this, getResources().getQuantityString(
+                        R.plurals.message_moved_toast, 1), Toast.LENGTH_SHORT).show();
+            }
+        })
+        .create();
+        dialog.show();
+    }
+
+    private void onMultiMove() {
+        String[] fn = new String[mFolderName.size()];
+        fn = mFolderName.toArray(fn);
+        AlertDialog dialog = new AlertDialog.Builder(this)
+        .setTitle(R.string.move_message_dialog)
+        .setItems(fn, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                Set<Long> selectedSet = mListAdapter.getSelectedSet();
+                if (which == DialogInterface.BUTTON_NEGATIVE)
+                    return;
+                targetFolderId = mFolderId.get(which);
+                HashSet<Long> cloneSet = new HashSet<Long>(selectedSet);
+                for (Long id : cloneSet) {
+                    mController.moveMessage(id, mMailboxId, targetFolderId);
+                }
+                Toast.makeText(MessageList.this, getResources().getQuantityString(
+                        R.plurals.message_moved_toast, cloneSet.size()), Toast.LENGTH_SHORT).show();
+                selectedSet.clear();
+                showMultiPanel(false);
+            }
+        })
+        .create();
+        dialog.show();
     }
 
     /**
@@ -882,6 +1028,8 @@ public class MessageList extends ListActivity implements OnItemClickListener, On
         } else {
             mFavoriteButton.setText(R.string.remove_star_action);
         }
+        if (mMailboxId < -1)
+            mMoveButton.setVisibility(View.GONE);
     }
 
     private void updateListPosition () {
@@ -1211,12 +1359,13 @@ public class MessageList extends ListActivity implements OnItemClickListener, On
         public LoadMessagesTask(long mailboxKey, long accountKey) {
             mMailboxKey = mailboxKey;
             mAccountKey = accountKey;
+            Context context = getApplicationContext();
         }
 
         @Override
         protected Cursor doInBackground(Void... params) {
             String selection =
-                Utility.buildMailboxIdSelection(MessageList.this.mResolver, mMailboxKey);
+                Utility.buildMailboxIdSelection(MessageList.this.mResolver, mMailboxKey, mContext);
             Cursor c = MessageList.this.managedQuery(
                     EmailContent.Message.CONTENT_URI, MESSAGE_PROJECTION,
                     selection, null, EmailContent.MessageColumns.TIMESTAMP + " DESC");
@@ -1233,7 +1382,7 @@ public class MessageList extends ListActivity implements OnItemClickListener, On
             // the position;
             restoreListPosition();
             autoRefreshStaleMailbox();
-                MailService.resetNewMessageCount(MessageList.this, -1);
+            MailService.resetNewMessageCount(MessageList.this, -1);
             }
         }
 
@@ -1711,7 +1860,7 @@ public class MessageList extends ListActivity implements OnItemClickListener, On
         public void bindView(View view, Context context, Cursor cursor) {
             // Reset the view (in case it was recycled) and prepare for binding
             MessageListItem itemView = (MessageListItem) view;
-            itemView.bindViewInit(this, true);
+            itemView.bindViewInit(this, true, mMailboxId);
 
             // Load the public fields in the view (for later use)
             itemView.mMessageId = cursor.getLong(COLUMN_ID);
@@ -1734,6 +1883,20 @@ public class MessageList extends ListActivity implements OnItemClickListener, On
             TextView subjectView = (TextView) view.findViewById(R.id.subject);
             text = cursor.getString(COLUMN_SUBJECT);
             subjectView.setText(text);
+            text = null;
+            if (mMailboxId < -1) {
+                TextView folderView = (TextView) view.findViewById(R.id.folder);
+                long mailboxid = cursor.getLong(COLUMN_MAILBOX_KEY);
+                int mailboxindex = mFolderId.indexOf(mailboxid);
+                // try/catch because the arrays this is building off may not be complete yet
+                // it can catch up after, once background thread is finished loading folder names
+                try {
+                    text = mFolderName.get(mailboxindex);
+                    folderView.setText(text);
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    folderView.setText(" ");
+                }
+            }
 
             boolean hasInvitation =
                         (cursor.getInt(COLUMN_FLAGS) & Message.FLAG_INCOMING_MEETING_INVITE) != 0;
@@ -1777,7 +1940,13 @@ public class MessageList extends ListActivity implements OnItemClickListener, On
 
         @Override
         public View newView(Context context, Cursor cursor, ViewGroup parent) {
-            return mInflater.inflate(R.layout.message_list_item, parent, false);
+            int itemlayout;
+            if (mMailboxId < -1) {
+                itemlayout = R.layout.message_list_item_with_folder;
+            } else {
+                itemlayout = R.layout.message_list_item;
+            }
+            return mInflater.inflate(itemlayout, parent, false);
         }
 
         /**
@@ -1807,7 +1976,7 @@ public class MessageList extends ListActivity implements OnItemClickListener, On
 
             MessageList.this.showMultiPanel(mChecked.size() > 0);
         }
-        
+
         /**
          * For selectAll menu item - a simply add to selected set without the item
          * having to be current in the listview
@@ -1815,9 +1984,9 @@ public class MessageList extends ListActivity implements OnItemClickListener, On
          */
 
         public void addToSelectedSet(long id) {
-        	mChecked.add(id);
+            mChecked.add(id);
         }
-        
+
         /**
          * This is used as a callback from the list items, to set the favorite state
          *
@@ -1828,6 +1997,94 @@ public class MessageList extends ListActivity implements OnItemClickListener, On
             ImageView favoriteView = (ImageView) itemView.findViewById(R.id.favorite);
             favoriteView.setImageDrawable(newFavorite ? mFavoriteIconOn : mFavoriteIconOff);
             onSetMessageFavorite(itemView.mMessageId, newFavorite);
+        }
+    }
+
+    /**
+     * Async task for loading the mailboxes for a given account
+     * If we're in the combined inbox, this will also load up a COMPLETE list
+     * of mailbox name:mailbox ids so we can populate the message list items
+     * with their individual folder names (this will be decided by checking
+     * the account id (negative numbers represent 'special' mailboxes)
+     * @Hide
+     */
+    private class GetFolderListTask extends AsyncTask<Void, Void, Cursor> {
+        private long mAccountKey;
+        private final String[] PROJECTION = new String[] { MailboxColumns.ID,
+                MailboxColumns.DISPLAY_NAME, MailboxColumns.UNREAD_COUNT,
+                MailboxColumns.TYPE, MailboxColumns.SYNC_INTERVAL,
+                MailboxColumns.FLAG_VISIBLE };
+        private final String[] PROJECTION_GET_ACCOUNT_ID = new String[] {
+                MailboxColumns.ACCOUNT_KEY };
+        private final String MAGIC_MAILBOX_GET_ALL_FOLDERS = MailboxColumns.TYPE +
+                "<" + Mailbox.TYPE_NOT_EMAIL + " AND " +
+                MailboxColumns.FLAG_VISIBLE + "=1";
+        private final String SELECTION_GET_ACCOUNT_ID = MailboxColumns.ID + "= ?";
+        private final int COLUMN_ID = 0;
+        private final int COLUMN_DISPLAY_NAME = 1;
+        private final int COLUMN_TYPE = 3;
+        private boolean showSecurityActivity = false;
+        /*
+         * Special constructor to cache some local info
+         */
+        public GetFolderListTask(long accountId) {
+            mAccountKey = accountId;
+        }
+        @Override
+        protected Cursor doInBackground(Void... params) {
+            if (mAccountKey != -1 && isSecurityHold(mAccountKey)) {
+                showSecurityActivity = true;
+                return null;
+            }
+            if (mAccountKey == -1) {
+                Cursor c = MessageList.this.managedQuery(
+                        EmailContent.Mailbox.CONTENT_URI,
+                        PROJECTION_GET_ACCOUNT_ID,
+                        SELECTION_GET_ACCOUNT_ID,
+                        new String[] { String.valueOf(mMailboxId) },
+                        null);
+                if (c.moveToFirst()) {
+                    mAccountKey = c.getLong(COLUMN_ID);
+                }
+            }
+            Cursor c;
+            if (mMailboxId < -1) {
+                c = MessageList.this.managedQuery(
+                        EmailContent.Mailbox.CONTENT_URI,
+                        PROJECTION, MAGIC_MAILBOX_GET_ALL_FOLDERS, null, null);
+            } else {
+                c = MessageList.this.managedQuery(
+                        EmailContent.Mailbox.CONTENT_URI,
+                        PROJECTION,
+                        MailboxList.MAILBOX_SELECTION,
+                        new String[] { String.valueOf(mAccountKey) },
+                        MailboxColumns.TYPE + "," + MailboxColumns.DISPLAY_NAME);
+            }
+            c.moveToPosition(-1);
+            while (c.moveToNext()) {
+                switch (c.getInt(COLUMN_TYPE)) {
+                    case Mailbox.TYPE_DRAFTS:
+                    case Mailbox.TYPE_OUTBOX:
+                    case Mailbox.TYPE_SENT:
+                        break;
+                }
+                long posId = c.getLong(COLUMN_ID);
+                if (posId != MessageList.this.mMailboxId) {
+                    mFolderId.add(posId);
+                    mFolderName.add(c.getString(COLUMN_DISPLAY_NAME));
+                }
+            }
+            return c;
+        }
+
+        @Override
+        protected void onPostExecute(Cursor cursor) {
+            if (showSecurityActivity) {
+                Intent i = AccountSecurity.actionUpdateSecurityIntent(
+                        MessageList.this, mAccountKey);
+                MessageList.this.startActivityForResult(i, REQUEST_SECURITY);
+            }
+            return;
         }
     }
 }

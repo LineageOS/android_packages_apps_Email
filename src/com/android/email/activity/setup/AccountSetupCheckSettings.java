@@ -114,7 +114,7 @@ public class AccountSetupCheckSettings extends Activity implements OnClickListen
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public synchronized void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.account_setup_check_settings);
         mMessageView = (TextView)findViewById(R.id.message);

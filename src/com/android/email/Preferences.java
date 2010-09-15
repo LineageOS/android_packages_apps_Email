@@ -37,6 +37,9 @@ public class Preferences {
     private static final String ENABLE_EXCHANGE_FILE_LOGGING = "enableExchangeFileLogging";
     private static final String DEVICE_UID = "deviceUID";
     private static final String ONE_TIME_INITIALIZATION_PROGRESS = "oneTimeInitializationProgress";
+    private static final String SHOW_UNREAD_COUNT_ALL = "showUnreadCountAll";
+    private static final String SHOW_ALL_MAILBOXES_COMBINED = "showAllMailboxesCombined";
+    private static final String SHOW_ONLY_UNREAD_COMBINED = "showOnlyUnreadCombined";
 
     private static Preferences preferences;
 
@@ -185,6 +188,30 @@ public class Preferences {
 
     public void setOneTimeInitializationProgress(int progress) {
         mSharedPreferences.edit().putInt(ONE_TIME_INITIALIZATION_PROGRESS, progress).commit();
+    }
+
+    public boolean getShowUnreadCountAll() {
+        return mSharedPreferences.getBoolean(SHOW_UNREAD_COUNT_ALL, false);
+    }
+
+    public void setShowUnreadCountAll(boolean show) {
+        mSharedPreferences.edit().putBoolean(SHOW_UNREAD_COUNT_ALL, show).commit();
+    }
+
+    public boolean getShowAllMailboxesCombined() {
+        return mSharedPreferences.getBoolean(SHOW_ALL_MAILBOXES_COMBINED, false);
+    }
+
+    public void setShowAllMailboxesCombined(boolean show) {
+        mSharedPreferences.edit().putBoolean(SHOW_ALL_MAILBOXES_COMBINED, show).commit();
+    }
+
+    public boolean getShowOnlyUnreadCombined() {
+        return mSharedPreferences.getBoolean(SHOW_ONLY_UNREAD_COMBINED, false);
+    }
+
+    public void setShowOnlyUnreadCombined(boolean show) {
+        mSharedPreferences.edit().putBoolean(SHOW_ONLY_UNREAD_COMBINED, show).commit();
     }
 
     public void save() {
