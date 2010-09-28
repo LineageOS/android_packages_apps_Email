@@ -1196,14 +1196,13 @@ public class SyncManager extends Service implements Runnable {
             try {
                 registry.register(new Scheme("https", new SSLSocketFactory(validationKeyStore, ""),
                         443));
+                SSLSocketFactory httptsSF = new SSLSocketFactory(validationKeyStore, "");
+                httptsSF.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+                // Register the httpts scheme with our factory
+                registry.register(new Scheme("httpts", httptsSF, 443));
             } catch (Exception e) {
                 throw new Error(e);
             }
-            // Use "insecure" socket factory.
-            SSLSocketFactory sf = new SSLSocketFactory(SSLUtils.getSSLSocketFactory(true));
-            sf.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-            // Register the httpts scheme with our factory
-            registry.register(new Scheme("httpts", sf, 443));
             HttpParams params = new BasicHttpParams();
             params.setIntParameter(ConnManagerPNames.MAX_TOTAL_CONNECTIONS, 3);
             params.setParameter(ConnManagerPNames.MAX_CONNECTIONS_PER_ROUTE, 3);
@@ -1228,17 +1227,15 @@ public class SyncManager extends Service implements Runnable {
                             INSTANCE.getFileStreamPath(accountUUID), protection).getKeyStore();
                     registry.register(new Scheme("https", new SSLSocketFactory(keyStore,
                             getPassword(accountUUID)), 443));
+                    SSLSocketFactory httptsSF = new SSLSocketFactory(keyStore, getPassword(accountUUID));
+                    httptsSF.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+                    // Register the httpts scheme with our factory
+                    registry.register(new Scheme("httpts", httptsSF, 443));
                 } else {
                     Log.d(TAG, "Create regular SSL factory");
                     registry
                             .register(new Scheme("https", SSLSocketFactory.getSocketFactory(), 443));
                 }
-                // Use "insecure" socket factory.
-                SSLSocketFactory sf = new SSLSocketFactory(SSLUtils.getSSLSocketFactory(true));
-                sf.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-                // Register the httpts scheme with our factory
-                registry.register(new Scheme("httpts", sf, 443));
-
                 HttpParams params = new BasicHttpParams();
                 params.setIntParameter(ConnManagerPNames.MAX_TOTAL_CONNECTIONS, 25);
                 params.setParameter(ConnManagerPNames.MAX_CONNECTIONS_PER_ROUTE,
