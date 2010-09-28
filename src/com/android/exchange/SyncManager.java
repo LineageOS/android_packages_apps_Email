@@ -1235,6 +1235,11 @@ public class SyncManager extends Service implements Runnable {
                     Log.d(TAG, "Create regular SSL factory");
                     registry
                             .register(new Scheme("https", SSLSocketFactory.getSocketFactory(), 443));
+                    // Use "insecure" socket factory.
+                    SSLSocketFactory sf = new SSLSocketFactory(SSLUtils.getSSLSocketFactory(true));
+                    sf.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+                    // Register the httpts scheme with our factory
+                    registry.register(new Scheme("httpts", sf, 443));
                 }
                 HttpParams params = new BasicHttpParams();
                 params.setIntParameter(ConnManagerPNames.MAX_TOTAL_CONNECTIONS, 25);
