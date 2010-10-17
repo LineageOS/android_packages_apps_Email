@@ -294,4 +294,34 @@
     <string name="account_client_certificate_import_error">Erreur durant l\'importation du certificat avec le mot de passe fourni</string>
 
     <string name="sample_account_name" >Exemple de nom de compte</string>
+
+    <string name="widget_name">E-mail</string>
+
+    <string name="show_all_folders_unread_title">Afficher nombre de non-lus</string>
+    <string name="show_all_folders_unread_summary_on">Le nombre de messages non lus de la liste des comptes comptera les non-lus de TOUS les dossiers</string>
+    <string name="show_all_folders_unread_summary_off">Le nombre de messages non lus de la liste des comptes comptera uniquement les non-lus de la Boîte de réception</string>
+
+    <string name="account_settings_default_folder_list_title">Dossier/Liste de messages</string>
+    <string name="account_settings_default_folder_list_summary_on">Afficher la liste des dossiers à l\'ouverture d\'un compte de messagerie</string>
+    <string name="account_settings_default_folder_list_summary_off">Afficher la liste des messages à l\'ouverture d\'un compte de messagerie</string>
+
+    <string name="move_message_dialog">Choisir le dossier de destination :</string>
+    <string name="move_action">Déplacer...</string>
+    <string name="shortcut_target_description">Aller à la liste des dossiers au lieu de la Boîte de réception</string>
+    <string name="global_settings_label">Paramètres globaux/Boîte de réception combinée</string>
+
+    <string name="signature_replies_forwards_title">Toujours signer</string>
+    <string name="signature_replies_forwards_summary_on">Appondre la signature aussi pour les transferts et réponses</string>
+    <string name="signature_replies_forwards_summary_off">Appondre la signature seulement pour les nouveaux messages</string>
+    <plurals name="message_moved_toast">
+        <item quantity="one">Message déplacé.</item>
+        <item quantity="other">Messages déplacés.</item>
+    </plurals>
+
+    <string name="show_all_mailboxes_combined_title">Afficher tous les messages</string>
+    <string name="show_all_mailboxes_combined_summary_on">Afficher les messages de tous les dossiers dans la boîte de réception combinée</string>
+    <string name="show_all_mailboxes_combined_summary_off">Afficher uniquement les messages des boîtes de réception dans la boîte de réception combinée</string>
+    <string name="show_only_unread_combined_title">N\'afficher que les non-lus</string>
+    <string name="show_only_unread_combined_summary_on">Seuls les messages non lus seront affichés dans la boîte de réception combinée</string>
+    <string name="show_only_unread_combined_summary_off">Tous les messages seront affichés dans la boîte de réception combinée</string>
 </resources>
