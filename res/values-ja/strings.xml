@@ -299,4 +299,30 @@
     <string name="account_setup_color_title">アカウントカラー</string>
     <string name="account_settings_color_label">アカウントカラー</string>
     <string name="sample_account_name">サンプルアカウント</string>
+
+    <string name="widget_name">メール</string>
+    <string name="show_all_folders_unread_title">すべての未読数を表示</string>
+    <string name="show_all_folders_unread_summary_on">アカウントリストの未読数はすべてのフォルダの未読数を表示する</string>
+    <string name="show_all_folders_unread_summary_off">アカウントリストの未読数は受信トレイのみの未読数を表示する</string>
+    <string name="account_settings_default_folder_list_title">フォルダ/メッセージリスト</string>
+    <string name="account_settings_default_folder_list_summary_on">アカウントを開いたときフォルダリストを表示する</string>
+    <string name="account_settings_default_folder_list_summary_off">アカウントを開いたときメッセージリストを表示する</string>
+    <string name="move_message_dialog">移動するフォルダを選択:</string>
+    <string name="move_action">移動...</string>
+    <string name="shortcut_target_description">受信トレイではなくフォルダリストへ行く</string>
+    <string name="global_settings_label">グローバル設定/統合受信トレイ</string>
+    <string name="signature_replies_forwards_title">常に署名を添付する</string>
+    <string name="signature_replies_forwards_summary_on">返信や転送するときも署名をつける</string>
+    <string name="signature_replies_forwards_summary_off">新規メッセージにのみ署名をつける</string>
+    <plurals name="message_moved_toast">
+      <item quantity="one">メッセージを移動しました。</item>
+      <item quantity="other">メッセージを移動しました。</item>
+    </plurals>
+    <string name="show_all_mailboxes_combined_title">すべてのメッセージを表示</string>
+    <string name="show_all_mailboxes_combined_summary_on">統合受信トレイにすべてのメールボックスのメッセージを表示する</string>
+    <string name="show_all_mailboxes_combined_summary_off">統合受信トレイでは受信トレイのメッセージのみ表示する</string>
+    <string name="show_only_unread_combined_title">未読メッセージのみ表示</string>
+    <string name="show_only_unread_combined_summary_on">統合受信トレイには未読メッセージのみ表示する</string>
+    <string name="show_only_unread_combined_summary_off">統合受信トレイにすべてのメッセージを表示する</string>
+
 </resources>
