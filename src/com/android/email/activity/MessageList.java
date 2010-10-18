@@ -378,7 +378,6 @@ public class MessageList extends ListActivity implements OnItemClickListener, On
             updateFolderList(accountId);
             ranFolderListTask = true;
         }
-        mAccountId = accountId;
     }
 
     @Override
@@ -1033,10 +1032,14 @@ public class MessageList extends ListActivity implements OnItemClickListener, On
         } else {
             mFavoriteButton.setText(R.string.remove_star_action);
         }
-        Account acc = Account.restoreAccountWithId(mContext, mAccountId);
-        acc.mHostAuthRecv = HostAuth.restoreHostAuthWithId(this, acc.mHostAuthKeyRecv);
-        if (mMailboxId >= -1 && "eas".equals(acc.mHostAuthRecv.mProtocol)) {
-            mMoveButton.setVisibility(View.VISIBLE);
+        if (mAccountId > 0) {
+            Account acc = Account.restoreAccountWithId(mContext, mAccountId);
+            acc.mHostAuthRecv = HostAuth.restoreHostAuthWithId(this, acc.mHostAuthKeyRecv);
+            if (mMailboxId >= -1 && "eas".equals(acc.mHostAuthRecv.mProtocol)) {
+                mMoveButton.setVisibility(View.VISIBLE);
+            } else {
+                mMoveButton.setVisibility(View.GONE);
+            }
         } else {
             mMoveButton.setVisibility(View.GONE);
         }
@@ -2056,6 +2059,7 @@ public class MessageList extends ListActivity implements OnItemClickListener, On
                 if (c.moveToFirst()) {
                     mAccountKey = c.getLong(COLUMN_ID);
                 }
+                mAccountId = mAccountKey;
             }
             Cursor c;
             if (mMailboxId < -1) {

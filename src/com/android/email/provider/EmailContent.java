@@ -2253,7 +2253,6 @@ public abstract class EmailContent {
         @Override
         @SuppressWarnings("unchecked")
         public EmailContent.HostAuth restore(Cursor cursor) {
-            String id = getDevId();
             mAccountKey = cursor.getLong(CONTENT_ACCOUNT_KEY_COLUMN);
             mBaseUri = CONTENT_URI;
             mId = cursor.getLong(CONTENT_ID_COLUMN);
@@ -2263,30 +2262,19 @@ public abstract class EmailContent {
             mFlags = cursor.getInt(CONTENT_FLAGS_COLUMN);
             mLogin = cursor.getString(CONTENT_LOGIN_COLUMN);
             mPassword = cursor.getString(CONTENT_PASSWORD_COLUMN);
-            String temppw = new DesEncrypter(id).decrypt(mPassword);
-            if (temppw != null) {
-                mPassword = temppw;
-            }
             mDomain = cursor.getString(CONTENT_DOMAIN_COLUMN);
             return this;
         }
 
         @Override
         public ContentValues toContentValues() {
-            String id = getDevId();
             ContentValues values = new ContentValues();
             values.put(HostAuthColumns.PROTOCOL, mProtocol);
             values.put(HostAuthColumns.ADDRESS, mAddress);
             values.put(HostAuthColumns.PORT, mPort);
             values.put(HostAuthColumns.FLAGS, mFlags);
             values.put(HostAuthColumns.LOGIN, mLogin);
-            String temppw = new DesEncrypter(id).encrypt(mPassword);
-            if (temppw != null) {
-                mPassword = temppw;
-                values.put(HostAuthColumns.PASSWORD, mPassword);
-            } else {
-                values.put(HostAuthColumns.PASSWORD, mPassword);
-            }
+            values.put(HostAuthColumns.PASSWORD, mPassword);
             values.put(HostAuthColumns.DOMAIN, mDomain);
             values.put(HostAuthColumns.ACCOUNT_KEY, mAccountKey);
             return values;
