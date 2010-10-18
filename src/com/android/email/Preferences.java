@@ -26,7 +26,7 @@ import java.util.UUID;
 public class Preferences {
 
     // Preferences file
-    private static final String PREFERENCES_FILE = "AndroidMail.Main";
+    public static final String PREFERENCES_FILE = "AndroidMail.Main";
 
     // Preferences field names
     private static final String ACCOUNT_UUIDS = "accountUuids";

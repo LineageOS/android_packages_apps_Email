@@ -17,6 +17,7 @@
 package com.android.email.provider;
 
 import com.android.email.Email;
+import com.android.email.Preferences;
 import com.android.email.provider.EmailContent.Account;
 import com.android.email.provider.EmailContent.AccountColumns;
 import com.android.email.provider.EmailContent.Attachment;
@@ -39,6 +40,7 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.OperationApplicationException;
+import android.content.SharedPreferences;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -82,7 +84,8 @@ public class EmailProvider extends ContentProvider {
     // Version 11: Add content and flags to attachment table
     // Version 12: Add content_bytes to attachment table. content is deprecated.
     // version 13: Add accountColor field to the Account table
-    public static final int DATABASE_VERSION = 13;
+    // version 14: large # changes requiring app data to be wiped (2 files)
+    public static final int DATABASE_VERSION = 14;
 
     // Any changes to the database format *must* include update-in-place code.
     // Original version: 2
@@ -816,20 +819,28 @@ public class EmailProvider extends ContentProvider {
             }
             if (oldVersion == 12)
             {
-    	    	// add the color column to the table
-    	    	try {
-    	    		db.execSQL("alter table " + Account.TABLE_NAME
-    	                    + " add column " + AccountColumns.ACCOUNT_COLOR + " integer;");
-    	    		
-    	    		Log.i(TAG, "EmailProvider.db upgraded from version 12 to 13 ");
-    	    	} catch (SQLException e) {
-    	    		Log.w(TAG, "Exception upgrading EmailProvider.db from 12 to 13 " + e);
-    	    	}
-	    		
-    	    	// attempt to preserve the colors
-    	    	preserveAccountColors (db);
-    	    	
-	    		oldVersion = 13;    	
+                // add the color column to the table
+                try {
+                    db.execSQL("alter table " + Account.TABLE_NAME
+                            + " add column " + AccountColumns.ACCOUNT_COLOR + " integer;");
+                    Log.i(TAG, "EmailProvider.db upgraded from version 12 to 13 ");
+                } catch (SQLException e) {
+                    Log.w(TAG, "Exception upgrading EmailProvider.db from 12 to 13 " + e);
+                }
+                // attempt to preserve the colors
+                preserveAccountColors (db);
+                oldVersion = 13;
+            }
+            if (oldVersion == 13)
+            {
+                // wipe settings files to make large # of changes
+                // in CM 6.1 function properly
+                try {
+                    SharedPreferences customprefs = mContext.getSharedPreferences(Preferences.PREFERENCES_FILE, Context.MODE_PRIVATE);
+                    customprefs.edit().clear().commit();
+                } catch (Exception e) {
+                }
+                oldVersion = 14;
             }
         }
 
