@@ -300,4 +300,34 @@
     <string name="account_client_certificate_import_error">Errore nell\'importare il certificato usando la password fornita</string>
 
     <string name="sample_account_name" >Modello Nome Account</string>
+
+    <string name="widget_name">Email</string>
+
+    <string name="show_all_folders_unread_title">Conteggio non letti</string>
+    <string name="show_all_folders_unread_summary_on">Il conteggio dei messaggi non letti visualizzerà il numero di non letti per TUTTE le cartelle</string>
+    <string name="show_all_folders_unread_summary_off">Il conteggio dei messaggi non letti visualizzerà il numero di non letti solo per la posta in arrivo</string>
+
+    <string name="account_settings_default_folder_list_title">Lista cartelle/messaggi</string>
+    <string name="account_settings_default_folder_list_summary_on">Visualizza di default la lista cartelle all\'apertura dell\'account</string>
+    <string name="account_settings_default_folder_list_summary_off">Visualizza di default la lista messaggi all\'apertura dell\'account</string>
+
+    <string name="move_message_dialog">Seleziona la cartella in cui spostare:</string>
+    <string name="move_action">Sposta...</string>
+    <string name="shortcut_target_description">Vai alla lista cartelle invece che alla posta in arrivo</string>
+    <string name="global_settings_label">Preferenze Globali/Posta in Arrivo Combinata</string>
+
+    <string name="signature_replies_forwards_title">Allega sempre firma</string>
+    <string name="signature_replies_forwards_summary_on">Allega la firma sia ai nuovi messaggi sia alle risposte</string>
+    <string name="signature_replies_forwards_summary_off">Allega la firma solo ai nuovi messaggi</string>
+    <plurals name="message_moved_toast">
+        <item quantity="one">Messaggio spostato.</item>
+        <item quantity="other">Messaggi spostati.</item>
+    </plurals>
+
+    <string name="show_all_mailboxes_combined_title">Mostra tutti messagi</string>
+    <string name="show_all_mailboxes_combined_summary_on">Mostra messaggi da TUTTE le cartelle nella posta in arrivo combinata</string>
+    <string name="show_all_mailboxes_combined_summary_off">Mostra solo messaggi dalle cartelle di posta in arrivo nella posta in arrivo combinata</string>
+    <string name="show_only_unread_combined_title">Mostra solo non letti</string>
+    <string name="show_only_unread_combined_summary_on">Mostra solo messaggi non letti nella posta in arrivo combinata</string>
+    <string name="show_only_unread_combined_summary_off">Mostra tutti i messaggi nella posta in arrivo combinata</string>
 </resources>
