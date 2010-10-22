@@ -1050,19 +1050,9 @@ public class ImapStore extends Store {
                  body size
                  */
 
-
                 String type = bs.getString(0);
                 String subType = bs.getString(1);
                 String mimeType = (type + "/" + subType).toLowerCase();
-
-                ImapList bodyParams = null;
-                if (bs.get(2) instanceof ImapList) {
-                    bodyParams = bs.getList(2);
-                }
-                String cid = bs.getString(3);
-                String encoding = bs.getString(5);
-                int size = bs.getNumber(6);
-
                 if (MimeUtility.mimeTypeMatches(mimeType, "message/rfc822")) {
 //                  A body type of type MESSAGE and subtype RFC822
 //                  contains, immediately after the basic fields, the
@@ -1074,6 +1064,13 @@ public class ImapStore extends Store {
                      */
                     throw new MessagingException("BODYSTRUCTURE message/rfc822 not yet supported.");
                 }
+                ImapList bodyParams = null;
+                if (bs.get(2) instanceof ImapList) {
+                    bodyParams = bs.getList(2);
+                }
+                String cid = bs.getString(3);
+                String encoding = bs.getString(5);
+                int size = bs.getNumber(6);
 
                 /*
                  * Set the content type with as much information as we know right now.

@@ -108,7 +108,7 @@ public class AccountSettings extends PreferenceActivity {
     private CheckBoxPreference mShowAllMailboxesCombined;
     private CheckBoxPreference mShowOnlyUnreadCombined;
 
-    SharedPreferences mSharedPrefs;
+    Preferences mSharedPrefs;
     /**
      * Display (and edit) settings for a specific account
      */
@@ -123,7 +123,7 @@ public class AccountSettings extends PreferenceActivity {
         super.onCreate(savedInstanceState);
 
         Intent i = getIntent();
-        mSharedPrefs = getPreferenceManager().getSharedPreferences();
+        mSharedPrefs = Preferences.getPreferences(this);
         if (ACTION_ACCOUNT_MANAGER_ENTRY.equals(i.getAction())) {
             // This case occurs if we're changing account settings from Settings -> Accounts
             setAccountIdFromAccountManagerIntent();
@@ -407,17 +407,16 @@ public class AccountSettings extends PreferenceActivity {
     private void saveSettings() {
         int newFlags = mAccount.getFlags() &
                 ~(Account.FLAGS_NOTIFY_NEW_MAIL | Account.FLAGS_VIBRATE_ALWAYS |
-                Account.FLAGS_VIBRATE_WHEN_SILENT | Account.FLAGS_MSG_LIST_ON_DELETE) |
-                Account.FLAGS_DEFAULT_FOLDER_LIST | Account.FLAGS_SIGNATURE_TOGGLE;
-
+                Account.FLAGS_VIBRATE_WHEN_SILENT | Account.FLAGS_MSG_LIST_ON_DELETE |
+                Account.FLAGS_DEFAULT_FOLDER_LIST | Account.FLAGS_SIGNATURE_TOGGLE);
         mAccount.setDefaultAccount(mAccountDefault.isChecked());
         mAccount.setDisplayName(mAccountDescription.getText());
         mAccount.setSenderName(mAccountName.getText());
         mAccount.setSignature(mAccountSignature.getText());
-        newFlags |= mAccountNotify.isChecked() ? Account.FLAGS_NOTIFY_NEW_MAIL : 0;
-        newFlags |= mMsgListOnDelete.isChecked() ? Account.FLAGS_MSG_LIST_ON_DELETE : 0;
-        newFlags |= mDefaultFolderList.isChecked() ? Account.FLAGS_DEFAULT_FOLDER_LIST : 0;
-        newFlags |= mSignatureToggle.isChecked() ? Account.FLAGS_SIGNATURE_TOGGLE : 0;
+        newFlags |= (mAccountNotify.isChecked() ? Account.FLAGS_NOTIFY_NEW_MAIL : 0) |
+                    (mMsgListOnDelete.isChecked() ? Account.FLAGS_MSG_LIST_ON_DELETE : 0) |
+                    (mDefaultFolderList.isChecked() ? Account.FLAGS_DEFAULT_FOLDER_LIST : 0) |
+                    (mSignatureToggle.isChecked() ? Account.FLAGS_SIGNATURE_TOGGLE : 0);
         mAccount.setSyncInterval(Integer.parseInt(mCheckFrequency.getValue()));
         if (mSyncWindow != null) {
             mAccount.setSyncLookback(Integer.parseInt(mSyncWindow.getValue()));

@@ -53,6 +53,7 @@ public class AccountSettingsUtils {
             cv.put(AccountColumns.RINGTONE_URI, account.mRingtoneUri);
             cv.put(AccountColumns.FLAGS, account.mFlags);
             cv.put(AccountColumns.SYNC_LOOKBACK, account.mSyncLookback);
+            cv.put(AccountColumns.ACCOUNT_COLOR, account.mAccountColor);
             account.update(context, cv);
         }
         // Update the backup (side copy) of the accounts

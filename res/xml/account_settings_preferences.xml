@@ -136,8 +136,7 @@
             android:key="signature_replies_forwards"
             android:title="@string/signature_replies_forwards_title"
             android:summaryOn="@string/signature_replies_forwards_summary_on"
-            android:summaryOff="@string/signature_replies_forwards_summary_off"
-            android:defaultValue="false"/>
+            android:summaryOff="@string/signature_replies_forwards_summary_off"/>
     </PreferenceCategory>
     <PreferenceCategory
         android:key="global"

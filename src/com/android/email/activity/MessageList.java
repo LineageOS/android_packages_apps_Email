@@ -2046,7 +2046,9 @@ public class MessageList extends ListActivity implements OnItemClickListener, On
         @Override
         protected Cursor doInBackground(Void... params) {
             if (mAccountKey != -1 && isSecurityHold(mAccountKey)) {
-                showSecurityActivity = true;
+                Intent i = AccountSecurity.actionUpdateSecurityIntent(
+                        MessageList.this, mAccountKey);
+                MessageList.this.startActivityForResult(i, REQUEST_SECURITY);
                 return null;
             }
             if (mAccountKey == -1) {
@@ -2093,10 +2095,8 @@ public class MessageList extends ListActivity implements OnItemClickListener, On
 
         @Override
         protected void onPostExecute(Cursor cursor) {
-            if (showSecurityActivity) {
-                Intent i = AccountSecurity.actionUpdateSecurityIntent(
-                        MessageList.this, mAccountKey);
-                MessageList.this.startActivityForResult(i, REQUEST_SECURITY);
+            if (cursor != null) {
+                cursor.close();
             }
             return;
         }

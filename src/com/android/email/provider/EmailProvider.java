@@ -71,6 +71,10 @@ public class EmailProvider extends ContentProvider {
 
     private static final String WHERE_ID = EmailContent.RECORD_ID + "=?";
 
+    // Version number for tracking non-db related changes that may require
+    // adjustments to settings, etc..when we don't want or need to touch the db
+    private static final int MAJOR_VERSION = 2;
+
     // Any changes to the database format *must* include update-in-place code.
     // Original version: 3
     // Version 4: Database wipe required; changing AccountManager interface w/Exchange
@@ -834,10 +838,16 @@ public class EmailProvider extends ContentProvider {
             if (oldVersion == 13)
             {
                 // wipe settings files to make large # of changes
-                // in CM 6.1 function properly
+                // in CM 6.1 function properly, introduce major version
+                // number
                 try {
-                    SharedPreferences customprefs = mContext.getSharedPreferences(Preferences.PREFERENCES_FILE, Context.MODE_PRIVATE);
-                    customprefs.edit().clear().commit();
+                    SharedPreferences customprefs = mContext
+                            .getSharedPreferences(Preferences.PREFERENCES_FILE,
+                            Context.MODE_PRIVATE);
+                    if (customprefs.getInt("major_version", 0) != MAJOR_VERSION) {
+                        customprefs.edit().clear().commit();
+                        customprefs.edit().putInt("major_version", MAJOR_VERSION).commit();
+                    }
                 } catch (Exception e) {
                 }
                 oldVersion = 14;

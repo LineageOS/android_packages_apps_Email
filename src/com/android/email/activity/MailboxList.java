@@ -359,7 +359,6 @@ public class MailboxList extends ListActivity implements OnItemClickListener, On
         if (mailboxId >= 0) {
             controller.toggleHideFolder(mAccountId, mailboxId, mControllerCallback);
         }
-        onRefresh(mailboxId);
     }
 
     private void onCompose() {
