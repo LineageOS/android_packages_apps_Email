@@ -88,6 +88,7 @@ public class AccountSettings extends PreferenceActivity {
     private long mAccountId = -1;
     private Account mAccount;
     private boolean mAccountDirty;
+    public static int mSetColor;
 
     private EditTextPreference mAccountDescription;
     private EditTextPreference mAccountName;
@@ -429,6 +430,7 @@ public class AccountSettings extends PreferenceActivity {
         SharedPreferences prefs = mAccountRingtone.getPreferenceManager().getSharedPreferences();
         mAccount.setRingtone(prefs.getString(PREFERENCE_RINGTONE, null));
         mAccount.setFlags(newFlags);
+        mAccount.setAccountColor(mSetColor);
 
         if (mAccount.mHostAuthRecv.mProtocol.equals("eas")) {
             android.accounts.Account acct = new android.accounts.Account(mAccount.mEmailAddress,

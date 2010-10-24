@@ -186,60 +186,60 @@ public class AccountSetupColor extends Activity implements OnClickListener, Seek
 
         for (int i = r; i < RGB_COMP_COUNT; i++)
         {
-        	mRGBSlider[i].setProgress(rgb[i]);
+            mRGBSlider[i].setProgress(rgb[i]);
         }
-        
+
         updateColor ();
-	}
+    }
 
-	public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) 
-	{
-		updateColor ();
-	}
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
+    {
+    updateColor ();
+    }
 
-	public void onStartTrackingTouch(SeekBar seekBar) 
-	{
-		// do nothing
-	}
+    public void onStartTrackingTouch(SeekBar seekBar)
+    {
+    // do nothing
+    }
 
-	public void onStopTrackingTouch(SeekBar seekBar) 
-	{	
-		// do nothing
-	}
-	
-	private void onDone() {
-		updateColor ();
-		mAccount.setAccountColor(mCurrentColor);
+    public void onStopTrackingTouch(SeekBar seekBar)
+    {
+    // do nothing
+    }
+
+    private void onDone() {
+        updateColor ();
+        mAccount.setAccountColor(mCurrentColor);
         
         if (mEditMode)
         {
-        	if (mAccount.isSaved()) {
+            if (mAccount.isSaved()) {
                 mAccount.update(this, mAccount.toContentValues());
+                AccountSettingsUtils.commitSettings(this,mAccount);
             } else {
                 mAccount.save(this);
             }
             // Update the backup (side copy) of the accounts
             AccountBackupRestore.backupAccounts(this);
+            AccountSettings.mSetColor = mCurrentColor;
             finish();
         }
         else {
-        	// Clear the incomplete flag now
+            // Clear the incomplete flag now
             mAccount.mFlags &= ~Account.FLAGS_INCOMPLETE;
             AccountSettingsUtils.commitSettings(this, mAccount);
-        	Email.setServicesEnabled(this);
+            Email.setServicesEnabled(this);
             AccountSetupNames.actionSetNames(this, mAccount.mId, mEasFlowMode);
             // Start up SyncManager (if it isn't already running)
             ExchangeUtils.startExchangeService(this);
         }
-	}
-	
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.next:
-			onDone();
-			break;
-		}
-		
-	}
-	
+    }
+
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.next:
+                onDone();
+                break;
+        }
+    }
 }
