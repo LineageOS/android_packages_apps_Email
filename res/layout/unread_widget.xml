@@ -4,12 +4,15 @@
     android:orientation="vertical"
     android:layout_width="wrap_content"
     android:gravity="fill"
-    android:layout_height="wrap_content" android:background="@drawable/icon">
+    android:layout_height="wrap_content" android:background="@drawable/unread_widget">
     <TextView  
         android:id="@+id/unread_count"
         android:layout_width="fill_parent" 
         android:layout_height="wrap_content" 
-        android:textSize="35sp"
-        android:gravity="center"
+        android:textSize="18dip"
+        android:paddingTop="3dip"
+        android:textStyle="bold"
+        android:textColor="#FFFFFFFF"
+        android:gravity="center_horizontal|top"
         android:visibility="invisible"/>
 </LinearLayout>

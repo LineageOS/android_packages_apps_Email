@@ -97,14 +97,15 @@ public class UnreadWidgetProvider extends AppWidgetProvider {
             }
             Intent intent = new Intent(context, Welcome.class);
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-            RemoteViews views = new RemoteViews(context.getPackageName(),
-                    R.layout.unread_widget);
+            RemoteViews views;
             if (unreadCount > 0) {
+                views = new RemoteViews(context.getPackageName(),
+                        R.layout.unread_widget);
                 views.setTextViewText(R.id.unread_count, Integer.toString(unreadCount));
-                views.setTextColor(R.id.unread_count, Color.BLACK);
                 views.setViewVisibility(R.id.unread_count, View.VISIBLE);
             } else {
-                views.setViewVisibility(R.id.unread_count, View.GONE);
+                views = new RemoteViews(context.getPackageName(),
+                        R.layout.unread_widget_nomail);
             }
             views.setOnClickPendingIntent(R.id.widget_layout, pendingIntent);
             return views;
