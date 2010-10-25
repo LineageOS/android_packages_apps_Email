@@ -32,6 +32,7 @@ import android.util.Base64;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.Inet6Address;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -121,11 +122,29 @@ public class SmtpSender extends Sender {
 
             String localHost = "localhost";
             try {
-                InetAddress localAddress = InetAddress.getLocalHost();
+                InetAddress localAddress = mTransport.getSocket().getLocalAddress();
+                String ipAddr = localAddress.getHostAddress();
                 localHost = localAddress.getHostName();
+                if (Email.DEBUG) {
+                    Log.i(Email.LOG_TAG, "Detected hostname: " + localHost + " (" + ipAddr + ")");
+                    Log.i(Email.LOG_TAG, "Old method: " + InetAddress.getLocalHost());
+                }
+                if (localHost.equals(ipAddr) || localHost.contains("_")) {
+                    // We don't have a FQDN or the hostname contains invalid characters, so use IP address.
+                    if (localAddress instanceof Inet6Address) {
+                        localHost = "[IPV6:" + ipAddr + "]";
+                    }
+                    else {
+                        localHost = "[" + ipAddr + "]";
+                    }
+                }
+                if (Email.DEBUG) {
+                    Log.i(Email.LOG_TAG, "Using " + localHost + " for EHLO");
+                }
+
             } catch (Exception e) {
                 if (Config.LOGD && Email.DEBUG) {
-                    Log.d(Email.LOG_TAG, "Unable to look up localhost");
+                    Log.w(Email.LOG_TAG, "Unable to look up localhost");
                 }
             }
 

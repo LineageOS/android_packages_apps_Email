@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URI;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.regex.Pattern;
@@ -186,6 +187,10 @@ public class MockTransport implements Transport {
 
     public String getHost() {
         return mHost;
+    }
+
+    public Socket getSocket() {
+        return null;
     }
 
     public InputStream getInputStream() {

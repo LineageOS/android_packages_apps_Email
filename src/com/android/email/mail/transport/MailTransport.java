@@ -287,6 +287,10 @@ public class MailTransport implements Transport {
         mSocket = null;
     }
 
+    public Socket getSocket() {
+        return mSocket;
+    }
+
     public InputStream getInputStream() {
         return mIn;
     }
