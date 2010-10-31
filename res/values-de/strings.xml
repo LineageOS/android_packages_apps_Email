@@ -301,4 +301,34 @@
     <string name="account_client_certificate_file">Zertifikat-Datei</string>
     <string name="account_client_certificate_password">Zertifikat-Passwort</string>
     <string name="account_client_certificate_import_error">Fehler beim Importieren des Zertifikats mit dem angegebenen Passwort</string>
+
+    <string name="widget_name">Email</string>
+
+    <string name="show_all_folders_unread_title">Anzahl ungelesener Emails</string>
+    <string name="show_all_folders_unread_summary_on">Zeige Anzahl ungelesener Emails in der Accountliste für alle Ordner</string>
+    <string name="show_all_folders_unread_summary_off">Zeige Anzahl ungelesener Emails in der Accountliste nur für den Posteingang</string>
+
+    <string name="account_settings_default_folder_list_title">Ordner/Nachrichtenliste</string>
+    <string name="account_settings_default_folder_list_summary_on">Standardmäßig Ordnerliste zeigen, wenn Account geöffnet wird</string>
+    <string name="account_settings_default_folder_list_summary_off">Standardmäßig Nachrichtenliste zeigen, wenn Account geöffnet wird</string>
+
+    <string name="move_message_dialog">Zielordner zum Verschieben:</string>
+    <string name="move_action">Verschieben...</string>
+    <string name="shortcut_target_description">Zu Ordnerliste wechseln statt zum Posteingang</string>
+    <string name="global_settings_label">Globale Einstellungen/Kombinierter Posteingang</string>
+
+    <string name="signature_replies_forwards_title">Immer Signatur anhängen</string>
+    <string name="signature_replies_forwards_summary_on">Signatur auch an Weiterleitungen und Antworten anhängen</string>
+    <string name="signature_replies_forwards_summary_off">Signatur nur an neue Nachrichten anhängen</string>
+    <plurals name="message_moved_toast">
+        <item quantity="one">Nachricht verschoben.</item>
+        <item quantity="other">Nachrichten verschoben.</item>
+    </plurals>
+
+    <string name="show_all_mailboxes_combined_title">Zeige alle Nachrichten</string>
+    <string name="show_all_mailboxes_combined_summary_on">Nachrichten von allen Accounts im kombinierten Posteingang zeigen</string>
+    <string name="show_all_mailboxes_combined_summary_off">Nur Nachrichten der Posteingänge im kombinierten Posteingang zeigen</string>
+    <string name="show_only_unread_combined_title">Nur Ungelesene</string>
+    <string name="show_only_unread_combined_summary_on">Nur ungelesene Nachrichten im kombinierten Posteingang anzeigen</string>
+    <string name="show_only_unread_combined_summary_off">Alle Nachrichten im kombinierten Posteingang anzeigen</string>
 </resources>
