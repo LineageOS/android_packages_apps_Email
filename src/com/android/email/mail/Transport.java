@@ -19,8 +19,10 @@ package com.android.email.mail;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.Socket;
 import java.net.SocketException;
 import java.net.URI;
+
 
 /**
  * This interface defines a "transport", which is defined here as being one layer below the 
@@ -133,6 +135,11 @@ public interface Transport {
      */
     public void close();
     
+    /**
+     * @return returns the active socket
+     */
+    public Socket getSocket();
+
     /**
      * @return returns the active input stream
      */
