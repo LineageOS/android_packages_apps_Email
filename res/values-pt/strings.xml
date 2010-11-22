@@ -326,10 +326,9 @@
     </plurals>
 
     <string name="show_all_mailboxes_combined_title">Mostrar todas mensagens</string>
-    <string name="show_all_mailboxes_combined_summary_on">Mostrar todas mensagens de todas Caixas de Entrada em uma visualização combinada de todas elas</string>
-    <string name="show_all_mailboxes_combined_summary_off">Mostrar somentes mensagens das Caixa de Entrada da visualização de Caixa de Entrada Combinada</string>
+    <string name="show_all_mailboxes_combined_summary_on">Mostrar todas msgs de todas Cx. Entrada em uma visualização combinada de todas</string>
+    <string name="show_all_mailboxes_combined_summary_off">Mostrar somentes msgs das Cx. Entrada da visualização de Cx. Entrada Combinada</string>
     <string name="show_only_unread_combined_title">Mostrar somente não lidas</string>
-    <string name="show_only_unread_combined_summary_on">Mostrar somente mensagens não lidas na visualização de Caixa de 
-Entrada Combinada</string>
-    <string name="show_only_unread_combined_summary_off">Mostrar todas mensagens na visualização de Caixa de Entrada Combinada</string>
+    <string name="show_only_unread_combined_summary_on">Mostrar somente msgs não lidas na visualização de Cx. Entrada Combinada</string>
+    <string name="show_only_unread_combined_summary_off">Mostrar todas msgs na visualização de Cx. Entrada Combinada</string>
 </resources>
