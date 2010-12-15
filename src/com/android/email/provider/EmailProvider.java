@@ -162,14 +162,14 @@ public class EmailProvider extends ContentProvider {
      */
     private static final String UPDATED_MESSAGE_INSERT = "insert or ignore into " +
         Message.UPDATED_TABLE_NAME + " select * from " + Message.TABLE_NAME + " where " +
-        EmailContent.RECORD_ID + '=';
+        EmailContent.RECORD_ID + "=?";
 
     private static final String UPDATED_MESSAGE_DELETE = "delete from " +
-        Message.UPDATED_TABLE_NAME + " where " + EmailContent.RECORD_ID + '=';
+        Message.UPDATED_TABLE_NAME + " where " + EmailContent.RECORD_ID + "=?";
 
     private static final String DELETED_MESSAGE_INSERT = "insert or replace into " +
         Message.DELETED_TABLE_NAME + " select * from " + Message.TABLE_NAME + " where " +
-        EmailContent.RECORD_ID + '=';
+        EmailContent.RECORD_ID + "=?";
 
     private static final String DELETE_ORPHAN_BODIES = "delete from " + Body.TABLE_NAME +
         " where " + BodyColumns.MESSAGE_KEY + " in " + "(select " + BodyColumns.MESSAGE_KEY +
@@ -177,7 +177,7 @@ public class EmailProvider extends ContentProvider {
         Message.TABLE_NAME + ')';
 
     private static final String DELETE_BODY = "delete from " + Body.TABLE_NAME +
-        " where " + BodyColumns.MESSAGE_KEY + '=';
+        " where " + BodyColumns.MESSAGE_KEY + "=?";
 
     private static final String ID_EQUALS = EmailContent.RECORD_ID + "=?";
 
@@ -846,8 +846,8 @@ public class EmailProvider extends ContentProvider {
                         // For synced messages, first copy the old message to the deleted table and
                         // delete it from the updated table (in case it was updated first)
                         // Note that this is all within a transaction, for atomicity
-                        db.execSQL(DELETED_MESSAGE_INSERT + id);
-                        db.execSQL(UPDATED_MESSAGE_DELETE + id);
+                        db.execSQL(DELETED_MESSAGE_INSERT, new String[] {id});
+                        db.execSQL(UPDATED_MESSAGE_DELETE, new String[] {id});
                     }
                     result = db.delete(TABLE_NAMES[table], whereWithId(id, selection),
                             selectionArgs);
@@ -876,7 +876,7 @@ public class EmailProvider extends ContentProvider {
             if (messageDeletion) {
                 if (match == MESSAGE_ID) {
                     // Delete the Body record associated with the deleted message
-                    db.execSQL(DELETE_BODY + id);
+                    db.execSQL(DELETE_BODY, new String[]{id});
                 } else {
                     // Delete any orphaned Body records
                     db.execSQL(DELETE_ORPHAN_BODIES);
@@ -1207,9 +1207,9 @@ public class EmailProvider extends ContentProvider {
                         // Note the insert or ignore semantics, guaranteeing that only the first
                         // update will be reflected in the updated message table; therefore this row
                         // will always have the "original" data
-                        db.execSQL(UPDATED_MESSAGE_INSERT + id);
+                        db.execSQL(UPDATED_MESSAGE_INSERT, new String[]{id});
                     } else if (match == MESSAGE_ID) {
-                        db.execSQL(UPDATED_MESSAGE_DELETE + id);
+                        db.execSQL(UPDATED_MESSAGE_DELETE, new String[]{id});
                     }
                     result = db.update(TABLE_NAMES[table], values, whereWithId(id, selection),
                             selectionArgs);
