@@ -23,7 +23,7 @@
     <!-- Do Not Translate.  Unused string. -->
     <string name="account_setup_failed_security_policies_required"></string>
     <!-- Do Not Translate.  Unused string. -->
-    <string name="account_folder_list_summary_unread"></string>    
+    <string name="account_folder_list_summary_unread"></string>
     <!-- Do Not Translate.  Unused string. -->
     <string name="account_settings_add_account_label"></string>
     <!-- Do Not Translate.  Unused string. -->
@@ -70,9 +70,9 @@
     <skip />
 
     <!-- Used as part of a multi-step process -->
-    <string name="next_action">Próximo</string> 
+    <string name="next_action">Próximo</string>
     <!--  Button name used to confirm acceptance of dialog boxes, warnings, errors, etc. -->
-    <string name="okay_action">OK</string> 
+    <string name="okay_action">OK</string>
     <!--  Button name used to cancel out of dialog boxes -->
     <string name="cancel_action">Cancelar</string>
     <!-- Menu item/button name -->
@@ -86,7 +86,7 @@
     <!-- Menu item/button name -->
     <string name="forward_action">Encaminhar</string>
     <!--  Button name used to complete a multi-step process -->
-    <string name="done_action">Concluído</string> 
+    <string name="done_action">Concluído</string>
     <!-- Menu item/button name -->
     <string name="discard_action">Rejeitar</string>
     <!-- Menu item/button name -->
@@ -152,10 +152,10 @@
          one or more new messages; e.g, "279 unread (someone@google.com)". -->
     <plurals name="notification_new_one_account_fmt">
     <!-- Case of one new message. -->
-    <item quantity="one"><xliff:g id="unread_message_count" example="1">%1$d</xliff:g> não lida (<xliff:g id="account">%2$s</xliff:g>)</item> 
+    <item quantity="one"><xliff:g id="unread_message_count" example="1">%1$d</xliff:g> não lida (<xliff:g id="account">%2$s</xliff:g>)</item>
 
     <!-- Case of "few" (small number of) new messages. -->
-    <item quantity="few"><xliff:g id="unread_message_count" example="2">%1$d</xliff:g> não lida (<xliff:g id="account">%2$s</xliff:g>)</item> 
+    <item quantity="few"><xliff:g id="unread_message_count" example="2">%1$d</xliff:g> não lida (<xliff:g id="account">%2$s</xliff:g>)</item>
 
     <!-- Case of a plural number of new messages. -->
     <item quantity="other"><xliff:g id="unread_message_count" example="279">%1$d</xliff:g> não lida (<xliff:g id="account">%2$s</xliff:g>)</item>
@@ -239,7 +239,7 @@
     <!-- Hint text in Subject field -->
     <string name="message_compose_subject_hint">Assunto</string>
     <!-- Hint text in Message composer body field -->
-    <string name="message_compose_body_hint">Compôr email</string>    
+    <string name="message_compose_body_hint">Compôr email</string>
     <!-- Header for forwarded original messages -->
     <string name="message_compose_fwd_header_fmt">\n\n-------- Mensagem Original --------\nAssunto: <xliff:g id="subject">%1$s</xliff:g>\nDe: <xliff:g id="sender">%2$s</xliff:g>\nPara: <xliff:g id="to">%3$s</xliff:g>\nCC: <xliff:g id="cc">%4$s</xliff:g>\n\n</string>
     <!-- Header for replied-to messages -->
@@ -415,7 +415,7 @@
     <string name="account_setup_incoming_delete_policy_never_label">Nunca</string>
     <!-- "Incoming server settings" screen, options in pop-up menu for Delete email from server: -->
     <string name="account_setup_incoming_delete_policy_delete_label">Quando apagada da caixa de entrada</string>
-    
+
     <!-- "Incoming server settings" screen, label for setting IMAP path prefix: -->
     <string name="account_setup_incoming_imap_path_prefix_label">Caminho da pasta IMAP</string>
     <!-- "Incoming server settings" screen, hint for setting IMAP path prefix: -->
@@ -491,19 +491,19 @@
     <string name="account_setup_options_mail_window_1month">Um mês</string>
 
     <!-- "Setup could not finish" dialog text; e.g., Username or password incorrect -->
-    <string name="account_setup_failed_dlg_auth_message">Nome de utilizador ou palavra chave incorrecta.</string> 
+    <string name="account_setup_failed_dlg_auth_message">Nome de utilizador ou palavra chave incorrecta.</string>
     <!-- "Setup could not finish" dialog text; e.g., Username or password incorrect\n(ERR01 Account does not exist) -->
-    <string name="account_setup_failed_dlg_auth_message_fmt">Nome de utilizador ou palavra chave incorrecta.\n(<xliff:g id="error">%s</xliff:g>)</string> 
+    <string name="account_setup_failed_dlg_auth_message_fmt">Nome de utilizador ou palavra chave incorrecta.\n(<xliff:g id="error">%s</xliff:g>)</string>
 
     <!-- "Setup could not finish" dialog text; e.g., Cannot safely connect to server -->
-    <string name="account_setup_failed_dlg_certificate_message">Não é possível ligar ao servidor em segurança.</string> 
+    <string name="account_setup_failed_dlg_certificate_message">Não é possível ligar ao servidor em segurança.</string>
     <!-- "Setup could not finish" dialog text; e.g., Cannot safely connect to server\n(TLS Not Supported) -->
-    <string name="account_setup_failed_dlg_certificate_message_fmt">Não é possível ligar ao servidor em segurança.\n(<xliff:g id="error">%s</xliff:g>)</string> 
+    <string name="account_setup_failed_dlg_certificate_message_fmt">Não é possível ligar ao servidor em segurança.\n(<xliff:g id="error">%s</xliff:g>)</string>
 
     <!-- "Setup could not finish" dialog text; e.g., Cannot connect to server -->
-    <string name="account_setup_failed_dlg_server_message">Não é possível ligar ao servidor.</string> 
+    <string name="account_setup_failed_dlg_server_message">Não é possível ligar ao servidor.</string>
     <!-- "Setup could not finish" dialog text; e.g., Cannot connect to server\n(Connection timed out) -->
-    <string name="account_setup_failed_dlg_server_message_fmt">Não é possível ligar ao servidor.\n(<xliff:g id="error">%s</xliff:g>)</string> 
+    <string name="account_setup_failed_dlg_server_message_fmt">Não é possível ligar ao servidor.\n(<xliff:g id="error">%s</xliff:g>)</string>
 
     <!-- Additional diagnostic text when TLS was required but the server doesn't support it -->
     <string name="account_setup_failed_tls_required">TLS requerido mas não suportado pelo servidor.</string>
@@ -670,7 +670,7 @@
          for: <xliff:g id="date">%s</xliff:g></string>
     <!-- Used as the body text of a message reporting to an attendee that a specific instance
          of a recurring meeting has been changed -->
-    <string name="exception_updated">Os detalhes deste evento foram modificados 
+    <string name="exception_updated">Os detalhes deste evento foram modificados
          para: <xliff:g id="date">%s</xliff:g></string>
 
     <!-- Message that appears if the AccountManager cannot create the system Account -->
