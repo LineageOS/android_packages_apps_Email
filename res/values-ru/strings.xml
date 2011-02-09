@@ -20,7 +20,7 @@
     <string name="read_attachment_desc" msgid="7594746717616308643">"Разрешить этой программе открывать приложения электронной почты."</string>
     <string name="permission_access_provider_label" msgid="4274353114641168675">"Получать доступ к данным провайдера электронной почты"</string>
     <string name="permission_access_provider_desc" msgid="1513898266889541617">"Разрешает этому приложению доступ к базе данных программы электронной почты, включая полученные и отправленные письма, имена пользователей и пароли."</string>
-    <string name="app_name" msgid="5815426892327290362">"Написать письмо"</string>
+    <string name="app_name" msgid="5815426892327290362">"Почта"</string>
     <string name="compose_title" msgid="427986915662706899">"Новое сообщение"</string>
     <string name="debug_title" msgid="5175710493691536719">"Выполнить отладку"</string>
     <string name="next_action" msgid="3931301986364184415">"Далее"</string>
@@ -241,6 +241,12 @@
     <string name="account_settings_vibrate_when_dlg_title" msgid="308167729046312952">"Вибросигнал"</string>
     <string name="account_settings_ringtone" msgid="7922187231467500404">"Выбор мелодии"</string>
     <string name="account_settings_servers" msgid="4925493817981624242">"Настройки сервера"</string>
+
+    <!-- On Settings screen, miscellaneous settings-->
+    <string name="misc_settings_label">Прочие параметры</string>
+    <string name="account_settings_msg_list_on_delete">Вернуться к списку сообщений</string>
+    <string name="account_settings_msg_list_on_delete_summary">Вернуться к списку сообщений после удаления</string>	
+	
     <string name="account_delete_dlg_title" msgid="6806087520856396608">"Удалить аккаунт"</string>
     <string name="account_delete_dlg_instructions_fmt" msgid="8236846322040271280">"Аккаунт \"<xliff:g id="ACCOUNT">%s</xliff:g>\" будет удален из Email."</string>
     <string name="upgrade_accounts_title" msgid="5444140226380754014">"Обновить аккаунты"</string>
@@ -271,4 +277,18 @@
     <item quantity="other" msgid="7816121892960632123">"Кол-во результатов: <xliff:g id="RESULTS">%1$d</xliff:g> с <xliff:g id="DOMAIN">%2$s</xliff:g>"</item>
   </plurals>
     <string name="gal_completed_limited_fmt" msgid="2343791690766047585">"Первые результаты с <xliff:g id="DOMAIN">%2$s</xliff:g> (<xliff:g id="RESULTS">%1$d</xliff:g>)"</string>
+
+    <!-- Menu item -->
+    <string name="select_all_action">Выбрать все</string>	
+    <string name="sync_action">Переключить синхронизацию</string>
+    <string name="hide_action">Переключить видимость</string>
+    <string name="show_hidden_action">Показывать скрытые папки</string>
+    <string name="hide_hidden_action">Скрывать скрытые папки</string>
+    <string name="toast_folder_sync_on">Сейчас синхронизируется папка:</string>
+    <string name="toast_folder_sync_off">Папка не синхронизируется:</string>
+    <string name="toast_folder_sync_invalid">Неверная папка для синхронизации</string>
+    <string name="toast_folder_hide_on">Скрытие папки:</string>
+    <string name="toast_folder_hide_off">Открытие папки:</string>
+    <string name="toast_folder_hide_invalid">Не могу скрыть эту папку!</string>	
+	
 </resources>
