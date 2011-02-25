@@ -271,4 +271,15 @@
     <item quantity="other" msgid="7816121892960632123">"<xliff:g id="RESULTS">%1$d</xliff:g> resultados de <xliff:g id="DOMAIN">%2$s</xliff:g>"</item>
   </plurals>
     <string name="gal_completed_limited_fmt" msgid="2343791690766047585">"Primeiros <xliff:g id="RESULTS">%1$d</xliff:g> resultados de <xliff:g id="DOMAIN">%2$s</xliff:g>"</string>
+
+    <string name="sync_action">Alternar sincronização</string>
+    <string name="hide_action">Alternar visibilidade</string>
+    <string name="show_hidden_action">Mostrar pastas escondidas</string>
+    <string name="hide_hidden_action">Esconder pastas escondidas</string>
+    <string name="toast_folder_sync_on">Sincronizando pasta agora:</string>
+    <string name="toast_folder_sync_off">Sincronização de pasta parada:</string>
+    <string name="toast_folder_sync_invalid">Pasta inválida para sincronização</string>
+    <string name="toast_folder_hide_on">Escondendo pasta:</string>
+    <string name="toast_folder_hide_off">Desescondendo pasta:</string>
+    <string name="toast_folder_hide_invalid">Não pode esconder esta pasta!</string>
 </resources>
