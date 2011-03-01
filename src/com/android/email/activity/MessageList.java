@@ -1218,6 +1218,10 @@ public class MessageList extends ListActivity implements OnItemClickListener, On
             Cursor c = MessageList.this.managedQuery(
                     EmailContent.Message.CONTENT_URI, MESSAGE_PROJECTION,
                     selection, null, EmailContent.MessageColumns.TIMESTAMP + " DESC");
+            if (isCancelled()) {
+                c.close();
+                c = null;
+            }
             return c;
         }
 

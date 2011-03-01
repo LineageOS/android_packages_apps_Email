@@ -26,13 +26,13 @@ import com.android.email.mail.Body;
 import com.android.email.mail.FetchProfile;
 import com.android.email.mail.Flag;
 import com.android.email.mail.Folder;
+import com.android.email.mail.Folder.FolderType;
+import com.android.email.mail.Folder.OpenMode;
 import com.android.email.mail.Message;
+import com.android.email.mail.Message.RecipientType;
 import com.android.email.mail.MessagingException;
 import com.android.email.mail.Part;
 import com.android.email.mail.Transport;
-import com.android.email.mail.Folder.FolderType;
-import com.android.email.mail.Folder.OpenMode;
-import com.android.email.mail.Message.RecipientType;
 import com.android.email.mail.internet.MimeBodyPart;
 import com.android.email.mail.internet.MimeMultipart;
 import com.android.email.mail.internet.MimeUtility;
@@ -50,7 +50,6 @@ import android.test.AndroidTestCase;
 import android.test.MoreAsserts;
 import android.test.suitebuilder.annotation.SmallTest;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Pattern;
@@ -80,7 +79,7 @@ public class ImapStoreUnitTests extends AndroidTestCase {
      */
     private final static String FOLDER_ENCODED = "&ZeU-";
 
-    private static ImapResponse CAPABILITY_RESPONSE = ImapTestUtils.parseResponse(
+    private final static ImapResponse CAPABILITY_RESPONSE = ImapTestUtils.parseResponse(
             "* CAPABILITY IMAP4rev1 STARTTLS");
 
     /* These values are provided by setUp() */
@@ -129,9 +128,13 @@ public class ImapStoreUnitTests extends AndroidTestCase {
         // TODO: inject specific facts in the initial folder SELECT and check them here
     }
 
+    /**
+     * Test simple login with failed authentication
+     */
     public void testLoginFailure() throws Exception {
         MockTransport mockTransport = openAndInjectMockTransport();
-        expectLogin(mockTransport, new String[] {"* iD nIL", "oK"}, "nO authentication failed");
+        expectLogin(mockTransport, false, false, new String[] {"* iD nIL", "oK"},
+                "nO authentication failed");
 
         try {
             mStore.getConnection().open();
@@ -141,9 +144,34 @@ public class ImapStoreUnitTests extends AndroidTestCase {
     }
 
     /**
+     * Test simple TLS open
+     */
+    public void testTlsOpen() throws MessagingException {
+
+        MockTransport mockTransport = openAndInjectMockTransport(Transport.CONNECTION_SECURITY_TLS,
+                false);
+
+        // try to open it, with STARTTLS
+        expectLogin(mockTransport, true, false,
+                new String[] {"* iD nIL", "oK"}, "oK user authenticated (Success)");
+        mockTransport.expect(
+                getNextTag(false) + " SELECT \"" + FOLDER_ENCODED + "\"", new String[] {
+                "* fLAGS (\\Answered \\Flagged \\Draft \\Deleted \\Seen)",
+                "* oK [pERMANENTFLAGS (\\Answered \\Flagged \\Draft \\Deleted \\Seen \\*)]",
+                "* 0 eXISTS",
+                "* 0 rECENT",
+                "* OK [uNSEEN 0]",
+                "* OK [uIDNEXT 1]",
+                getNextTag(true) + " oK [" + "rEAD-wRITE" + "] " +
+                        FOLDER_ENCODED + " selected. (Success)"});
+
+        mFolder.open(OpenMode.READ_WRITE, null);
+        assertTrue(mockTransport.isTlsStarted());
+    }
+
+    /**
      * TODO: Test with SSL negotiation (faked)
      * TODO: Test with SSL required but not supported
-     * TODO: Test with TLS negotiation (faked)
      * TODO: Test with TLS required but not supported
      */
 
@@ -339,6 +367,19 @@ public class ImapStoreUnitTests extends AndroidTestCase {
     }
 
     /**
+     * Confirm that when IMAP ID is not in capability, it is not sent/received.
+     * This supports RFC 2971 section 3, and is important because certain servers
+     * (e.g. imap.vodafone.net.nz) do not process the unexpected ID command properly.
+     */
+    public void testImapIdNotSupported() throws MessagingException {
+        MockTransport mockTransport = openAndInjectMockTransport();
+
+        // try to open it
+        setupOpenFolder(mockTransport, null, "rEAD-wRITE");
+        mFolder.open(OpenMode.READ_WRITE, null);
+    }
+
+    /**
      * Test small Folder functions that don't really do anything in Imap
      */
     public void testSmallFolderFunctions() throws MessagingException {
@@ -390,9 +431,17 @@ public class ImapStoreUnitTests extends AndroidTestCase {
      * Set up a basic MockTransport. open it, and inject it into mStore
      */
     private MockTransport openAndInjectMockTransport() {
+        return openAndInjectMockTransport(Transport.CONNECTION_SECURITY_NONE, false);
+    }
+
+    /**
+     * Set up a MockTransport with security settings
+     */
+    private MockTransport openAndInjectMockTransport(int connectionSecurity,
+            boolean trustAllCertificates) {
         // Create mock transport and inject it into the ImapStore that's already set up
         MockTransport mockTransport = new MockTransport();
-        mockTransport.setSecurity(Transport.CONNECTION_SECURITY_NONE, false);
+        mockTransport.setSecurity(connectionSecurity, trustAllCertificates);
         mockTransport.setMockHost("mock.server.com");
         mStore.setTransport(mockTransport);
         return mockTransport;
@@ -426,9 +475,8 @@ public class ImapStoreUnitTests extends AndroidTestCase {
      * @param mockTransport the mock transport we're using
      * @param imapIdResponse the expected series of responses to the IMAP ID command.  Non-final
      *      lines should be tagged with *.  The final response should be untagged (the correct
-     *      tag will be added at runtime).
-     * @param "READ-WRITE" or "READ-ONLY"
-     * @return the next tag# to use
+     *      tag will be added at runtime).  Pass "null" to test w/o IMAP ID.
+     * @param readWriteMode "READ-WRITE" or "READ-ONLY"
      */
     private void setupOpenFolder(MockTransport mockTransport, String[] imapIdResponse,
             String readWriteMode) {
@@ -450,29 +498,50 @@ public class ImapStoreUnitTests extends AndroidTestCase {
     }
 
     private void expectLogin(MockTransport mockTransport, String[] imapIdResponse) {
-        expectLogin(mockTransport, imapIdResponse, "oK user authenticated (Success)");
+        expectLogin(mockTransport, false, (imapIdResponse != null), imapIdResponse,
+                "oK user authenticated (Success)");
     }
 
-    private void expectLogin(MockTransport mockTransport, String[] imapIdResponse,
-            String loginResponse) {
+    private void expectLogin(MockTransport mockTransport, boolean startTls, boolean withId,
+            String[] imapIdResponse, String loginResponse) {
         // inject boilerplate commands that match our typical login
         mockTransport.expect(null, "* oK Imap 2000 Ready To Assist You");
 
-        mockTransport.expect(getNextTag(false) + " CAPABILITY", new String[] {
-                "* cAPABILITY iMAP4rev1 sTARTTLS aUTH=gSSAPI lOGINDISABLED",
-                getNextTag(true) + " oK CAPABILITY completed"});
+        expectCapability(mockTransport, withId);
 
-        String expectedNextTag = getNextTag(false);
-        // Fix the tag # of the ID response
-        String last = imapIdResponse[imapIdResponse.length-1];
-        last = expectedNextTag + " " + last;
-        imapIdResponse[imapIdResponse.length-1] = last;
-        mockTransport.expect(getNextTag(false) + " ID \\(.*\\)", imapIdResponse);
+        // TLS (if expected)
+        if (startTls) {
+            mockTransport.expect(getNextTag(false) + " STARTTLS",
+                getNextTag(true) + " Ok starting TLS");
+            mockTransport.expectStartTls();
+            // After switching to TLS the client must re-query for capability
+            expectCapability(mockTransport, withId);
+        }
 
-        getNextTag(true); // Advance the tag for ID response.
+        // ID
+        if (withId) {
+            String expectedNextTag = getNextTag(false);
+            // Fix the tag # of the ID response
+            String last = imapIdResponse[imapIdResponse.length-1];
+            last = expectedNextTag + " " + last;
+            imapIdResponse[imapIdResponse.length-1] = last;
+            mockTransport.expect(getNextTag(false) + " ID \\(.*\\)", imapIdResponse);
+            getNextTag(true); // Advance the tag for ID response.
+        }
 
+        // LOGIN
         mockTransport.expect(getNextTag(false) + " LOGIN user \"password\"",
                 getNextTag(true) + " " + loginResponse);
+    }
+
+    private void expectCapability(MockTransport mockTransport, boolean withId) {
+        String capabilityList = withId
+                ? "* cAPABILITY iMAP4rev1 sTARTTLS aUTH=gSSAPI lOGINDISABLED iD"
+                : "* cAPABILITY iMAP4rev1 sTARTTLS aUTH=gSSAPI lOGINDISABLED";
+
+        mockTransport.expect(getNextTag(false) + " CAPABILITY", new String[] {
+            capabilityList,
+            getNextTag(true) + " oK CAPABILITY completed"});
     }
 
     private void expectNoop(MockTransport mockTransport, boolean ok) {
@@ -1420,7 +1489,7 @@ public class ImapStoreUnitTests extends AndroidTestCase {
     }
 
     /**
-     * Test for {@link ImapStore#getConnection} and {@link ImapStore#keepConnectionForReuse}
+     * Test for {@link ImapStore#getConnection}
      */
     public void testGetConnection() throws Exception {
         MockTransport mock = openAndInjectMockTransport();
@@ -1488,7 +1557,8 @@ public class ImapStoreUnitTests extends AndroidTestCase {
         expectLogin(mock);
         mStore.checkSettings();
 
-        expectLogin(mock, new String[] {"* iD nIL", "oK"}, "nO authentication failed");
+        expectLogin(mock, false, false,
+                new String[] {"* iD nIL", "oK"}, "nO authentication failed");
         try {
             mStore.checkSettings();
             fail();
