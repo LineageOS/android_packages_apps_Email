@@ -43,6 +43,7 @@
     <string name="refresh_action" msgid="5951383001436708175">"Uppdatera"</string>
     <string name="add_account_action" msgid="8835736309476033727">"Lägg till konto"</string>
     <string name="deselect_all_action" msgid="253663239459688238">"Avmarkera alla"</string>
+    <string name="select_all_action">Markera alla</string>
     <string name="compose_action" msgid="4045702519637388045">"Skriv"</string>
     <string name="search_action" msgid="6325101454876682308">"Sök"</string>
     <string name="open_action" msgid="936766723989190816">"Öppna"</string>
@@ -197,6 +198,7 @@
     <string name="account_setup_options_mail_window_1week" msgid="5639718031108023741">"En vecka"</string>
     <string name="account_setup_options_mail_window_2weeks" msgid="4567049268124213035">"Två veckor"</string>
     <string name="account_setup_options_mail_window_1month" msgid="5846359669750047081">"En månad"</string>
+    <string name="account_setup_options_mail_window_all">All e-post</string>
     <string name="account_setup_failed_dlg_auth_message" msgid="42827150104879570">"Fel användarnamn eller lösenord."</string>
     <string name="account_setup_failed_dlg_auth_message_fmt" msgid="8598560266430207606">"Fel användarnamn eller lösenord."\n"(<xliff:g id="ERROR">%s</xliff:g>)"</string>
     <string name="account_setup_failed_dlg_certificate_message" msgid="961843413600482906">"Det går inte att upprätta en säker anslutning till servern."</string>
@@ -241,6 +243,9 @@
     <string name="account_settings_vibrate_when_dlg_title" msgid="308167729046312952">"Vibrera"</string>
     <string name="account_settings_ringtone" msgid="7922187231467500404">"Välj ringsignal"</string>
     <string name="account_settings_servers" msgid="4925493817981624242">"Serverinställningar"</string>
+    <string name="misc_settings_label">Övriga inställningar</string>
+    <string name="account_settings_msg_list_on_delete">Återgå till meddelandelista</string>
+    <string name="account_settings_msg_list_on_delete_summary">Återgå till meddelandelista om du tar bort meddelandet du tittar på.</string>
     <string name="account_delete_dlg_title" msgid="6806087520856396608">"Ta bort konto"</string>
     <string name="account_delete_dlg_instructions_fmt" msgid="8236846322040271280">"Kontot <xliff:g id="ACCOUNT">%s</xliff:g> tas bort från E-post."</string>
     <string name="upgrade_accounts_title" msgid="5444140226380754014">"Uppgradera konton"</string>
@@ -269,4 +274,14 @@
     <item quantity="other" msgid="7816121892960632123">"<xliff:g id="RESULTS">%1$d</xliff:g> resultat från <xliff:g id="DOMAIN">%2$s</xliff:g>"</item>
   </plurals>
     <string name="gal_completed_limited_fmt" msgid="2343791690766047585">"De första <xliff:g id="RESULTS">%1$d</xliff:g> resultaten från <xliff:g id="DOMAIN">%2$s</xliff:g>"</string>
+    <string name="sync_action">Växla synk</string>
+    <string name="hide_action">Växla synlighet</string>
+    <string name="show_hidden_action">Visa gömda mappar</string>
+    <string name="hide_hidden_action">Göm gömda mappar</string>
+    <string name="toast_folder_sync_on">Synkroniserar mapp:</string>
+    <string name="toast_folder_sync_off">Synkroniserar inte längre mapp:</string>
+    <string name="toast_folder_sync_invalid">Felaktig mall för synkronisering</string>
+    <string name="toast_folder_hide_on">Gömmer mapp:</string>
+    <string name="toast_folder_hide_off">Slutar gömma mapp:</string>
+    <string name="toast_folder_hide_invalid">Kan inte gömma denna mapp!</string>
 </resources>
