@@ -280,4 +280,9 @@
     <string name="toast_folder_hide_on">Escondendo pasta:</string>
     <string name="toast_folder_hide_off">Desescondendo pasta:</string>
     <string name="toast_folder_hide_invalid">Não pode esconder esta pasta!</string>
+    <string name="select_all_action">Marcar todas</string>
+    <string name="account_settings_msg_list_on_delete_summary">Retornar a pasta de emails depois de deletar a mensagem que você está visualizando.</string>
+    <string name="account_settings_msg_list_on_delete">Retornar a lista de emails</string>
+    <string name="misc_settings_label">Configurações diversas</string>
+    <string name="account_setup_options_mail_window_all">Todos emails</string>
 </resources>
