@@ -36,11 +36,13 @@ import com.android.email.provider.EmailContent.MessageColumns;
 import com.android.exchange.provider.GalEmailAddressAdapter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
@@ -968,6 +970,30 @@ public class MessageCompose extends Activity implements OnClickListener, OnFocus
     }
 
     private void onSend() {
+        boolean onDelete = (0 != (mAccount.getFlags() & Account.FLAGS_CONFIRM_ON_DELETE));
+
+        if (onDelete) {
+            new AlertDialog.Builder(MessageCompose.this)
+                .setTitle(R.string.confirm_on_send_dlg_title)
+                .setMessage(R.string.confirm_on_send_dlg_msg)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        onSendAction();
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        /* User clicked Cancel so do some stuff */
+                    }
+                })
+                .create()
+                .show();
+        } else {
+            onSendAction();
+        }
+    }
+
+    private void onSendAction() {
         if (!isAddressAllValid()) {
             Toast.makeText(this, getString(R.string.message_compose_error_invalid_email),
                            Toast.LENGTH_LONG).show();

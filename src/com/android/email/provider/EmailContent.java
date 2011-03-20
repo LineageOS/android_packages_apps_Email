@@ -29,6 +29,7 @@ import android.os.Environment;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.RemoteException;
+import android.util.Log;
 
 import java.io.File;
 import java.net.URI;
@@ -838,6 +839,8 @@ public abstract class EmailContent {
         public static final int FLAGS_SECURITY_HOLD = 32;
         public static final int FLAGS_VIBRATE_WHEN_SILENT = 64;
         public static final int FLAGS_MSG_LIST_ON_DELETE = 128;
+        public static final int FLAGS_CONFIRM_ON_DELETE = 256;
+        public static final int FLAGS_CONFIRM_ON_SEND = 512;
 
         public static final int DELETE_POLICY_NEVER = 0;
         public static final int DELETE_POLICY_7DAYS = 1;        // not supported

@@ -38,10 +38,12 @@ import com.android.email.service.EmailServiceConstants;
 import org.apache.commons.io.IOUtils;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.ContentObserver;
 import android.database.Cursor;
@@ -517,7 +519,32 @@ public class MessageView extends Activity implements OnClickListener {
         // the cursor was closed in onPause()
     }
 
+
     private void onDelete() {
+        boolean onDelete = (0 != (mAccount.getFlags() & Account.FLAGS_CONFIRM_ON_DELETE));
+
+        if (onDelete) {
+            new AlertDialog.Builder(MessageView.this)
+                .setTitle(R.string.confirm_on_delete_dlg_title)
+                .setMessage(R.string.confirm_on_delete_dlg_msg)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        onDeleteAction();
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        /* User clicked Cancel so do some stuff */
+                    }
+                })
+                .create()
+                .show();
+        } else {
+            onDeleteAction();
+        }
+    }
+
+    private void onDeleteAction() {
         if (mMessage != null) {
             // the delete triggers mCursorObserver
             // first move to older/newer before the actual delete
