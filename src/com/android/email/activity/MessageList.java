@@ -778,8 +778,9 @@ public class MessageList extends ListActivity implements OnItemClickListener, On
         for (Long id : selectedSet) {
             long accountId = mController.lookupAccountForMessage(id);
             Account mAccount = Account.restoreAccountWithId(this, accountId);
-            if (! onDelete)
-                onDelete = (0 != (mAccount.getFlags() & Account.FLAGS_CONFIRM_ON_DELETE));
+            onDelete = (0 != (mAccount.getFlags() & Account.FLAGS_CONFIRM_ON_DELETE));
+            if (onDelete)
+                break;
         }
 
         if (onDelete) {
