@@ -34,11 +34,13 @@ import com.android.email.provider.EmailContent.Message;
 import com.android.email.provider.EmailContent.MessageColumns;
 import com.android.email.service.MailService;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.app.NotificationManager;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
@@ -685,7 +687,32 @@ public class MessageList extends ListActivity implements OnItemClickListener, On
         }
     }
 
-    private void onDelete(long messageId, long accountId) {
+    private void onDelete(final long messageId, final long accountId) {
+        Account mAccount = Account.restoreAccountWithId(this, accountId);
+        boolean onDelete = (0 != (mAccount.getFlags() & Account.FLAGS_CONFIRM_ON_DELETE));
+
+        if (onDelete) {
+            new AlertDialog.Builder(MessageList.this)
+                .setTitle(R.string.confirm_on_delete_dlg_title)
+                .setMessage(R.string.confirm_on_delete_dlg_msg)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        onDeleteAction(messageId, accountId);
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        /* User clicked Cancel so do some stuff */
+                    }
+                })
+                .create()
+                .show();
+        } else {
+            onDeleteAction(messageId, accountId);
+        }
+    }
+
+    private void onDeleteAction(long messageId, long accountId) {
         mController.deleteMessage(messageId, accountId);
         Toast.makeText(this, getResources().getQuantityString(
                 R.plurals.message_deleted_toast, 1), Toast.LENGTH_SHORT).show();
@@ -746,7 +773,36 @@ public class MessageList extends ListActivity implements OnItemClickListener, On
         });
     }
 
-    private void onMultiDelete(Set<Long> selectedSet) {
+    private void onMultiDelete(final Set<Long> selectedSet) {
+        boolean onDelete = false;
+        for (Long id : selectedSet) {
+            long accountId = mController.lookupAccountForMessage(id);
+            Account mAccount = Account.restoreAccountWithId(this, accountId);
+            onDelete = (0 != (mAccount.getFlags() & Account.FLAGS_CONFIRM_ON_DELETE));
+        }
+
+        if (onDelete) {
+            new AlertDialog.Builder(MessageList.this)
+                .setTitle(R.string.confirm_on_delete_dlg_title)
+                .setMessage(R.string.confirm_on_delete_dlg_msg)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        onMultiDeleteAction(selectedSet);
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        /* User clicked Cancel so do some stuff */
+                    }
+                })
+                .create()
+                .show();
+        } else {
+            onMultiDeleteAction(selectedSet);
+        }
+    }
+
+    private void onMultiDeleteAction(Set<Long> selectedSet) {
         // Clone the set, because deleting is going to thrash things
         HashSet<Long> cloneSet = new HashSet<Long>(selectedSet);
         for (Long id : cloneSet) {

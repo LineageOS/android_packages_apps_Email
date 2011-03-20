@@ -120,6 +120,16 @@
             android:title="@string/account_settings_msg_list_on_delete"
             android:summary="@string/account_settings_msg_list_on_delete_summary"
             android:defaultValue="false"/>
+        <CheckBoxPreference
+            android:key="confirm_on_delete"
+            android:title="@string/account_settings_confirm_on_delete"
+            android:summary="@string/account_settings_confirm_on_delete_summary"
+            android:defaultValue="false"/>
+        <CheckBoxPreference
+            android:key="confirm_on_send"
+            android:title="@string/account_settings_confirm_on_send"
+            android:summary="@string/account_settings_confirm_on_send_summary"
+            android:defaultValue="false"/>
     </PreferenceCategory>
 
 </PreferenceScreen>

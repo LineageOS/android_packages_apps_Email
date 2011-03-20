@@ -152,6 +152,14 @@
     <!-- Dialog text when we are unable to load the message for display -->
     <string name="error_loading_message_body">Unexpected error while loading message text.  Message
         may be too large to view.</string>
+    <!-- Appears in Confirm deletion dialog title -->
+    <string name="confirm_on_delete_dlg_title">Confirm deletion</string>
+    <!-- Appears in Confirm deletion dialog message -->
+    <string name="confirm_on_delete_dlg_msg">Do you want to delete this message?</string>
+    <!-- Appears in Confirm send dialog title -->
+    <string name="confirm_on_send_dlg_title">Send messaga?</string>
+    <!-- Appears in Confirm send dialog message -->
+    <string name="confirm_on_send_dlg_msg">Send this message?</string>
 
     <!-- Notification message in notifications window when one account has
          one or more new messages; e.g, "279 unread (someone@google.com)". -->
@@ -615,6 +623,12 @@ save attachment.</string>
     <string name="misc_settings_label">Miscellaneous settings</string>
     <string name="account_settings_msg_list_on_delete">Return to message list</string>
     <string name="account_settings_msg_list_on_delete_summary">Return to message folder after deleting the message you\'re viewing.</string>
+    <!-- Confirm on delete -->
+    <string name="account_settings_confirm_on_delete">Confirm on delete</string>
+    <string name="account_settings_confirm_on_delete_summary">Show a dialog whenever you perform delete action</string>
+    <!-- Confirm on send -->
+    <string name="account_settings_confirm_on_send">Confirm on send</string>
+    <string name="account_settings_confirm_on_send_summary">Show a dialog whenever you perform send action</string>
     <!-- Title of Remove account confirmation dialog box -->
     <string name="account_delete_dlg_title">Remove account</string>
     <!-- Message of Remove account confirmation dialog box -->
