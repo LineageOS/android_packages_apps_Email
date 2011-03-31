@@ -269,4 +269,20 @@
     <item quantity="other" msgid="7816121892960632123">"<xliff:g id="DOMAIN">%2$s</xliff:g>からの結果: <xliff:g id="RESULTS">%1$d</xliff:g>件"</item>
   </plurals>
     <string name="gal_completed_limited_fmt" msgid="2343791690766047585">"<xliff:g id="DOMAIN">%2$s</xliff:g>からの結果: 最初の<xliff:g id="RESULTS">%1$d</xliff:g>件"</string>
+    <!-- CyanogenMod -->
+    <string name="select_all_action">全て選択</string>
+    <string name="account_setup_options_mail_window_all">全てのメール</string>
+    <string name="misc_settings_label">その他の設定</string>
+    <string name="account_settings_msg_list_on_delete">メッセージリストに戻る</string>
+    <string name="account_settings_msg_list_on_delete_summary">表示中のメールを削除したあとメッセージフォルダに戻る</string>
+    <string name="sync_action">同期のトグル</string>
+    <string name="hide_action">表示のトグル</string>
+    <string name="show_hidden_action">非表示フォルダを表示する</string>
+    <string name="hide_hidden_action">非表示フォルダを隠す</string>
+    <string name="toast_folder_sync_on">現在同期中のフォルダ:</string>
+    <string name="toast_folder_sync_off">同期しないフォルダ:</string>
+    <string name="toast_folder_sync_invalid">同期できないフォルダ</string>
+    <string name="toast_folder_hide_on">非表示に変更中:</string>
+    <string name="toast_folder_hide_off">表示に変更中:</string>
+    <string name="toast_folder_hide_invalid">このフォルダは非表示にできません!</string>
 </resources>
