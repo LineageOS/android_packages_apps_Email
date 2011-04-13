@@ -42,6 +42,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Locale;
 
 public class Pop3Store extends Store {
     // All flags defining debug or development code settings must be FALSE
@@ -758,13 +759,13 @@ public class Pop3Store extends Store {
             int messageId = mUidToMsgNumMap.get(message.getUid());
             if (lines == -1) {
                 // Fetch entire message
-                response = executeSimpleCommand(String.format("RETR %d", messageId));
+                response = executeSimpleCommand(String.format(Locale.US,"RETR %d", messageId));
             } else {
                 // Fetch partial message.  Try "TOP", and fall back to slower "RETR" if necessary
                 try {
-                    response = executeSimpleCommand(String.format("TOP %d %d", messageId,  lines));
+                    response = executeSimpleCommand(String.format(Locale.US,"TOP %d %d", messageId,  lines));
                 } catch (MessagingException me) {
-                    response = executeSimpleCommand(String.format("RETR %d", messageId));
+                    response = executeSimpleCommand(String.format(Locale.US,"RETR %d", messageId));
                 }
             }
             if (response != null)  {

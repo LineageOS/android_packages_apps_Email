@@ -59,6 +59,7 @@ import java.net.URI;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -876,7 +877,7 @@ public class LocalStore extends Store implements PersistentDataCallbacks {
                                     name));
                             bp.setHeader(MimeHeader.HEADER_CONTENT_TRANSFER_ENCODING, "base64");
                             bp.setHeader(MimeHeader.HEADER_CONTENT_DISPOSITION,
-                                    String.format("attachment;\n filename=\"%s\";\n size=%d",
+                                    String.format(Locale.US,"attachment;\n filename=\"%s\";\n size=%d",
                                     name,
                                     size));
                             bp.setHeader(MimeHeader.HEADER_CONTENT_ID, contentId);

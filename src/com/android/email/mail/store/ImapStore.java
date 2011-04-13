@@ -69,6 +69,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Pattern;
@@ -1163,7 +1164,7 @@ public class ImapStore extends Store {
                 if ((size > 0)
                         && (MimeUtility.getHeaderParameter(contentDisposition.toString(), "size")
                                 == null)) {
-                    contentDisposition.append(String.format(";\n size=%d", size));
+                    contentDisposition.append(String.format(Locale.US,";\n size=%d", size));
                 }
 
                 if (contentDisposition.length() > 0) {
@@ -1239,7 +1240,7 @@ public class ImapStore extends Store {
                     }
 
                     mConnection.sendCommand(
-                            String.format(ImapConstants.APPEND + " \"%s\" (%s) {%d}",
+                            String.format(Locale.US,ImapConstants.APPEND + " \"%s\" (%s) {%d}",
                                     encodeFolderName(mName),
                                     flagList,
                                     out.getCount()), false);
