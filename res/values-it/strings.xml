@@ -63,6 +63,15 @@
     <string name="notification_new_title" msgid="2200257910380529139">"Nuova email"</string>
     <string name="error_loading_message_body" msgid="2265140604109272914">"Errore inaspettato durante il caricamento del testo del messaggio. La dimensione del messaggio potrebbe essere troppo grande per la visualizzazione."</string>
   <plurals name="notification_new_one_account_fmt">
+    <!-- Appears in Confirm deletion dialog title -->
+    <string name="confirm_on_delete_dlg_title">Conferma eliminazione</string>
+    <!-- Appears in Confirm deletion dialog message -->
+    <string name="confirm_on_delete_dlg_msg">Sicuro di voler eliminare questo messaggio?</string>
+    <!-- Appears in Confirm send dialog title -->
+    <string name="confirm_on_send_dlg_title">Invia messaggio?</string>
+    <!-- Appears in Confirm send dialog message -->
+    <string name="confirm_on_send_dlg_msg">Inviare questo messaggio?</string>
+
     <item quantity="one" msgid="3422945912787702191">"<xliff:g id="UNREAD_MESSAGE_COUNT">%1$d</xliff:g> da leggere (<xliff:g id="ACCOUNT">%2$s</xliff:g>)"</item>
     <item quantity="few" msgid="6543078667692990869">"<xliff:g id="UNREAD_MESSAGE_COUNT">%1$d</xliff:g> da leggere (<xliff:g id="ACCOUNT">%2$s</xliff:g>)"</item>
     <item quantity="other" msgid="6937673814351448076">"<xliff:g id="UNREAD_MESSAGE_COUNT">%1$d</xliff:g> da leggere (<xliff:g id="ACCOUNT">%2$s</xliff:g>)"</item>
