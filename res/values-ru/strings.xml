@@ -61,6 +61,14 @@
     <string name="status_network_error" msgid="6045933332005067021">"Ошибка соединения"</string>
     <string name="notification_new_title" msgid="2200257910380529139">"Новое письмо"</string>
     <string name="error_loading_message_body" msgid="2265140604109272914">"Непредвиденная ошибка при загрузке текста сообщения. Возможно, объем сообщения слишком велик."</string>
+    <!-- Appears in Confirm deletion dialog title -->
+    <string name="confirm_on_delete_dlg_title">Подтвердите удаление</string>
+    <!-- Appears in Confirm deletion dialog message -->
+    <string name="confirm_on_delete_dlg_msg">Вы хотите удалить это сообщение?</string>
+    <!-- Appears in Confirm send dialog title -->
+    <string name="confirm_on_send_dlg_title">Отправить сообщение?</string>
+    <!-- Appears in Confirm send dialog message -->
+    <string name="confirm_on_send_dlg_msg">Отправить это сообщение?</string>
   <plurals name="notification_new_one_account_fmt">
     <item quantity="one" msgid="3422945912787702191">"Непрочитанных: <xliff:g id="UNREAD_MESSAGE_COUNT">%1$d</xliff:g> (<xliff:g id="ACCOUNT">%2$s</xliff:g>)"</item>
     <item quantity="few" msgid="6543078667692990869">"Непрочитанных: <xliff:g id="UNREAD_MESSAGE_COUNT">%1$d</xliff:g> (<xliff:g id="ACCOUNT">%2$s</xliff:g>)"</item>
