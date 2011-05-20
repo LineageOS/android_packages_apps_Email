@@ -150,6 +150,14 @@
     <string name="notification_new_title" msgid="2200257910380529139">"新郵件"</string>
     <!-- Dialog text when we are unable to load the message for display -->
     <string name="error_loading_message_body" msgid="2265140604109272914">"載入郵件文字時發生未預期的錯誤，郵件可能過大以致於無法檢視。"</string>
+    <!-- Appears in Confirm deletion dialog title -->
+    <string name="confirm_on_delete_dlg_title">刪除確認</string>
+    <!-- Appears in Confirm deletion dialog message -->
+    <string name="confirm_on_delete_dlg_msg">您想要刪除此訊息嗎？</string>
+    <!-- Appears in Confirm send dialog title -->
+    <string name="confirm_on_send_dlg_title">傳送訊息？</string>
+    <!-- Appears in Confirm send dialog message -->
+    <string name="confirm_on_send_dlg_msg">要傳送此訊息？</string>
 
     <!-- Notification message in notifications window when one account has
          one or more new messages; e.g, "279 unread (someone@google.com)". -->
@@ -590,6 +598,12 @@
     <string name="misc_settings_label">雜項</string>
     <string name="account_settings_msg_list_on_delete">返回收件匣</string>
     <string name="account_settings_msg_list_on_delete_summary">刪除檢視中的郵件後返回收件匣</string>
+    <!-- Confirm on delete -->
+    <string name="account_settings_confirm_on_delete">刪除確認</string>
+    <string name="account_settings_confirm_on_delete_summary">每當您執行刪除動作時均顯示詢問話框</string>
+    <!-- Confirm on send -->
+    <string name="account_settings_confirm_on_send">傳送確認</string>
+    <string name="account_settings_confirm_on_send_summary">每當您執行傳送動作時均顯示詢問話框</string>
     <!-- Title of Remove account confirmation dialog box -->
     <string name="account_delete_dlg_title" msgid="6806087520856396608">"移除帳戶"</string>
     <!-- Message of Remove account confirmation dialog box -->
