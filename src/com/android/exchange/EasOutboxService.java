@@ -81,7 +81,7 @@ public class EasOutboxService extends EasSyncService {
      * @throws IOException
      */
     int sendMessage(File cacheDir, long msgId) throws IOException, MessagingException {
-        int result;
+        int result=EmailServiceStatus.SUCCESS;
         sendCallback(msgId, null, EmailServiceStatus.IN_PROGRESS);
         File tmpFile = File.createTempFile("eas_", "tmp", cacheDir);
         // Write the output to a temporary file
@@ -148,18 +148,46 @@ public class EasOutboxService extends EasSyncService {
                 sendCallback(-1, subject, EmailServiceStatus.SUCCESS);
             } else {
                 userLog("Message sending failed, code: " + code);
-                ContentValues cv = new ContentValues();
-                cv.put(SyncColumns.SERVER_ID, SEND_FAILED);
-                Message.update(mContext, Message.CONTENT_URI, msgId, cv);
-                // We mark the result as SUCCESS on a non-auth failure since the message itself is
-                // already marked failed and we don't want to stop other messages from trying to
-                // send.
-                if (isAuthError(code)) {
-                    result = EmailServiceStatus.LOGIN_FAILED;
-                } else {
-                    result = EmailServiceStatus.SUCCESS;
+                
+                boolean retrySuccess=false;
+                if (smartSend) {
+                    userLog("Retrying without smartSend");
+                    cmd = "SendMail&SaveInSent=T";
+                    userLog("Send cmd: " + cmd);
+                    
+                    inputStream = new FileInputStream(tmpFile);
+                    inputEntity = new InputStreamEntity(inputStream, tmpFile.length());
+
+                    resp = sendHttpClientPost(cmd, inputEntity, SEND_MAIL_TIMEOUT);
+
+                    inputStream.close();
+                    code = resp.getStatusLine().getStatusCode();
+                    if (code == HttpStatus.SC_OK) {
+                        userLog("Deleting message...");
+                        mContentResolver.delete(ContentUris.withAppendedId(Message.CONTENT_URI, msgId),
+                                null, null);
+                        result = EmailServiceStatus.SUCCESS;
+                        sendCallback(-1, subject, EmailServiceStatus.SUCCESS);
+                        retrySuccess=true;
+                    }
                 }
-                sendCallback(msgId, null, result);
+                
+                if (!retrySuccess) {
+                    userLog("Message sending failed, code: " + code);
+
+                    ContentValues cv = new ContentValues();
+                    cv.put(SyncColumns.SERVER_ID, SEND_FAILED);
+                    Message.update(mContext, Message.CONTENT_URI, msgId, cv);
+                    // We mark the result as SUCCESS on a non-auth failure since the message itself
+                    // is already marked failed and we don't want to stop other messages from
+                    // trying to send.
+                    if (isAuthError(code)) {
+                        result = EmailServiceStatus.LOGIN_FAILED;
+                    } else {
+                        result = EmailServiceStatus.SUCCESS;
+                    }
+                        sendCallback(msgId, null, result);
+                }
 
             }
         } catch (IOException e) {
