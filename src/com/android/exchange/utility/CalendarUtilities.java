@@ -932,6 +932,12 @@ public class CalendarUtilities {
         return toCalendar.getTimeInMillis();
     }
 
+    /* TODO BKBK This end ups making a string that I don't think is right!
+     * BYDAY=-1MO,-1TU,-1WE,-1TH,-1FR
+     * I think that should be
+     * BYDAY=MO,TU,WE,TH,FR;BYSETPOS=-1
+     * http://www.ietf.org/rfc/rfc2445.txt
+     */
     static void addByDay(StringBuilder rrule, int dow, int wom) {
         rrule.append(";BYDAY=");
         boolean addComma = false;
@@ -943,12 +949,15 @@ public class CalendarUtilities {
                 if (wom > 0) {
                     // 5 = last week -> -1
                     // So -1SU = last sunday
-                    rrule.append(wom == 5 ? -1 : wom);
+                    rrule.append(wom == 5 ? "" : wom);
                 }
                 rrule.append(sDayTokens[i]);
                 addComma = true;
             }
             dow >>= 1;
+        }
+        if (wom == 5) {
+            rrule.append(";BYSETPOS=-1");
         }
     }
 
