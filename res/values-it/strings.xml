@@ -255,12 +255,13 @@
     <string name="account_settings_vibrate_when_dlg_title" msgid="308167729046312952">"Vibrazione"</string>
     <string name="account_settings_ringtone" msgid="7922187231467500404">"Seleziona suoneria"</string>
     <string name="account_settings_servers" msgid="4925493817981624242">"Impostazioni server"</string>
-
-    <!-- On Settings screen, miscellaneous settings-->
     <string name="misc_settings_label">Impostazioni varie</string>
     <string name="account_settings_msg_list_on_delete">Ritorna a elenco messaggi</string>
     <string name="account_settings_msg_list_on_delete_summary">Ritorna alla cartella messaggi dopo eliminazione messaggio.</string>
-
+    <string name="account_settings_confirm_on_delete">Conferma cancellazione</string>
+    <string name="account_settings_confirm_on_delete_summary">Richiedi una conferma prima di cancellare una email</string>
+    <string name="account_settings_confirm_on_send">Conferma invio</string>
+    <string name="account_settings_confirm_on_send_summary">Richiedi una conferma prima di invirare una email</string>
     <string name="account_delete_dlg_title" msgid="6806087520856396608">"Rimuovi account"</string>
     <string name="account_delete_dlg_instructions_fmt" msgid="8236846322040271280">"L\'account \"<xliff:g id="ACCOUNT">%s</xliff:g>\" verrà rimosso da Email."</string>
     <string name="upgrade_accounts_title" msgid="5444140226380754014">"Esegui l\'upgrade degli account"</string>
