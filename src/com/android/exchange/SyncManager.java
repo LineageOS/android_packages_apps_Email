@@ -1773,6 +1773,38 @@ public class SyncManager extends Service implements Runnable {
             // Run the reconciler and clean up any mismatched accounts - if we weren't running when
             // accounts were deleted, it won't have been called.
             runAccountReconciler();
+
+            /*
+             * Added this section due to error in 2.3 base framework.  Since this won't
+             * be fixed any time soon, I'm resorting to starting the thread here!!  Lame,
+             * but it will get things going again!!  More details below, so keep reading...
+             *
+             * http://groups.google.com/group/android-developers/browse_thread/thread/d87fb390c13d141d/52f7154ab49f229
+             * (see first comment #26: Dianne Hackborn Feb 28, 2011 7:35pm)
+             *
+             * See comment 26 from Dianne Hackborn):
+             *   Okay, this did indeed break in 2.3.  The change was from August of last
+             *   year.  This is the change that broke it:
+             *
+             *   http://android.git.kernel.org/?p=platform/frameworks/base.git;a=commit;h=5474b0f8603ee66413c3e44600ca46f162f3089e
+             *
+             *   In particular this change here:
+             *   -                if (si.intent == null && N > 1) {
+             *   +                if (si.intent == null) {
+             *
+             *   I'll get this fixed in the next platform update (post-Android 3.0);
+             *   unfortunately this code has been out in the source tree for a while, and in
+             *   a couple releases now, so we'll need to live with the broken behavior on
+             *   those versions.  The service will still have its onCreate() called so you
+             *   can do work there.
+             *   
+             * A few comments down, Dianne suggests that the appropriate workaround
+             * is to post an Intent, thereby allowing the onStartCommand() to be called.
+             * A further suggestion by another Marc (Upstream Issue 14466) is to simply
+             * call startService(Intent) to get the onStartCommand(Intent,int,int) to
+             * be called explicitly.
+             */
+            startService(new Intent(this, SyncManager.class));
         }
     }
 
