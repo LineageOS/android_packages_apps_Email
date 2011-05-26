@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAF3///+8\u003d",
+        "filename": "src/com/android/exchange/SyncManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 32
+      },
+      "writtenOn": "2011-05-26T11:22:06Z",
+      "side": 1,
+      "message": "Unused?",
+      "revId": "f6f50498d91cb2905c037d3d6757d5dceebddc28",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
