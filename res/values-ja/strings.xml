@@ -285,4 +285,17 @@
     <string name="toast_folder_hide_on">非表示に変更中:</string>
     <string name="toast_folder_hide_off">表示に変更中:</string>
     <string name="toast_folder_hide_invalid">このフォルダは非表示にできません!</string>
+    <string name="confirm_on_delete_dlg_title">削除の確認</string>
+    <!-- Appears in Confirm deletion dialog message -->
+    <string name="confirm_on_delete_dlg_msg">このメッセージを削除しますか?</string>
+    <!-- Appears in Confirm send dialog title -->
+    <string name="confirm_on_send_dlg_title">送信の確認</string>
+    <!-- Appears in Confirm send dialog message -->
+    <string name="confirm_on_send_dlg_msg">このメッセージを送信しますか?</string>
+    <string name="account_settings_confirm_on_delete">削除の確認</string>
+    <string name="account_settings_confirm_on_delete_summary">メッセージを削除する際に確認ダイアログを表示する</string>
+    <!-- Confirm on send -->
+    <string name="account_settings_confirm_on_send">送信の確認</string>
+    <string name="account_settings_confirm_on_send_summary">メッセージを送信する際に確認ダイアログを表示する</string>
+
 </resources>
