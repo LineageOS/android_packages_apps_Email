@@ -18,6 +18,7 @@ package com.android.exchange.adapter;
 import com.android.email.SecurityPolicy;
 import com.android.email.SecurityPolicy.PolicySet;
 import com.android.exchange.EasSyncService;
+import android.provider.Settings;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -117,8 +118,14 @@ public class ProvisionParser extends Parser {
             }
 
             if (!supported) {
-                log("Policy not supported: " + tag);
-                mIsSupportable = false;
+                if (Settings.Secure.getInt(mService.mContext.getContentResolver(),
+                        Settings.Secure.EMAIL_EXCHANGE_POLICY_IGNORE,
+                        mService.mContext.getResources().getBoolean(com.android.internal.R.bool.config_exchangePolicyIgnore) ? 1 : 0) == 1) {
+                    log("Policy not supported (ignored): " + tag);
+                } else {
+                    log("Policy not supported: " + tag);
+                    mIsSupportable = false;
+                }
             }
         }
 
