@@ -285,4 +285,15 @@
     <string name="account_settings_msg_list_on_delete">Retornar a lista de emails</string>
     <string name="misc_settings_label">Configurações diversas</string>
     <string name="account_setup_options_mail_window_all">Todos emails</string>
+    <string name="confirm_on_delete_dlg_title">Confirmar a exclusão</string>
+    <string name="confirm_on_delete_dlg_msg">Você quer deletar esta mensagem?</string>
+    <string name="confirm_on_send_dlg_title">Enviar mensagem?</string>
+    <string name="confirm_on_send_dlg_msg">Enviar esta mensagem?</string>
+    <string name="account_settings_confirm_on_delete">Confirmar ao apagar</string>
+    <string name="account_settings_confirm_on_delete_summary">Mostrar uma janela sempre que você executa ação de exclusão</string>
+    <string name="account_settings_confirm_on_send">Confirmar ao enviar</string>
+    <string name="account_settings_confirm_on_send_summary">Mostrar uma janela sempre que você executar a ação de enviar</string>
+    <string name="account_setup_color_title">Cor da conta</string>
+    <string name="account_settings_color_label">Cor da conta</string>
+    <string name="sample_account_name">Nome da conta de amostragem</string>
 </resources>
