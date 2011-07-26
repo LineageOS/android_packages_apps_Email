@@ -580,7 +580,7 @@
     <!-- On Settings screen, vibrate pop-up menu summary text -->
     <string name="account_settings_vibrate_when_summary" msgid="3991584445166247189">"收到電子郵件時震動提醒"</string>
     <!-- On Settings screen, vibrate pop-up menu option "always" text -->
-    <string name="account_settings_vibrate_when_always" msgid="6739506816960483174">"永遠要"</string>
+    <string name="account_settings_vibrate_when_always" msgid="6739506816960483174">"一律"</string>
     <!-- On Settings screen, vibrate pop-up menu option "silent" text -->
     <string name="account_settings_vibrate_when_silent" msgid="6417076436551648924">"靜音時才啟用"</string>
     <!-- On Settings screen, vibrate pop-up menu option "never" text -->
@@ -666,7 +666,7 @@
 
     <!-- Strings that support the DeviceAdmin / DevicePolicyManager API -->
     <!-- Name of the DeviceAdmin (seen in settings & in user confirmation screen) -->
-    <string name="device_admin_label" msgid="8680224994637869414">"傳送電子郵件"</string>
+    <string name="device_admin_label" msgid="8680224994637869414">"電子郵件"</string>
     <!-- Long-form description of the DeviceAdmin (2nd line in settings & in user conf. screen) -->
     <string name="device_admin_description" msgid="426727923791430306">"啟用伺服器專用安全性政策"</string>
 
