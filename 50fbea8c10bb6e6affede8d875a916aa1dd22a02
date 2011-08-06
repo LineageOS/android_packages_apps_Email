@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAHn//+x8\u003d",
+        "filename": "res/values-de/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1119
+      },
+      "writtenOn": "2011-08-06T18:16:21Z",
+      "side": 1,
+      "message": "Um das ganze einheitlich zu machen, würde ich es ohne Punkt am Ende machen.",
+      "revId": "50fbea8c10bb6e6affede8d875a916aa1dd22a02",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAHn//+x4\u003d",
+        "filename": "res/values-de/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1119
+      },
+      "writtenOn": "2011-08-06T18:16:21Z",
+      "side": 1,
+      "message": "hier auch",
+      "revId": "50fbea8c10bb6e6affede8d875a916aa1dd22a02",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAHn//+x0\u003d",
+        "filename": "res/values-de/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1119
+      },
+      "writtenOn": "2011-08-06T18:16:21Z",
+      "side": 1,
+      "message": "hier auch",
+      "revId": "50fbea8c10bb6e6affede8d875a916aa1dd22a02",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
