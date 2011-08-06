@@ -247,11 +247,11 @@
     <!-- On Settings screen, miscellaneous settings-->
     <string name="misc_settings_label">Erweiterte Einstellungen</string>
     <string name="account_settings_msg_list_on_delete">Zurück zur Nachrichtenliste</string>
-    <string name="account_settings_msg_list_on_delete_summary">Nach dem Löschen der aktuellen Email zur Nachrichtenliste zurückkehren.</string>
+    <string name="account_settings_msg_list_on_delete_summary">Nach dem Löschen der aktuellen Email zur Nachrichtenliste zurückkehren</string>
     <string name="account_settings_confirm_on_delete">Löschen bestätigen</string>
-    <string name="account_settings_confirm_on_delete_summary">Vor dem Löschen einen Dialog anzeigen.</string>
+    <string name="account_settings_confirm_on_delete_summary">Vor dem Löschen einen Dialog anzeigen</string>
     <string name="account_settings_confirm_on_send">Senden bestätigen</string>
-    <string name="account_settings_confirm_on_send_summary">Vor dem Senden einen Dialog anzeigen.</string>
+    <string name="account_settings_confirm_on_send_summary">Vor dem Senden einen Dialog anzeigen</string>
 
     <string name="account_delete_dlg_title" msgid="6806087520856396608">"Konto entfernen"</string>
     <string name="account_delete_dlg_instructions_fmt" msgid="8236846322040271280">"Das Konto \"<xliff:g id="ACCOUNT">%s</xliff:g>\" wird aus Email entfernt."</string>
