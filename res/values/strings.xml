@@ -743,8 +743,8 @@ save attachment.</string>
     <string name="toast_folder_hide_on">Hiding folder:</string>
     <string name="toast_folder_hide_off">Unhiding folder:</string>
     <string name="toast_folder_hide_invalid">Cannot hide this folder!</string>
-        
-    <string name="sample_account_name" >Sample Account Name</string>
-    <string name="default_rgb_value" >255</string>
-    <string name="default_html_color_code" >0xFFFFFFFF</string>
+
+    <string name="sample_account_name">Sample Account Name</string>
+    <string name="default_rgb_value" translatable="false">255</string>
+    <string name="default_html_color_code" translatable="false">0xFFFFFFFF</string>
 </resources>
