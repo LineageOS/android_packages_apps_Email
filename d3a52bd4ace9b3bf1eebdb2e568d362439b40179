@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAH3///4Y\u003d",
+        "filename": "res/values-pt/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 783
+      },
+      "writtenOn": "2011-08-23T07:58:35Z",
+      "side": 1,
+      "message": "amostragem -\u003e exemplo",
+      "revId": "d3a52bd4ace9b3bf1eebdb2e568d362439b40179",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
