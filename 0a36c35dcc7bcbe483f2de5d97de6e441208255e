@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAH3///pk\u003d",
+        "filename": "res/values-de/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2011-08-24T13:48:49Z",
+      "side": 1,
+      "message": "Klingt irgendwie komisch. Wie wäre es mit \u0027Kontofarbe\u0027?\nEine Alternative wäre noch \u0027Farbe des Kontos\u0027 (K9 verwendet das). \u0027Kontofarbe\u0027 gefällt mir aber besser.",
+      "revId": "0a36c35dcc7bcbe483f2de5d97de6e441208255e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
