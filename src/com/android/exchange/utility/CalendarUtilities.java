@@ -1040,12 +1040,16 @@ public class CalendarUtilities {
     }
 
     /**
-     * Convenience method to add "until" to an EAS calendar stream
+     * Convenience method to add "until" or COUNT to an EAS calendar stream
      */
     static void addUntil(String rrule, Serializer s) throws IOException {
         String until = tokenFromRrule(rrule, "UNTIL=");
         if (until != null) {
             s.data(Tags.CALENDAR_RECURRENCE_UNTIL, recurrenceUntilToEasUntil(until));
+        }
+        String count = tokenFromRrule(rrule, "COUNT=");
+        if (count != null) {
+            s.data(Tags.CALENDAR_RECURRENCE_OCCURRENCES, count);
         }
     }
 
