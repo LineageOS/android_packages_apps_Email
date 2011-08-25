@@ -298,4 +298,8 @@
     <string name="account_settings_confirm_on_send">送信の確認</string>
     <string name="account_settings_confirm_on_send_summary">メッセージを送信する際に確認ダイアログを表示する</string>
 
+    <string name="account_setup_color_title">アカウントの色</string>
+    <string name="account_settings_color_label">アカウントの色</string>
+    <string name="sample_account_name">サンプルアカウント</string>
+
 </resources>
