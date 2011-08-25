@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAH3///nc\u003d",
+        "filename": "res/values-de/strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1053
+      },
+      "writtenOn": "2011-08-25T00:10:19Z",
+      "side": 1,
+      "message": "Verteckte  \u003d\u003d\u003e Versteckte\n\nKannst Du das bitte auch gleich noch fixen?",
+      "revId": "8d7c4488df4d1808338a5da687653b7d96560ba3",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
