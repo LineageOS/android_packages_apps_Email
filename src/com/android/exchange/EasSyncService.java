@@ -1857,6 +1857,11 @@ public class EasSyncService extends AbstractSyncService {
                         // internal error, so let's not throw an exception (which leads to delays)
                         // but rather simply run through the loop again
                     } else {
+                        // Make sure we release the previously acquired wake lock otherwise we end up
+                        // in possible battery drain as explained at http://code.google.com/p/android/issues/detail?id=9307
+                        // comment #122
+                        SyncManager.runAsleep(mMailboxId, 0);
+
                         throw e;
                     }
                 }
