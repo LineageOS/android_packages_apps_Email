@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAH3//91I\u003d",
+        "filename": "src/com/android/exchange/EasSyncService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1860,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2011-09-15T19:57:06Z",
+      "side": 1,
+      "message": "Extra whitespace",
+      "revId": "2bca93f2ee0a6cdd8c8876a34bf631c5340dbe6f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAH3//91E\u003d",
+        "filename": "src/com/android/exchange/EasSyncService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1865,
+      "author": {
+        "id": 68
+      },
+      "writtenOn": "2011-09-15T19:57:06Z",
+      "side": 1,
+      "message": "Extra whitespace",
+      "revId": "2bca93f2ee0a6cdd8c8876a34bf631c5340dbe6f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
