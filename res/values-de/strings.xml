@@ -65,7 +65,7 @@
 	<string name="confirm_on_delete_dlg_title">Löschen bestätigen</string>
     <string name="confirm_on_delete_dlg_msg">Wollen sie diese Nachricht löschen?</string>
     <string name="confirm_on_send_dlg_title">Senden bestätigen</string>
-    <string name="confirm_on_send_dlg_msg">Woleln sie diese Nachricht senden?</string>
+    <string name="confirm_on_send_dlg_msg">Wollen sie diese Nachricht senden?</string>
   <plurals name="notification_new_one_account_fmt">
     <item quantity="one" msgid="3422945912787702191">"<xliff:g id="UNREAD_MESSAGE_COUNT">%1$d</xliff:g> ungelesen (<xliff:g id="ACCOUNT">%2$s</xliff:g>)"</item>
     <item quantity="few" msgid="6543078667692990869">"<xliff:g id="UNREAD_MESSAGE_COUNT">%1$d</xliff:g> ungelesen (<xliff:g id="ACCOUNT">%2$s</xliff:g>)"</item>
