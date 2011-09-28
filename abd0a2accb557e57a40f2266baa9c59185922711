@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAI3///OI\u003d",
+        "filename": "res/values-de/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 73
+      },
+      "writtenOn": "2011-09-28T02:42:20Z",
+      "side": 1,
+      "message": "whitespace error on this line - use spaces, no tabs",
+      "revId": "abd0a2accb557e57a40f2266baa9c59185922711",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAI3///OE\u003d",
+        "filename": "res/values-de/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 73
+      },
+      "writtenOn": "2011-09-28T02:42:20Z",
+      "side": 1,
+      "message": "vllt besser: \"Wollen sie diese Nachricht wirklich löschen?\" ich habe die englische Bezeichnung gerade nicht zur Hand. Am besten daran halten.",
+      "revId": "abd0a2accb557e57a40f2266baa9c59185922711",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAI3///OA\u003d",
+        "filename": "res/values-de/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 73
+      },
+      "writtenOn": "2011-09-28T02:42:20Z",
+      "side": 1,
+      "message": "typo: Wollen",
+      "revId": "abd0a2accb557e57a40f2266baa9c59185922711",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
