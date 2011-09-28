@@ -58,10 +58,14 @@
     <string name="dump_settings_action" msgid="4478192525236169829">"Einstellungen für Speicherauszug"</string>
     <string name="choose_attachment_dialog_title" msgid="81937507117528954">"Anhang auswählen"</string>
     <string name="status_loading_more" msgid="1580386959044617884">"Nachrichten werden geladen..."</string>
-    <string name="status_sending_messages" msgid="3971880826111264523">"Nachrichten werden gesendet…"</string>
+    <string name="status_sending_messages" msgid="3971880826111264523">"Nachrichten werden gesendet..."</string>
     <string name="status_network_error" msgid="6045933332005067021">"Verbindungsfehler"</string>
     <string name="notification_new_title" msgid="2200257910380529139">"Neue E-Mail"</string>
     <string name="error_loading_message_body" msgid="2265140604109272914">"Unerwarteter Fehler beim Laden des Nachrichtentextes aufgetreten. Die Nachricht ist möglicherweise zu lang, um angezeigt zu werden."</string>
+    <string name="confirm_on_delete_dlg_title">Löschen bestätigen</string>
+    <string name="confirm_on_delete_dlg_msg">Wollen Sie diese Nachricht wirklich löschen?</string>
+    <string name="confirm_on_send_dlg_title">Senden bestätigen</string>
+    <string name="confirm_on_send_dlg_msg">Wollen Sie diese Nachricht senden?</string>
   <plurals name="notification_new_one_account_fmt">
     <item quantity="one" msgid="3422945912787702191">"<xliff:g id="UNREAD_MESSAGE_COUNT">%1$d</xliff:g> ungelesen (<xliff:g id="ACCOUNT">%2$s</xliff:g>)"</item>
     <item quantity="few" msgid="6543078667692990869">"<xliff:g id="UNREAD_MESSAGE_COUNT">%1$d</xliff:g> ungelesen (<xliff:g id="ACCOUNT">%2$s</xliff:g>)"</item>
