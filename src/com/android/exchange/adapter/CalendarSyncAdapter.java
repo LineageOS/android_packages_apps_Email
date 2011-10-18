@@ -462,6 +462,17 @@ public class CalendarSyncAdapter extends AbstractSyncAdapter {
                             // this an all-day event in the local time zone (this is what OWA does)
                             GregorianCalendar cal = new GregorianCalendar(mLocalTimeZone);
                             cal.setTimeInMillis(startTime);
+                      
+							// Second calendar to check local DST offset
+							GregorianCalendar calLocal = new GregorianCalendar(mLocalTimeZone);
+							calLocal.set(GregorianCalendar.DAY_OF_MONTH, cal.get(GregorianCalendar.DAY_OF_MONTH));
+							calLocal.set(GregorianCalendar.MONTH, cal.get(GregorianCalendar.MONTH));
+
+							// Add DST offset if needed
+							if(cal.get(GregorianCalendar.DST_OFFSET) != calLocal.get(GregorianCalendar.DST_OFFSET)) {
+								cal.setTimeInMillis(startTime+calLocal.get(GregorianCalendar.DST_OFFSET));
+							}
+
                             userLog("All-day event arrived in: " + timeZone.getID());
                             if (cal.get(GregorianCalendar.HOUR_OF_DAY) != 0 ||
                                     cal.get(GregorianCalendar.MINUTE) != 0) {
