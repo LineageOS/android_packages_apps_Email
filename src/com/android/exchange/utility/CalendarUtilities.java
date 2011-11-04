@@ -768,7 +768,7 @@ public class CalendarUtilities {
             } else {
                 TimeZoneDate dstStart = getTimeZoneDateFromSystemTime(timeZoneBytes,
                         MSFT_TIME_ZONE_DAYLIGHT_DATE_OFFSET);
-		if(dstStart == null) return null;
+                if(dstStart == null) return null;
 
                 // See comment above for bias...
                 long dstSavings =
