@@ -16,6 +16,24 @@
       "revId": "f96d3e8741c3fb09f5def3d02ba05f07042b56bf",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAK3///Rw\u003d",
+        "filename": "src/com/android/exchange/utility/CalendarUtilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1997
+      },
+      "writtenOn": "2011-11-04T14:28:34Z",
+      "side": 1,
+      "message": "Done, but it create a new issue I6211b08e. Is that ok or should I cancel the whole and submit as an atom?",
+      "parentUuid": "AAAAK3///S8\u003d",
+      "revId": "f96d3e8741c3fb09f5def3d02ba05f07042b56bf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
