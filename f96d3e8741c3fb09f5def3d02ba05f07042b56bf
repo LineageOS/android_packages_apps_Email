@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAK3///S8\u003d",
+        "filename": "src/com/android/exchange/utility/CalendarUtilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1402
+      },
+      "writtenOn": "2011-11-04T12:17:35Z",
+      "side": 1,
+      "message": "Please dont use tabs, use spaces.",
+      "revId": "f96d3e8741c3fb09f5def3d02ba05f07042b56bf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
