@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--  Copyright (C) 2008 The Android Open Source Project
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2008 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -12,15 +12,15 @@
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
      limitations under the License.
- -->
+-->
 
-<resources xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
     <string name="read_attachment_label" msgid="1162255191991555285">"Leer los archivos adjuntos del mensaje"</string>
     <string name="read_attachment_desc" msgid="7594746717616308643">"Permite que esta aplicación lea los archivos adjuntos del correo electrónico."</string>
     <string name="permission_access_provider_label" msgid="4274353114641168675">"Acceder a los datos del proveedor de servicios de correo"</string>
     <string name="permission_access_provider_desc" msgid="1513898266889541617">"Permite que la aplicación acceda a la base de datos de tu correo electrónico, incluidos los mensajes recibidos, los mensajes enviados, los nombre de usuario y las contraseñas."</string>
-    <string name="app_name" msgid="5815426892327290362">"Email"</string>
+    <string name="app_name" msgid="5815426892327290362">"Correo Electrónico"</string>
     <string name="compose_title" msgid="427986915662706899">"Redactar"</string>
     <string name="debug_title" msgid="5175710493691536719">"Depurar"</string>
     <string name="next_action" msgid="3931301986364184415">"Siguiente"</string>
@@ -52,17 +52,17 @@
     <string name="accounts_action" msgid="901105887272231493">"Cuentas"</string>
     <string name="mark_as_read_action" msgid="5031651846998842419">"Marcar como leída"</string>
     <string name="mark_as_unread_action" msgid="3766298115778767554">"Marcar como no leído"</string>
-    <string name="add_cc_bcc_action" msgid="5569074812077509737">"Añadir Cc/CCO"</string>
+    <string name="add_cc_bcc_action" msgid="5569074812077509737">"Añadir Cc/Cco"</string>
     <string name="add_attachment_action" msgid="2696013743130573897">"Añadir adjunto"</string>
     <string name="dump_settings_action" msgid="4478192525236169829">"Ajustes de volcado"</string>
     <string name="choose_attachment_dialog_title" msgid="81937507117528954">"Elegir archivo adjunto"</string>
-    <string name="status_loading_more" msgid="1580386959044617884">"Cargando mensajes..."</string>
-    <string name="status_sending_messages" msgid="3971880826111264523">"Enviando mensajes..."</string>
+    <string name="status_loading_more" msgid="1580386959044617884">"Cargando mensajes\u2026"</string>
+    <string name="status_sending_messages" msgid="3971880826111264523">"Enviando mensajes\u2026"</string>
     <string name="status_network_error" msgid="6045933332005067021">"Error de conexión"</string>
     <string name="notification_new_title" msgid="2200257910380529139">"Nuevo mensaje"</string>
     <string name="error_loading_message_body" msgid="2265140604109272914">"Se ha producido un error inesperado durante la carga del mensaje de texto. Es posible que el mensaje sea demasiado grande para mostrarse."</string>
   <plurals name="notification_new_one_account_fmt">
-    <item quantity="one" msgid="3422945912787702191">"<xliff:g id="UNREAD_MESSAGE_COUNT">%1$d</xliff:g> no leídos (<xliff:g id="ACCOUNT">%2$s</xliff:g>)"</item>
+    <item quantity="one" msgid="3422945912787702191">"<xliff:g id="UNREAD_MESSAGE_COUNT">%1$d</xliff:g> no leído (<xliff:g id="ACCOUNT">%2$s</xliff:g>)"</item>
     <item quantity="few" msgid="6543078667692990869">"<xliff:g id="UNREAD_MESSAGE_COUNT">%1$d</xliff:g> no leídos (<xliff:g id="ACCOUNT">%2$s</xliff:g>)"</item>
     <item quantity="other" msgid="6937673814351448076">"<xliff:g id="UNREAD_MESSAGE_COUNT">%1$d</xliff:g> no leídos (<xliff:g id="ACCOUNT">%2$s</xliff:g>)"</item>
   </plurals>
@@ -86,13 +86,13 @@
     <string name="mailbox_list_title" msgid="8299608543467211089">"Buzón de correo"</string>
     <string name="message_list_load_more_messages_action" msgid="7428302707908825692">"Cargar más mensajes"</string>
     <string name="message_list_send_pending_messages_action" msgid="9100624762133992435">"Enviar mensajes salientes"</string>
-    <string name="message_compose_to_hint" msgid="2891895306418177013">"Al"</string>
+    <string name="message_compose_to_hint" msgid="2891895306418177013">"A"</string>
     <string name="message_compose_cc_hint" msgid="8481884461031434144">"Cc"</string>
-    <string name="message_compose_bcc_hint" msgid="9177337492358841680">"CCO"</string>
+    <string name="message_compose_bcc_hint" msgid="9177337492358841680">"Cco"</string>
     <string name="message_compose_subject_hint" msgid="6993487234024160782">"Asunto"</string>
     <string name="message_compose_body_hint" msgid="7575406246484103697">"Redactar"</string>
-    <string name="message_compose_fwd_header_fmt" msgid="5181300290654579434">\n\n"-------- Original Message --------"\n"Subject: <xliff:g id="SUBJECT">%1$s</xliff:g>"\n"From: <xliff:g id="SENDER">%2$s</xliff:g>"\n"To: <xliff:g id="TO">%3$s</xliff:g>"\n"CC: <xliff:g id="CC_0">%4$s</xliff:g>"\n\n</string>
-    <string name="message_compose_reply_header_fmt" msgid="8815624773273454573">\n\n"<xliff:g id="SENDER">%s</xliff:g> wrote:"\n\n</string>
+    <string name="message_compose_fwd_header_fmt" msgid="5181300290654579434">\n\n"-------- Mensaje original --------"\n"Asunto: <xliff:g id="SUBJECT">%1$s</xliff:g>"\n"De: <xliff:g id="SENDER">%2$s</xliff:g>"\n"Para: <xliff:g id="TO">%3$s</xliff:g>"\n"Cc: <xliff:g id="CC_0">%4$s</xliff:g>"\n\n</string>
+    <string name="message_compose_reply_header_fmt" msgid="8815624773273454573">\n\n"<xliff:g id="SENDER">%s</xliff:g> escribió:"\n\n</string>
     <string name="message_compose_quoted_text_label" msgid="5722467956990009520">"Texto entre comillas"</string>
     <string name="message_compose_error_no_recipients" msgid="4903715888250785486">"Debes especificar, al menos, un destinatario."</string>
     <string name="message_compose_error_invalid_email" msgid="1817633338629885643">"Algunas direcciones de correo electrónico no son válidas."</string>
@@ -138,10 +138,10 @@
     <string name="account_setup_username_password_toast" msgid="4441448542557889481">"Introduce una dirección de correo electrónico y una contraseña válidas."</string>
     <string name="account_duplicate_dlg_title" msgid="3176749833792312641">"Cuenta duplicada"</string>
     <string name="account_duplicate_dlg_message_fmt" msgid="1920726613701479851">"Estas claves de acceso ya se utilizan para la cuenta \"<xliff:g id="DUPLICATE">%s</xliff:g>\"."</string>
-    <string name="account_setup_check_settings_retr_info_msg" msgid="4121970450267725664">"Recuperando la información de la cuenta..."</string>
-    <string name="account_setup_check_settings_check_incoming_msg" msgid="5356212700221438863">"Comprobando la configuración del servidor de entrada..."</string>
-    <string name="account_setup_check_settings_check_outgoing_msg" msgid="4033015234096725343">"Comprobando la configuración del servidor de salida..."</string>
-    <string name="account_setup_check_settings_canceling_msg" msgid="5077315503721883906">"Cancelando..."</string>
+    <string name="account_setup_check_settings_retr_info_msg" msgid="4121970450267725664">"Recuperando la información de la cuenta\u2026"</string>
+    <string name="account_setup_check_settings_check_incoming_msg" msgid="5356212700221438863">"Comprobando la configuración del servidor de entrada\u2026"</string>
+    <string name="account_setup_check_settings_check_outgoing_msg" msgid="4033015234096725343">"Comprobando la configuración del servidor de salida\u2026"</string>
+    <string name="account_setup_check_settings_canceling_msg" msgid="5077315503721883906">"Cancelando\u2026"</string>
     <string name="account_setup_names_title" msgid="8875040521875381849">"Configurar correo electrónico"</string>
     <string name="account_setup_names_instructions" msgid="2880279273965835007">"Tu cuenta ya está configurada y en breve verás tu correo."</string>
     <string name="account_setup_names_account_name_label" msgid="8033895024273259196">"Asignar un nombre a esta cuenta (opcional)"</string>
@@ -186,6 +186,10 @@
     <string name="account_setup_options_mail_check_frequency_15min" msgid="5052776740089741793">"Cada 15 minutos"</string>
     <string name="account_setup_options_mail_check_frequency_30min" msgid="1097088928685931864">"Cada 30 minutos"</string>
     <string name="account_setup_options_mail_check_frequency_1hour" msgid="3767715356039692899">"Cada hora"</string>
+    <string name="account_setup_options_mail_check_frequency_3hour">"Cada 3 horas"</string>
+    <string name="account_setup_options_mail_check_frequency_6hour">"Cada 6 horas"</string>
+    <string name="account_setup_options_mail_check_frequency_12hour">"Cada 12 horas"</string>
+    <string name="account_setup_options_mail_check_frequency_24hour">"Cada 24 horas"</string>
     <string name="account_setup_options_default_label" msgid="8869166381331276697">"Enviar correo electrónico desde esta cuenta de forma predeterminada"</string>
     <string name="account_setup_options_notify_label" msgid="1247525794828820038">"Avisarme cuando llegue un correo electrónico"</string>
     <string name="account_setup_options_sync_contacts_label" msgid="7467467090023434271">"Sincronizar contactos desde esta cuenta"</string>
@@ -241,6 +245,18 @@
     <string name="account_settings_vibrate_when_dlg_title" msgid="308167729046312952">"Vibración"</string>
     <string name="account_settings_ringtone" msgid="7922187231467500404">"Seleccionar tono"</string>
     <string name="account_settings_servers" msgid="4925493817981624242">"Ajustes del servidor"</string>
+
+    <!-- On Settings screen, miscellaneous settings-->
+    <string name="misc_settings_label">Otros ajustes</string>
+    <string name="account_settings_msg_list_on_delete">Volver a lista</string>
+    <string name="account_settings_msg_list_on_delete_summary">Volver a listado de mensajes al borrar el mensaje actual</string>
+    <!-- Confirm on delete -->
+    <string name="account_settings_confirm_on_delete">Confirmar borrado</string>
+    <string name="account_settings_confirm_on_delete_summary">Pedir confirmación al borrar un mensaje</string>
+    <!-- Confirm on send -->
+    <string name="account_settings_confirm_on_send">Confirm envío</string>
+    <string name="account_settings_confirm_on_send_summary">Pedir confirmación al enviar un mensaje</string>
+
     <string name="account_delete_dlg_title" msgid="6806087520856396608">"Eliminar cuenta"</string>
     <string name="account_delete_dlg_instructions_fmt" msgid="8236846322040271280">"Se va a eliminar la cuenta \"<xliff:g id="ACCOUNT">%s</xliff:g>\" de \"Correo electrónico\"."</string>
     <string name="upgrade_accounts_title" msgid="5444140226380754014">"Actualizar cuentas"</string>
@@ -269,4 +285,19 @@
     <item quantity="other" msgid="7816121892960632123">"<xliff:g id="RESULTS">%1$d</xliff:g> resultados de <xliff:g id="DOMAIN">%2$s</xliff:g>"</item>
   </plurals>
     <string name="gal_completed_limited_fmt" msgid="2343791690766047585">"Primeros <xliff:g id="RESULTS">%1$d</xliff:g> resultados de <xliff:g id="DOMAIN">%2$s</xliff:g>"</string>
+
+    <string name="sync_action">Cambiar sicronización</string>
+    <string name="hide_action">Cambiar visibilidad</string>
+    <string name="show_hidden_action">Mostrar carpetas ocultas</string>
+    <string name="hide_hidden_action">No mostrar carpetas ocultas</string>
+    <string name="toast_folder_sync_on">Sincronizando carpeta:</string>
+    <string name="toast_folder_sync_off">No más sincronización de carpeta:</string>
+    <string name="toast_folder_sync_invalid">Carpeta inválida para sincronización</string>
+    <string name="toast_folder_hide_on">Ocultando carpeta:</string>
+    <string name="toast_folder_hide_off">Mostrando carpeta:</string>
+    <string name="toast_folder_hide_invalid">¡No se puede ocultar esta carpeta!</string>
+
+    <string name="sample_account_name" >Cuenta de ejemplo</string>
+    <string name="default_rgb_value" >255</string>
+    <string name="default_html_color_code" >0xFFFFFFFF</string>
 </resources>
