@@ -444,6 +444,14 @@ save attachment.</string>
     <string name="account_setup_options_mail_check_frequency_30min">Every 30 minutes</string>
     <!-- In Account setup options & Account Settings screens, email check frequency option -->
     <string name="account_setup_options_mail_check_frequency_1hour">Every hour</string>
+    <!-- In Account setup options & Account Settings screens, email check frequency option -->
+    <string name="account_setup_options_mail_check_frequency_3hour">Every 3 hours</string>
+    <!-- In Account setup options & Account Settings screens, email check frequency option -->
+    <string name="account_setup_options_mail_check_frequency_6hour">Every 6 hours</string>
+    <!-- In Account setup options & Account Settings screens, email check frequency option -->
+    <string name="account_setup_options_mail_check_frequency_12hour">Every 12 hours</string>
+    <!-- In Account setup options & Account Settings screens, email check frequency option -->
+    <string name="account_setup_options_mail_check_frequency_24hour">Every 24 hours</string>
     <!-- Check box label on "Set up email" screen to make this the default account -->
     <!-- Note, this should usually match the default account summary preference string -->
     <string name="account_setup_options_default_label">Send email from this account by default.</string>
