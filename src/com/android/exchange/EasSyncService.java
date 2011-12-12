@@ -2024,7 +2024,7 @@ private String getCalFilter() {
             case com.android.email.Account.SYNC_WINDOW_1_WEEK: {
                 filter = Eas.FILTER_2_WEEKS;
                 break;
-            }            
+            }
             case com.android.email.Account.SYNC_WINDOW_2_WEEKS: {
                 filter = Eas.FILTER_2_WEEKS;
                 break;
@@ -2121,7 +2121,7 @@ private String getCalFilter() {
                 if (className.equals("Email")) {
                     s.data(Tags.SYNC_FILTER_TYPE, getEmailFilter());
                 } else if (className.equals("Calendar")) {
-                    // Set to Forever!
+                    // Use the same EAS string as Email filter
                     s.data(Tags.SYNC_FILTER_TYPE, getCalFilter());
                 }
                 // Set the truncation amount for all classes
