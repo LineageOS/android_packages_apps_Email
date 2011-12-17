@@ -245,7 +245,6 @@
     <string name="account_delete_dlg_instructions_fmt" msgid="8236846322040271280">"حساب \"<xliff:g id="ACCOUNT">%s</xliff:g>\" از ایمیل حذف می شود."</string>
     <string name="upgrade_accounts_title" msgid="5444140226380754014">"ارتقا حساب ها"</string>
     <string name="upgrade_accounts_error" msgid="7241661832029255715">"ارتقا حساب امکان پذیر نیست"</string>
-    <string name="provider_note_live" msgid="3584841823811425060">"فقط برخی از حساب های \"Plus\" از جمله دسترسی POP به این برنامه اجازه می دهند متصل شود. اگر شما نمی توانید با رمز ورود و آدرس ایمیل درست خود به سیستم وارد شوید، ممکن است فاقد یک حساب \"Plus\" پولی باشید. لطفاً مرورگر وب را برای دسترسی به این حساب های ایمیل راه اندازی کنید."</string>
     <string name="provider_note_t_online" msgid="1973701903400232774">"قبل از تنظیم این حساب ایمیل، لطفاً از وب سایت T-Online بازدید کرده و یک رمز ورود برای دسترسی ایمیل POP3 ایجاد کنید."</string>
     <string name="exchange_name" msgid="1190783774800310346">"شرکت"</string>
     <string name="exchange_name_alternate" msgid="5772529644749041052">"Microsoft Exchange ActiveSync"</string>

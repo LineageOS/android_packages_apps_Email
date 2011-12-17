@@ -245,7 +245,6 @@
     <string name="account_delete_dlg_instructions_fmt" msgid="8236846322040271280">"A conta \"<xliff:g id="ACCOUNT">%s</xliff:g>\" será removida deste e-mail."</string>
     <string name="upgrade_accounts_title" msgid="5444140226380754014">"Atualizar contas"</string>
     <string name="upgrade_accounts_error" msgid="7241661832029255715">"Não é possível atualizar a conta."</string>
-    <string name="provider_note_live" msgid="3584841823811425060">"Somente algumas contas \"Plus\" incluem o acesso POP permitindo que este programa seja conectado. Se não for possível fazer login com seu endereço de e-mail e senha corretos, você talvez não tenha uma conta \"Plus\" paga. Inicie o navegador da web para acessar estas contas de email."</string>
     <string name="provider_note_t_online" msgid="1973701903400232774">"Antes de configurar essa conta de e-mail, visite o site T-Online e crie uma senha para acessar email POP3."</string>
     <string name="exchange_name" msgid="1190783774800310346">"Corporativa"</string>
     <string name="exchange_name_alternate" msgid="5772529644749041052">"Microsoft Exchange ActiveSync"</string>

@@ -245,7 +245,6 @@
     <string name="account_delete_dlg_instructions_fmt" msgid="8236846322040271280">"El compte \"<xliff:g id="ACCOUNT">%s</xliff:g>\" s\'eliminarà del correu electrònic."</string>
     <string name="upgrade_accounts_title" msgid="5444140226380754014">"Actualitza els comptes"</string>
     <string name="upgrade_accounts_error" msgid="7241661832029255715">"No es pot actualitzar el compte"</string>
-    <string name="provider_note_live" msgid="3584841823811425060">"Només alguns comptes \"Plus\" inclouen l\'accés POP que permet que aquest programa s\'hi connecti. Si no podeu iniciar la sessió amb l\'adreça electrònica i la contrasenya correctes, pot ser que no tingueu un compte \"Plus\" de pagament. Inicieu el navegador web per accedir a aquests comptes de correu."</string>
     <string name="provider_note_t_online" msgid="1973701903400232774">"Abans de configurar aquest compte de correu electrònic, visiteu el lloc web de T-Online i creeu una contrasenya per a l\'accés al correu electrònic POP3."</string>
     <string name="exchange_name" msgid="1190783774800310346">"Corporatiu"</string>
     <string name="exchange_name_alternate" msgid="5772529644749041052">"Microsoft Exchange ActiveSync"</string>

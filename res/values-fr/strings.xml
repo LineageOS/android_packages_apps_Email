@@ -245,7 +245,6 @@
     <string name="account_delete_dlg_instructions_fmt" msgid="8236846322040271280">"Le compte \"<xliff:g id="ACCOUNT">%s</xliff:g>\" va être supprimé de votre messagerie."</string>
     <string name="upgrade_accounts_title" msgid="5444140226380754014">"Mettre les comptes à niveau"</string>
     <string name="upgrade_accounts_error" msgid="7241661832029255715">"Impossible de mettre le compte à niveau."</string>
-    <string name="provider_note_live" msgid="3584841823811425060">"Seuls certains comptes \"Plus\" comportent un accès POP permettant à ce programme de se connecter. Si vous ne parvenez pas à vous connecter avec l\'adresse e-mail et le mot de passe corrects, vous ne disposez peut-être pas d\'un compte payant \"Plus\". Pour accéder à ces comptes de messagerie, lancez votre navigateur Web."</string>
     <string name="provider_note_t_online" msgid="1973701903400232774">"Avant de configurer ce compte de messagerie, veuillez consulter le site de T-Online et créer un mot de passe de messagerie POP3."</string>
     <string name="exchange_name" msgid="1190783774800310346">"Entreprise"</string>
     <string name="exchange_name_alternate" msgid="5772529644749041052">"Microsoft Exchange ActiveSync"</string>

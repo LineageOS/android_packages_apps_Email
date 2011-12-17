@@ -245,7 +245,6 @@
     <string name="account_delete_dlg_instructions_fmt" msgid="8236846322040271280">"A(z) \"<xliff:g id="ACCOUNT">%s</xliff:g>\" fiók el lesz távolítva az e-mail szolgáltatásból."</string>
     <string name="upgrade_accounts_title" msgid="5444140226380754014">"Fiókok frissítése"</string>
     <string name="upgrade_accounts_error" msgid="7241661832029255715">"A fiókot nem lehet frissíteni"</string>
-    <string name="provider_note_live" msgid="3584841823811425060">"Csak bizonyos \"Plus\" típusú fiókok rendelkeznek olyan POP-hozzáféréssel, amely lehetővé teszi a program számára a kapcsolódást. Ha nem tud bejelentkezni a megfelelő e-mail címmel és jelszóval, valószínűleg nem fizetett elő \"Plus\" típusú fiókra. Kérjük, indítsa el a webböngészőt az ilyen e-mail fiókok eléréséhez."</string>
     <string name="provider_note_t_online" msgid="1973701903400232774">"Kérjük, az e-mail fiók beállítása előtt keresse fel a T-Online webhelyét, és hozzon létre jelszót a POP3-alapú hozzáféréshez."</string>
     <string name="exchange_name" msgid="1190783774800310346">"Vállalati"</string>
     <string name="exchange_name_alternate" msgid="5772529644749041052">"Microsoft Exchange ActiveSync"</string>

@@ -245,7 +245,6 @@
     <string name="account_delete_dlg_instructions_fmt" msgid="8236846322040271280">"Профилът „<xliff:g id="ACCOUNT">%s</xliff:g>“ ще бъде премахнат от имейла."</string>
     <string name="upgrade_accounts_title" msgid="5444140226380754014">"Надстройка на профилите"</string>
     <string name="upgrade_accounts_error" msgid="7241661832029255715">"Неуспешно надстройване на профил"</string>
-    <string name="provider_note_live" msgid="3584841823811425060">"Само някои „Plus“ профили включват достъп чрез POP, позволявайки на тази програма да се свърже. Ако не можете да влезете с правилния си имейл адрес и парола, може да не сте платили за такъв профил. Моля, стартирайте уеб браузъра, за да получите достъп до тези пощенски профили."</string>
     <string name="provider_note_t_online" msgid="1973701903400232774">"Преди да настроите този имейл профил, моля, посетете уебсайта на T-Online и създайте парола за достъп до имейл чрез POP3."</string>
     <string name="exchange_name" msgid="1190783774800310346">"Фирмен"</string>
     <string name="exchange_name_alternate" msgid="5772529644749041052">"Microsoft Exchange ActiveSync"</string>

@@ -245,7 +245,6 @@
     <string name="account_delete_dlg_instructions_fmt" msgid="8236846322040271280">"Akun \"<xliff:g id="ACCOUNT">%s</xliff:g>\" akan dihapus dari Email."</string>
     <string name="upgrade_accounts_title" msgid="5444140226380754014">"Meningkatkan versi akun"</string>
     <string name="upgrade_accounts_error" msgid="7241661832029255715">"Tidak dapat meningkatkan versi akun"</string>
-    <string name="provider_note_live" msgid="3584841823811425060">"Hanya beberapa akun \"Plus\" termasuk akses POP yang memungkinkan program ini terhubung. Jika tidak dapat masuk dengan alamat dan sandi email yang benar, Anda mungkin tidak memiliki akun \"Plus\" berbayar. Buka peramban Web untuk mendapat akses ke akun surat ini."</string>
     <string name="provider_note_t_online" msgid="1973701903400232774">"Sebelum menyiapkan akun email ini, kunjungi Situs web T-Online dan buat sandi untuk akses email POP3."</string>
     <string name="exchange_name" msgid="1190783774800310346">"Perusahaan"</string>
     <string name="exchange_name_alternate" msgid="5772529644749041052">"Microsoft Exchange ActiveSync"</string>

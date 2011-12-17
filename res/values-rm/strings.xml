@@ -246,7 +246,6 @@
     <string name="account_delete_dlg_instructions_fmt" msgid="8236846322040271280">"Il conto «<xliff:g id="ACCOUNT">%s</xliff:g>» vegn stizzà da Voss e-mail."</string>
     <string name="upgrade_accounts_title" msgid="5444140226380754014">"Actualisar ils contos"</string>
     <string name="upgrade_accounts_error" msgid="7241661832029255715">"Impussibel dad actualisar il conto"</string>
-    <string name="provider_note_live" msgid="3584841823811425060">"Mo tscherts contos «plus» includan l\'access POP e permettan uschia a quest program da stabilir ina connexiun. Sche Vus na pudais betg s\'annunziar cun Vossa adressa d\'e-mail ed il pled-clav correct n\'avais Vus eventualmain betg in conto «plus» (che custa). Aviai Voss navigatur da web per acceder quests contos dad e-mail."</string>
     <string name="provider_note_t_online" msgid="1973701903400232774">"Visitai per plaschair la pagina d\'internet da T-Online e creai in pled-clav per l\'access dad e-mail POP avant che configurar quest conto dad e-mail."</string>
     <string name="exchange_name" msgid="1190783774800310346">"Da fatschenta"</string>
     <string name="exchange_name_alternate" msgid="5772529644749041052">"Microsoft Exchange ActiveSync"</string>

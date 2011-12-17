@@ -245,7 +245,6 @@
     <string name="account_delete_dlg_instructions_fmt" msgid="8236846322040271280">"Tili \"<xliff:g id="ACCOUNT">%s</xliff:g>\" poistetaan sähköpostista."</string>
     <string name="upgrade_accounts_title" msgid="5444140226380754014">"Tilien päivitys"</string>
     <string name="upgrade_accounts_error" msgid="7241661832029255715">"Tilin päivitys epäonnistui"</string>
-    <string name="provider_note_live" msgid="3584841823811425060">"Vain joihinkin Plus-tileihin sisältyy POP-käyttö, joka sallii tämän ohjelman muodostaa yhteyden. Jos et pysty kirjautumaan tiliisi sähköpostiosoitteellasi ja salasanallasi, sinulla ei ehkä ole maksullista Plus-tiliä. Pääset käyttämään näitä sähköpostitilejä käynnistämällä verkkoselaimen."</string>
     <string name="provider_note_t_online" msgid="1973701903400232774">"Käy ennen tämän sähköpostitilin luomista T-Onlinen sivustossa ja luo salasana sähköpostin POP3-käyttöä varten."</string>
     <string name="exchange_name" msgid="1190783774800310346">"Yritys"</string>
     <string name="exchange_name_alternate" msgid="5772529644749041052">"Microsoft Exchange ActiveSync"</string>

@@ -245,7 +245,6 @@
     <string name="account_delete_dlg_instructions_fmt" msgid="8236846322040271280">"Налог „<xliff:g id="ACCOUNT">%s</xliff:g>“ биће уклоњен из е-поште."</string>
     <string name="upgrade_accounts_title" msgid="5444140226380754014">"Надоградња налога"</string>
     <string name="upgrade_accounts_error" msgid="7241661832029255715">"Није могуће надоградити налог."</string>
-    <string name="provider_note_live" msgid="3584841823811425060">"Само неки „Плус“ налози подржавају приступ преко POP протокола, што омогућава повезивање овог програма. Ако не можете да се пријавите користећи тачну адресу е-поште и лозинку, можда немате плаћени „Плус“ налог. Покрените веб прегледач да бисте приступили овим налозима е-поште."</string>
     <string name="provider_note_t_online" msgid="1973701903400232774">"Пре него што конфигуришете овај налог е-поште, посетите T-Online веб сајт и одредите лозинку за приступ е-пошти преко POP3 протокола."</string>
     <string name="exchange_name" msgid="1190783774800310346">"Corporate"</string>
     <string name="exchange_name_alternate" msgid="5772529644749041052">"Microsoft Exchange ActiveSync"</string>

@@ -245,7 +245,6 @@
     <string name="account_delete_dlg_instructions_fmt" msgid="8236846322040271280">"Račun »<xliff:g id="ACCOUNT">%s</xliff:g>« bo odstranjen iz e-pošte."</string>
     <string name="upgrade_accounts_title" msgid="5444140226380754014">"Nadgradi račune"</string>
     <string name="upgrade_accounts_error" msgid="7241661832029255715">"Računa ni mogoče nadgraditi"</string>
-    <string name="provider_note_live" msgid="3584841823811425060">"Samo nekateri računi »Plus« vsebujejo tudi dostop do strežnika POP, da se ta program lahko poveže. Če ste pravilno vnesli svoj e-poštni naslov in geslo in se ne morete prijaviti, morda nimate plačljivega računa »Plus«. Zaženite brskalnik, če želite dostopati do teh e-poštnih računov."</string>
     <string name="provider_note_t_online" msgid="1973701903400232774">"Preden nastavite ta e-poštni račun, obiščite spletno mesto T-Online in ustvarite geslo za e-poštni dostop POP3."</string>
     <string name="exchange_name" msgid="1190783774800310346">"Podjetje"</string>
     <string name="exchange_name_alternate" msgid="5772529644749041052">"Microsoft Exchange ActiveSync"</string>

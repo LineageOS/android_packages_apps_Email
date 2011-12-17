@@ -245,7 +245,6 @@
     <string name="account_delete_dlg_instructions_fmt" msgid="8236846322040271280">"Paskyra „<xliff:g id="ACCOUNT">%s</xliff:g>“ bus pašalinta iš el. pašto."</string>
     <string name="upgrade_accounts_title" msgid="5444140226380754014">"Naujovinti paskyras"</string>
     <string name="upgrade_accounts_error" msgid="7241661832029255715">"Neįmanoma naujovinti paskyros"</string>
-    <string name="provider_note_live" msgid="3584841823811425060">"Tik kai kuriose „Plus“ paskyrose yra POP prieiga, leidžianti prisijungti šiai programai. Jei negalite prisijungti su teisingu el. pašto adresu ir slaptažodžiu, galbūt neapmokėjote „Plus“ paskyros. Paleiskite žiniatinklio naršyklę, kad gautumėte prieigą prie šių pašto paskyrų."</string>
     <string name="provider_note_t_online" msgid="1973701903400232774">"Prieš nustatydami šią el. pašto paskyrą, apsilankykite „T-Online“ svetainėje ir sukurkite POP3 el. pašto prieigos slaptažodį."</string>
     <string name="exchange_name" msgid="1190783774800310346">"Įmonės"</string>
     <string name="exchange_name_alternate" msgid="5772529644749041052">"Microsoft Exchange ActiveSync"</string>

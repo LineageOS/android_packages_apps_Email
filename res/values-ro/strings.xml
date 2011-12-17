@@ -245,7 +245,6 @@
     <string name="account_delete_dlg_instructions_fmt" msgid="8236846322040271280">"Contul „<xliff:g id="ACCOUNT">%s</xliff:g>” va fi eliminat din e-mail."</string>
     <string name="upgrade_accounts_title" msgid="5444140226380754014">"Treceţi conturile la o versiune superioară"</string>
     <string name="upgrade_accounts_error" msgid="7241661832029255715">"Contul nu poate fi trecut la o versiune superioară"</string>
-    <string name="provider_note_live" msgid="3584841823811425060">"Numai unele conturi de tip „Plus” includ accesul de tip POP, permiţând conectarea acestui program. Dacă nu reuşiţi să vă conectaţi cu adresa de e-mail şi parola corecte, este posibil să nu aveţi un cont de tip „Plus” plătit. Lansaţi browserul web pentru a obţine accesul la aceste conturi de e-mail."</string>
     <string name="provider_note_t_online" msgid="1973701903400232774">"Înainte de configurarea acestui cont de e-mail, vizitaţi T-Online pe web şi creaţi-vă o parolă pentru accesul la serviciile de e-mail POP3."</string>
     <string name="exchange_name" msgid="1190783774800310346">"Corporaţie"</string>
     <string name="exchange_name_alternate" msgid="5772529644749041052">"Microsoft Exchange ActiveSync"</string>

@@ -245,7 +245,6 @@
     <string name="account_delete_dlg_instructions_fmt" msgid="8236846322040271280">"บัญชี \"<xliff:g id="ACCOUNT">%s</xliff:g>\" จะถูกลบจากอีเมล"</string>
     <string name="upgrade_accounts_title" msgid="5444140226380754014">"อัปเกรดบัญชี"</string>
     <string name="upgrade_accounts_error" msgid="7241661832029255715">"อัปเกรดบัญชีไม่ได้"</string>
-    <string name="provider_note_live" msgid="3584841823811425060">"มีเพียงบัญชีแบบ \"Plus\" บางประเภทเท่านั้นที่มีการเข้าถึงแบบ POP ที่โปรแกรมสามารถเชื่อมต่อได้ ถ้าคุณไม่สามารถลงชื่อเข้าใช้ด้วยที่อยู่อีเมลและรหัสผ่านที่ถูกต้อง อาจเป็นเพราะคุณไม่มีบัญชี \"Plus\" แบบมีค่าใช้จ่าย โปรดเปิดเว็บเบราว์เซอร์เพื่อเข้าถึงบัญชีอีเมลเหล่านี้"</string>
     <string name="provider_note_t_online" msgid="1973701903400232774">"ก่อนที่จะตั้งค่าบัญชีอีเมลนี้ โปรดเข้าสู่เว็บไซต์ T-Online และสร้างรหัสผ่านสำหรับการเข้าถึงอีเมลแบบ POP3"</string>
     <string name="exchange_name" msgid="1190783774800310346">"องค์กร"</string>
     <string name="exchange_name_alternate" msgid="5772529644749041052">"Microsoft Exchange ActiveSync"</string>

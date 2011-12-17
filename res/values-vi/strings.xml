@@ -245,7 +245,6 @@
     <string name="account_delete_dlg_instructions_fmt" msgid="8236846322040271280">"Tài khoản \"<xliff:g id="ACCOUNT">%s</xliff:g>\" sẽ bị xoá khỏi Email."</string>
     <string name="upgrade_accounts_title" msgid="5444140226380754014">"Nâng cấp tài khoản"</string>
     <string name="upgrade_accounts_error" msgid="7241661832029255715">"Không thể nâng cấp tài khoản"</string>
-    <string name="provider_note_live" msgid="3584841823811425060">"Chỉ một số tài khoản \"Plus\" mới có quyền truy cập POP nhằm cho phép chương trình này kết nối. Nếu bạn không thể đăng nhập bằng địa chỉ email và mật khẩu chính xác của mình, bạn có thể không có tài khoản \"Plus\" trả tiền. Vui lòng khởi chạy trình duyệt Web để yêu cầu quyền truy cập vào các tài khoản thư này."</string>
     <string name="provider_note_t_online" msgid="1973701903400232774">"Trước khi thiết lập tài khoản email này, vui lòng truy cập trang Web T-Online và tạo mật khẩu để truy cập email POP3."</string>
     <string name="exchange_name" msgid="1190783774800310346">"Doanh nghiệp"</string>
     <string name="exchange_name_alternate" msgid="5772529644749041052">"Microsoft Exchange ActiveSync"</string>
