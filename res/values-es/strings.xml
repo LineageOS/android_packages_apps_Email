@@ -16,7 +16,7 @@
 
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
-    <string name="read_attachment_label" msgid="1162255191991555285">"Leer los archivos adjuntos del mensaje"</string>
+    <string name="read_attachment_label" msgid="1162255191991555285">"Leer archivos adjuntos"</string>
     <string name="read_attachment_desc" msgid="7594746717616308643">"Permite que esta aplicación lea los archivos adjuntos del correo electrónico."</string>
     <string name="permission_access_provider_label" msgid="4274353114641168675">"Acceder a los datos del proveedor de servicios de correo"</string>
     <string name="permission_access_provider_desc" msgid="1513898266889541617">"Permite que la aplicación acceda a la base de datos de tu correo electrónico, incluidos los mensajes recibidos, los mensajes enviados, los nombre de usuario y las contraseñas."</string>
@@ -51,7 +51,7 @@
     <string name="remove_account_action" msgid="3789169090601376209">"Eliminar cuenta"</string>
     <string name="folders_action" msgid="7502431531355227666">"Carpetas"</string>
     <string name="accounts_action" msgid="901105887272231493">"Cuentas"</string>
-    <string name="mark_as_read_action" msgid="5031651846998842419">"Marcar como leída"</string>
+    <string name="mark_as_read_action" msgid="5031651846998842419">"Marcar como leído"</string>
     <string name="mark_as_unread_action" msgid="3766298115778767554">"Marcar como no leído"</string>
     <string name="add_cc_bcc_action" msgid="5569074812077509737">"Añadir Cc/Cco"</string>
     <string name="add_attachment_action" msgid="2696013743130573897">"Añadir adjunto"</string>
@@ -62,6 +62,14 @@
     <string name="status_network_error" msgid="6045933332005067021">"Error de conexión"</string>
     <string name="notification_new_title" msgid="2200257910380529139">"Nuevo mensaje"</string>
     <string name="error_loading_message_body" msgid="2265140604109272914">"Se ha producido un error inesperado durante la carga del mensaje de texto. Es posible que el mensaje sea demasiado grande para mostrarse."</string>
+    <!-- Appears in Confirm deletion dialog title -->
+    <string name="confirm_on_delete_dlg_title">Confirmar borrado</string>
+    <!-- Appears in Confirm deletion dialog message -->
+    <string name="confirm_on_delete_dlg_msg">¿Realmente deseas borrar este mensaje?</string>
+    <!-- Appears in Confirm send dialog title -->
+    <string name="confirm_on_send_dlg_title">Confirmar envío</string>
+    <!-- Appears in Confirm send dialog message -->
+    <string name="confirm_on_send_dlg_msg">¿Deseas enviar este mensaje?</string>
   <plurals name="notification_new_one_account_fmt">
     <item quantity="one" msgid="3422945912787702191">"<xliff:g id="UNREAD_MESSAGE_COUNT">%1$d</xliff:g> no leído (<xliff:g id="ACCOUNT">%2$s</xliff:g>)"</item>
     <item quantity="few" msgid="6543078667692990869">"<xliff:g id="UNREAD_MESSAGE_COUNT">%1$d</xliff:g> no leídos (<xliff:g id="ACCOUNT">%2$s</xliff:g>)"</item>
@@ -71,8 +79,8 @@
     <item quantity="few" msgid="1991747245324120305">"en <xliff:g id="NUMBER_ACCOUNTS">%d</xliff:g> cuentas"</item>
     <item quantity="other" msgid="2723797835410343458">"en <xliff:g id="NUMBER_ACCOUNTS">%d</xliff:g> cuentas"</item>
   </plurals>
-    <string name="mailbox_name_display_inbox" msgid="3542327124749861736">"Recibidos"</string>
-    <string name="mailbox_name_display_outbox" msgid="2826214174661417662">"Enviados"</string>
+    <string name="mailbox_name_display_inbox" msgid="3542327124749861736">"Bandeja de entrada"</string>
+    <string name="mailbox_name_display_outbox" msgid="2826214174661417662">"Bandeja de salida"</string>
     <string name="mailbox_name_display_drafts" msgid="4868718300700514319">"Borradores"</string>
     <string name="mailbox_name_display_trash" msgid="9139069064580630647">"Papelera"</string>
     <string name="mailbox_name_display_sent" msgid="3426058998191869523">"Enviados"</string>
@@ -86,7 +94,7 @@
     <string name="account_folder_list_refresh_toast" msgid="8158352329765828902">"Mantén pulsada una cuenta para actualizarla."</string>
     <string name="mailbox_list_title" msgid="8299608543467211089">"Buzón de correo"</string>
     <string name="message_list_load_more_messages_action" msgid="7428302707908825692">"Cargar más mensajes"</string>
-    <string name="message_list_send_pending_messages_action" msgid="9100624762133992435">"Enviar mensajes salientes"</string>
+    <string name="message_list_send_pending_messages_action" msgid="9100624762133992435">"Enviar mensajes pendientes"</string>
     <string name="message_compose_to_hint" msgid="2891895306418177013">"A"</string>
     <string name="message_compose_cc_hint" msgid="8481884461031434144">"Cc"</string>
     <string name="message_compose_bcc_hint" msgid="9177337492358841680">"Cco"</string>
@@ -95,7 +103,7 @@
     <string name="message_compose_fwd_header_fmt" msgid="5181300290654579434">\n\n"-------- Mensaje original --------"\n"Asunto: <xliff:g id="SUBJECT">%1$s</xliff:g>"\n"De: <xliff:g id="SENDER">%2$s</xliff:g>"\n"Para: <xliff:g id="TO">%3$s</xliff:g>"\n"Cc: <xliff:g id="CC_0">%4$s</xliff:g>"\n\n</string>
     <string name="message_compose_reply_header_fmt" msgid="8815624773273454573">\n\n"<xliff:g id="SENDER">%s</xliff:g> escribió:"\n\n</string>
     <string name="message_compose_quoted_text_label" msgid="5722467956990009520">"Texto entre comillas"</string>
-    <string name="message_compose_error_no_recipients" msgid="4903715888250785486">"Debes especificar, al menos, un destinatario."</string>
+    <string name="message_compose_error_no_recipients" msgid="4903715888250785486">"Debes especificar al menos un destinatario."</string>
     <string name="message_compose_error_invalid_email" msgid="1817633338629885643">"Algunas direcciones de correo electrónico no son válidas."</string>
     <string name="message_compose_attachments_skipped_toast" msgid="5611815773808423460">"No se pueden reenviar algunos archivos adjuntos porque no se han descargado."</string>
     <string name="message_compose_attachment_size" msgid="4401081828287333647">"El archivo es demasiado grande para adjuntarlo."</string>
@@ -203,6 +211,7 @@
     <string name="account_setup_options_mail_window_1week" msgid="5639718031108023741">"Una semana"</string>
     <string name="account_setup_options_mail_window_2weeks" msgid="4567049268124213035">"Dos semanas"</string>
     <string name="account_setup_options_mail_window_1month" msgid="5846359669750047081">"Un mes"</string>
+    <string name="account_setup_options_mail_window_all">Todos los correos</string>
     <string name="account_setup_failed_dlg_auth_message" msgid="42827150104879570">"Nombre de usuario o contraseña incorrecta"</string>
     <string name="account_setup_failed_dlg_auth_message_fmt" msgid="8598560266430207606">"Nombre de usuario o contraseña incorrecta"\n"(<xliff:g id="ERROR">%s</xliff:g>)"</string>
     <string name="account_setup_failed_dlg_certificate_message" msgid="961843413600482906">"No se puede establecer una conexión de forma segura con el servidor."</string>
@@ -227,8 +236,8 @@
     <string name="account_settings_notify_label" msgid="1630001017303007974">"Notificaciones de correo"</string>
     <string name="account_settings_exchange_summary" msgid="8498451479029626317">"Frecuencia de sincronización, notificaciones, etc."</string>
     <string name="account_settings_notify_summary" msgid="6609224590300639887">"Notificar en la barra de estado cuando llegue un mensaje"</string>
+    <string name="account_settings_mail_check_frequency_label" msgid="8271462919214560616">"Frecuencia comprobación de correo"</string>
     <string name="account_settings_color_label">Color asignado</string>
-    <string name="account_settings_mail_check_frequency_label" msgid="8271462919214560616">"Frecuencia comprobación de inbox"</string>
     <string name="account_settings_incoming_label" msgid="7858928031806297542">"Configuración entrante"</string>
     <string name="account_settings_outgoing_label" msgid="4464829249980026745">"Configuración saliente"</string>
     <string name="account_settings_description_label" msgid="8894815221204511715">"Nombre de cuenta"</string>
@@ -275,7 +284,7 @@
     <string name="meeting_when" msgid="2765696159697448656">"Cuándo: <xliff:g id="WHEN">%s</xliff:g>"</string>
     <string name="meeting_where" msgid="5992367535856553079">"Dónde: <xliff:g id="WHERE">%s</xliff:g>"</string>
     <string name="meeting_recurring" msgid="3134262212606714023">"Cuándo: <xliff:g id="EVENTDATE">%s</xliff:g> (periódico)"</string>
-    <string name="exception_cancel" msgid="6160117429428313805">"Este evento se ha cancelado el día: <xliff:g id="DATE">%s</xliff:g>"</string>
+    <string name="exception_cancel" msgid="6160117429428313805">"Este evento se ha cancelado para el día: <xliff:g id="DATE">%s</xliff:g>"</string>
     <string name="exception_updated" msgid="3397583105901142050">"Los detalles de este evento se han cambiado al día: <xliff:g id="DATE">%s</xliff:g>"</string>
     <string name="system_account_create_failed" msgid="4917162302393971752">"El administrador de cuentas no puede crear la cuenta. Inténtalo de nuevo."</string>
     <string name="device_admin_label" msgid="8680224994637869414">"Correo electrónico"</string>
