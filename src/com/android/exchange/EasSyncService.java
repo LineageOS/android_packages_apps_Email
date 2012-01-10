@@ -2009,6 +2009,38 @@ public class EasSyncService extends AbstractSyncService {
         }
         return filter;
     }
+    // Create a string getCalFilter() which uses the same Eas.FILTER as Email. 
+    // Not all sync windows allowed for calendar, so limited to 2 weeks, 1 month, and all
+    private String getCalFilter() {
+        String filter = Eas.FILTER_2_WEEKS;
+        switch (mAccount.mSyncLookback) {
+            case com.android.email.Account.SYNC_WINDOW_1_DAY: {
+                filter = Eas.FILTER_2_WEEKS;
+                break;
+            }
+            case com.android.email.Account.SYNC_WINDOW_3_DAYS: {
+                filter = Eas.FILTER_2_WEEKS;
+                break;
+            }
+            case com.android.email.Account.SYNC_WINDOW_1_WEEK: {
+                filter = Eas.FILTER_2_WEEKS;
+                break;
+            }
+            case com.android.email.Account.SYNC_WINDOW_2_WEEKS: {
+                filter = Eas.FILTER_2_WEEKS;
+                break;
+            }
+            case com.android.email.Account.SYNC_WINDOW_1_MONTH: {
+                filter = Eas.FILTER_1_MONTH;
+                break;
+            }
+            case com.android.email.Account.SYNC_WINDOW_ALL: {
+                filter = Eas.FILTER_ALL;
+                break;
+            }
+        }
+        return filter;
+    }
 
     /**
      * Common code to sync E+PIM data
@@ -2090,8 +2122,7 @@ public class EasSyncService extends AbstractSyncService {
                 if (className.equals("Email")) {
                     s.data(Tags.SYNC_FILTER_TYPE, getEmailFilter());
                 } else if (className.equals("Calendar")) {
-                    // TODO Force two weeks for calendar until we can set this!
-                    s.data(Tags.SYNC_FILTER_TYPE, Eas.FILTER_2_WEEKS);
+                    s.data(Tags.SYNC_FILTER_TYPE, getCalFilter());
                 }
                 // Set the truncation amount for all classes
                 if (mProtocolVersionDouble >= Eas.SUPPORTED_PROTOCOL_EX2007_DOUBLE) {
