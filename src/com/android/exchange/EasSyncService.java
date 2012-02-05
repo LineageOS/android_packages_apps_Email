@@ -194,6 +194,7 @@ public class EasSyncService extends AbstractSyncService {
     public String mHostAddress;
     public String mUserName;
     public String mPassword;
+    public int mPort;
     private boolean mSsl = true;
     private boolean mTrustSsl = false;
     public ContentResolver mContentResolver;
@@ -395,6 +396,7 @@ public class EasSyncService extends AbstractSyncService {
             svc.mHostAddress = hostAddress;
             svc.mUserName = userName;
             svc.mPassword = password;
+            svc.mPort = port;
             svc.mSsl = ssl;
             svc.mTrustSsl = trustCertificates;
             // We mustn't use the "real" device id or we'll screw up current accounts
@@ -801,6 +803,7 @@ public class EasSyncService extends AbstractSyncService {
                 svc.mHostAddress = ha.mAddress;
                 svc.mUserName = ha.mLogin;
                 svc.mPassword = ha.mPassword;
+                svc.mPort = ha.mPort;
                 svc.mSsl = (ha.mFlags & HostAuth.FLAG_SSL) != 0;
                 svc.mTrustSsl = (ha.mFlags & HostAuth.FLAG_TRUST_ALL_CERTIFICATES) != 0;
                 svc.mDeviceId = SyncManager.getDeviceId();
@@ -1102,6 +1105,7 @@ public class EasSyncService extends AbstractSyncService {
             cacheAuthAndCmdString();
         }
         String us = (mSsl ? (mTrustSsl ? "httpts" : "https") : "http") + "://" + mHostAddress +
+            ((mPort > 0) ? ":" + Long.toString(mPort) : "") +
             "/Microsoft-Server-ActiveSync";
         if (cmd != null) {
             us += "?Cmd=" + cmd + mCmdString;
@@ -2197,6 +2201,7 @@ public class EasSyncService extends AbstractSyncService {
         mHostAddress = ha.mAddress;
         mUserName = ha.mLogin;
         mPassword = ha.mPassword;
+        mPort = ha.mPort;
 
         // Set up our protocol version from the Account
         mProtocolVersion = mAccount.mProtocolVersion;

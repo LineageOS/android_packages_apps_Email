@@ -238,8 +238,9 @@ public class ExchangeStore extends Store {
             setUri(uri);
             boolean ssl = uri.getScheme().contains("+ssl");
             boolean tssl = uri.getScheme().contains("+trustallcerts");
-            try {
-                int port = ssl ? 443 : 80;
+            try {            
+                int port = uri.getPort();
+                if (port < 0) port = ssl ? 443 : 80;
 
                 IEmailService svc = ExchangeUtils.getExchangeEmailService(mContext, null);
                 // Use a longer timeout for the validate command.  Note that the instanceof check
