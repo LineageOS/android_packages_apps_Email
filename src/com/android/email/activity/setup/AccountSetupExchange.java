@@ -288,7 +288,11 @@ public class AccountSetupExchange extends Activity implements OnClickListener,
         }
 
         if (hostAuth.mAddress != null) {
-            mServerView.setText(hostAuth.mAddress);
+            if (hostAuth.mPort > 0 && hostAuth.mPort != 80 && hostAuth.mPort != 443) {
+                mServerView.setText(hostAuth.mAddress + ":" + Integer.toString(hostAuth.mPort));
+            } else {
+                mServerView.setText(hostAuth.mAddress);
+            }
         }
 
         boolean ssl = 0 != (hostAuth.mFlags & HostAuth.FLAG_SSL);
@@ -438,13 +442,23 @@ public class AccountSetupExchange extends Activity implements OnClickListener,
         mCacheLoginCredential = userName;
         String userInfo = userName + ":" + mPasswordView.getText();
         String host = mServerView.getText().toString().trim();
+        int port = 0;
+        if (host.contains(":")) {
+            int target = host.lastIndexOf(":");
+            try { 
+                port = Integer.parseInt(host.substring(target + 1));
+                host = host.substring(0, target);
+            } catch (NumberFormatException e) {
+                throw new URISyntaxException(host, "NumberFormatException");
+            }
+        }
         String path = null;
 
         URI uri = new URI(
                 scheme,
                 userInfo,
                 host,
-                0,
+                port,
                 path,
                 null,
                 null);
