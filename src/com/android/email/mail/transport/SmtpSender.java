@@ -36,6 +36,8 @@ import com.android.emailcommon.provider.HostAuth;
 import java.io.IOException;
 import java.net.Inet6Address;
 import java.net.InetAddress;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.net.ssl.SSLException;
 
@@ -125,7 +127,7 @@ public class SmtpSender extends Sender {
                 sb.append(']');
                 localHost = sb.toString();
             }
-            String result = executeSimpleCommand("EHLO " + localHost);
+            List<String> results = executeSimpleCommand("EHLO " + localHost);
 
             /*
              * TODO may need to add code to fall back to HELO I switched it from
@@ -136,14 +138,14 @@ public class SmtpSender extends Sender {
              * if not.
              */
             if (mTransport.canTryTlsSecurity()) {
-                if (result.contains("-STARTTLS")) {
+                if (results.contains("STARTTLS")) {
                     executeSimpleCommand("STARTTLS");
                     mTransport.reopenTls();
                     /*
                      * Now resend the EHLO. Required by RFC2487 Sec. 5.2, and more specifically,
                      * Exim.
                      */
-                    result = executeSimpleCommand("EHLO " + localHost);
+                    results = executeSimpleCommand("EHLO " + localHost);
                 } else {
                     if (Email.DEBUG) {
                         Log.d(Logging.LOG_TAG, "TLS not supported but required");
@@ -155,8 +157,16 @@ public class SmtpSender extends Sender {
             /*
              * result contains the results of the EHLO in concatenated form
              */
-            boolean authLoginSupported = result.matches(".*AUTH.*LOGIN.*$");
-            boolean authPlainSupported = result.matches(".*AUTH.*PLAIN.*$");
+            boolean authLoginSupported = false;
+            boolean authPlainSupported = false;
+
+            for (String result : results) {
+                if (result.matches(".*AUTH.*LOGIN.*$") == true) {
+                    authLoginSupported = true;
+                } else if (result.matches(".*AUTH.*PLAIN.*$") == true) {
+                    authPlainSupported = true;
+                }
+            }
 
             if (mUsername != null && mUsername.length() > 0 && mPassword != null
                     && mPassword.length() > 0) {
@@ -240,9 +250,9 @@ public class SmtpSender extends Sender {
      * is logged (if debug logging is enabled) so do not use this function for user ID or password.
      *
      * @param command The command string to send to the server.
-     * @return Returns the response string from the server.
+     * @return Returns a list of response strings from the server.
      */
-    private String executeSimpleCommand(String command) throws IOException, MessagingException {
+    private List<String> executeSimpleCommand(String command) throws IOException, MessagingException {
         return executeSensitiveCommand(command, null);
     }
 
@@ -253,31 +263,39 @@ public class SmtpSender extends Sender {
      * @param command The command string to send to the server.
      * @param sensitiveReplacement If the command includes sensitive data (e.g. authentication)
      * please pass a replacement string here (for logging).
-     * @return Returns the response string from the server.
+     * @return Returns a list of response strings from the server.
      */
-    private String executeSensitiveCommand(String command, String sensitiveReplacement)
+    private List<String> executeSensitiveCommand(String command, String sensitiveReplacement)
             throws IOException, MessagingException {
         if (command != null) {
             mTransport.writeLine(command, sensitiveReplacement);
         }
 
-        String line = mTransport.readLine();
+        List<String> results = new ArrayList<String>();
+        boolean cont = false;
 
-        String result = line;
+        do {
+            String line = mTransport.readLine();
 
-        while (line.length() >= 4 && line.charAt(3) == '-') {
-            line = mTransport.readLine();
-            result += line.substring(3);
-        }
-
-        if (result.length() > 0) {
-            char c = result.charAt(0);
-            if ((c == '4') || (c == '5')) {
-                throw new MessagingException(result);
+            if (line.length() > 0) {
+                char c = line.charAt(0);
+                if ((c == '4') || (c == '5')) {
+                    throw new MessagingException(line);
+                }
             }
-        }
 
-        return result;
+            results.add(line.substring(4));
+
+            if (line.length() >= 4) {
+                if (line.charAt(3) == '-') {
+                    cont = true;
+                } else {
+                    cont = false;
+                }
+            }
+        } while (cont);
+
+        return results;
     }
 
 
