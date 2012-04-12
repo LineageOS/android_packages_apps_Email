@@ -331,7 +331,11 @@
         <service
             android:name=".service.MailService"
             android:enabled="false"
+            android:exported="true"
             >
+            <intent-filter>
+                <action android:name="com.android.email.intent.action.MAIL_SERVICE_WAKEUP" />
+            </intent-filter>
         </service>
 
         <service
