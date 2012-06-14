@@ -367,6 +367,7 @@
     <string name="account_settings_background_attachments_label" msgid="2980317599840958688">"Anhänge herunterladen"</string>
     <string name="account_settings_background_attachments_summary" msgid="5954218549226189376">"Anhänge neuer Nachrichten automatisch über WLAN herunterladen"</string>
     <string name="account_settings_notify_label" msgid="1630001017303007974">"E-Mail-Benachrichtigung"</string>
+    <string name="account_settings_notify_light_label" msgid="1630001017303007975">"Benachrichtigungs-LED verwenden"</string>
     <string name="account_settings_summary" msgid="8403582255413830007">"Synchronisierungshäufigkeit, Benachrichtigungen usw."</string>
     <string name="account_settings_notify_summary" msgid="6301122709602752038">"Bei E-Mail-Eingang Benachrichtigung in der Systemleiste"</string>
     <string name="account_settings_mail_check_frequency_label" msgid="8271462919214560616">"Häufigkeit des E-Mail-Abrufs"</string>
