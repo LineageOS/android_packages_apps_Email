@@ -78,6 +78,7 @@ public class AccountSettingsFragment extends PreferenceFragment {
     private static final String PREFERENCE_CATEGORY_DATA_USAGE = "data_usage";
     private static final String PREFERENCE_CATEGORY_NOTIFICATIONS = "account_notifications";
     private static final String PREFERENCE_NOTIFY = "account_notify";
+    private static final String PREFERENCE_NOTIFY_LIGHT = "account_notify_light";
     private static final String PREFERENCE_VIBRATE_WHEN = "account_settings_vibrate_when";
     private static final String PREFERENCE_RINGTONE = "account_ringtone";
     private static final String PREFERENCE_CATEGORY_SERVER = "account_servers";
@@ -101,6 +102,7 @@ public class AccountSettingsFragment extends PreferenceFragment {
     private CheckBoxPreference mAccountBackgroundAttachments;
     private CheckBoxPreference mAccountDefault;
     private CheckBoxPreference mAccountNotify;
+    private CheckBoxPreference mAccountNotifyLight;
     private ListPreference mAccountVibrateWhen;
     private RingtonePreference mAccountRingtone;
     private CheckBoxPreference mSyncContacts;
@@ -493,6 +495,10 @@ public class AccountSettingsFragment extends PreferenceFragment {
         mAccountNotify.setChecked(0 != (mAccount.getFlags() & Account.FLAGS_NOTIFY_NEW_MAIL));
         mAccountNotify.setOnPreferenceChangeListener(mPreferenceChangeListener);
 
+        mAccountNotifyLight = (CheckBoxPreference) findPreference(PREFERENCE_NOTIFY_LIGHT);
+        mAccountNotifyLight.setChecked(0 != (mAccount.getFlags() & Account.FLAGS_NOTIFY_USE_LED));
+        mAccountNotifyLight.setOnPreferenceChangeListener(mPreferenceChangeListener);
+
         mAccountRingtone = (RingtonePreference) findPreference(PREFERENCE_RINGTONE);
         mAccountRingtone.setOnPreferenceChangeListener(mPreferenceChangeListener);
 
@@ -638,7 +644,7 @@ public class AccountSettingsFragment extends PreferenceFragment {
     private void saveSettings() {
         // Turn off all controlled flags - will turn them back on while checking UI elements
         int newFlags = mAccount.getFlags() &
-                ~(Account.FLAGS_NOTIFY_NEW_MAIL |
+                ~(Account.FLAGS_NOTIFY_NEW_MAIL | Account.FLAGS_NOTIFY_USE_LED |
                         Account.FLAGS_VIBRATE_ALWAYS | Account.FLAGS_VIBRATE_WHEN_SILENT |
                         Account.FLAGS_BACKGROUND_ATTACHMENTS);
 
@@ -651,6 +657,7 @@ public class AccountSettingsFragment extends PreferenceFragment {
         mAccount.setSenderName(mAccountName.getText().trim());
         mAccount.setSignature(mAccountSignature.getText());
         newFlags |= mAccountNotify.isChecked() ? Account.FLAGS_NOTIFY_NEW_MAIL : 0;
+        newFlags |= mAccountNotifyLight.isChecked() ? Account.FLAGS_NOTIFY_USE_LED : 0;
         mAccount.setSyncInterval(Integer.parseInt(mCheckFrequency.getValue()));
         if (mSyncWindow != null) {
             mAccount.setSyncLookback(Integer.parseInt(mSyncWindow.getValue()));

@@ -934,6 +934,7 @@ as <xliff:g id="filename">%s</xliff:g>.</string>
     <string name="account_settings_background_attachments_summary">
         Auto-download attachments to recent messages via Wi-Fi</string>
     <string name="account_settings_notify_label">Email notifications</string>
+    <string name="account_settings_notify_light_label">Use notification LED</string>
     <!-- On Settings screen, summary line when called via AccountManager for Exchange accounts
         [CHAR LIMIT=50] -->
     <string name="account_settings_summary">Sync frequency, notifications, etc.</string>
