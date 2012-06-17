@@ -268,4 +268,36 @@
     <item quantity="other" msgid="7816121892960632123">"<xliff:g id="RESULTS">%1$d</xliff:g> resultaten van <xliff:g id="DOMAIN">%2$s</xliff:g>"</item>
   </plurals>
     <string name="gal_completed_limited_fmt" msgid="2343791690766047585">"Eerste <xliff:g id="RESULTS">%1$d</xliff:g> resultaten van <xliff:g id="DOMAIN">%2$s</xliff:g>"</string>
+
+    <!-- CYANOGENMOD EDITS -->
+    <string name="select_all_action">Alles selecteren</string>
+    <string name="confirm_on_delete_dlg_title">Bericht verwijderen?</string>
+    <string name="confirm_on_delete_dlg_msg">Dit bericht verwijderen?</string>
+    <string name="confirm_on_send_dlg_title">Bericht versturen?</string>
+    <string name="confirm_on_send_dlg_msg">Dit bericht versturen?</string>
+    <string name="account_setup_color_title">Accountkleur</string>
+    <string name="account_setup_options_mail_check_frequency_3hour">Elke 3 uur</string>
+    <string name="account_setup_options_mail_check_frequency_6hour">Elke 6 uur</string>
+    <string name="account_setup_options_mail_check_frequency_12hour">Elke 12 uur</string>
+    <string name="account_setup_options_mail_check_frequency_24hour">Elke 24 uur</string>
+    <string name="account_setup_options_mail_window_all">Alle e-mails</string>
+    <string name="account_settings_color_label">Accountkleur</string>
+    <string name="misc_settings_label">Diverse instellingen</string>
+    <string name="account_settings_msg_list_on_delete">Terug naar berichtenlijst</string>
+    <string name="account_settings_msg_list_on_delete_summary">Terug naar berichtenlijst na het verwijderen van het bericht dat u bekeek</string>
+    <string name="account_settings_confirm_on_delete">Verwijderen bevestigen</string>
+    <string name="account_settings_confirm_on_delete_summary">Melding tonen indien u iets verwijdert</string>
+    <string name="account_settings_confirm_on_send">Verzenden bevestigen</string>
+    <string name="account_settings_confirm_on_send_summary">Melding tonen indien u iets verzendt</string>
+    <string name="sync_action">Synchronisatie in-/uitschakelen</string>
+    <string name="hide_action">Zichtbaarheid in-/uitschakelen</string>
+    <string name="show_hidden_action">Verborgen mappen tonen</string>
+    <string name="hide_hidden_action">Verborgen mappen verbergen</string>
+    <string name="toast_folder_sync_on">Synchroniseren van map:</string>
+    <string name="toast_folder_sync_off">Niet meer synchroniseren van map:</string>
+    <string name="toast_folder_sync_invalid">Ongeldige map om te synchroniseren</string>
+    <string name="toast_folder_hide_on">Verbergen van map:</string>
+    <string name="toast_folder_hide_off">Zichtbaar maken van map:</string>
+    <string name="toast_folder_hide_invalid">Kan deze map niet verbergen</string>
+    <string name="sample_account_name">Voorbeeldaccountnaam</string>
 </resources>
