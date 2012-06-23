@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAUH//8rE\u003d",
+        "filename": "res/values-nl/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 2597
+      },
+      "writtenOn": "2012-06-23T21:32:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAAUH//8r8\u003d",
+      "revId": "78c72e99c46c95933c5adbdd43707b2be07bbed8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAUH//8r4\u003d",
         "filename": "res/values-nl/strings.xml",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2012-06-23T21:19:35Z",
       "side": 1,
       "message": "spatie erachter?",
+      "revId": "78c72e99c46c95933c5adbdd43707b2be07bbed8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAUH//8rA\u003d",
+        "filename": "res/values-nl/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 2597
+      },
+      "writtenOn": "2012-06-23T21:32:40Z",
+      "side": 1,
+      "message": "Staat niet in de Engelse vertaling",
+      "parentUuid": "AAAAUH//8r4\u003d",
       "revId": "78c72e99c46c95933c5adbdd43707b2be07bbed8",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAUH//8q8\u003d",
+        "filename": "res/values-nl/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 2597
+      },
+      "writtenOn": "2012-06-23T21:32:40Z",
+      "side": 1,
+      "message": "Staat niet in de Engelse vertaling",
+      "parentUuid": "AAAAUH//8r0\u003d",
+      "revId": "78c72e99c46c95933c5adbdd43707b2be07bbed8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAUH//8rw\u003d",
         "filename": "res/values-nl/strings.xml",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAUH//8q4\u003d",
+        "filename": "res/values-nl/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 2597
+      },
+      "writtenOn": "2012-06-23T21:32:40Z",
+      "side": 1,
+      "message": "Staat niet in de Engelse vertaling",
+      "parentUuid": "AAAAUH//8rw\u003d",
+      "revId": "78c72e99c46c95933c5adbdd43707b2be07bbed8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAUH//8rs\u003d",
         "filename": "res/values-nl/strings.xml",
         "patchSetId": 2
@@ -81,6 +153,24 @@
       "writtenOn": "2012-06-23T21:19:35Z",
       "side": 1,
       "message": "spatie erachter?",
+      "revId": "78c72e99c46c95933c5adbdd43707b2be07bbed8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAUH//8q0\u003d",
+        "filename": "res/values-nl/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 2597
+      },
+      "writtenOn": "2012-06-23T21:32:40Z",
+      "side": 1,
+      "message": "Staat niet in de Engelse vertaling",
+      "parentUuid": "AAAAUH//8rs\u003d",
       "revId": "78c72e99c46c95933c5adbdd43707b2be07bbed8",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
