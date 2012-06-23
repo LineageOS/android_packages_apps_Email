@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAUH//8oQ\u003d",
+        "filename": "res/values-nl/strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 3353
+      },
+      "writtenOn": "2012-06-23T21:53:06Z",
+      "side": 1,
+      "message": "Voorbeeld accountnaam/Naam van voorbeeldaccount?",
+      "revId": "8077a2e58f587437b81107834a34e30b14d7ea2d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
