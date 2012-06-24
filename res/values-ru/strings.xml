@@ -367,6 +367,7 @@
     <string name="account_settings_background_attachments_label" msgid="2980317599840958688">"Загружать прикрепленные файлы"</string>
     <string name="account_settings_background_attachments_summary" msgid="5954218549226189376">"Автоматически загружать файлы из новых сообщений через Wi-Fi"</string>
     <string name="account_settings_notify_label" msgid="1630001017303007974">"Уведомления электронной почты"</string>
+    <string name="account_settings_notify_light_label">Использовать индикатор событий</string>
     <string name="account_settings_summary" msgid="8403582255413830007">"Частота синхронизации, уведомления и другие настройки"</string>
     <string name="account_settings_notify_summary" msgid="6301122709602752038">"При получении почты показывать оповещение в строке состояния системы"</string>
     <string name="account_settings_mail_check_frequency_label" msgid="8271462919214560616">"Частота проверки папки \"Входящие\""</string>
