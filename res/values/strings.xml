@@ -1176,6 +1176,11 @@ as <xliff:g id="filename">%s</xliff:g>.</string>
          to automatically show pictures for [CHAR LIMIT=80] -->
     <string name="trusted_senders_cleared">\"Show pictures\" cleared.</string>
 
+    <!--  Settings screen, allow untrusted attachments title -->
+    <string name="general_preference_allow_untrusted_attachments_title">Untrusted attachements</string>
+    <!--  Settings screen, allow untrusted attachments summary -->
+    <string name="general_preference_allow_untrusted_attachments_summary">Allow upload / download of untrusted filetypes.</string>
+
     <!-- Generic string for "current position" / "total number" [CHAR LIMIT=12] -->
     <string name="position_of_count"><xliff:g example="1">%1$d</xliff:g> of <xliff:g
             example="12">%2$s</xliff:g></string>

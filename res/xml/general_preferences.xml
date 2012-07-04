@@ -50,5 +50,12 @@
             android:title="@string/general_preferences_clear_trusted_senders_title"
             android:summary="@string/general_preferences_clear_trusted_senders_summary" />
 
+        <CheckBoxPreference
+            android:key="allow_untrusted_attachments"
+            android:persistent="true"
+            android:defaultValue="false"
+            android:title="@string/general_preference_allow_untrusted_attachments_title"
+            android:summary="@string/general_preference_allow_untrusted_attachments_summary" />
+
     </PreferenceCategory>
 </PreferenceScreen>
