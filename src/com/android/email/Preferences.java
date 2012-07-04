@@ -73,6 +73,11 @@ public class Preferences {
     public static final String REPLY_ALL = "reply_all";
     // Reply All Default - when changing this, be sure to update general_preferences.xml
     public static final boolean REPLY_ALL_DEFAULT = false;
+    
+    // ALLOW_UNTRUSTED_ATTACHMENTS is saved by the framework (CheckBoxPreference's parent, Preference).
+    public static final String ALLOW_UNTRUSTED_ATTACHMENTS = "allow_untrusted_attachments";
+    // Allow Untrusted attachments Default - when changing this, be sure to update general_preferences.xml
+    public static final boolean ALLOW_UNTRUSTED_ATTACHMENTS_DEFAULT = false;
 
     private static Preferences sPreferences;
 
