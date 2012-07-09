@@ -1,0 +1,8 @@
+Change-Id: Ie71a582e56cce4d42d8b96864d5b5ff625a483cf
+Code-Review+2: Steve Kondik <shade@chemlab.org>
+Verified+1: Steve Kondik <shade@chemlab.org>
+Submitted-by: Steve Kondik <shade@chemlab.org>
+Submitted-at: Mon, 09 Jul 2012 09:13:37 +0400
+Reviewed-on: http://review.cyanogenmod.com/18160
+Project: CyanogenMod/android_packages_apps_Email
+Branch: refs/heads/ics
