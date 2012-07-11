@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Copyright (C) 2008 The Android Open Source Project
+      Copyright (C) 2012 The CyanogenMod Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+ -->
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <plurals name="move_messages">
+        <item quantity="one" msgid="320885379869442589">"Bericht verplaatsen"</item>
+        <item quantity="other" msgid="371256717624461324">"Berichten verplaatsen"</item>
+    </plurals>
+    <plurals name="notification_new_one_account_fmt">
+    <item quantity="one" msgid="3422945912787702191">"<xliff:g id="UNREAD_MESSAGE_COUNT">%1$d</xliff:g> ongelezen (<xliff:g id="ACCOUNT">%2$s</xliff:g>)"</item>
+        <item quantity="few" msgid="6543078667692990869">"<xliff:g id="UNREAD_MESSAGE_COUNT">%1$d</xliff:g> ongelezen (<xliff:g id="ACCOUNT">%2$s</xliff:g>)"</item>
+        <item quantity="other" msgid="6937673814351448076">"<xliff:g id="UNREAD_MESSAGE_COUNT">%1$d</xliff:g> ongelezen (<xliff:g id="ACCOUNT">%2$s</xliff:g>)"</item>
+    </plurals>
+    <plurals name="notification_new_multi_account_fmt">
+        <item quantity="few" msgid="1991747245324120305">"in <xliff:g id="NUMBER_ACCOUNTS">%d</xliff:g> accounts"</item>
+        <item quantity="other" msgid="2723797835410343458">"in <xliff:g id="NUMBER_ACCOUNTS">%d</xliff:g> accounts"</item>
+    </plurals>
+    <plurals name="number_of_accounts">
+        <item quantity="one" msgid="6343953132237244947">"<xliff:g id="NUM_ACCOUNTS">%1$d</xliff:g> account"</item>
+        <item quantity="other" msgid="8548760449976444566">"<xliff:g id="NUM_ACCOUNTS">%1$d</xliff:g> accounts"</item>
+    </plurals>
+    <plurals name="picker_combined_view_account_count">
+        <item quantity="one" msgid="380235084337895804">"<xliff:g id="ACCOUNT_COUNT">%d</xliff:g> account"</item>
+        <item quantity="other" msgid="4145163147488719025">"<xliff:g id="ACCOUNT_COUNT">%d</xliff:g> accounts"</item>
+    </plurals>
+    <plurals name="message_view_selected_message_count">
+        <item quantity="one" msgid="5064657358375178519">"<xliff:g id="MESSAGE_COUNT">%d</xliff:g> geselecteerd"</item>
+        <item quantity="other" msgid="7901361399231876038">"<xliff:g id="MESSAGE_COUNT">%d</xliff:g> geselecteerd"</item>
+    </plurals>
+    <plurals name="message_view_show_attachments_action">
+        <item quantity="one" msgid="7594476368958824007">"Bijlage <xliff:g id="NUM_ATTACHMENT">%1$d</xliff:g>"</item>
+        <item quantity="other" msgid="974463163535515223">"Bijlagen <xliff:g id="NUM_ATTACHMENT">%1$d</xliff:g>"</item>
+    </plurals>
+    <plurals name="message_delete_confirm">
+        <item quantity="one" msgid="3799616435056423256">"Dit bericht verwijderen?"</item>
+        <item quantity="other" msgid="4437637377522896262">"Deze berichten verwijderen?"</item>
+    </plurals>
+    <plurals name="message_deleted_toast">
+        <item quantity="one" msgid="710742672464447084">"Bericht verwijderd."</item>
+        <item quantity="other" msgid="6574961322865652255">"Berichten verwijderd."</item>
+    </plurals>
+    <plurals name="message_moved_toast">
+        <item quantity="one" msgid="3098493230185412871">"<xliff:g id="NUM_MESSAGE">%1$d</xliff:g> bericht verplaatst naar <xliff:g id="MAILBOX_NAME">%2$s</xliff:g>"</item>
+        <item quantity="other" msgid="2286739630865943494">"<xliff:g id="NUM_MESSAGE">%1$d</xliff:g> berichten verplaatst naar <xliff:g id="MAILBOX_NAME">%2$s</xliff:g>"</item>
+    </plurals>
+    <plurals name="gal_completed_fmt">
+        <item quantity="one" msgid="7496785524617037642">"<xliff:g id="RESULTS">%1$d</xliff:g> resultaat van <xliff:g id="DOMAIN">%2$s</xliff:g>"</item>
+        <item quantity="other" msgid="7816121892960632123">"<xliff:g id="RESULTS">%1$d</xliff:g> resultaten van <xliff:g id="DOMAIN">%2$s</xliff:g>"</item>
+    </plurals>
+</resources>

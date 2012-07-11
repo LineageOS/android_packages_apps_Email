@@ -1,6 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--  Copyright 2009 Google Inc. All Rights Reserved.  -->
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Copyright (C) 2009 Google Inc.
+      Copyright (C) 2012 The CyanogenMod Project
 
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+ -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="application_name" msgid="7812006268714926951">"Automatisch uploaden"</string>
@@ -8,8 +21,8 @@
     <string name="summary_title_uploading" msgid="3357617474017589370">"Uploaden"</string>
     <string name="summary_title_finished" msgid="7775292294989807025">"Voltooid"</string>
     <string name="summary_title_paused" msgid="8936561302881926595">"Onderbroken"</string>
-    <string name="summary_subtitle_uploading_format" msgid="8787409179557302869">"%1$d%% • %2$d foto\'s • %3$d video\'s"</string>
-    <string name="summary_subtitle_counts_format" msgid="7867903205999702138">"%1$d foto\'s • %2$d video\'s"</string>
+    <string name="summary_subtitle_uploading_format" msgid="8787409179557302869">"%1$d%% \u2022 %2$d foto\'s \u2022 %3$d video\'s"</string>
+    <string name="summary_subtitle_counts_format" msgid="7867903205999702138">"%1$d foto\'s \u2022 %2$d video\'s"</string>
     <string name="summary_subtitle_paused_low_battery" msgid="7030423720574078362">"de accu is bijna leeg"</string>
     <string name="summary_subtitle_paused_photos_quota" msgid="3057279018089658614">"fotoquotum overschreden"</string>
     <string name="summary_subtitle_paused_roaming" msgid="974863046888934062">"roaming"</string>
@@ -17,23 +30,23 @@
     <string name="summary_subtitle_paused_need_charger" msgid="3256171133661659691">"uitgesteld tot opladen"</string>
     <string name="summary_subtitle_paused_need_network" msgid="1922651711990030201">"wachten op verbinding"</string>
     <string name="summary_subtitle_paused_retry_format" msgid="3851931944505090119">"opnieuw proberen over %s"</string>
-    <string name="summary_menu_show_pending" msgid="658361192495996">"Uploads in behandeling weergeven"</string>
-    <string name="summary_menu_show_finished" msgid="8544099132633066086">"Voltooide uploads weergeven"</string>
+    <string name="summary_menu_show_pending" msgid="658361192495996">"Uploads in behandeling tonen"</string>
+    <string name="summary_menu_show_finished" msgid="8544099132633066086">"Voltooide uploads tonen"</string>
     <string name="menu_view_online" msgid="6546633605818509942">"Online bekijken"</string>
-    <string name="menu_show_pending_items" msgid="8798191388238604213">"Uploads in behandeling weergeven"</string>
+    <string name="menu_show_pending_items" msgid="8798191388238604213">"Uploads in behandeling tonen"</string>
     <string name="menu_hide_pending_items" msgid="9216079748638469160">"Uploads in behandeling verbergen"</string>
-    <string name="menu_show_completed_items" msgid="4380487776635859783">"Details weergeven"</string>
+    <string name="menu_show_completed_items" msgid="4380487776635859783">"Details tonen"</string>
     <string name="menu_hide_completed_items" msgid="6126007571523662799">"Details verbergen"</string>
     <string name="menu_settings" msgid="5088116127086866634">"Instellingen"</string>
     <string name="format_date_uploaded" msgid="803752037646090928">"Geüpload op %s"</string>
-    <string name="format_progress_percent" msgid="1420459750508777491">"<xliff:g id="NUMBER">%d</xliff:g><xliff:g id="PERCENTSIGN">%%</xliff:g>"</string>
+    <string name="format_progress_percent"><xliff:g id="number" example="50">%d</xliff:g><xliff:g id="percentsign" example="%">%%</xliff:g></string>
     <string name="account" msgid="5199161365824352613">"Account"</string>
     <string name="upload" msgid="2615541458361216022">"Uploaden"</string>
     <string name="ok" msgid="2516349681897895312">"OK"</string>
     <string name="cancel" msgid="1207103189404543868">"Annuleren"</string>
     <string name="uploading_to" msgid="3986362895940069510">"Uploaden naar "<b>"%s"</b></string>
     <string name="uploading_for" msgid="1735961974624867111">" voor "<b>"%s"</b></string>
-    <string name="destination_format" msgid="7472552212462849956">"%1$s \'%2$s\'"</string>
+    <string name="destination_format" msgid="7472552212462849956">"%1$s \'%2$s\u2019"</string>
     <string name="toast_intent_error" msgid="6164928822619692280">"Het starten van de upload is mislukt."</string>
     <string name="toast_file_error" msgid="1315722681020841350">"Het bestand is niet beschikbaar."</string>
     <string name="account_error" msgid="1904775271866104941">"Ophalen van accountgegevens mislukt."</string>
@@ -69,7 +82,7 @@
     <string name="manager_upload_now" msgid="2284408578936376342">"Nu uploaden"</string>
     <string name="manager_upload_later" msgid="5453932124711705632">"Later uploaden"</string>
     <string name="manager_do_not_upload" msgid="1934417351195364210">"Niet uploaden"</string>
-    <string name="manager_view_media" msgid="3714544539986850549">"Weergeven"</string>
+    <string name="manager_view_media" msgid="3714544539986850549">"Tonen"</string>
     <string name="manager_retry" msgid="939534318469518843">"Opnieuw proberen"</string>
     <string name="manager_toast_canceled" msgid="2331820022556147571">"Upload geannuleerd"</string>
     <string name="manager_toast_not_canceled" msgid="4274246237708259185">"Upload al voltooid"</string>
@@ -81,19 +94,19 @@
     <string name="notify_paused" msgid="3999817913227671338">"Uploads onderbroken"</string>
     <string name="notify_activation_reminder" msgid="1639234651193843030">"Automatisch uploaden is nog niet geactiveerd"</string>
     <string name="dialog_first_wifi" msgid="4318047428346248089">"Grote bestanden worden alleen geüpload via een Wi-Fi-verbinding."</string>
-    <string name="dialog_sync_all_scanning" msgid="3175935645776839524">"Scannen naar bestanden..."</string>
-    <string name="dialog_sync_all_preparing" msgid="1666557491871126684">"<xliff:g id="PHOTOCOUNT">%1$d</xliff:g> foto\'s en <xliff:g id="VIDEOCOUNT">%2$d</xliff:g> video\'s voorbereiden op uploaden..."</string>
+    <string name="dialog_sync_all_scanning" msgid="3175935645776839524">"Zoeken naar bestanden\u2026"</string>
+    <string name="dialog_sync_all_preparing" msgid="1666557491871126684">"<xliff:g id="PHOTOCOUNT">%1$d</xliff:g> foto\'s en <xliff:g id="VIDEOCOUNT">%2$d</xliff:g> video\'s voorbereiden op uploaden\u2026"</string>
     <string name="dialog_sync_all_found_none" msgid="4066988191364416995">"U hoeft geen aanvullende foto\'s/video\'s te uploaden."</string>
     <string name="dialog_sync_all_server_error" msgid="2177063494820815086">"Er is een fout opgetreden tijdens de communicatie met de server. Probeer het later opnieuw."</string>
     <string name="dialog_sync_all_canceled" msgid="2595386304244274687">"Alles synchroniseren is geannuleerd"</string>
     <string name="dialog_sync_all_error_title" msgid="6227689508729774372">"Alles synchroniseren"</string>
     <string name="manager_view_completed" msgid="5119780300858727185">"Voltooide uploads bekijken"</string>
-    <string name="manager_view_pending" msgid="4403346072556950609">"Items in behandeling weergeven"</string>
+    <string name="manager_view_pending" msgid="4403346072556950609">"Items in behandeling tonen"</string>
     <string name="preference_category_title_general" msgid="330919434495694575">"Algemeen"</string>
     <string name="preference_title_pause_all_uploads" msgid="4188909974244266321">"Alle uploads onderbreken"</string>
     <string name="preference_title_need_power" msgid="9165152026296632685">"Opladen vereist"</string>
     <string name="preference_summary_need_power" msgid="1829578224249216151">"Alleen uploaden wanneer de telefoon wordt opgeladen."</string>
-    <string name="preference_title_need_wifi" msgid="2398468701949227352">"Wi-Fi"</string>
+    <string name="preference_title_need_wifi">Wi-Fi</string>
     <string name="preference_summary_need_wifi" msgid="4627730244549568487">"Alleen uploaden wanneer Wi-Fi beschikbaar is."</string>
     <string name="preference_category_title_photos" msgid="8558221017057440259">"Foto\'s"</string>
     <string name="preference_title_photos_account" msgid="1235191190019405102">"Account"</string>
@@ -111,7 +124,7 @@
     <string name="preference_title_camera_sync_version" msgid="1590760570503808392">"Auto-uploadversie"</string>
     <string name="photos_upload_dimension_1600" msgid="2261848079760937674">"Aanbevolen: 1600 pixels (voor delen, afdrukken en screensavers)"</string>
     <string name="photos_upload_dimension_original" msgid="6807552546029109517">"Oorspronkelijk formaat (traagste upload)"</string>
-    <string name="pause_state_need_media" msgid="3849758767808306320">"onderbroken - SD-kaart niet beschikbaar"</string>
+    <string name="pause_state_need_media" msgid="3849758767808306320">"onderbroken \u2212 SD-kaart niet beschikbaar"</string>
     <string name="summary_subtitle_paused_need_media" msgid="8674787576306211689">"SD-kaart niet beschikbaar"</string>
     <string name="preference_plus_title" msgid="8505499389432915393">"Inst. Auto-uploaden"</string>
     <string name="preference_plus_enable_cs" msgid="8946492352805623630">"Automatisch uploaden"</string>
