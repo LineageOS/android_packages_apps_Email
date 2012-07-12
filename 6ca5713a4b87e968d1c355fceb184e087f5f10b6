@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAUX///cU\u003d",
+        "filename": "res/values-nl/arrays.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 2248
+      },
+      "writtenOn": "2012-07-12T13:55:15Z",
+      "side": 1,
+      "message": "Waar komen de msgid nummers vandaag? Die zitten niet in de Engelse variant. Ik snap ook niet waarom die in de Engelse arrays.xml op translatable\u003dfalse staat...",
+      "revId": "6ca5713a4b87e968d1c355fceb184e087f5f10b6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
