@@ -69,6 +69,176 @@
       "revId": "6ca5713a4b87e968d1c355fceb184e087f5f10b6",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAUX///XU\u003d",
+        "filename": "res/values-nl/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 2881
+      },
+      "writtenOn": "2012-07-12T23:36:30Z",
+      "side": 1,
+      "message": "\"te\" moet weg",
+      "revId": "6ca5713a4b87e968d1c355fceb184e087f5f10b6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAUX///XQ\u003d",
+        "filename": "res/values-nl/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 2881
+      },
+      "writtenOn": "2012-07-12T23:36:30Z",
+      "side": 1,
+      "message": "één ?",
+      "revId": "6ca5713a4b87e968d1c355fceb184e087f5f10b6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAUX///XM\u003d",
+        "filename": "res/values-nl/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 2881
+      },
+      "writtenOn": "2012-07-12T23:36:30Z",
+      "side": 1,
+      "message": "de Play Store",
+      "revId": "6ca5713a4b87e968d1c355fceb184e087f5f10b6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAUX///XI\u003d",
+        "filename": "res/values-nl/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 2881
+      },
+      "writtenOn": "2012-07-12T23:36:30Z",
+      "side": 1,
+      "message": "één",
+      "revId": "6ca5713a4b87e968d1c355fceb184e087f5f10b6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAUX///XE\u003d",
+        "filename": "res/values-nl/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 2881
+      },
+      "writtenOn": "2012-07-12T23:36:30Z",
+      "side": 1,
+      "message": "één",
+      "revId": "6ca5713a4b87e968d1c355fceb184e087f5f10b6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAUX///XA\u003d",
+        "filename": "res/values-nl/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 2881
+      },
+      "writtenOn": "2012-07-12T23:36:30Z",
+      "side": 1,
+      "message": "pincode ?",
+      "revId": "6ca5713a4b87e968d1c355fceb184e087f5f10b6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAUX///W4\u003d",
+        "filename": "res/values-nl/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 2881
+      },
+      "writtenOn": "2012-07-12T23:36:30Z",
+      "side": 1,
+      "message": "pincode ?",
+      "revId": "6ca5713a4b87e968d1c355fceb184e087f5f10b6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAUX///W0\u003d",
+        "filename": "res/values-nl/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 2881
+      },
+      "writtenOn": "2012-07-12T23:36:30Z",
+      "side": 1,
+      "message": "pincode ?",
+      "revId": "6ca5713a4b87e968d1c355fceb184e087f5f10b6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAUX///Ww\u003d",
+        "filename": "res/values-nl/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 2881
+      },
+      "writtenOn": "2012-07-12T23:36:30Z",
+      "side": 1,
+      "message": "Het account (ze gebruiken verder ook overal \"dit account\" namelijk)",
+      "revId": "6ca5713a4b87e968d1c355fceb184e087f5f10b6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAUX///Ws\u003d",
+        "filename": "res/values-nl/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 2881
+      },
+      "writtenOn": "2012-07-12T23:36:30Z",
+      "side": 1,
+      "message": "verwijderen - voluit?",
+      "revId": "6ca5713a4b87e968d1c355fceb184e087f5f10b6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
