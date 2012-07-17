@@ -472,5 +472,6 @@
     <string name="account_setup_options_mail_check_frequency_2hour">Co 2 godziny</string>
     <string name="account_setup_options_mail_check_frequency_4hour">Co 4 godziny</string>
     <string name="account_setup_options_mail_check_frequency_1day">Codziennie</string>
+    <string name="account_settings_notify_light_label">Powiadamiaj diodą LED</string>
     <!-- **** CYANOGENMOD EDITS END **** -->
 </resources>
