@@ -470,4 +470,7 @@
     <string name="search_slow_warning_message" msgid="8494483410797387903">"サーバーによって時間がかかる場合があります。"</string>
     <string name="action_bar_mailbox_list_title" msgid="7484457755531286333">"フォルダ"</string>
     <string name="require_manual_sync_message" msgid="7777357288642785955">"このアカウントのバックグラウンドでの同期は、ローミング中は無効です。"</string>
+
+    <!-- #CM -->
+    <string name="account_settings_notify_light_label">通知LEDを使用する</string>
 </resources>
