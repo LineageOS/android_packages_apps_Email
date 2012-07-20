@@ -423,6 +423,41 @@
     },
     {
       "key": {
+        "uuid": "AAAAVX///B4\u003d",
+        "filename": "res/values-nl/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 2881
+      },
+      "writtenOn": "2012-07-20T23:13:54Z",
+      "side": 1,
+      "message": "dit mag natuurlijk zo blijven, zie onderstaand.",
+      "parentUuid": "AAAAVX///P8\u003d",
+      "revId": "6ca5713a4b87e968d1c355fceb184e087f5f10b6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAVX///B8\u003d",
+        "filename": "res/values-nl/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 2881
+      },
+      "writtenOn": "2012-07-20T23:13:54Z",
+      "side": 1,
+      "message": "Bovenstaande opmerking ging over deze regel eigenlijk, sorry.\n\nHet account",
+      "revId": "6ca5713a4b87e968d1c355fceb184e087f5f10b6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAUX///Ws\u003d",
         "filename": "res/values-nl/strings.xml",
         "patchSetId": 1
