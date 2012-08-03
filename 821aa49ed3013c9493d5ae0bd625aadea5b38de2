@@ -16,6 +16,24 @@
       "revId": "821aa49ed3013c9493d5ae0bd625aadea5b38de2",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAVn//+yE\u003d",
+        "filename": "res/values-nl/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 2597
+      },
+      "writtenOn": "2012-08-03T13:52:06Z",
+      "side": 1,
+      "message": "- Kies het getoonde schem na het verwijderen van berichten\n?",
+      "parentUuid": "AAAAVn//+8U\u003d",
+      "revId": "821aa49ed3013c9493d5ae0bd625aadea5b38de2",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
