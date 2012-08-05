@@ -66,7 +66,9 @@ import com.android.email.mail.internet.EmailHtmlUtil;
 import com.android.email.service.AttachmentDownloadService;
 import com.android.emailcommon.Logging;
 import com.android.emailcommon.mail.Address;
+import com.android.emailcommon.mail.MeetingInfo;
 import com.android.emailcommon.mail.MessagingException;
+import com.android.emailcommon.mail.PackedString;
 import com.android.emailcommon.provider.Account;
 import com.android.emailcommon.provider.EmailContent.Attachment;
 import com.android.emailcommon.provider.EmailContent.Body;
@@ -131,6 +133,7 @@ public abstract class MessageViewFragmentBase extends Fragment implements View.O
     private TextView mMessageTab;
     private TextView mAttachmentTab;
     private TextView mInviteTab;
+    private TextView mInviteInfo;
     // It is not really a tab, but looks like one of them.
     private TextView mShowPicturesTab;
     private View mAlwaysShowPicturesButton;
@@ -310,6 +313,7 @@ public abstract class MessageViewFragmentBase extends Fragment implements View.O
         mAlwaysShowPicturesButton = UiUtilities.getView(view, R.id.always_show_pictures_button);
         // Invite is only used in MessageViewFragment, but visibility is controlled here.
         mInviteTab = UiUtilities.getView(view, R.id.show_invite);
+        mInviteInfo = UiUtilities.getView(view, R.id.invite_info);
 
         mMessageTab.setOnClickListener(this);
         mAttachmentTab.setOnClickListener(this);
@@ -1619,6 +1623,17 @@ public abstract class MessageViewFragmentBase extends Fragment implements View.O
             ssb.append(friendlyBcc);
         }
         mAddressesView.setText(ssb);
+        String meetingTime = new PackedString(message.mMeetingInfo).get(MeetingInfo.MEETING_DTSTART);
+        if (meetingTime != null) {
+            long epochTimeMillis = Utility.parseEmailDateTimeToMillis(meetingTime);
+            String friendlyMeetingTime = formatDate(epochTimeMillis, false);
+            meetingTime = new PackedString(message.mMeetingInfo).get(MeetingInfo.MEETING_DTEND);
+            if (meetingTime != null) {
+                epochTimeMillis = Utility.parseEmailDateTimeToMillis(meetingTime);
+                friendlyMeetingTime += "-" + formatDate(epochTimeMillis, false);
+            }
+            mInviteInfo.setText(mContext.getString(R.string.message_view_invite_text) + " (" + friendlyMeetingTime + ")");
+        }
     }
 
     /**
