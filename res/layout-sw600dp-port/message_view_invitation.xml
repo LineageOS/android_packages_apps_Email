@@ -97,6 +97,7 @@
 
                 <!-- "Going?" -->
                 <TextView
+                    android:id="@+id/invite_info"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"

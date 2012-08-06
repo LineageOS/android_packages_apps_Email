@@ -313,7 +313,11 @@ public abstract class MessageViewFragmentBase extends Fragment implements View.O
         mAlwaysShowPicturesButton = UiUtilities.getView(view, R.id.always_show_pictures_button);
         // Invite is only used in MessageViewFragment, but visibility is controlled here.
         mInviteTab = UiUtilities.getView(view, R.id.show_invite);
-        mInviteInfo = UiUtilities.getView(view, R.id.invite_info);
+        try {
+            mInviteInfo = UiUtilities.getView(view, R.id.invite_info);
+        } catch (IllegalArgumentException ex) {
+            mInviteInfo = null;
+        }
 
         mMessageTab.setOnClickListener(this);
         mAttachmentTab.setOnClickListener(this);
@@ -1632,7 +1636,9 @@ public abstract class MessageViewFragmentBase extends Fragment implements View.O
                 epochTimeMillis = Utility.parseEmailDateTimeToMillis(meetingTime);
                 friendlyMeetingTime += "-" + formatDate(epochTimeMillis, false);
             }
-            mInviteInfo.setText(mContext.getString(R.string.message_view_invite_text) + " (" + friendlyMeetingTime + ")");
+            if (mInviteInfo != null) {
+                mInviteInfo.setText(mContext.getString(R.string.message_view_invite_text) + " (" + friendlyMeetingTime + ")");
+            }
         }
     }
 
