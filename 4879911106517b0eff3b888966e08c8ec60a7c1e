@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAWX//+sg\u003d",
+        "filename": "res/values-nl/strings.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 2248
+      },
+      "writtenOn": "2012-08-21T03:02:29Z",
+      "side": 1,
+      "message": "van E-mail of uit E-mail?",
+      "revId": "4879911106517b0eff3b888966e08c8ec60a7c1e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAWX//+sY\u003d",
+        "filename": "res/values-nl/strings.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 2248
+      },
+      "writtenOn": "2012-08-21T03:02:29Z",
+      "side": 1,
+      "message": "Te tonen scherm kiezen voor na het verwijderen van een bericht?\nKies het te tonen scherm na het verwijderen van een bericht?",
+      "revId": "4879911106517b0eff3b888966e08c8ec60a7c1e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
