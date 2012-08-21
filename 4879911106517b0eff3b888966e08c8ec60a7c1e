@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAWX//+r4\u003d",
+        "filename": "res/values-nl/strings.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 2597
+      },
+      "writtenOn": "2012-08-21T03:25:45Z",
+      "side": 1,
+      "message": "Ik vind \u0027van\u0027 beter klinken, maar hoor graag reacties van anderen.",
+      "parentUuid": "AAAAWX//+sg\u003d",
+      "revId": "4879911106517b0eff3b888966e08c8ec60a7c1e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAWX//+sY\u003d",
         "filename": "res/values-nl/strings.xml",
         "patchSetId": 4
