@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAAAWX//+AI\u003d",
+        "filename": "res/values-nl/strings.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 4297
+      },
+      "writtenOn": "2012-08-23T01:44:17Z",
+      "side": 1,
+      "message": "Wi-Fi",
+      "revId": "4879911106517b0eff3b888966e08c8ec60a7c1e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAWX//+sg\u003d",
         "filename": "res/values-nl/strings.xml",
         "patchSetId": 4
