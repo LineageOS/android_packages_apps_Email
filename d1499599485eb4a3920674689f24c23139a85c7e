@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAWn///u4\u003d",
+        "filename": "res/values-nl/strings.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 2881
+      },
+      "writtenOn": "2012-08-23T19:49:04Z",
+      "side": 1,
+      "message": "Allen beantwoorden\n(zie regel 383)",
+      "revId": "d1499599485eb4a3920674689f24c23139a85c7e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAWn///u0\u003d",
+        "filename": "res/values-nl/strings.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 2881
+      },
+      "writtenOn": "2012-08-23T19:49:04Z",
+      "side": 1,
+      "message": "Moet dit zo kort? Anders \"Verplaatsen\"",
+      "revId": "d1499599485eb4a3920674689f24c23139a85c7e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
