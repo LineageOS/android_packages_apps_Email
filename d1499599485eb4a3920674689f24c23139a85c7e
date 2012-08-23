@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "AAAAWn///kk\u003d",
+        "filename": "res/values-nl/strings.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 2597
+      },
+      "writtenOn": "2012-08-23T22:26:05Z",
+      "side": 1,
+      "message": "^^",
+      "revId": "d1499599485eb4a3920674689f24c23139a85c7e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAWn///u0\u003d",
         "filename": "res/values-nl/strings.xml",
         "patchSetId": 6
@@ -30,6 +47,24 @@
       "writtenOn": "2012-08-23T19:49:04Z",
       "side": 1,
       "message": "Moet dit zo kort? Anders \"Verplaatsen\"",
+      "revId": "d1499599485eb4a3920674689f24c23139a85c7e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAWn///ko\u003d",
+        "filename": "res/values-nl/strings.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 2597
+      },
+      "writtenOn": "2012-08-23T22:26:05Z",
+      "side": 1,
+      "message": "Max. 5 karakters",
+      "parentUuid": "AAAAWn///u0\u003d",
       "revId": "d1499599485eb4a3920674689f24c23139a85c7e",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
