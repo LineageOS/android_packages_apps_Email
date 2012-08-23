@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAWn///24\u003d",
+        "filename": "res/values-nl/strings.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 2597
+      },
+      "writtenOn": "2012-08-23T14:41:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAAWX//+AI\u003d",
+      "revId": "4879911106517b0eff3b888966e08c8ec60a7c1e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAWX//+sg\u003d",
         "filename": "res/values-nl/strings.xml",
         "patchSetId": 4
@@ -89,6 +107,42 @@
     },
     {
       "key": {
+        "uuid": "AAAAWn///20\u003d",
+        "filename": "res/values-nl/strings.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 2597
+      },
+      "writtenOn": "2012-08-23T14:41:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAAWX//+es\u003d",
+      "revId": "4879911106517b0eff3b888966e08c8ec60a7c1e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAWn///2w\u003d",
+        "filename": "res/values-nl/strings.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 2597
+      },
+      "writtenOn": "2012-08-23T14:41:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAAWX//+dQ\u003d",
+      "revId": "4879911106517b0eff3b888966e08c8ec60a7c1e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAWX//+sY\u003d",
         "filename": "res/values-nl/strings.xml",
         "patchSetId": 4
@@ -117,6 +171,24 @@
       "writtenOn": "2012-08-22T02:50:22Z",
       "side": 1,
       "message": "Ik ben het eens met \"Kies het te tonen scherm na het verwijderen van een bericht\"",
+      "revId": "4879911106517b0eff3b888966e08c8ec60a7c1e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAWn///2s\u003d",
+        "filename": "res/values-nl/strings.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 2597
+      },
+      "writtenOn": "2012-08-23T14:41:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAAWX//+dI\u003d",
       "revId": "4879911106517b0eff3b888966e08c8ec60a7c1e",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
