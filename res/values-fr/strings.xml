@@ -367,6 +367,7 @@
     <string name="account_settings_background_attachments_label" msgid="2980317599840958688">"Télécharger les pièces jointes"</string>
     <string name="account_settings_background_attachments_summary" msgid="5954218549226189376">"Téléch. auto des pièces jointes aux messages récents via Wi-Fi"</string>
     <string name="account_settings_notify_label" msgid="1630001017303007974">"Notifications"</string>
+    <string name="account_settings_notify_light_label">Utiliser LED de notification</string>
     <string name="account_settings_summary" msgid="8403582255413830007">"Fréquence de synchronisation, notifications, etc."</string>
     <string name="account_settings_notify_summary" msgid="6301122709602752038">"Afficher une notification dans la barre système à la réception d\'e-mails"</string>
     <string name="account_settings_mail_check_frequency_label" msgid="8271462919214560616">"Fréquence de consultation de la boîte de réception"</string>
