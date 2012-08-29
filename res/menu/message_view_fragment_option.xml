@@ -24,7 +24,7 @@
         android:id="@+id/move"
         android:title="@string/move_action"
         android:icon="@drawable/ic_menu_move_to_holo_light"
-        android:showAsAction="ifRoom"
+        android:showAsAction="never"
     />
 
     <item
@@ -45,7 +45,7 @@
         android:id="@+id/older"
         android:icon="@drawable/menu_item_older"
         android:showAsAction="always"
-        android:visible="false"
+	    android:visible="false"
     />
     <item
         android:id="@+id/mailbox_settings"
