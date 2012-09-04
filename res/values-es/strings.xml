@@ -60,7 +60,7 @@
     <string name="message_list_send_pending_messages_action" msgid="8502942186631824114">"Enviar todos"</string>
     <string name="choose_attachment_dialog_title" msgid="81937507117528954">"Elegir archivo adjunto"</string>
     <string name="move_to_folder_dialog_title" msgid="2614318192482193898">"Mover a"</string>
-    <string name="status_loading_messages" msgid="6552307237621292344">"Cargando mensajes..."</string>
+    <string name="status_loading_messages" msgid="6552307237621292344">"Cargando mensajes\u2026"</string>
     <string name="status_network_error" msgid="2611654064403817391">"Error de conexión"</string>
     <string name="error_loading_message_body" msgid="6775234299515596760">"No se ha podido cargar el mensaje de texto. Es posible que sea demasiado grande para mostrarse."</string>
   <plurals name="move_messages">
@@ -129,7 +129,7 @@
     <string name="bcc" msgid="3098643138241111579">"CCO"</string>
     <string name="subject_hint" msgid="7253964583324677128">"Asunto"</string>
     <string name="body_hint" msgid="4279864165439577668">"Redactar correo"</string>
-    <string name="message_compose_fwd_header_fmt" msgid="5181300290654579434">\n\n"-------- Original Message --------"\n"Subject: <xliff:g id="SUBJECT">%1$s</xliff:g>"\n"From: <xliff:g id="SENDER">%2$s</xliff:g>"\n"To: <xliff:g id="TO">%3$s</xliff:g>"\n"CC: <xliff:g id="CC_0">%4$s</xliff:g>"\n\n</string>
+    <string name="message_compose_fwd_header_fmt" msgid="5181300290654579434">\n\n"-------- Mensaje Original --------"\n"Asunto: <xliff:g id="SUBJECT">%1$s</xliff:g>"\n"De: <xliff:g id="SENDER">%2$s</xliff:g>"\n"Para: <xliff:g id="TO">%3$s</xliff:g>"\n"CC: <xliff:g id="CC_0">%4$s</xliff:g>"\n\n</string>
     <string name="message_compose_reply_header_fmt" msgid="8815624773273454573">\n\n"<xliff:g id="SENDER">%s</xliff:g> wrote:"\n\n</string>
     <string name="message_compose_quoted_text_label" msgid="6950097435198536165">"Incluir texto citado"</string>
     <string name="message_compose_include_quoted_text_checkbox_label" msgid="8165567368956050390">"Incluir texto"</string>
@@ -246,9 +246,9 @@
     <string name="account_duplicate_dlg_title" msgid="8089732986912704425">"Cuenta duplicada"</string>
     <string name="account_duplicate_dlg_message_fmt" msgid="6447629283679935840">"Ya estás usando este nombre de usuario para la cuenta \"<xliff:g id="DUPLICATE">%s</xliff:g>\"."</string>
     <string name="account_password_spaces_error" msgid="8928309156658903257">"Esta contraseña contiene uno o varios espacios al principio o al final. Muchos servidores no admiten contraseñas con espacios."</string>
-    <string name="account_setup_check_settings_retr_info_msg" msgid="4121970450267725664">"Recuperando la información de la cuenta..."</string>
-    <string name="account_setup_check_settings_check_incoming_msg" msgid="5356212700221438863">"Comprobando la configuración del servidor de entrada..."</string>
-    <string name="account_setup_check_settings_check_outgoing_msg" msgid="4033015234096725343">"Comprobando la configuración del servidor de salida..."</string>
+    <string name="account_setup_check_settings_retr_info_msg" msgid="4121970450267725664">"Recuperando la información de la cuenta\u2026"</string>
+    <string name="account_setup_check_settings_check_incoming_msg" msgid="5356212700221438863">"Comprobando la configuración del servidor de entrada\u2026"</string>
+    <string name="account_setup_check_settings_check_outgoing_msg" msgid="4033015234096725343">"Comprobando la configuración del servidor de salida\u2026"</string>
     <string name="account_setup_names_title" msgid="8483517350241119291">"Configuración de cuenta"</string>
     <string name="account_setup_names_headline" msgid="2413440250372658881">"Tu cuenta ya está configurada y en breve verás tu correo"</string>
     <string name="account_setup_names_account_name_label" msgid="8033895024273259196">"Asigna un nombre a esta cuenta (opcional)"</string>
