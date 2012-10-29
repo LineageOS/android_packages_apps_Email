@@ -309,7 +309,7 @@
     <string name="account_settings_default_summary" msgid="1531901438624688482">"E-mail standaard vanaf dit account verzenden"</string>
     <string name="account_settings_background_attachments_label" msgid="2980317599840958688">"Bijlagen downloaden"</string>
     <string name="account_settings_background_attachments_summary" msgid="5954218549226189376">"Bijlagen van recente berichten automatisch downloaden via Wi-Fi"</string>
-    <string name="account_settings_notify_label" msgid="1630001017303007974">"Meldingen via e-mail"</string>
+    <string name="account_settings_notify_label" msgid="1630001017303007974">"Meldingen van e-mail"</string>
     <string name="account_settings_summary" msgid="8403582255413830007">"Synchronisatiefrequentie, meldingen, enzovoort"</string>
     <string name="account_settings_notify_summary" msgid="6301122709602752038">"Melding in de systeembalk wanneer er e-mail binnenkomt"</string>
     <string name="account_settings_mail_check_frequency_label" msgid="8271462919214560616">"Controlefrequentie inbox"</string>
