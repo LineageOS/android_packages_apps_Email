@@ -957,7 +957,7 @@ public class MessageCompose extends Activity implements OnClickListener, OnFocus
                     // Use a best guess and infer the action here.
                     String inferredAction = inferAction();
                     if (inferredAction != null) {
-                        mAction = inferredAction;
+                        setAction(inferredAction);
                         // No need to update the action selector as switching actions should do it.
                         return;
                     }
