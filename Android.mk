@@ -33,7 +33,7 @@ LOCAL_AAPT_FLAGS += --extra-packages com.android.ex.chips
 
 LOCAL_STATIC_JAVA_LIBRARIES := android-common com.android.emailcommon guava android-common-chips
 
-LOCAL_PACKAGE_NAME := Email
+LOCAL_PACKAGE_NAME := Email2
 
 LOCAL_PROGUARD_FLAG_FILES := proguard.flags
 
