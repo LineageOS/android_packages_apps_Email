@@ -320,6 +320,8 @@
     <string name="message_compose_error_invalid_email">Some email addresses are invalid.</string>
     <!-- Toast that appears when an attachment is too big to send. -->
     <string name="message_compose_attachment_size">File too large to attach.</string>
+    <!-- Toast that appears when an attachment has no size. -->
+    <string name="message_compose_attachment_no_size">Empty file.</string>
     <!-- Title for dialog containing list of quick responses that user may insert
             into message body. [CHAR_LIMIT=30] -->
     <string name="message_compose_insert_quick_response_list_title">Insert quick response</string>
