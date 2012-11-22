@@ -1,0 +1,8 @@
+Change-Id: I5c593e99d09365105ec20593d647d3cb613d6759
+Code-Review+2: Steve Kondik <shade@chemlab.org>
+Verified+1: Steve Kondik <shade@chemlab.org>
+Submitted-by: Steve Kondik <shade@chemlab.org>
+Submitted-at: Thu, 22 Nov 2012 03:46:43 -0800
+Reviewed-on: http://review.cyanogenmod.org/26410
+Project: CyanogenMod/android_packages_apps_Email
+Branch: refs/heads/jellybean
