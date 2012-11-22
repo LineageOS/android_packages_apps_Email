@@ -1595,8 +1595,7 @@ public class MessageCompose extends Activity implements OnClickListener, OnFocus
             if (size <= 0) {
                 // The size was not measurable;  This attachment is not safe to use.
                 // Quick hack to force a relevant error into the UI
-                // TODO: A proper announcement of the problem
-                size = AttachmentUtilities.MAX_ATTACHMENT_UPLOAD_SIZE + 1;
+                size = AttachmentUtilities.ATTACHMENT_UPLOAD_NO_SIZE;
             }
         }
 
@@ -1612,6 +1611,10 @@ public class MessageCompose extends Activity implements OnClickListener, OnFocus
         // Before attaching the attachment, make sure it meets any other pre-attach criteria
         if (attachment.mSize > AttachmentUtilities.MAX_ATTACHMENT_UPLOAD_SIZE) {
             Toast.makeText(this, R.string.message_compose_attachment_size, Toast.LENGTH_LONG)
+                    .show();
+            return;
+        } else if (attachment.mSize == AttachmentUtilities.ATTACHMENT_UPLOAD_NO_SIZE) {
+            Toast.makeText(this, R.string.message_compose_attachment_no_size, Toast.LENGTH_LONG)
                     .show();
             return;
         }
