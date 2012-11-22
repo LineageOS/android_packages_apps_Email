@@ -133,6 +133,10 @@ public class AttachmentUtilities {
      * 6.8MB uploaded.
      */
     public static final int MAX_ATTACHMENT_UPLOAD_SIZE = (5 * 1024 * 1024);
+    /**
+     * The attachment has no size and upload is not allowed.
+     */
+    public static final int ATTACHMENT_UPLOAD_NO_SIZE = -1;
 
     public static Uri getAttachmentUri(long accountId, long id) {
         return CONTENT_URI.buildUpon()
