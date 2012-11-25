@@ -68,7 +68,7 @@
     <item quantity="other" msgid="371256717624461324">"Mover mensagens"</item>
   </plurals>
     <string name="cannot_move_protocol_not_supported_toast" msgid="6558083148128616292">"Não é possível mover em contas POP3."</string>
-    <string name="cannot_move_multiple_accounts_toast" msgid="7922594026384944163">"Não é possível mover porque a seleção contém várias contas."</string>
+    <string name="cannot_move_multiple_accounts_toast" msgid="7922594026384944163">"Não é possível mover porque a selecção contém várias contas."</string>
     <string name="cannot_move_special_mailboxes_toast" msgid="7093107954841896970">"Não é possível mover as mensagens em Rascunhos, Caixa de Saída e Enviadas."</string>
   <plurals name="notification_new_one_account_fmt">
     <item quantity="one" msgid="3422945912787702191">"<xliff:g id="UNREAD_MESSAGE_COUNT">%1$d</xliff:g> não lidas (<xliff:g id="ACCOUNT">%2$s</xliff:g>)"</item>
@@ -115,8 +115,8 @@
     <string name="message_is_empty_description" msgid="4004644319382041459">"Sem assunto"</string>
     <string name="message_list_load_more_messages_action" msgid="7428302707908825692">"Carregar mais mensagens"</string>
   <plurals name="message_view_selected_message_count">
-    <item quantity="one" msgid="5064657358375178519">"<xliff:g id="MESSAGE_COUNT">%d</xliff:g> selecionada(s)"</item>
-    <item quantity="other" msgid="7901361399231876038">"<xliff:g id="MESSAGE_COUNT">%d</xliff:g> selecionada(s)"</item>
+    <item quantity="one" msgid="5064657358375178519">"<xliff:g id="MESSAGE_COUNT">%d</xliff:g> seleccionada(s)"</item>
+    <item quantity="other" msgid="7901361399231876038">"<xliff:g id="MESSAGE_COUNT">%d</xliff:g> seleccionada(s)"</item>
   </plurals>
     <string name="message_list_no_messages" msgid="7846910091922523867">"Não tem mensagens"</string>
     <string name="message_compose_to_hint" msgid="2891895306418177013">"Para"</string>
@@ -186,7 +186,7 @@
     <string name="attachment_info_wifi_only" msgid="1481120960014563617">"Este anexo é demasiado grande para ser transferido através de uma rede de telemóvel. Pode transferi-lo da próxima vez que se ligar a uma rede Wi-Fi."</string>
     <string name="attachment_info_no_intent" msgid="8139209405745777924">"Não existe nenhuma aplicação instalada capaz de abrir este anexo. Tente transferir uma aplicação apropriada do Android Market."</string>
     <string name="attachment_info_sideload_disabled" msgid="3270731101769840006">"Este anexo é uma aplicação. Tem de marcar Fontes Desconhecidas em Definições &gt; Aplicações, antes da instalação."</string>
-    <string name="attachment_info_apk_install_disabled" msgid="2817790592227462682">"Não é possível instalar aplicações diretamente a partir do e-mail. Deverá primeiro guardar esta aplicação e, em seguida, instalá-la utilizando a aplicação Transferências."</string>
+    <string name="attachment_info_apk_install_disabled" msgid="2817790592227462682">"Não é possível instalar aplicações directamente a partir do e-mail. Deverá primeiro guardar esta aplicação e, em seguida, instalá-la utilizando a aplicação Transferências."</string>
     <string name="attachment_not_found" msgid="7155322700141145123">"Não foi possível transferir o anexo."</string>
     <string name="message_decode_error" msgid="5016042255170947834">"Ocorreu um erro durante a descodificação da mensagem."</string>
     <string name="eml_view_title" msgid="8827210108543430336">"A visualizar <xliff:g id="FILENAME">%s</xliff:g>"</string>
@@ -290,7 +290,7 @@
     <string name="account_setup_exchange_ssl_label" msgid="6704105469083211236">"Utilizar ligação segura (SSL)"</string>
     <string name="account_setup_exchange_trust_certificates_label" msgid="6232880757633882678">"Aceitar todos os certificados SLL"</string>
     <string name="account_setup_exchange_certificate_title" msgid="8473793588405277962">"Certificado do cliente"</string>
-    <string name="account_setup_exchange_select_certificate" msgid="1536103662037268683">"Selecionar"</string>
+    <string name="account_setup_exchange_select_certificate" msgid="1536103662037268683">"Seleccionar"</string>
     <string name="account_setup_exchange_use_certificate" msgid="8690682770083161349">"Utilizar certificado de cliente"</string>
     <string name="account_setup_exchange_remove_certificate" msgid="5633249155510301766">"Remover"</string>
     <string name="account_setup_exchange_no_certificate" msgid="1119542961954780872">"Nenhum"</string>
@@ -322,7 +322,7 @@
     <string name="account_setup_options_mail_window_all" msgid="5372861827683632364">"Todas"</string>
     <string name="account_setup_options_mail_window_default" msgid="8321351926520165832">"Utilizar predef. da conta"</string>
     <string name="account_setup_failed_dlg_auth_message" msgid="42827150104879570">"Nome de utilizador ou palavra passe incorrectos."</string>
-    <string name="account_setup_failed_dlg_auth_message_fmt" msgid="8598560266430207606">"Nome de utilizador ou palavra-passe incorretos."\n"(<xliff:g id="ERROR">%s</xliff:g>)"</string>
+    <string name="account_setup_failed_dlg_auth_message_fmt" msgid="8598560266430207606">"Nome de utilizador ou palavra-passe incorrectos."\n"(<xliff:g id="ERROR">%s</xliff:g>)"</string>
     <string name="account_setup_failed_dlg_certificate_message" msgid="3836152264696108805">"Não é possível ligar ao servidor em segurança."</string>
     <string name="account_setup_failed_dlg_certificate_message_fmt" msgid="2121921642915593041">"Não é possível ligar ao servidor em segurança."\n"(<xliff:g id="ERROR">%s</xliff:g>)"</string>
     <string name="account_setup_failed_certificate_required" msgid="1280569002588325367">"Certificado de cliente necessário. Ligar ao servidor com o certificado de cliente?"</string>
@@ -334,17 +334,17 @@
     <string name="account_setup_failed_auth_required" msgid="6799839150250217566">"Os métodos de autenticação não são suportados pelo servidor."</string>
     <string name="account_setup_failed_security" msgid="925820957665764964">"Não foi possível abrir ligação ao servidor devido a um erro de segurança."</string>
     <string name="account_setup_failed_ioerror" msgid="7802604687451830378">"Não foi possível abrir ligação ao servidor."</string>
-    <string name="account_setup_failed_protocol_unsupported" msgid="4607759927226943569">"Introduziu um endereço de servidor incorreto ou o servidor requer uma versão de protocolo que o E-mail não suporta."</string>
+    <string name="account_setup_failed_protocol_unsupported" msgid="4607759927226943569">"Introduziu um endereço de servidor incorrecto ou o servidor requer uma versão de protocolo que o E-mail não suporta."</string>
     <string name="account_setup_failed_access_denied" msgid="6835358740050287051">"Não tem autorização para sincronizar com este servidor. Contacte o administrador do servidor para obter mais informações."</string>
     <string name="account_setup_security_required_title" msgid="1850321535870447468">"Administração de segurança remota"</string>
     <string name="account_setup_security_policies_required_fmt" msgid="5410714107656671761">"O servidor <xliff:g id="SERVER">%s</xliff:g> requer permissão para controlar remotamente algumas das funcionalidades de segurança do dispositivo Android. Pretende concluir a configuração desta conta?"</string>
     <string name="account_setup_failed_security_policies_unsupported" msgid="3210264746877120355">"Este servidor requer funcionalidades de segurança que o seu aparelho Android não suporta, incluindo: <xliff:g id="ERROR">%s</xliff:g>"</string>
     <string name="account_setup_username_uneditable_error" msgid="1618869759801584109">"Não é possível alterar o nome de utilizador de uma conta. Para adicionar uma conta com outro nome de utilizador, toque em Adicionar Conta."</string>
-    <string name="disable_admin_warning" msgid="6196985268695592382">"AVISO: a desativação da autorização da aplicação E-mail para administrar o aparelho eliminará todas as contas de e-mail que necessitam desta, juntamente com o respetivo e-mail, contactos, eventos de agenda e outros dados."</string>
-    <string name="account_security_dialog_title" msgid="430041952584831904">"Atualização de segurança"</string>
-    <string name="account_security_dialog_content_fmt" msgid="8843806143923278214">"<xliff:g id="ACCOUNT">%s</xliff:g> requer a atualização das definições de segurança."</string>
+    <string name="disable_admin_warning" msgid="6196985268695592382">"AVISO: a desactivação da autorização da aplicação E-mail para administrar o aparelho eliminará todas as contas de e-mail que necessitam desta, juntamente com o respectivo e-mail, contactos, eventos de agenda e outros dados."</string>
+    <string name="account_security_dialog_title" msgid="430041952584831904">"Actualização de segurança"</string>
+    <string name="account_security_dialog_content_fmt" msgid="8843806143923278214">"<xliff:g id="ACCOUNT">%s</xliff:g> requer a actualização das definições de segurança."</string>
     <string name="security_notification_ticker_fmt" msgid="1108023476125276507">"A conta \"<xliff:g id="ACCOUNT">%s</xliff:g>\" requer a actualização das definições de segurança."</string>
-    <string name="security_notification_content_title" msgid="3352841884304076235">"É necessária uma atualização da segurança"</string>
+    <string name="security_notification_content_title" msgid="3352841884304076235">"É necessária uma actualização da segurança"</string>
     <string name="account_security_title" msgid="3511543138560418587">"Segurança do dispositivo"</string>
     <string name="account_security_policy_explanation_fmt" msgid="6932627044314460766">"O servidor <xliff:g id="SERVER">%s</xliff:g> requer permissão para controlar remotamente algumas das funcionalidades de segurança do aparelho Android."</string>
     <string name="account_setup_failed_dlg_edit_details_action" msgid="5355993309841479360">"Editar detalhes"</string>
@@ -358,7 +358,7 @@
     <string name="password_expired_dialog_content_fmt" msgid="5982207349002500211">"Os dados para <xliff:g id="ACCOUNT">%s</xliff:g> estão a ser apagados do seu aparelho. Pode restaurá-los alterando o PIN ou palavra-passe de bloqueio do ecrã. Alterar agora?"</string>
     <string name="account_settings_exit_server_settings" msgid="8006323251094711431">"Rejeitar alterações não guardadas?"</string>
     <string name="account_settings_login_dialog_title" msgid="4024422579146302775">"Não foi possível iniciar sessão."</string>
-    <string name="account_settings_login_dialog_content_fmt" msgid="3492735234999710234">"O nome de utilizador ou palavra-passe para <xliff:g id="ACCOUNT">%s</xliff:g> estão incorretos. Quer atualizá-los agora?"</string>
+    <string name="account_settings_login_dialog_content_fmt" msgid="3492735234999710234">"O nome de utilizador ou palavra-passe para <xliff:g id="ACCOUNT">%s</xliff:g> estão incorrectos. Quer actualizá-los agora?"</string>
     <string name="account_settings_default_label" msgid="3575963379680943640">"Conta predefinida"</string>
     <string name="account_settings_default_summary" msgid="1531901438624688482">"Enviar e-mail a partir desta conta por predefinição"</string>
     <string name="account_settings_background_attachments_label" msgid="2980317599840958688">"Transferir anexos"</string>
@@ -368,7 +368,7 @@
     <string name="account_settings_notify_summary" msgid="6301122709602752038">"Notificar na barra de sistema quando chegar e-mail"</string>
     <string name="account_settings_mail_check_frequency_label" msgid="8271462919214560616">"Frequência de verificação de caixa de entrada"</string>
     <string name="account_settings_incoming_label" msgid="7858928031806297542">"Definições de recepção"</string>
-    <string name="account_settings_incoming_summary" msgid="2923044634831881068">"Nome de utiliz., palavra-passe e outras def. do serv. de receção"</string>
+    <string name="account_settings_incoming_summary" msgid="2923044634831881068">"Nome de utiliz., palavra-passe e outras def. do serv. de recepção"</string>
     <string name="account_settings_outgoing_label" msgid="4464829249980026745">"Definições de envio"</string>
     <string name="account_settings_outgoing_summary" msgid="3572093624332724311">"Nome de utiliz., palavra-passe e outras def. do serv. de envio"</string>
     <string name="account_settings_description_label" msgid="8894815221204511715">"Nome da conta"</string>
@@ -405,11 +405,11 @@
     <string name="mailbox_settings_mailbox_check_frequency_label" msgid="1246075442689328906">"Verificar frequência"</string>
     <string name="mailbox_settings_mailbox_sync_window_label" msgid="2957945231022052672">"Dias para sincronização"</string>
     <string name="account_shortcut_picker_name" msgid="1994861845225243190">"Conta de e-mail"</string>
-    <string name="account_shortcut_picker_title" msgid="1039929224016048015">"Selecionar uma conta"</string>
-    <string name="mailbox_shortcut_picker_title" msgid="4152973927804882131">"Selecione uma pasta"</string>
+    <string name="account_shortcut_picker_title" msgid="1039929224016048015">"Seleccionar uma conta"</string>
+    <string name="mailbox_shortcut_picker_title" msgid="4152973927804882131">"Seleccione uma pasta"</string>
     <string name="toast_account_not_found" msgid="8144242451730692816">"Não foi possível localizar a conta. Pode ter sido removida."</string>
     <string name="toast_mailbox_not_found" msgid="4960014581292378895">"Não foi possível localizar a pasta. Pode ter sido removida."</string>
-    <string name="provider_note_live" msgid="2995297671709325333">"Apenas algumas contas “Plus” incluem acesso POP, permitindo a ligação deste programa. Se não conseguir iniciar sessão com o endereço de e-mail e palavra-passe corretos, é possível que não tenha uma conta “Plus” paga. Inicie o navegador de internet para obter acesso a essas contas de e-mail."</string>
+    <string name="provider_note_live" msgid="2995297671709325333">"Apenas algumas contas “Plus” incluem acesso POP, permitindo a ligação deste programa. Se não conseguir iniciar sessão com o endereço de e-mail e palavra-passe correctos, é possível que não tenha uma conta “Plus” paga. Inicie o navegador de internet para obter acesso a essas contas de e-mail."</string>
     <string name="provider_note_t_online" msgid="1630642061431427894">"Antes de configurar esta conta de e-mail, visite o Web site T-Online e crie uma palavra-passe de acesso a e-mail POP3."</string>
     <string name="exchange_name" msgid="1190783774800310346">"Empresa"</string>
     <string name="exchange_name_alternate" msgid="5772529644749041052">"Microsoft Exchange ActiveSync"</string>
@@ -425,7 +425,7 @@
     <string name="header_label_general_preferences" msgid="9204600297009680176">"Geral"</string>
     <string name="category_general_preferences" msgid="2742423840964045801">"Aplicação"</string>
     <string name="general_preference_auto_advance_label" msgid="213945004511666631">"Avanço automático"</string>
-    <string name="general_preference_auto_advance_summary" msgid="6483439980032715119">"Selecionar o ecrã a apresentar após eliminar uma mensagem"</string>
+    <string name="general_preference_auto_advance_summary" msgid="6483439980032715119">"Seleccionar o ecrã a apresentar após eliminar uma mensagem"</string>
     <string name="general_preference_auto_advance_dialog_title" msgid="5405052109452503909">"Avançar para"</string>
     <string name="general_preference_auto_advance_newer" msgid="1336720027570509885">"Mensagem mais recente"</string>
     <string name="general_preference_auto_advance_older" msgid="8273143493185128646">"Mensagem mais antiga"</string>
@@ -467,5 +467,5 @@
     <string name="search_slow_warning_title" msgid="2826118321880530239">"A aguardar resultados"</string>
     <string name="search_slow_warning_message" msgid="8494483410797387903">"Alguns servidores podem demorar algum tempo."</string>
     <string name="action_bar_mailbox_list_title" msgid="7484457755531286333">"Pastas"</string>
-    <string name="require_manual_sync_message" msgid="7777357288642785955">"A sincronização em segundo plano desta conta está desativada quando está em roaming."</string>
+    <string name="require_manual_sync_message" msgid="7777357288642785955">"A sincronização em segundo plano desta conta está desactivada quando está em roaming."</string>
 </resources>
