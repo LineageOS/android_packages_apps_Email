@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAa3//5Yk\u003d",
+        "filename": "res/values/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1133,
+      "author": {
+        "id": 1576
+      },
+      "writtenOn": "2012-11-29T08:28:20Z",
+      "side": 1,
+      "message": "Blocked attachments",
+      "revId": "f3ba88d63df0bc6d9f662bb5712b41f618a07cc0",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAa3//5Yg\u003d",
+        "filename": "res/values/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1137,
+      "author": {
+        "id": 1576
+      },
+      "writtenOn": "2012-11-29T08:28:20Z",
+      "side": 1,
+      "message": "Select the attachment types that are blocked from viewing or saving \n\nNo . at end of sentence",
+      "revId": "f3ba88d63df0bc6d9f662bb5712b41f618a07cc0",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
