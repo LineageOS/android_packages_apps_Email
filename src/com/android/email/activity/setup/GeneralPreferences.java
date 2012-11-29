@@ -16,8 +16,10 @@
 
 package com.android.email.activity.setup;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.ListPreference;
+import android.preference.MultiSelectListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.Preference.OnPreferenceChangeListener;
@@ -28,6 +30,11 @@ import android.widget.Toast;
 import com.android.email.Preferences;
 import com.android.email.R;
 import com.android.email.activity.UiUtilities;
+import com.android.emailcommon.utility.AttachmentUtilities;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class GeneralPreferences extends PreferenceFragment implements OnPreferenceChangeListener  {
 
@@ -38,9 +45,14 @@ public class GeneralPreferences extends PreferenceFragment implements OnPreferen
     private static final String PREFERENCE_KEY_REPLY_ALL = Preferences.REPLY_ALL;
     private static final String PREFERENCE_KEY_CLEAR_TRUSTED_SENDERS = "clear_trusted_senders";
 
+    private static final String PREFERENCE_KEY_DISALLOWED_ATTACHMENT_EXTENSIONS =
+                                        "disallowed_attachment_extensions";
+
     private Preferences mPreferences;
     private ListPreference mAutoAdvance;
     private ListPreference mTextZoom;
+
+    private MultiSelectListPreference mDisallowedAttachmentExtensions;
 
     CharSequence[] mSizeSummaries;
 
@@ -109,6 +121,17 @@ public class GeneralPreferences extends PreferenceFragment implements OnPreferen
         mTextZoom.setValueIndex(mPreferences.getTextZoom());
         mTextZoom.setOnPreferenceChangeListener(this);
 
+        mDisallowedAttachmentExtensions =
+                (MultiSelectListPreference) findPreference(
+                        PREFERENCE_KEY_DISALLOWED_ATTACHMENT_EXTENSIONS);
+        mDisallowedAttachmentExtensions.setEntries(
+                AttachmentUtilities.UNACCEPTABLE_ATTACHMENT_EXTENSIONS);
+        mDisallowedAttachmentExtensions.setEntryValues(
+                AttachmentUtilities.UNACCEPTABLE_ATTACHMENT_EXTENSIONS);
+        mDisallowedAttachmentExtensions.setDefaultValue(
+                AttachmentUtilities.UNACCEPTABLE_ATTACHMENT_EXTENSIONS);
+        checkDisallowedAttachmentExtensions();
+
         reloadDynamicSummaries();
     }
 
@@ -127,5 +150,27 @@ public class GeneralPreferences extends PreferenceFragment implements OnPreferen
             summary = mSizeSummaries[textZoomIndex];
         }
         mTextZoom.setSummary(summary);
+    }
+
+    /**
+     * Check all the extensions as disallowed if there isn't prior user selection
+     */
+    private void checkDisallowedAttachmentExtensions() {
+        SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
+        final String NOEXT = ".noextension";
+        Set<String> daeDefSet = new HashSet<String>();
+        daeDefSet.add(NOEXT);
+        Set<String> daeSet =
+                prefs.getStringSet(
+                            PREFERENCE_KEY_DISALLOWED_ATTACHMENT_EXTENSIONS,
+                            daeDefSet);
+        String[] dae = daeSet.toArray(new String[daeSet.size()]);
+        if (dae.length == 1 && dae[0].compareTo(NOEXT) == 0) {
+            // Put all the extensions as disallowed
+            Set<String> values =
+                    new HashSet<String>(
+                            Arrays.asList(AttachmentUtilities.UNACCEPTABLE_ATTACHMENT_EXTENSIONS));
+            mDisallowedAttachmentExtensions.setValues(values);
+        }
     }
 }
