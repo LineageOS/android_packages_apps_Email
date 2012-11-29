@@ -23,6 +23,7 @@ import com.android.emailcommon.utility.Utility;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
@@ -31,7 +32,10 @@ import android.net.Uri;
 import android.provider.Settings;
 import android.text.TextUtils;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Encapsulates commonly used attachment information related to suitability for viewing and saving,
@@ -48,6 +52,9 @@ public class AttachmentInfo {
     public static final int COLUMN_MIME_TYPE = 3;
     public static final int COLUMN_ACCOUNT_KEY = 4;
     public static final int COLUMN_FLAGS = 5;
+
+    private static final String PREFERENCE_KEY_BLOCKED_ATTACHMENT_EXTENSIONS =
+                                    "blocked_attachment_extensions";
 
     /** Attachment not denied */
     public static final int ALLOW           = 0x00;
@@ -109,6 +116,8 @@ public class AttachmentInfo {
         boolean canSave = true;
         boolean canInstall = false;
         int denyFlags = ALLOW;
+        SharedPreferences preferences =
+                context.getSharedPreferences(Preferences.PREFERENCES_FILE, Context.MODE_PRIVATE);
 
         // Don't enable the "save" button if we've got no place to save the file
         if (!Utility.isExternalStorageMounted()) {
@@ -124,10 +133,20 @@ public class AttachmentInfo {
         }
 
         // Check for unacceptable attachments by filename extension
+        // Read from user preferences
+        Set<String> unacceptableAttachmentExtensionsSet =
+                new HashSet<String>(
+                        Arrays.asList(AttachmentUtilities.UNACCEPTABLE_ATTACHMENT_EXTENSIONS));
+        unacceptableAttachmentExtensionsSet =
+                preferences.getStringSet(
+                        PREFERENCE_KEY_BLOCKED_ATTACHMENT_EXTENSIONS,
+                        unacceptableAttachmentExtensionsSet);
+        String[] unacceptableAttachmentExtensions =
+                unacceptableAttachmentExtensionsSet.toArray(
+                        new String[unacceptableAttachmentExtensionsSet.size()]);
         String extension = AttachmentUtilities.getFilenameExtension(mName);
         if (!TextUtils.isEmpty(extension) &&
-                Utility.arrayContains(AttachmentUtilities.UNACCEPTABLE_ATTACHMENT_EXTENSIONS,
-                        extension)) {
+                Utility.arrayContains(unacceptableAttachmentExtensions, extension)) {
             canView = false;
             canSave = false;
             denyFlags |= DENY_MALWARE;
