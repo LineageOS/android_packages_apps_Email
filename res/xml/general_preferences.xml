@@ -51,4 +51,15 @@
             android:summary="@string/general_preferences_clear_trusted_senders_summary" />
 
     </PreferenceCategory>
+
+    <PreferenceCategory
+            android:key="category_general_security_preferences"
+            android:title="@string/category_general_security_preferences">
+
+        <MultiSelectListPreference
+            android:key="blocked_attachment_extensions"
+            android:title="@string/security_preferences_blocked_attachment_extensions_title"
+            android:summary="@string/security_preferences_blocked_attachment_extensions_summary" />
+
+    </PreferenceCategory>
 </PreferenceScreen>
