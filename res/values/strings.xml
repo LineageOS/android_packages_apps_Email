@@ -1098,6 +1098,8 @@ as <xliff:g id="filename">%s</xliff:g>.</string>
     <string name="header_label_general_preferences">General</string>
     <!-- First category in general preferences [CHAR LIMIT=64] -->
     <string name="category_general_preferences">Application</string>
+    <!-- First category in general security preferences -->
+    <string name="category_general_security_preferences">Security</string>
 
     <!-- General preference: Label of the setting for the direction to move to
          when deleting the current message.
@@ -1124,6 +1126,15 @@ as <xliff:g id="filename">%s</xliff:g>.</string>
          the direction to move to when deleting the current message.
          This option is for "move back to the message list" [CHAR LIMIT=32] -->
     <string name="general_preference_auto_advance_message_list">Message list</string>
+
+    <!-- Security preference: The title of the setting with the list of blocked
+         attachment extensions" -->
+    <string name="security_preferences_blocked_attachment_extensions_title">
+         Blocked attachments</string>
+    <!-- Security preference: The summary of the setting with the list of blocked
+         attachment extensions" -->
+    <string name="security_preferences_blocked_attachment_extensions_summary">
+         Select the attachment types that are blocked from viewing or saving</string>
 
     <!-- General preference: Label of the setting for the text zoom.  [CHAR LIMIT=32] -->
     <string name="general_preference_text_zoom_label">Message text size</string>
