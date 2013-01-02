@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAbn//94U\u003d",
+        "filename": "src/com/android/email/mail/transport/SmtpSender.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 2597
+      },
+      "writtenOn": "2013-01-02T01:12:31Z",
+      "side": 1,
+      "message": "Whitespace error",
+      "revId": "af024b6070c433f01ebdc4f6e79bfa090b2c4e9e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAbn//94Q\u003d",
+        "filename": "src/com/android/email/mail/transport/SmtpSender.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 2597
+      },
+      "writtenOn": "2013-01-02T01:12:31Z",
+      "side": 1,
+      "message": "Whitespace error",
+      "revId": "af024b6070c433f01ebdc4f6e79bfa090b2c4e9e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAbn//94M\u003d",
+        "filename": "src/com/android/email/mail/transport/SmtpSender.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 2597
+      },
+      "writtenOn": "2013-01-02T01:12:31Z",
+      "side": 1,
+      "message": "Whitespace error",
+      "revId": "af024b6070c433f01ebdc4f6e79bfa090b2c4e9e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
