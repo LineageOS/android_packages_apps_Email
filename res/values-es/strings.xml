@@ -309,6 +309,4 @@
     <string name="toast_folder_hide_invalid">¡No se puede ocultar esta carpeta!</string>
 
     <string name="sample_account_name" >Cuenta de ejemplo</string>
-    <string name="default_rgb_value" >255</string>
-    <string name="default_html_color_code" >0xFFFFFFFF</string>
 </resources>
