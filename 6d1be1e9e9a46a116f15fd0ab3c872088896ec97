@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAcn//8uU\u003d",
+        "filename": "res/values-iw/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 5248
+      },
+      "writtenOn": "2013-01-16T06:03:39Z",
+      "side": 1,
+      "message": "It\u0027s Called \"Havrahat Tavim\" in Hebrew (no idea what\u0027s the phrase in English). It would look like one in the end. You have to add a backslash before special chars like \" \\ and \u0027 in order to make the compiler understand them as an ordinary text instead of a special char.",
+      "parentUuid": "AAAAcn//858\u003d",
+      "revId": "6d1be1e9e9a46a116f15fd0ab3c872088896ec97",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAcn//85o\u003d",
         "filename": "res/values-iw/strings.xml",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2013-01-15T22:11:15Z",
       "side": 1,
       "message": "\"Retot\"",
+      "revId": "6d1be1e9e9a46a116f15fd0ab3c872088896ec97",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAcn//8uE\u003d",
+        "filename": "res/values-iw/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 5248
+      },
+      "writtenOn": "2013-01-16T06:03:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAAcn//85o\u003d",
       "revId": "6d1be1e9e9a46a116f15fd0ab3c872088896ec97",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
