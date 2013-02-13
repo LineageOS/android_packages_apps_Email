@@ -53,6 +53,8 @@
     <string name="mailbox_settings_action" msgid="8008375875310554776">"Synchronisierungsoptionen"</string>
     <string name="mark_as_unread_action" msgid="3766298115778767554">"Als ungelesen markieren"</string>
     <string name="move_action" msgid="3059189775933985898">"Verschieben"</string>
+    <string name="newer_action" msgid="8950909456802330593">"Neuere"</string>
+    <string name="older_action" msgid="4504015635360605471">"Ältere"</string>
     <string name="plus_cc_label" msgid="3365150001259912183">"+ Cc/Bcc"</string>
     <string name="add_cc_bcc_menu" msgid="4757145078498200242">"Cc/Bcc hinzufügen"</string>
     <string name="add_file_attachment" msgid="2203398371671979481">"Datei anhängen"</string>
@@ -68,7 +70,7 @@
     <item quantity="other" msgid="371256717624461324">"Nachrichten verschieben"</item>
   </plurals>
     <string name="cannot_move_protocol_not_supported_toast" msgid="6558083148128616292">"Verschieben wird für POP3-Konten nicht unterstützt."</string>
-    <string name="cannot_move_multiple_accounts_toast" msgid="7922594026384944163">"Verschieben nicht möglich, da mehrere Konten ausgewählt wurden."</string>
+    <string name="cannot_move_multiple_accounts_toast" msgid="7922594026384944163">"Verschieben nicht möglich, weil mehrere Konten ausgewählt wurden."</string>
     <string name="cannot_move_special_mailboxes_toast" msgid="7093107954841896970">"Nachrichten im Postausgang und den Ordnern \"Entwürfe\" und \"Gesendet\" können nicht verschoben werden."</string>
   <plurals name="notification_new_one_account_fmt">
     <item quantity="one" msgid="3422945912787702191">"<xliff:g id="UNREAD_MESSAGE_COUNT">%1$d</xliff:g> ungelesen (<xliff:g id="ACCOUNT">%2$s</xliff:g>)"</item>
@@ -181,7 +183,7 @@
     <string name="attachment_info_wifi_settings" msgid="96432970927503597">"WLAN-Einstellungen"</string>
     <string name="attachment_info_application_settings" msgid="4124655487276125596">"App-Einstellungen"</string>
     <string name="attachment_info_unknown" msgid="8342655396805943320">"Anhang kann nicht geöffnet werden."</string>
-    <string name="attachment_info_malware" msgid="6576029010855055528">"Sie können diese Datei nicht öffnen oder speichern, da diese Art von Anhang möglicherweise schädliche Software enthält."</string>
+    <string name="attachment_info_malware" msgid="6576029010855055528">"Sie können diese Datei nicht öffnen oder speichern, weil diese Art von Anhang möglicherweise schädliche Software enthält."</string>
     <string name="attachment_info_policy" msgid="3560422300127587508">"Dieser Anhang kann aufgrund der Sicherheitsrichtlinien dieses Kontos nicht gespeichert oder geöffnet werden."</string>
     <string name="attachment_info_wifi_only" msgid="1481120960014563617">"Dieser Anhang ist zu groß, um ihn über ein Mobilfunknetz herunterzuladen. Sie können ihn herunterladen, sobald Sie das nächste Mal mit einem WLAN-Netzwerk verbunden sind."</string>
     <string name="attachment_info_no_intent" msgid="8139209405745777924">"Sie verfügen über keine App, mit der Sie diesen Anhang öffnen können. Laden Sie eine entsprechende App von Android Market herunter."</string>
@@ -392,11 +394,6 @@
     <string name="account_settings_sync_email_enable" msgid="3754115565685222477">"E-Mails synchr."</string>
     <string name="account_settings_sync_email_summary" msgid="262964076412310990">"E-Mails dieses Kontos synchronisieren"</string>
     <string name="account_settings_vibrate_when_label" msgid="708477308761702671">"Vibration"</string>
-    <string name="account_settings_vibrate_when_summary" msgid="3991584445166247189">"Bei E-Mail-Eingang zusätzlich vibrieren"</string>
-    <string name="account_settings_vibrate_when_always" msgid="6739506816960483174">"Immer"</string>
-    <string name="account_settings_vibrate_when_silent" msgid="6417076436551648924">"Nur im Lautlos-Modus"</string>
-    <string name="account_settings_vibrate_when_never" msgid="3759680093309511614">"Nie"</string>
-    <string name="account_settings_vibrate_when_dlg_title" msgid="308167729046312952">"Vibration"</string>
     <string name="account_settings_ringtone" msgid="8229878374785575207">"Klingelton auswählen"</string>
     <string name="account_settings_servers" msgid="4925493817981624242">"Servereinstellungen"</string>
     <string name="account_delete_dlg_title" msgid="6806087520856396608">"Konto entfernen"</string>

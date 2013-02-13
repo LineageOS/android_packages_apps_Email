@@ -86,7 +86,7 @@ public class Welcome extends Activity {
      */
     private static final String EXTRA_DEBUG_PANE_MODE = "DEBUG_PANE_MODE";
 
-    private static final String VIEW_MAILBOX_INTENT_URL_PATH = "/view/mailbox";
+    public static final String VIEW_MAILBOX_INTENT_URL_PATH = "/view/mailbox";
 
     private final EmailAsyncTask.Tracker mTaskTracker = new EmailAsyncTask.Tracker();
 
