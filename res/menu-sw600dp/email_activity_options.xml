@@ -48,10 +48,12 @@
          with the phone menu. -->
     <item
         android:id="@+id/newer"
+        android:title="@string/message_view_move_to_newer"
         android:visible="false"
     />
     <item
         android:id="@+id/older"
+        android:title="@string/message_view_move_to_older"
         android:visible="false"
     />
     <item
