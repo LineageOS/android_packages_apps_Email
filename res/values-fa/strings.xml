@@ -53,6 +53,8 @@
     <string name="mailbox_settings_action" msgid="8008375875310554776">"گزینه‌های همگام‌سازی"</string>
     <string name="mark_as_unread_action" msgid="3766298115778767554">"علامت‌گذاری به‌عنوان خوانده نشده"</string>
     <string name="move_action" msgid="3059189775933985898">"انتقال"</string>
+    <string name="newer_action" msgid="8950909456802330593">"جدیدتر"</string>
+    <string name="older_action" msgid="4504015635360605471">"قدیمی‌تر"</string>
     <string name="plus_cc_label" msgid="3365150001259912183">"+ گیرندهٔ کپی/گیرنده مخفی"</string>
     <string name="add_cc_bcc_menu" msgid="4757145078498200242">"افزودن گیرندهٔ کپی/گیرندهٔ کپی مخفی"</string>
     <string name="add_file_attachment" msgid="2203398371671979481">"پیوست کردن فایل"</string>
@@ -183,7 +185,7 @@
     <string name="attachment_info_unknown" msgid="8342655396805943320">"پیوست باز نمی‌شود."</string>
     <string name="attachment_info_malware" msgid="6576029010855055528">"شما نمی‌توانید این فایل را ذخیره یا باز کنید زیرا این نوع پیوست ممکن است حاوی نرم‌افزار مخرب باشد."</string>
     <string name="attachment_info_policy" msgid="3560422300127587508">"به دلیل خط‌مشی‌های امنیتی، این حساب را نمی‌توان ذخیره یا باز کرد."</string>
-    <string name="attachment_info_wifi_only" msgid="1481120960014563617">"این پیوست برای دانلود از طریق شبکه تلفن همراه خیلی بزرگ است. می‌توانید دفعه دیگر که به یک شبکه Wi-Fi متصل می‌شوید، آنرا دانلود کنید."</string>
+    <string name="attachment_info_wifi_only" msgid="1481120960014563617">"این پیوست برای دانلود از طریق شبکهٔ تلفن همراه خیلی بزرگ است. می‌توانید دفعه دیگر که به یک شبکه Wi-Fi متصل می‌شوید، آنرا دانلود کنید."</string>
     <string name="attachment_info_no_intent" msgid="8139209405745777924">"هیچ برنامه نصب شده‌ای برای باز کردن این پیوست وجود ندارد. یک برنامه مناسب از Android Market نصب کنید."</string>
     <string name="attachment_info_sideload_disabled" msgid="3270731101769840006">"این پیوست یک برنامه است. باید قبل از نصب آن، منبع‌های ناشناس را در تنظیمات &gt; برنامه‌ها بررسی کنید."</string>
     <string name="attachment_info_apk_install_disabled" msgid="2817790592227462682">"نمی‌توان برنامه‎ها را به طور مستقیم از ایمیل نصب کرد. ابتدا این برنامه را ذخیره کنید و سپس آنرا با استفاده از برنامه \"دانلودها\" نصب کنید."</string>
@@ -388,11 +390,6 @@
     <string name="account_settings_sync_email_enable" msgid="3754115565685222477">"همگام‌سازی ایمیل"</string>
     <string name="account_settings_sync_email_summary" msgid="262964076412310990">"همگام‌سازی ایمیل برای این حساب"</string>
     <string name="account_settings_vibrate_when_label" msgid="708477308761702671">"لرزش"</string>
-    <string name="account_settings_vibrate_when_summary" msgid="3991584445166247189">"همچنین لرزش هنگام دریافت ایمیل"</string>
-    <string name="account_settings_vibrate_when_always" msgid="6739506816960483174">"همیشه"</string>
-    <string name="account_settings_vibrate_when_silent" msgid="6417076436551648924">"فقط هنگام ساکت بودن"</string>
-    <string name="account_settings_vibrate_when_never" msgid="3759680093309511614">"هرگز"</string>
-    <string name="account_settings_vibrate_when_dlg_title" msgid="308167729046312952">"لرزش"</string>
     <string name="account_settings_ringtone" msgid="8229878374785575207">"انتخاب آهنگ زنگ"</string>
     <string name="account_settings_servers" msgid="4925493817981624242">"تنظیمات سرور"</string>
     <string name="account_delete_dlg_title" msgid="6806087520856396608">"حذف حساب"</string>
