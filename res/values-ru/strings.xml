@@ -469,4 +469,13 @@
     <string name="search_slow_warning_message" msgid="8494483410797387903">"Ожидание ответа от сервера может занять много времени."</string>
     <string name="action_bar_mailbox_list_title" msgid="7484457755531286333">"Папки"</string>
     <string name="require_manual_sync_message" msgid="7777357288642785955">"Для этого аккаунта отключена фоновая синхронизация в роуминге."</string>
+
+    <!-- **** CYANOGENMOD ADDITIONS START **** -->
+
+    <string name="category_general_security_preferences">Безопасность</string>
+    <string name="security_preferences_blocked_attachment_extensions_title">Блокирование вложений</string>
+    <string name="security_preferences_blocked_attachment_extensions_summary">Выбор форматов вложений, которые блокируются для просмотра или сохранения</string>
+
+    <!-- **** CYANOGENMOD ADDITIONS END **** -->
+
 </resources>
