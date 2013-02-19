@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAdX//9Fw\u003d",
+        "filename": "res/values-ru/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 5574
+      },
+      "writtenOn": "2013-02-19T18:05:42Z",
+      "side": 1,
+      "message": "\"Vybor formatov vlozhenIY\" *\noni v title ukazany vo mnozhestvennom chisle, a tut naoborot.",
+      "revId": "0f3983adb90b61f9dbcc6a7a2eafb7fae0e3e3d2",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
