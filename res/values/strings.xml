@@ -1122,8 +1122,7 @@ as <xliff:g id="filename">%s</xliff:g>.</string>
 
     <!-- Security preference: The title of the setting with the list of blocked
          attachment extensions" -->
-    <string name="security_preferences_blocked_attachment_extensions_title">
-         Blocked attachments</string>
+    <string name="security_preferences_blocked_attachment_extensions_title">Blocked attachments</string>
     <!-- Security preference: The summary of the setting with the list of blocked
          attachment extensions" -->
     <string name="security_preferences_blocked_attachment_extensions_summary">Select the attachment types that are blocked from viewing or saving</string>
