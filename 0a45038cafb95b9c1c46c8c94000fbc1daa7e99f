@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAdX//9Gk\u003d",
+        "filename": "res/values-es/strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 3134
+      },
+      "writtenOn": "2013-02-19T18:04:00Z",
+      "side": 1,
+      "message": "I prefer do not translate  this headers strings. The reason is that sender and receiver could not shared the same language, so IHMO is better to stay in a neutral language.",
+      "revId": "0a45038cafb95b9c1c46c8c94000fbc1daa7e99f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAdX//9Gg\u003d",
+        "filename": "res/values-es/strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 3134
+      },
+      "writtenOn": "2013-02-19T18:04:00Z",
+      "side": 1,
+      "message": "Same here",
+      "revId": "0a45038cafb95b9c1c46c8c94000fbc1daa7e99f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
