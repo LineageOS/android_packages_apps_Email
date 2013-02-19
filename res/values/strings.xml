@@ -1126,8 +1126,7 @@ as <xliff:g id="filename">%s</xliff:g>.</string>
          Blocked attachments</string>
     <!-- Security preference: The summary of the setting with the list of blocked
          attachment extensions" -->
-    <string name="security_preferences_blocked_attachment_extensions_summary">
-         Select the attachment types that are blocked from viewing or saving</string>
+    <string name="security_preferences_blocked_attachment_extensions_summary">Select the attachment types that are blocked from viewing or saving</string>
 
     <!-- General preference: Label of the setting for the text zoom.  [CHAR LIMIT=32] -->
     <string name="general_preference_text_zoom_label">Message text size</string>
