@@ -425,6 +425,9 @@
     <string name="settings_activity_title" msgid="5185915603716333904">"Настройки"</string>
     <string name="header_label_general_preferences" msgid="9204600297009680176">"Общие"</string>
     <string name="category_general_preferences" msgid="2742423840964045801">"Приложение"</string>
+    <string name="category_general_security_preferences">Безопасность</string>
+    <string name="security_preferences_blocked_attachment_extensions_title">Блокирование вложений</string>
+    <string name="security_preferences_blocked_attachment_extensions_summary">Выбор форматов вложения, которые блокируются для просмотра или сохранения</string>
     <string name="general_preference_auto_advance_label" msgid="213945004511666631">"Автопереход"</string>
     <string name="general_preference_auto_advance_summary" msgid="6483439980032715119">"Выберите экран для отображения после удаления цепочки писем"</string>
     <string name="general_preference_auto_advance_dialog_title" msgid="5405052109452503909">"Переходить к"</string>
