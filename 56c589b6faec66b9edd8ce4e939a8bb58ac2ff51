@@ -16,6 +16,24 @@
       "revId": "56c589b6faec66b9edd8ce4e939a8bb58ac2ff51",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAdX//8so\u003d",
+        "filename": "res/values-nl/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 2597
+      },
+      "writtenOn": "2013-02-20T14:32:43Z",
+      "side": 1,
+      "message": "http://support.microsoft.com/kb/316992/nl\n\nKan geen betere site vinden, maar ik vertrouw wel op de Nederlandse Microsoft-vertalers",
+      "parentUuid": "AAAAdX//8wg\u003d",
+      "revId": "56c589b6faec66b9edd8ce4e939a8bb58ac2ff51",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
