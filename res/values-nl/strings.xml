@@ -402,5 +402,9 @@
     <string name="require_manual_sync_message" msgid="7777357288642785955">"Achtergrondsynchronisatie voor dit account is uitgeschakeld tijdens roaming."</string>
 
     <!-- CYANOGENMOD EDITS -->
-    <string name="account_settings_notify_light_label">Notificatie-LED gebruiken</string>
+    <string name="account_settings_notify_light_label">Meldingsled gebruiken</string>
+    <string name="message_compose_attachment_no_size">Bestand is leeg</string>
+    <string name="category_general_security_preferences">Beveiliging</string>
+    <string name="security_preferences_blocked_attachment_extensions_title">Geblokkeerde bijlagen</string>
+    <string name="security_preferences_blocked_attachment_extensions_summary">Kies de typen bijlagen die niet getoond/opgeslagen mogen worden</string>
 </resources>
