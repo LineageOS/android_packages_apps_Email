@@ -469,4 +469,12 @@
     <string name="search_slow_warning_message" msgid="8494483410797387903">"Cette opération peut prendre du temps avec certains serveurs."</string>
     <string name="action_bar_mailbox_list_title" msgid="7484457755531286333">"Dossiers"</string>
     <string name="require_manual_sync_message" msgid="7777357288642785955">"La synchronisation en arrière-plan pour ce compte est désactivée en itinérance."</string>
+
+    <!-- ****  CYANOGENMOD ADDITIONS **** -->
+
+    <!-- Security preference -->
+    <string name="category_general_security_preferences">Sécurité</string>
+    <string name="security_preferences_blocked_attachment_extensions_title">Bloquer les pièces jointes</string>
+    <string name="security_preferences_blocked_attachment_extensions_summary">Sélectionner les types de fichiers joints qui seront bloqués à l\'affichage ou à l\'enregistrement</string>
+
 </resources>
