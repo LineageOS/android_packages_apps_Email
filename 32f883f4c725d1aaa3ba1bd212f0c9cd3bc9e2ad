@@ -188,6 +188,24 @@
       "revId": "32f883f4c725d1aaa3ba1bd212f0c9cd3bc9e2ad",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAeX///TU\u003d",
+        "filename": "res/values-fr/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 3150
+      },
+      "writtenOn": "2013-03-07T01:47:25Z",
+      "side": 1,
+      "message": "c\u0027est peut être aussi dans le sens de \"échantillon\" genre :\n\néchantillon du nom du compte/d\u0027utilisateur",
+      "parentUuid": "AAAAeX///To\u003d",
+      "revId": "32f883f4c725d1aaa3ba1bd212f0c9cd3bc9e2ad",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
