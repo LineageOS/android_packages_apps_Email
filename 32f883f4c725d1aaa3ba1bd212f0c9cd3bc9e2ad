@@ -206,6 +206,24 @@
       "revId": "32f883f4c725d1aaa3ba1bd212f0c9cd3bc9e2ad",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAeX///TM\u003d",
+        "filename": "res/values-fr/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 5765
+      },
+      "writtenOn": "2013-03-07T01:52:50Z",
+      "side": 1,
+      "message": "je suis quasiment sûr que c\u0027est dans le sens de \"Exemple\".\n\nJ\u0027ai vérifié sur Internet, et il y a très peu de cas avec \"échantillon\".\n\nPuis le mot \"Exemple\", est plus concret dans l\u0027usage.",
+      "parentUuid": "AAAAeX///TU\u003d",
+      "revId": "32f883f4c725d1aaa3ba1bd212f0c9cd3bc9e2ad",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
