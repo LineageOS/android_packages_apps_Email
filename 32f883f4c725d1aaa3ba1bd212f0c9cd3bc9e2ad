@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAeX///ig\u003d",
+        "filename": "res/values-fr/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 3150
+      },
+      "writtenOn": "2013-03-07T01:12:42Z",
+      "side": 1,
+      "message": "Retour à la liste des messages après la suppression du message que vous lisiez.\n\n????",
+      "revId": "32f883f4c725d1aaa3ba1bd212f0c9cd3bc9e2ad",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAeX///ic\u003d",
+        "filename": "res/values-fr/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 3150
+      },
+      "writtenOn": "2013-03-07T01:12:42Z",
+      "side": 1,
+      "message": "Confirmer la suppression.\n\n????",
+      "revId": "32f883f4c725d1aaa3ba1bd212f0c9cd3bc9e2ad",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAeX///iA\u003d",
+        "filename": "res/values-fr/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 3150
+      },
+      "writtenOn": "2013-03-07T01:12:42Z",
+      "side": 1,
+      "message": "Affiche une boite de dialogue chaque fois que vous supprimez un message\n\n????????????",
+      "revId": "32f883f4c725d1aaa3ba1bd212f0c9cd3bc9e2ad",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAeX///h8\u003d",
+        "filename": "res/values-fr/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 3150
+      },
+      "writtenOn": "2013-03-07T01:12:42Z",
+      "side": 1,
+      "message": "Confirmation d\u0027envoi\n\n??",
+      "revId": "32f883f4c725d1aaa3ba1bd212f0c9cd3bc9e2ad",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAeX///h0\u003d",
+        "filename": "res/values-fr/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 3150
+      },
+      "writtenOn": "2013-03-07T01:12:42Z",
+      "side": 1,
+      "message": "Affiche une boite de dialogue chaque fois que vous envoyez un message\n\n????????????",
+      "revId": "32f883f4c725d1aaa3ba1bd212f0c9cd3bc9e2ad",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAeX///U0\u003d",
+        "filename": "res/values-fr/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 3150
+      },
+      "writtenOn": "2013-03-07T01:12:42Z",
+      "side": 1,
+      "message": "Synchronisation des dossiers en cours :",
+      "revId": "32f883f4c725d1aaa3ba1bd212f0c9cd3bc9e2ad",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAeX///Uw\u003d",
+        "filename": "res/values-fr/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 3150
+      },
+      "writtenOn": "2013-03-07T01:12:42Z",
+      "side": 1,
+      "message": "Ce dossier ne sera plus synchronisé :",
+      "revId": "32f883f4c725d1aaa3ba1bd212f0c9cd3bc9e2ad",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAeX///Us\u003d",
+        "filename": "res/values-fr/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 3150
+      },
+      "writtenOn": "2013-03-07T01:12:42Z",
+      "side": 1,
+      "message": "Dossier non valide pour la synchronisation",
+      "revId": "32f883f4c725d1aaa3ba1bd212f0c9cd3bc9e2ad",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAeX///Uo\u003d",
+        "filename": "res/values-fr/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 3150
+      },
+      "writtenOn": "2013-03-07T01:12:42Z",
+      "side": 1,
+      "message": "???? alors là, je sèche ! ????",
+      "revId": "32f883f4c725d1aaa3ba1bd212f0c9cd3bc9e2ad",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
