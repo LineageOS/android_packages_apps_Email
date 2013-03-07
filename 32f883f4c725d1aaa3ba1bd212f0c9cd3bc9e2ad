@@ -152,6 +152,24 @@
       "revId": "32f883f4c725d1aaa3ba1bd212f0c9cd3bc9e2ad",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAeX///UA\u003d",
+        "filename": "res/values-fr/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 5765
+      },
+      "writtenOn": "2013-03-07T01:20:47Z",
+      "side": 1,
+      "message": "C\u0027est quelque chose comme \"Exemple de nom de compte\", mais il faudrait le dire mieux que ça, non ?",
+      "parentUuid": "AAAAeX///Uo\u003d",
+      "revId": "32f883f4c725d1aaa3ba1bd212f0c9cd3bc9e2ad",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
