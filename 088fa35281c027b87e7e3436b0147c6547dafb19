@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAeX//+yQ\u003d",
+        "filename": "res/values-fr/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 4808
+      },
+      "writtenOn": "2013-03-08T04:00:40Z",
+      "side": 1,
+      "message": "@Marco, I want to be sur, do you want I delete this line ? For information, why ?",
+      "revId": "088fa35281c027b87e7e3436b0147c6547dafb19",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
