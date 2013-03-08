@@ -1,0 +1,9 @@
+Change-Id: I32f883f4c725d1aaa3ba1bd212f0c9cd3bc9e2ad
+Code-Review+2: Marco Brohet <therbom@gmail.com>
+Verified+1: Marco Brohet <therbom@gmail.com>
+Code-Review+1: Thibault LEMOINE <thibaultblizz@gmail.com>
+Submitted-by: Marco Brohet <therbom@gmail.com>
+Submitted-at: Fri, 08 Mar 2013 10:33:16 -0800
+Reviewed-on: http://review.cyanogenmod.org/33282
+Project: CyanogenMod/android_packages_apps_Email
+Branch: refs/heads/gingerbread
