@@ -307,9 +307,6 @@
     <string name="account_setup_options_mail_check_frequency_15min" msgid="5052776740089741793">"Toutes les 15 minutes"</string>
     <string name="account_setup_options_mail_check_frequency_30min" msgid="1097088928685931864">"Toutes les 30 minutes"</string>
     <string name="account_setup_options_mail_check_frequency_1hour" msgid="3767715356039692899">"Toutes les heures"</string>
-    <string name="account_setup_options_mail_check_frequency_2hour">"Toutes les 2 heures"</string>
-    <string name="account_setup_options_mail_check_frequency_4hour">"Toutes les 4 heures"</string>
-    <string name="account_setup_options_mail_check_frequency_1day">"Une fois par jour"</string>
     <string name="account_setup_options_default_label" msgid="8869166381331276697">"Par défaut, envoyer les e-mails avec ce compte"</string>
     <string name="account_setup_options_notify_label" msgid="1247525794828820038">"Afficher une notification lors de la réception d\'un e-mail"</string>
     <string name="account_setup_options_sync_contacts_label" msgid="7467467090023434271">"Synchroniser les contacts issus de ce compte"</string>
@@ -369,7 +366,6 @@
     <string name="account_settings_background_attachments_label" msgid="2980317599840958688">"Télécharger les pièces jointes"</string>
     <string name="account_settings_background_attachments_summary" msgid="5954218549226189376">"Téléch. auto des pièces jointes aux messages récents via Wi-Fi"</string>
     <string name="account_settings_notify_label" msgid="1630001017303007974">"Notifications"</string>
-    <string name="account_settings_notify_light_label">Utiliser LED de notification</string>
     <string name="account_settings_summary" msgid="8403582255413830007">"Fréquence de synchronisation, notifications, etc."</string>
     <string name="account_settings_notify_summary" msgid="6301122709602752038">"Afficher une notification dans la barre système à la réception d\'e-mails"</string>
     <string name="account_settings_mail_check_frequency_label" msgid="8271462919214560616">"Fréquence de consultation de la boîte de réception"</string>
@@ -470,11 +466,14 @@
     <string name="action_bar_mailbox_list_title" msgid="7484457755531286333">"Dossiers"</string>
     <string name="require_manual_sync_message" msgid="7777357288642785955">"La synchronisation en arrière-plan pour ce compte est désactivée en itinérance."</string>
 
-    <!-- ****  CYANOGENMOD ADDITIONS **** -->
+    <!-- CYANOGENMOD ADDITIONS -->
 
-    <!-- Security preference -->
+    <string name="message_compose_attachment_no_size">Fichier vide.</string>
+    <string name="account_setup_options_mail_check_frequency_2hour">Toutes les 2 heures</string>
+    <string name="account_setup_options_mail_check_frequency_4hour">Toutes les 4 heures</string>
+    <string name="account_setup_options_mail_check_frequency_1day">Une fois par jour</string>
+    <string name="account_settings_notify_light_label">Utiliser la LED de notification</string>
     <string name="category_general_security_preferences">Sécurité</string>
     <string name="security_preferences_blocked_attachment_extensions_title">Bloquer les pièces jointes</string>
     <string name="security_preferences_blocked_attachment_extensions_summary">Sélectionner les types de fichiers joints qui seront bloqués à l\'affichage ou à l\'enregistrement</string>
-
 </resources>
