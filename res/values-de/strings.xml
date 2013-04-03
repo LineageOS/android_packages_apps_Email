@@ -469,4 +469,15 @@
     <string name="search_slow_warning_message" msgid="8494483410797387903">"Bei einigen Servern benötigen Sie möglicherweise etwas mehr Geduld."</string>
     <string name="action_bar_mailbox_list_title" msgid="7484457755531286333">"Ordner"</string>
     <string name="require_manual_sync_message" msgid="7777357288642785955">"Die Hintergrundsynchronisierung ist für dieses Konto während des Roamings deaktiviert."</string>
+
+    <!-- **** CYANOGENMOD ADDITIONS START **** -->
+
+    <string name="category_general_security_preferences">Sicherheit</string>
+
+    <string name="security_preferences_blocked_attachment_extensions_title">Gesperrte Anhänge</string>
+    <string name="security_preferences_blocked_attachment_extensions_summary">Auswahl der Dateitypen, die für das Ansehen und Speichern gesperrt sind</string>
+
+    <string name="message_compose_attachment_no_size">Leere Datei.</string>
+
+    <!-- **** CYANOGENMOD ADDITIONS END **** -->
 </resources>
