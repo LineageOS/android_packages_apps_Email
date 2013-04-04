@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAen///e0\u003d",
+        "filename": "res/values-fr/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 5596
+      },
+      "writtenOn": "2013-04-04T20:02:34Z",
+      "side": 1,
+      "message": "Utiliser la LED de notification",
+      "revId": "0c4920bbb9a1c7c8b9821b05aeba7a398f99309e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
