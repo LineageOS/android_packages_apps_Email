@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAen//+Y4\u003d",
+        "filename": "res/values-fr/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 4617
+      },
+      "writtenOn": "2013-04-05T20:48:18Z",
+      "side": 1,
+      "message": "Un point de trop ! ;-)",
+      "revId": "6ab6c33b8ce8b52199fca53aa54274a9c3cc85a4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
