@@ -16,6 +16,24 @@
       "revId": "6ab6c33b8ce8b52199fca53aa54274a9c3cc85a4",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAen//+Uk\u003d",
+        "filename": "res/values-fr/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 4808
+      },
+      "writtenOn": "2013-04-05T22:02:47Z",
+      "side": 1,
+      "message": "Le point est présent dans le texte source, c\u0027est pour ça que je l\u0027ai laissé. J\u0027ai remarqué que les textes avec les points sont ceux qui apparaissent dans un petit pop-up en bas dans un cadre foncé.",
+      "parentUuid": "AAAAen//+Y4\u003d",
+      "revId": "6ab6c33b8ce8b52199fca53aa54274a9c3cc85a4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
