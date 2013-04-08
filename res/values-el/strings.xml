@@ -62,7 +62,7 @@
     <string name="message_list_send_pending_messages_action" msgid="8502942186631824114">"Αποστολή όλων"</string>
     <string name="choose_attachment_dialog_title" msgid="81937507117528954">"Επιλογή επισύναψης"</string>
     <string name="move_to_folder_dialog_title" msgid="2614318192482193898">"Μετακίνηση σε"</string>
-    <string name="status_loading_messages" msgid="6552307237621292344">"Φόρτωση μηνυμάτων\u2026"</string>
+    <string name="status_loading_messages" msgid="6552307237621292344">"Φόρτωση μηνυμάτων…"</string>
     <string name="status_network_error" msgid="2611654064403817391">"Πρόβλημα σύνδεσης."</string>
     <string name="error_loading_message_body" msgid="6775234299515596760">"Δεν ήταν δυνατή η φόρτωση του κειμένου μηνύματος. Το μήνυμα ενδέχεται να είναι πάρα πολύ μεγάλο για προβολή."</string>
   <plurals name="move_messages">
@@ -205,7 +205,7 @@
     <string name="message_saved_toast" msgid="8443125659172627665">"Το μήνυμα αποθηκεύτηκε ως πρόχειρο."</string>
     <string name="message_view_display_attachment_toast" msgid="7714482237896346836">"Δεν είναι δυνατή η εμφάνιση του συνημμένου."</string>
     <string name="message_view_load_attachment_failed_toast" msgid="8605967295095023587">"Δεν ήταν δυνατή η φόρτωση του συνημμένου \"<xliff:g id="FILENAME">%s</xliff:g>\"."</string>
-    <string name="message_view_parse_message_toast" msgid="8830378966553031281">"Άνοιγμα μηνύματος\u2026"</string>
+    <string name="message_view_parse_message_toast" msgid="8830378966553031281">"Άνοιγμα μηνύματος…"</string>
   <plurals name="message_moved_toast">
     <item quantity="one" msgid="3098493230185412871">"<xliff:g id="NUM_MESSAGE">%1$d</xliff:g> μήνυμα μετακινήθηκε σε <xliff:g id="MAILBOX_NAME">%2$s</xliff:g>"</item>
     <item quantity="other" msgid="2286739630865943494">"<xliff:g id="NUM_MESSAGE">%1$d</xliff:g> μηνύματα μετακινήθηκαν σε <xliff:g id="MAILBOX_NAME">%2$s</xliff:g>"</item>
@@ -249,8 +249,8 @@
     <string name="account_duplicate_dlg_message_fmt" msgid="6447629283679935840">"Χρησιμοποιείτε ήδη αυτό το όνομα χρήστη για τον λογαριασμό \"<xliff:g id="DUPLICATE">%s</xliff:g>\"."</string>
     <string name="account_password_spaces_error" msgid="8928309156658903257">"Αυτός κωδικός πρόσβασης ξεκινά ή καταλήγει σε έναν ή περισσότερους χαρακτήρες κενού διαστήματος. Πολλοί διακομιστές δεν υποστηρίζουν κωδικούς πρόσβασης με κενά διαστήματα."</string>
     <string name="account_setup_check_settings_retr_info_msg" msgid="4121970450267725664">"Ανάκτηση στοιχείων λογαριασμού..."</string>
-    <string name="account_setup_check_settings_check_incoming_msg" msgid="5356212700221438863">"Έλεγχος ρυθμίσεων διακομιστή εισερχομένων\u2026"</string>
-    <string name="account_setup_check_settings_check_outgoing_msg" msgid="4033015234096725343">"Έλεγχος ρυθμίσεων διακομιστή εξερχομένων\u2026"</string>
+    <string name="account_setup_check_settings_check_incoming_msg" msgid="5356212700221438863">"Έλεγχος ρυθμίσεων διακομιστή εισερχομένων..."</string>
+    <string name="account_setup_check_settings_check_outgoing_msg" msgid="4033015234096725343">"Έλεγχος ρυθμίσεων διακομιστή εξερχομένων..."</string>
     <string name="account_setup_names_title" msgid="8483517350241119291">"Ρύθμιση λογαριασμού"</string>
     <string name="account_setup_names_headline" msgid="2413440250372658881">"Ο λογαριασμός σας ρυθμίστηκε και γίνεται λήψη μηνυμάτων ηλεκτρονικού ταχυδρομείου!"</string>
     <string name="account_setup_names_account_name_label" msgid="8033895024273259196">"Δώστε σε αυτόν τον λογαριασμό ένα όνομα (προαιρετικό)"</string>
@@ -453,7 +453,7 @@
     <string name="widget_all_mail" msgid="4352573990283094963">"Συνδ. προβ. εισερχ."</string>
     <string name="widget_unread" msgid="4404711399009077833">"Μη αναγνωσμένα"</string>
     <string name="widget_starred" msgid="8290352707134011791">"Με αστέρι"</string>
-    <string name="widget_loading" msgid="2340962056927255554">"Φόρτωση\u2026"</string>
+    <string name="widget_loading" msgid="2340962056927255554">"Φόρτωση…"</string>
     <string name="widget_touch_to_configure" msgid="7062039013915225323">"Αγγίξτε για ρύθμιση."</string>
     <string name="widget_no_accounts" msgid="2412482205591224408">"Δεν έχετε δημιουργήσει ακόμα κάποιον λογαριασμό ηλεκτρονικού ταχυδρομείου."</string>
     <string name="widget_no_mailboxes" msgid="5222354534538852579">"Αυτός ο λογαριασμός δεν έχει συγχρονιστεί. Δοκιμάστε ξανά αργότερα."</string>
@@ -465,24 +465,4 @@
     <string name="search_slow_warning_message" msgid="8494483410797387903">"Ορισμένοι διακομιστές ενδέχεται να χρειαστούν αρκετό χρόνο."</string>
     <string name="action_bar_mailbox_list_title" msgid="7484457755531286333">"Φάκελοι"</string>
     <string name="require_manual_sync_message" msgid="7777357288642785955">"Ο συγχρονισμός στο παρασκήνιο για αυτόν το λογαριασμό είναι απενεργοποιημένος κατά την περιαγωγή."</string>
-
-    <!-- CYANOGENMOD ADDITIONS START -->
-
-    <string name="account_settings_notify_light_label">Χρήση LED ειδοποιήσεων</string>
-
-    <string name="message_compose_attachment_no_size">Άδειο αρχείο.</string>
-
-    <!-- First category in general security preferences -->
-    <string name="category_general_security_preferences">Ασφάλεια</string>
-
-    <!-- Security preference: The title of the setting with the list of blocked
-         attachment extensions" -->
-    <string name="security_preferences_blocked_attachment_extensions_title">
-         Αποκλεισμένα συνημμένα</string>
-    <!-- Security preference: The summary of the setting with the list of blocked
-         attachment extensions" -->
-    <string name="security_preferences_blocked_attachment_extensions_summary">
-         Επιλέξτε τους τύπους σύνημμένων που έχουν αποκλειστεί από την προβολή ή την αποθήκευση</string>
-
-    <!-- CYANOGENMOD ADDITIONS END -->
 </resources>
