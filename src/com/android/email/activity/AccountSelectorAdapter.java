@@ -541,11 +541,13 @@ public class AccountSelectorAdapter extends CursorAdapter {
             if (mMailboxId == Mailbox.NO_MAILBOX) {
                 return;
             }
+
             // Combined mailbox?
             // Unfortunately this can happen even when account != ACCOUNT_ID_COMBINED_VIEW,
-            // when you open "starred" on 2-pane on non-combined view.
+            // when you open "starred" on non-combined view.
             if (mMailboxId < 0) {
-                setCombinedMailboxInfo(context, mailboxId);
+                // Set starred mailbox info for special account.
+                setFavoriteMailboxInfo(context, accountId, mailboxId);
                 return;
             }
 
@@ -572,6 +574,15 @@ public class AccountSelectorAdapter extends CursorAdapter {
 
             mMailboxMessageCount = FolderProperties.getMessageCountForCombinedMailbox(
                     context, mailboxId);
+        }
+
+        private void setFavoriteMailboxInfo(Context context, long accountId, long mailboxId) {
+            Preconditions.checkState(mailboxId < -1, "Not combined mailbox");
+            mMailboxDisplayName = FolderProperties.getInstance(context)
+                    .getCombinedMailboxName(mMailboxId);
+
+            mMailboxMessageCount = FolderProperties.getFavoriteMessageCount(
+                    context, accountId, mMailboxId);
         }
 
         /**
