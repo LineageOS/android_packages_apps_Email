@@ -201,6 +201,15 @@ public class FolderProperties {
     }
 
     /**
+     * @return message count to show for the UI for favorite mailbox.
+     */
+    public static int getFavoriteMessageCount(Context context, long accountId,
+            long mailboxId) {
+        Preconditions.checkState(mailboxId < -1L);
+        return Message.getFavoriteMessageCount(context, accountId);
+    }
+
+    /**
      * Lookup icons of special mailboxes
      */
     public Drawable getIcon(int type, long mailboxId, int mailboxFlags) {
