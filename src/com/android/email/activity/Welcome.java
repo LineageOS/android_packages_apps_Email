@@ -193,18 +193,21 @@ public class Welcome extends Activity {
         UiUtilities.setDebugPaneMode(getDebugPaneMode(intent));
 
         // Reconcile POP/IMAP accounts.  EAS accounts are taken care of by ExchangeService.
-        EmailAsyncTask.runAsyncParallel(new Runnable() {
-            @Override
-            public void run() {
-                // Reconciling can be heavy - so do it in the background.
-                if (MailService.hasMismatchInPopImapAccounts(Welcome.this)) {
+        // Move the runOnUiThread function out of the runAsyncParallel, which will make the
+        // Welcome activity got duplicate finish request.
+        if (MailService.hasMismatchInPopImapAccounts(this)) {
+            EmailAsyncTask.runAsyncParallel(new Runnable() {
+                @Override
+                public void run() {
+                    // Reconciling can be heavy - so do it in the background.
                     MailService.reconcilePopImapAccountsSync(Welcome.this);
                 }
-                Welcome.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        resolveAccount();
-                    }});
+            });
+        }
+        Welcome.this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                resolveAccount();
             }
         });
 
