@@ -403,7 +403,7 @@ public class MessageCompose extends Activity implements OnClickListener, OnFocus
         if (savedInstanceState != null) {
             long draftId = savedInstanceState.getLong(STATE_KEY_DRAFT_ID, Message.NOT_SAVED);
             long existingSaveTaskId = savedInstanceState.getLong(STATE_KEY_LAST_SAVE_TASK_ID, -1);
-            setAction(savedInstanceState.getString(STATE_KEY_ACTION));
+            setAction(savedInstanceState.getString(STATE_KEY_ACTION), true /* restore views */);
             SendOrSaveMessageTask existingSaveTask = sActiveSaveTasks.get(existingSaveTaskId);
 
             if ((draftId != Message.NOT_SAVED) || (existingSaveTask != null)) {
@@ -417,7 +417,7 @@ public class MessageCompose extends Activity implements OnClickListener, OnFocus
             }
         } else {
             Intent intent = getIntent();
-            setAction(intent.getAction());
+            setAction(intent.getAction(), true /* restore views */);
             resolveIntent(intent);
         }
     }
@@ -468,7 +468,7 @@ public class MessageCompose extends Activity implements OnClickListener, OnFocus
     @Override
     public void setIntent(Intent intent) {
         super.setIntent(intent);
-        setAction(intent.getAction());
+        setAction(intent.getAction(), true /* restore views */);
     }
 
     private void setQuickResponsesAvailable(boolean quickResponsesAvailable) {
@@ -958,7 +958,7 @@ public class MessageCompose extends Activity implements OnClickListener, OnFocus
                     // Use a best guess and infer the action here.
                     String inferredAction = inferAction();
                     if (inferredAction != null) {
-                        setAction(inferredAction);
+                        setAction(inferredAction, restoreViews);
                         // No need to update the action selector as switching actions should do it.
                         return;
                     }
@@ -1805,33 +1805,35 @@ public class MessageCompose extends Activity implements OnClickListener, OnFocus
         }
     }
 
-    private void setAction(String action) {
+    private void setAction(String action, final boolean restoreViews) {
         if (Objects.equal(action, mAction)) {
             return;
         }
 
         mAction = action;
-        onActionChanged();
+        onActionChanged(restoreViews);
     }
 
     /**
      * Handles changing from reply/reply all/forward states. Note: this activity cannot transition
      * from a standard compose state to any of the other three states.
      */
-    private void onActionChanged() {
+    private void onActionChanged(final boolean restoreViews) {
         if (!hasSourceMessage()) {
             return;
         }
         // Temporarily remove listeners so that changing action does not invalidate and save message
         removeListeners();
 
-        processSourceMessage(mSource, mAccount);
+        if (restoreViews) {
+            processSourceMessage(mSource, mAccount);
 
-        // Note that the attachments might not be loaded yet, but this will safely noop
-        // if that's the case, and the attachments will be processed when they load.
-        if (processSourceMessageAttachments(mAttachments, mSourceAttachments, isForward())) {
-            updateAttachmentUi();
-            setMessageChanged(true);
+            // Note that the attachments might not be loaded yet, but this will safely noop
+            // if that's the case, and the attachments will be processed when they load.
+            if (processSourceMessageAttachments(mAttachments, mSourceAttachments, isForward())) {
+                updateAttachmentUi();
+                setMessageChanged(true);
+            }
         }
 
         updateActionSelector();
@@ -1856,7 +1858,7 @@ public class MessageCompose extends Activity implements OnClickListener, OnFocus
     private final OnNavigationListener ACTION_SPINNER_LISTENER = new OnNavigationListener() {
         @Override
         public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-            setAction(ActionSpinnerAdapter.getAction(itemPosition));
+            setAction(ActionSpinnerAdapter.getAction(itemPosition), true /* restore views */);
             return true;
         }
     };
