@@ -465,12 +465,4 @@
     <string name="search_slow_warning_message" msgid="8494483410797387903">"Alguns servidores podem levar um longo tempo."</string>
     <string name="action_bar_mailbox_list_title" msgid="7484457755531286333">"Pastas"</string>
     <string name="require_manual_sync_message" msgid="7777357288642785955">"A sincronização em segundo plano para essa conta é desativada durante o roaming."</string>
-    <string name="account_setup_options_mail_check_frequency_2hour">A cada 2 horas</string>
-    <string name="account_setup_options_mail_check_frequency_4hour">A cada 4 horas</string>
-    <string name="account_setup_options_mail_check_frequency_1day">Todos os dias</string>
-    <string name="account_settings_notify_light_label">Usar LED de notificação</string>
-    <string name="message_compose_attachment_no_size">Arquivo vazio.</string>
-    <string name="category_general_security_preferences">Segurança</string>
-    <string name="security_preferences_blocked_attachment_extensions_title">Anexos bloqueados</string>
-    <string name="security_preferences_blocked_attachment_extensions_summary">Selecione os tipos de anexo que são bloqueados de visualização ou armazenagem</string>
 </resources>
