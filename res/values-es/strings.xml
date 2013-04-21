@@ -131,8 +131,8 @@
     <string name="bcc" msgid="3098643138241111579">"Cco"</string>
     <string name="subject_hint" msgid="7253964583324677128">"Asunto"</string>
     <string name="body_hint" msgid="4279864165439577668">"Redactar correo"</string>
-    <string name="message_compose_fwd_header_fmt" msgid="5181300290654579434">\n\n"-------- Mensaje original --------"\n"Asunto: <xliff:g id="SUBJECT">%1$s</xliff:g>"\n"De: <xliff:g id="SENDER">%2$s</xliff:g>"\n"Para: <xliff:g id="TO">%3$s</xliff:g>"\n"Cc: <xliff:g id="CC_0">%4$s</xliff:g>"\n\n</string>
-    <string name="message_compose_reply_header_fmt" msgid="8815624773273454573">\n\n"<xliff:g id="SENDER">%s</xliff:g> escribió:"\n\n</string>
+    <string name="message_compose_fwd_header_fmt" msgid="5181300290654579434">\n\n"-------- Original Message --------"\n"Subject: <xliff:g id="SUBJECT">%1$s</xliff:g>"\n"From: <xliff:g id="SENDER">%2$s</xliff:g>"\n"To: <xliff:g id="TO">%3$s</xliff:g>"\n"Cc: <xliff:g id="CC_0">%4$s</xliff:g>"\n\n</string>
+    <string name="message_compose_reply_header_fmt" msgid="8815624773273454573">\n\n"<xliff:g id="SENDER">%s</xliff:g> wrote:"\n\n</string>
     <string name="message_compose_quoted_text_label" msgid="6950097435198536165">"Incluir texto citado"</string>
     <string name="message_compose_include_quoted_text_checkbox_label" msgid="8165567368956050390">"Incluir texto"</string>
     <string name="message_compose_error_no_recipients" msgid="4903715888250785486">"Debes especificar al menos un destinatario."</string>
@@ -186,7 +186,7 @@
     <string name="attachment_info_malware" msgid="6576029010855055528">"No se puede guardar ni abrir este archivo porque el tipo de archivo adjunto puede incluir software malintencionado."</string>
     <string name="attachment_info_policy" msgid="3560422300127587508">"No se puede guardar ni abrir este archivo adjunto debido a las políticas de seguridad de la cuenta."</string>
     <string name="attachment_info_wifi_only" msgid="1481120960014563617">"Este archivo adjunto es demasiado grande para descargarlo en una red móvil. Puedes descargarlo la próxima vez que te conectes a una red Wi-Fi."</string>
-    <string name="attachment_info_no_intent" msgid="8139209405745777924">"Ninguna de las aplicaciones instaladas puede abrir este archivo adjunto. Prueba a descargar una aplicación adecuada en Play Store."</string>
+    <string name="attachment_info_no_intent" msgid="8139209405745777924">"Ninguna de las aplicaciones instaladas puede abrir este archivo adjunto. Prueba a descargar una aplicación adecuada en Android Market."</string>
     <string name="attachment_info_sideload_disabled" msgid="3270731101769840006">"Este archivo adjunto es una aplicación. Para poder instalarla, debes activar la opción Orígenes desconocidos en Ajustes &gt; Aplicaciones."</string>
     <string name="attachment_info_apk_install_disabled" msgid="2817790592227462682">"Las aplicaciones no se pueden instalar directamente desde los mensajes de correo. Primero debes guardar la aplicación y, a continuación, instalarla mediante la aplicación Descargas."</string>
     <string name="attachment_not_found" msgid="7155322700141145123">"No se ha podido descargar el archivo adjunto."</string>
@@ -465,17 +465,4 @@
     <string name="search_slow_warning_message" msgid="8494483410797387903">"Algunos servidores pueden tardar mucho tiempo."</string>
     <string name="action_bar_mailbox_list_title" msgid="7484457755531286333">"Carpetas"</string>
     <string name="require_manual_sync_message" msgid="7777357288642785955">"Se ha inhabilitado la sincronización en segundo plano de esta cuenta en itinerancia."</string>
-
-    <!-- CYANOGENMOD ADDITIONS START -->
-
-    <string name="account_setup_options_mail_check_frequency_2hour">Cada 2 horas</string>
-    <string name="account_setup_options_mail_check_frequency_4hour">Cada 4 horas</string>
-    <string name="account_setup_options_mail_check_frequency_1day">Cada día</string>
-    <string name="account_settings_notify_light_label">Usar luz de notificación</string>
-    <string name="message_compose_attachment_no_size">Archivo vacío.</string>
-    <string name="category_general_security_preferences">Seguridad</string>
-    <string name="security_preferences_blocked_attachment_extensions_title">Bloquear adjuntos</string>
-    <string name="security_preferences_blocked_attachment_extensions_summary">Seleccionar los tipos de archivo adjuntos que serán bloqueados al abrirlos o guardarlos</string>
-
-    <!-- CYANOGENMOD ADDITIONS END -->
 </resources>
