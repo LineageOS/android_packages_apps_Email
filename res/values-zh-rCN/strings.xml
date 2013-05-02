@@ -138,8 +138,6 @@
     <string name="message_compose_error_no_recipients" msgid="4903715888250785486">"必须至少添加一个收件人。"</string>
     <string name="message_compose_error_invalid_email" msgid="1817633338629885643">"某些电子邮件地址无效。"</string>
     <string name="message_compose_attachment_size" msgid="4401081828287333647">"文件太大，无法附加。"</string>
-    <!-- Toast that appears when an attachment has no size. -->
-    <string name="message_compose_attachment_no_size">空白文件.</string>
     <string name="message_compose_insert_quick_response_list_title" msgid="5314107302508728189">"插入快速回复"</string>
     <string name="message_compose_display_name" msgid="6415258924917140704">"<xliff:g id="NAME">%1$s</xliff:g>以及其他 <xliff:g id="NUMBER">%2$d</xliff:g> 人"</string>
     <string name="message_view_to_label" msgid="6485191743265527381">"收件人："</string>
@@ -423,22 +421,12 @@
     <string name="settings_activity_title" msgid="5185915603716333904">"设置"</string>
     <string name="header_label_general_preferences" msgid="9204600297009680176">"常规"</string>
     <string name="category_general_preferences" msgid="2742423840964045801">"应用"</string>
-    <!-- First category in general security preferences -->
-    <string name="category_general_security_preferences">安全</string>
     <string name="general_preference_auto_advance_label" msgid="213945004511666631">"自动跳转"</string>
     <string name="general_preference_auto_advance_summary" msgid="6483439980032715119">"选择要在删除邮件后显示的屏幕"</string>
     <string name="general_preference_auto_advance_dialog_title" msgid="5405052109452503909">"跳转至"</string>
     <string name="general_preference_auto_advance_newer" msgid="1336720027570509885">"更晚的邮件"</string>
     <string name="general_preference_auto_advance_older" msgid="8273143493185128646">"更早的邮件"</string>
     <string name="general_preference_auto_advance_message_list" msgid="7834069275897767359">"邮件列表"</string>
-
-    <!-- Security preference: The title of the setting with the list of blocked
-         attachment extensions" -->
-    <string name="security_preferences_blocked_attachment_extensions_title">被阻挡的附件</string>
-    <!-- Security preference: The summary of the setting with the list of blocked
-         attachment extensions" -->
-    <string name="security_preferences_blocked_attachment_extensions_summary">选择将阻挡查看与保存的附件格式</string>
-
     <string name="general_preference_text_zoom_label" msgid="4021955890499565713">"邮件文字大小"</string>
   <string-array name="general_preference_text_zoom_summary_array">
     <item msgid="4693576184223089069">"超小字体"</item>

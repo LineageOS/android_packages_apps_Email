@@ -465,10 +465,4 @@
     <string name="search_slow_warning_message" msgid="8494483410797387903">"Niektóre serwery mogą zwracać wyniki po dłuższym czasie."</string>
     <string name="action_bar_mailbox_list_title" msgid="7484457755531286333">"Foldery"</string>
     <string name="require_manual_sync_message" msgid="7777357288642785955">"Synchronizacja w tle z tym kontem jest podczas roamingu wyłączona."</string>
-
-    <!-- **** CYANOGENMOD EDITS START **** -->
-    <string name="account_setup_options_mail_check_frequency_2hour">Co 2 godziny</string>
-    <string name="account_setup_options_mail_check_frequency_4hour">Co 4 godziny</string>
-    <string name="account_setup_options_mail_check_frequency_1day">Codziennie</string>
-    <!-- **** CYANOGENMOD EDITS END **** -->
 </resources>

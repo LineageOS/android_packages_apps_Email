@@ -465,28 +465,4 @@
     <string name="search_slow_warning_message" msgid="8494483410797387903">"שרתים מסוימים עשויים לדרוש זמן רב."</string>
     <string name="action_bar_mailbox_list_title" msgid="7484457755531286333">"תיקיות"</string>
     <string name="require_manual_sync_message" msgid="7777357288642785955">"סינכרון ברקע של חשבון זה מושבת בזמן נדידה."</string>
-
-    <!-- **** CYANOGENMOD ADDITIONS START **** -->
-
-    <!-- Toast that appears when an attachment has no size. -->
-    <string name="message_compose_attachment_no_size">קובץ ריק.</string>
-
-    <!-- In Account setup options & Account Settings screens, email check frequency option -->
-    <string name="account_setup_options_mail_check_frequency_2hour">כל שעתיים</string>
-    <!-- In Account setup options & Account Settings screens, email check frequency option -->
-    <string name="account_setup_options_mail_check_frequency_4hour">כל 4 שעות</string>
-    <!-- In Account setup options & Account Settings screens, email check frequency option -->
-    <string name="account_setup_options_mail_check_frequency_1day">כל יום</string>
-
-    <string name="account_settings_notify_light_label">השתמש בתאורת התראות</string>
-
-    <!-- First category in general security preferences -->
-    <string name="category_general_security_preferences">אבטחה</string>
-    <!-- Security preference: The title of the setting with the list of blocked attachment extensions" -->
-    <string name="security_preferences_blocked_attachment_extensions_title">קבצים מצורפים חסומים</string>
-    <!-- Security preference: The summary of the setting with the list of blocked attachment extensions" -->
-    <string name="security_preferences_blocked_attachment_extensions_summary">בחר את סוגי הקבצים המצורפים שחסומים לצפייה או שמירה</string>
-
-    <!-- **** CYANOGENMOD ADDITIONS END **** -->
-
 </resources>
