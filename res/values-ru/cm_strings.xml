@@ -21,4 +21,5 @@
     <string name="account_setup_options_mail_check_frequency_2hour">Каждые 2 часа</string>
     <string name="account_setup_options_mail_check_frequency_4hour">Каждые 4 часа</string>
     <string name="account_setup_options_mail_check_frequency_1day">Каждый день</string>
+    <string name="message_compose_attachment_no_size">Пустой файл.</string>
 </resources>
