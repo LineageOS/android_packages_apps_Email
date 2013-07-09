@@ -336,6 +336,14 @@
             android:name=".service.MailService"
             android:enabled="false"
             >
+            <intent-filter>
+                <action
+                    android:name="com.android.email.intent.action.MAIL_SERVICE_WAKEUP" />
+            </intent-filter>
+            <intent-filter>
+                <action
+                    android:name="com.android.email.intent.action.MAIL_SERVICE_SEND_PENDING" />
+            </intent-filter>
         </service>
 
         <service
