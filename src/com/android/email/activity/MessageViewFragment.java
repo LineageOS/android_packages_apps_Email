@@ -59,6 +59,7 @@ public class MessageViewFragment extends MessageViewFragmentBase
 
     /* Nullable - not available on phone portrait. */
     private View mForwardButton;
+    private View mFetchEntireMailButton;
 
     private View mMoreButton;
 
@@ -214,6 +215,7 @@ public class MessageViewFragment extends MessageViewFragmentBase
         mReplyButton = UiUtilities.getView(view, R.id.reply);
         mReplyAllButton = UiUtilities.getView(view, R.id.reply_all);
         mForwardButton = UiUtilities.getViewOrNull(view, R.id.forward);
+        mFetchEntireMailButton = UiUtilities.getViewOrNull(view, R.id.fetch_entire_mail);
         mMeetingYes = UiUtilities.getView(view, R.id.accept);
         mMeetingMaybe = UiUtilities.getView(view, R.id.maybe);
         mMeetingNo = UiUtilities.getView(view, R.id.decline);
@@ -227,6 +229,9 @@ public class MessageViewFragment extends MessageViewFragmentBase
         }
         if (mForwardButton != null) {
             mForwardButton.setOnClickListener(this);
+        }
+        if (mFetchEntireMailButton != null) {
+            mFetchEntireMailButton.setOnClickListener(this);
         }
         mMeetingYes.setOnClickListener(this);
         mMeetingMaybe.setOnClickListener(this);
@@ -307,6 +312,15 @@ public class MessageViewFragment extends MessageViewFragmentBase
 
         // Disable forward/reply buttons as necessary.
         enableReplyForwardButtons(Mailbox.isMailboxTypeReplyAndForwardable(mailbox.mType));
+
+        // update the fetch entire mail button status.
+        if (mFetchEntireMailButton != null) {
+            if (mMessageCliped) {
+                mFetchEntireMailButton.setVisibility(View.VISIBLE);
+            } else {
+                mFetchEntireMailButton.setVisibility(View.GONE);
+            }
+        }
     }
 
     /**
@@ -429,11 +443,17 @@ public class MessageViewFragment extends MessageViewFragmentBase
 
                 // Remove Reply if ReplyAll icon is visible or vice versa
                 menu.removeItem(mDefaultReplyAll ? R.id.reply_all : R.id.reply);
+                if (!mMessageCliped) {
+                    menu.removeItem(R.id.fetch_entire_mail);
+                }
+
                 popup.setOnMenuItemClickListener(this);
                 popup.show();
                 break;
             }
-
+            case R.id.fetch_entire_mail:
+                fetchEntireMail();
+                return;
         }
         super.onClick(view);
     }
@@ -450,6 +470,9 @@ public class MessageViewFragment extends MessageViewFragmentBase
                     return true;
                 case R.id.forward:
                     mCallback.onForward();
+                    return true;
+                case R.id.fetch_entire_mail:
+                    fetchEntireMail();
                     return true;
             }
         }

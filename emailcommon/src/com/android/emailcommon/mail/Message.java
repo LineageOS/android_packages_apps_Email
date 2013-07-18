@@ -16,6 +16,8 @@
 
 package com.android.emailcommon.mail;
 
+import com.android.emailcommon.utility.Utility;
+
 import java.util.Date;
 import java.util.HashSet;
 
@@ -27,6 +29,7 @@ public abstract class Message implements Part, Body {
     }
 
     protected String mUid;
+    protected int mNeedSyncSize = Utility.ENTIRE_MAIL;
 
     private HashSet<Flag> mFlags = null;
 
@@ -40,6 +43,14 @@ public abstract class Message implements Part, Body {
 
     public void setUid(String uid) {
         this.mUid = uid;
+    }
+
+    public int getNeedSyncSize() {
+        return mNeedSyncSize;
+    }
+
+    public void setNeedSyncSize(int syncSize) {
+        this.mNeedSyncSize = syncSize;
     }
 
     public Folder getFolder() {

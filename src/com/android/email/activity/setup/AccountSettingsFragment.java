@@ -29,6 +29,7 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.SystemProperties;
 import android.os.Vibrator;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
@@ -97,6 +98,7 @@ public class AccountSettingsFragment extends PreferenceFragment {
     private ListPreference mSyncWindow;
     private CheckBoxPreference mAccountBackgroundAttachments;
     private CheckBoxPreference mAccountDefault;
+    private ListPreference mSyncSize;
     private CheckBoxPreference mAccountNotify;
     private CheckBoxPreference mAccountNotifyLight;
     private CheckBoxPreference mAccountVibrate;
@@ -488,6 +490,31 @@ public class AccountSettingsFragment extends PreferenceFragment {
             dataUsageCategory.addPreference(mSyncWindow);
         }
 
+        // add sync size preference
+        mSyncSize = null;
+        if (SystemProperties.getBoolean("persist.env.email.syncsize", true)) {
+            mSyncSize = new ListPreference(mContext);
+            mSyncSize.setTitle(R.string.account_setup_options_mail_sync_size_label);
+            mSyncSize.setEntries(R.array.account_setup_options_mail_sync_size_entries_labels);
+            mSyncSize.setEntryValues(R.array.account_setup_options_mail_sync_size_entries_values);
+            mSyncSize.setValue(String.valueOf(mAccount.getSyncSize()));
+            mSyncSize.setSummary(mSyncSize.getEntry());
+
+            // Must correspond to the hole in the XML file that's reserved.
+            mSyncSize.setOrder(3);
+            mSyncSize.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    final String summary = newValue.toString();
+                    int index = mSyncSize.findIndexOfValue(summary);
+                    mSyncSize.setSummary(mSyncSize.getEntries()[index]);
+                    mSyncSize.setValue(summary);
+                    onPreferenceChanged(preference.getKey(), newValue);
+                    return false;
+                }
+            });
+            dataUsageCategory.addPreference(mSyncSize);
+        }
+
         // Show "background attachments" for IMAP & EAS - hide it for POP3.
         mAccountBackgroundAttachments = (CheckBoxPreference)
                 findPreference(PREFERENCE_BACKGROUND_ATTACHMENTS);
@@ -662,6 +689,9 @@ public class AccountSettingsFragment extends PreferenceFragment {
         mAccount.setSyncInterval(Integer.parseInt(mCheckFrequency.getValue()));
         if (mSyncWindow != null) {
             mAccount.setSyncLookback(Integer.parseInt(mSyncWindow.getValue()));
+        }
+        if (mSyncSize != null) {
+            mAccount.setSyncSize(Integer.parseInt(mSyncSize.getValue()));
         }
         if (mAccountVibrate.isChecked()) {
             newFlags |= Account.FLAGS_VIBRATE;

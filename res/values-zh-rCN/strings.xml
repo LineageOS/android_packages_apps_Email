@@ -323,6 +323,11 @@
     <string name="account_setup_options_mail_window_1month" msgid="5846359669750047081">"一个月"</string>
     <string name="account_setup_options_mail_window_all" msgid="5372861827683632364">"全部"</string>
     <string name="account_setup_options_mail_window_default" msgid="8321351926520165832">"使用帐户的默认设置"</string>
+
+    <!-- In Account setup options & Account Settings screens, Email sync size option. -->
+    <string name="account_setup_options_mail_sync_size_label">同步每封邮件的缓存空间</string>
+    <string name="account_setup_options_mail_sync_size_all">同步整封邮件</string>
+
     <string name="account_setup_failed_dlg_auth_message" msgid="42827150104879570">"用户名或密码不正确。"</string>
     <string name="account_setup_failed_dlg_auth_message_fmt" msgid="8598560266430207606">"用户名或密码不正确。"\n"(<xliff:g id="ERROR">%s</xliff:g>)"</string>
     <string name="account_setup_failed_dlg_certificate_message" msgid="3836152264696108805">"无法安全地连接到服务器。"</string>
@@ -465,4 +470,8 @@
     <string name="search_slow_warning_message" msgid="8494483410797387903">"有些服务器可能会花费较长的时间。"</string>
     <string name="action_bar_mailbox_list_title" msgid="7484457755531286333">"文件夹"</string>
     <string name="require_manual_sync_message" msgid="7777357288642785955">"漫游时停用了此帐户的后台同步功能。"</string>
+    <string name="fetch_entire_mail">"获取整封邮件"</string>
+    <string name="no_active_network">"当前无可用网络"</string>
+    <string name="clip_message">## 邮件被截取 ## 您可以尝试获取整封邮件</string>
+
 </resources>
