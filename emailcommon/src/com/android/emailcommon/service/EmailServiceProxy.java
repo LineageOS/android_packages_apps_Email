@@ -346,19 +346,31 @@ public class EmailServiceProxy extends ServiceProxy implements IEmailService {
     }
 
     /**
-     * Request the sync adapter to load a complete message
+     * Request an message to be loaded; the service MUST give higher priority to non-background
+     * loading. The service MUST use the loadMessageStatus callback when loading has started and
+     * stopped and SHOULD send callbacks with progress information if possible.
      *
-     * @param messageId the id of the message to be loaded
+     * @param messageId the id of the message need load the entire message
      */
     @Override
     public void loadMore(final long messageId) throws RemoteException {
         setTask(new ProxyTask() {
             @Override
             public void run() throws RemoteException {
-                if (mCallback != null) mService.setCallback(mCallback);
-                mService.loadMore(messageId);
+                try {
+                    if (mCallback != null) mService.setCallback(mCallback);
+                    mService.loadMore(messageId);
+                } catch (RemoteException e) {
+                    try {
+                        // Try to send a callback (if set)
+                        if (mCallback != null) {
+                            mCallback.loadMessageStatus(-1, EmailServiceStatus.REMOTE_EXCEPTION, 0);
+                        }
+                    } catch (RemoteException e1) {
+                    }
+                }
             }
-        }, "startSync");
+        }, "loadMore");
     }
 
     /**

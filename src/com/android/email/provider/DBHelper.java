@@ -124,7 +124,7 @@ public final class DBHelper {
 
     // Versions 100+ are in Email2
 
-    public static final int DATABASE_VERSION = 39;
+    public static final int DATABASE_VERSION = 40;
 
     // Any changes to the database format *must* include update-in-place code.
     // Original version: 2
@@ -319,7 +319,8 @@ public final class DBHelper {
             + AccountColumns.SIGNATURE + " text, "
             + AccountColumns.POLICY_KEY + " integer, "
             + AccountColumns.NOTIFIED_MESSAGE_ID + " integer, "
-            + AccountColumns.NOTIFIED_MESSAGE_COUNT + " integer"
+            + AccountColumns.NOTIFIED_MESSAGE_COUNT + " integer, "
+            + AccountColumns.SYNC_SIZE + " integer"
             + ");";
         db.execSQL("create table " + Account.TABLE_NAME + s);
         // Deleting an account deletes associated Mailboxes and HostAuth's
@@ -938,6 +939,16 @@ public final class DBHelper {
                     Log.w(TAG, "Exception upgrading EmailProvider.db from 38 to 39 " + e);
                 }
                 oldVersion = 39;
+            }
+            if (oldVersion == 39) {
+                try {
+                    db.execSQL("alter table " + Account.TABLE_NAME
+                            + " add column " + Account.SYNC_SIZE + " integer;");
+                } catch (SQLException e) {
+                    // Shouldn't be needed unless we're debugging and interrupt the process
+                    Log.w(TAG, "Exception upgrading EmailProvider.db from 39 to 40 " + e);
+                }
+                oldVersion = 40;
             }
         }
 

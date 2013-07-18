@@ -31,11 +31,13 @@ import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Paint;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.SystemProperties;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.QuickContact;
 import android.text.SpannableStringBuilder;
@@ -45,6 +47,7 @@ import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnLayoutChangeListener;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -59,6 +62,7 @@ import com.android.email.AttachmentInfo;
 import com.android.email.Controller;
 import com.android.email.ControllerResultUiThreadWrapper;
 import com.android.email.Email;
+import com.android.email.EmailConnectivityManager;
 import com.android.email.Preferences;
 import com.android.email.R;
 import com.android.email.Throttle;
@@ -117,6 +121,7 @@ public abstract class MessageViewFragmentBase extends Fragment implements View.O
     private TextView mFromAddressView;
     private TextView mDateTimeView;
     private TextView mAddressesView;
+    private TextView mClipMessage;
     private WebView mMessageContentView;
     private LinearLayout mAttachments;
     private View mTabSection;
@@ -127,6 +132,7 @@ public abstract class MessageViewFragmentBase extends Fragment implements View.O
     private View mDetailsCollapsed;
     private View mDetailsExpanded;
     private boolean mDetailsFilled;
+    protected boolean mMessageCliped;
 
     private TextView mMessageTab;
     private TextView mAttachmentTab;
@@ -144,6 +150,10 @@ public abstract class MessageViewFragmentBase extends Fragment implements View.O
 
     private Controller mController;
     private ControllerResultUiThreadWrapper<ControllerResults> mControllerCallback;
+
+    private static final int MSG_UPDATE_CLIP_MESSAGE = 0;
+    private static final int SEND_DELAY = 500;
+    private Handler mUpdateClipMsgHandler;
 
     // contains the HTML body. Is used by LoadAttachmentTask to display inline images.
     // is null most of the time, is used transiently to pass info to LoadAttachementTask
@@ -298,6 +308,7 @@ public abstract class MessageViewFragmentBase extends Fragment implements View.O
         mLoadingProgress = UiUtilities.getView(view, R.id.loading_progress);
         mDetailsCollapsed = UiUtilities.getView(view, R.id.sub_header_contents_collapsed);
         mDetailsExpanded = UiUtilities.getView(view, R.id.sub_header_contents_expanded);
+        mClipMessage = UiUtilities.getView(view, R.id.clip_message);
 
         mFromNameView.setOnClickListener(this);
         mFromAddressView.setOnClickListener(this);
@@ -322,6 +333,34 @@ public abstract class MessageViewFragmentBase extends Fragment implements View.O
         mAttachmentsScroll = UiUtilities.getView(view, R.id.attachments_scroll);
         mInviteScroll = UiUtilities.getView(view, R.id.invite_scroll);
 
+        mClipMessage.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
+        mClipMessage.setOnClickListener(this);
+
+        mUpdateClipMsgHandler = new Handler() {
+            @Override
+            public void handleMessage(android.os.Message msg) {
+                if (msg.what == MSG_UPDATE_CLIP_MESSAGE) {
+                    if (mClipMessage != null) {
+                        if (mMessageCliped
+                                && mMessageContentView != null
+                                && mMessageContentView.isShown()) {
+                            mClipMessage.setVisibility(View.VISIBLE);
+                        } else {
+                            mClipMessage.setVisibility(View.GONE);
+                        }
+                    }
+                }
+            }
+        };
+        mMessageContentView.addOnLayoutChangeListener(new OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom,
+                    int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                mUpdateClipMsgHandler.removeMessages(MSG_UPDATE_CLIP_MESSAGE);
+                mUpdateClipMsgHandler.sendEmptyMessageDelayed(MSG_UPDATE_CLIP_MESSAGE, SEND_DELAY);
+            }
+        });
+
         WebSettings webSettings = mMessageContentView.getSettings();
         boolean supportMultiTouch = mContext.getPackageManager()
                 .hasSystemFeature(PackageManager.FEATURE_TOUCHSCREEN_MULTITOUCH);
@@ -341,7 +380,7 @@ public abstract class MessageViewFragmentBase extends Fragment implements View.O
         mController.addResultCallback(mControllerCallback);
 
         resetView();
-        new LoadMessageTask(true).executeParallel();
+        new LoadMessageTask(true, false).executeParallel();
 
         UiUtilities.installFragment(this);
     }
@@ -618,6 +657,7 @@ public abstract class MessageViewFragmentBase extends Fragment implements View.O
 
         makeVisible(getTabContentViewForFlag(mCurrentTab), true);
         getTabViewForFlag(mCurrentTab).setSelected(true);
+        mUpdateClipMsgHandler.sendEmptyMessage(MSG_UPDATE_CLIP_MESSAGE);
     }
 
     private View getTabViewForFlag(int tabFlag) {
@@ -999,6 +1039,9 @@ public abstract class MessageViewFragmentBase extends Fragment implements View.O
             case R.id.sub_header_contents_expanded:
                 hideDetails();
                 break;
+            case R.id.clip_message:
+                fetchEntireMail();
+                break;
         }
     }
 
@@ -1046,14 +1089,16 @@ public abstract class MessageViewFragmentBase extends Fragment implements View.O
     private class LoadMessageTask extends EmailAsyncTask<Void, Void, Message> {
 
         private final boolean mOkToFetch;
+        private final boolean mFromUser;
         private Mailbox mMailbox;
 
         /**
          * Special constructor to cache some local info
          */
-        public LoadMessageTask(boolean okToFetch) {
+        public LoadMessageTask(boolean okToFetch, boolean fromUser) {
             super(mTaskTracker);
             mOkToFetch = okToFetch;
+            mFromUser = fromUser;
         }
 
         @Override
@@ -1080,8 +1125,14 @@ public abstract class MessageViewFragmentBase extends Fragment implements View.O
                 return;
             }
             mMessageId = message.mId;
+            if ((Utility.ENTIRE_MAIL == Utility.getAccountSyncSize(mContext, message.mAccountKey))
+                    || (message.mFlagLoaded == Message.FLAG_LOADED_COMPLETE)) {
+                mMessageCliped = false;
+            } else {
+                mMessageCliped = true;
+            }
 
-            reloadUiFromMessage(message, mOkToFetch);
+            reloadUiFromMessage(message, mOkToFetch, mFromUser);
             queryContactStatus();
             onMessageShown(mMessageId, mMailbox);
             RecentMailboxManager.getInstance(mContext).touch(mAccountId, message.mMailboxKey);
@@ -1206,6 +1257,9 @@ public abstract class MessageViewFragmentBase extends Fragment implements View.O
                 }
                 boolean htmlChanged = false;
                 int numDisplayedAttachments = 0;
+                // If not remove original attachments view will cause
+                // show double attachments.
+                mAttachments.removeAllViews();
                 for (Attachment attachment : attachments) {
                     if (mHtmlTextRaw != null && attachment.mContentId != null
                             && attachment.mContentUri != null) {
@@ -1543,7 +1597,8 @@ public abstract class MessageViewFragmentBase extends Fragment implements View.O
      * @param okToFetch If true, and message is not fully loaded, it's OK to fetch from
      * the network.  Use false to prevent looping here.
      */
-    protected void reloadUiFromMessage(Message message, boolean okToFetch) {
+    protected void reloadUiFromMessage(Message message, boolean okToFetch,
+            boolean fetchEntireMailFromUser) {
         mMessage = message;
         mAccountId = message.mAccountKey;
 
@@ -1556,9 +1611,26 @@ public abstract class MessageViewFragmentBase extends Fragment implements View.O
         // 2. If != LOADED, ask controller to load it
         // 3. Controller callback (after loaded) should trigger LoadBodyTask & LoadAttachmentsTask
         // 4. Else start the loader tasks right away (message already loaded)
-        if (okToFetch && message.mFlagLoaded != Message.FLAG_LOADED_COMPLETE) {
+        boolean needFetchEntireMail = false;
+        if (!SystemProperties.getBoolean("persist.env.email.syncsize", true)
+                || fetchEntireMailFromUser
+                || Utility.getAccountSyncSize(mContext, mAccountId) == Utility.ENTIRE_MAIL) {
+            needFetchEntireMail = true;
+        }
+        boolean needFetchPartialMail = false;
+        if (SystemProperties.getBoolean("persist.env.email.syncsize", true)
+                && !fetchEntireMailFromUser
+                && message.mFlagLoaded != Message.FLAG_LOADED_COMPLETE
+                && message.mFlagLoaded != Message.FLAG_LOADED_SYNC_SIZE_COMPLETE) {
+            needFetchPartialMail = true;
+        }
+        if (okToFetch && needFetchEntireMail
+                && message.mFlagLoaded != Message.FLAG_LOADED_COMPLETE) {
             mControllerCallback.getWrappee().setWaitForLoadMessageId(message.mId);
-            mController.loadMessageForView(message.mId);
+            mController.loadMessageForView(message.mId, Message.FLAG_LOADED_COMPLETE);
+        } else if (okToFetch && needFetchPartialMail) {
+            mControllerCallback.getWrappee().setWaitForLoadMessageId(message.mId);
+            mController.loadMessageForView(message.mId, Message.FLAG_LOADED_SYNC_SIZE_COMPLETE);
         } else {
             Address[] fromList = Address.unpack(mMessage.mFrom);
             boolean autoShowImages = false;
@@ -1782,7 +1854,7 @@ public abstract class MessageViewFragmentBase extends Fragment implements View.O
                         // reload UI and reload everything else too
                         // pass false to LoadMessageTask to prevent looping here
                         cancelAllTasks();
-                        new LoadMessageTask(false).executeParallel();
+                        new LoadMessageTask(false, false).executeParallel();
                         break;
                     default:
                         // do nothing - we don't have a progress bar at this time
@@ -1948,6 +2020,15 @@ public abstract class MessageViewFragmentBase extends Fragment implements View.O
         for (Address sender : fromList) {
             String email = sender.getAddress();
             prefs.setSenderAsTrusted(email);
+        }
+    }
+
+    public void fetchEntireMail() {
+        if (EmailConnectivityManager.NO_ACTIVE_NETWORK
+               == EmailConnectivityManager.getActiveNetworkType(mContext)) {
+            Utility.showToast(getActivity(), R.string.no_active_network);
+        } else {
+            new LoadMessageTask(true, true).executeParallel();
         }
     }
 
