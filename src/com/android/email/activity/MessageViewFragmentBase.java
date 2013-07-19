@@ -75,6 +75,7 @@ import com.android.emailcommon.provider.Account;
 import com.android.emailcommon.provider.EmailContent.Attachment;
 import com.android.emailcommon.provider.EmailContent.Body;
 import com.android.emailcommon.provider.EmailContent.Message;
+import com.android.emailcommon.provider.HostAuth;
 import com.android.emailcommon.provider.Mailbox;
 import com.android.emailcommon.utility.AttachmentUtilities;
 import com.android.emailcommon.utility.EmailAsyncTask;
@@ -1723,51 +1724,54 @@ public abstract class MessageViewFragmentBase extends Fragment implements View.O
         boolean hasImages = false;
 
         if (bodyHtml == null) {
-            text = bodyText;
-            /*
-             * Convert the plain text to HTML
-             */
-            StringBuffer sb = new StringBuffer("<html><body>");
-            if (text != null) {
-                // Escape any inadvertent HTML in the text message
-                text = EmailHtmlUtil.escapeCharacterToDisplay(text);
-                // Find any embedded URL's and linkify
-                Matcher m = Patterns.WEB_URL.matcher(text);
-                while (m.find()) {
-                    int start = m.start();
-                    /*
-                     * WEB_URL_PATTERN may match domain part of email address. To detect
-                     * this false match, the character just before the matched string
-                     * should not be '@'.
-                     */
-                    if (start == 0 || text.charAt(start - 1) != '@') {
-                        String url = m.group();
-                        Matcher proto = WEB_URL_PROTOCOL.matcher(url);
-                        String link;
-                        if (proto.find()) {
-                            // This is work around to force URL protocol part be lower case,
-                            // because WebView could follow only lower case protocol link.
-                            link = proto.group().toLowerCase() + url.substring(proto.end());
-                        } else {
-                            // Patterns.WEB_URL matches URL without protocol part,
-                            // so added default protocol to link.
-                            link = "http://" + url;
-                        }
-                        String href = String.format("<a href=\"%s\">%s</a>", link, url);
-                        m.appendReplacement(sb, href);
-                    }
-                    else {
-                        m.appendReplacement(sb, "$0");
-                    }
-                }
-                m.appendTail(sb);
-            }
-            sb.append("</body></html>");
-            text = sb.toString();
+            text = convertTextToHtml(bodyText);
         } else {
             text = bodyHtml;
             mHtmlTextRaw = bodyHtml;
             hasImages = IMG_TAG_START_REGEX.matcher(text).find();
+        }
+
+        // Caused by we want to make least effect on the message view, we will only show the
+        // original mail in the Sent and Outbox for IMAP and POP3 account.
+        if (SystemProperties.getBoolean("persist.env.email.showmail", false)) {
+            Account account = Account.restoreAccountWithId(mContext, mAccountId);
+            HostAuth hostAuth = HostAuth.restoreHostAuthWithId(mContext, account.mHostAuthKeyRecv);
+            Mailbox mailbox = Mailbox.restoreMailboxWithId(mContext, mMessage.mMailboxKey);
+
+            boolean needAppendForAccountType = HostAuth.SCHEME_IMAP.equals(hostAuth.mProtocol)
+                    || HostAuth.SCHEME_POP3.equals(hostAuth.mProtocol);
+            boolean needAppendForMailbox = mailbox.mType == Mailbox.TYPE_OUTBOX
+                    || mailbox.mType == Mailbox.TYPE_SENT;
+
+            if (needAppendForMailbox && needAppendForAccountType) {
+                // Get the intro text from the database, and convert the text to html.
+                String introText = Body.restoreIntroTextWithMessageId(mContext, mMessage.mId);
+                if (!TextUtils.isEmpty(introText)) {
+                    introText = convertTextToHtml(introText);
+                } else {
+                    introText = "";
+                }
+
+                // Get the intro reply html from the database, and convert the text to html.
+                String replyhtml = Body.restoreReplyHtmlWithMessageId(mContext, mMessage.mId);
+                if (!TextUtils.isEmpty(replyhtml)) {
+                    hasImages = hasImages || IMG_TAG_START_REGEX.matcher(replyhtml).find();
+                } else {
+                    replyhtml = "";
+                }
+
+                // Get the reply text from the database, and convert the text to html.
+                String replyText = Body.restoreReplyTextWithMessageId(mContext, mMessage.mId);
+                if (!TextUtils.isEmpty(replyText)) {
+                    replyText = convertTextToHtml(replyText);
+                } else {
+                    replyText = "";
+                }
+
+                // Append the intro text, reply html and reply text to content.
+                text = text + introText + replyhtml + replyText;
+                mHtmlTextRaw = text;
+            }
         }
 
         // TODO this is not really accurate.
@@ -1792,6 +1796,54 @@ public abstract class MessageViewFragmentBase extends Fragment implements View.O
         new LoadAttachmentsTask().executeParallel(mMessage.mId);
 
         mIsMessageLoadedForTest = true;
+    }
+
+    /**
+     * Convert the plain text to HTML
+     * @param text plain text part
+     */
+    private String convertTextToHtml(String text) {
+        String result = null;
+
+        StringBuffer sb = new StringBuffer("<html><body>");
+        if (text != null) {
+            // Escape any inadvertent HTML in the text message
+            text = EmailHtmlUtil.escapeCharacterToDisplay(text);
+            // Find any embedded URL's and linkify
+            Matcher m = Patterns.WEB_URL.matcher(text);
+            while (m.find()) {
+                int start = m.start();
+                /*
+                 * WEB_URL_PATTERN may match domain part of email address. To detect
+                 * this false match, the character just before the matched string
+                 * should not be '@'.
+                 */
+                if (start == 0 || text.charAt(start - 1) != '@') {
+                    String url = m.group();
+                    Matcher proto = WEB_URL_PROTOCOL.matcher(url);
+                    String link;
+                    if (proto.find()) {
+                        // This is work around to force URL protocol part be lower case,
+                        // because WebView could follow only lower case protocol link.
+                        link = proto.group().toLowerCase() + url.substring(proto.end());
+                    } else {
+                        // Patterns.WEB_URL matches URL without protocol part,
+                        // so added default protocol to link.
+                        link = "http://" + url;
+                    }
+                    String href = String.format("<a href=\"%s\">%s</a>", link, url);
+                    m.appendReplacement(sb, href);
+                }
+                else {
+                    m.appendReplacement(sb, "$0");
+                }
+            }
+            m.appendTail(sb);
+        }
+        sb.append("</body></html>");
+        result = sb.toString();
+
+        return result;
     }
 
     /**
