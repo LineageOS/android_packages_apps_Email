@@ -473,5 +473,8 @@
     <string name="fetch_entire_mail">"获取整封邮件"</string>
     <string name="no_active_network">"当前无可用网络"</string>
     <string name="clip_message">## 邮件被截取 ## 您可以尝试获取整封邮件</string>
-
+    <string name="alert_attachment_not_complete_title">附件未下载完</string>
+    <string name="alert_attachment_not_complete_message">"您当前转发的邮件中所包含的附件仍未完成下载。"</string>
+    <string name="alert_forward_immediately">直接转发</string>
+    <string name="alert_forward_after_download_complete">智能转发</string>
 </resources>
