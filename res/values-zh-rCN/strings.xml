@@ -477,4 +477,9 @@
     <string name="alert_attachment_not_complete_message">"您当前转发的邮件中所包含的附件仍未完成下载。"</string>
     <string name="alert_forward_immediately">直接转发</string>
     <string name="alert_forward_after_download_complete">智能转发</string>
+    <string name="send_progress_start">发送邮件</string>
+    <string name="send_progress_failed">邮件发送失败</string>
+    <string name="send_progress_completed">邮件发送完成</string>
+    <string name="send_progress_failed_detail">发送失败： \"<xliff:g id="subject">%s</xliff:g>\"</string>
+    <string name="send_progress_completed_detail">总共： <xliff:g id="total">%d</xliff:g>， 成功： <xliff:g id="success">%d</xliff:g>， 失败： <xliff:g id="fail">%d</xliff:g></string>
 </resources>
