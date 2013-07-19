@@ -19,7 +19,9 @@ package com.android.email.activity.setup;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.res.XmlResourceParser;
+import android.os.SystemProperties;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.EditText;
 
@@ -91,6 +93,9 @@ public class AccountSettingsUtils {
      */
     public static Provider findProviderForDomain(Context context, String domain) {
         Provider p = VendorPolicyLoader.getInstance(context).findProviderForDomain(domain);
+        if (SystemProperties.getBoolean("persist.env.email.specprovider", false) && p == null) {
+            p = findProviderForDomain(context, domain, R.xml.providers_spec);
+        }
         if (p == null) {
             p = findProviderForDomain(context, domain, R.xml.providers_product);
         }
@@ -119,6 +124,15 @@ public class AccountSettingsUtils {
                     String providerDomain = getXmlAttribute(context, xml, "domain");
                     try {
                         if (matchProvider(domain, providerDomain)) {
+                            if (SystemProperties.getBoolean(
+                                    "persist.env.email.specprovider", false)) {
+                                String spec = getXmlAttribute(context, xml, "spec");
+                                if (!TextUtils.isEmpty(spec)
+                                        && !spec.equals(SystemProperties.get(
+                                                "persist.env.c.email.carrier", null))) {
+                                    continue;
+                                }
+                            }
                             provider = new Provider();
                             provider.id = getXmlAttribute(context, xml, "id");
                             provider.label = getXmlAttribute(context, xml, "label");
