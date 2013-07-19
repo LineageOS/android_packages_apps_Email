@@ -51,6 +51,7 @@ import com.android.email.activity.setup.AccountSecurity;
 import com.android.email.activity.setup.AccountSettings;
 import com.android.emailcommon.Logging;
 import com.android.emailcommon.mail.Address;
+import com.android.emailcommon.mail.MessagingException;
 import com.android.emailcommon.provider.Account;
 import com.android.emailcommon.provider.EmailContent;
 import com.android.emailcommon.provider.EmailContent.AccountColumns;
@@ -59,6 +60,7 @@ import com.android.emailcommon.provider.EmailContent.MailboxColumns;
 import com.android.emailcommon.provider.EmailContent.Message;
 import com.android.emailcommon.provider.EmailContent.MessageColumns;
 import com.android.emailcommon.provider.Mailbox;
+import com.android.emailcommon.utility.IntentUtilities;
 import com.android.emailcommon.utility.Utility;
 import com.google.common.annotations.VisibleForTesting;
 
@@ -76,9 +78,11 @@ public class NotificationController {
     private static final int NOTIFICATION_ID_ATTACHMENT_WARNING = 3;
     private static final int NOTIFICATION_ID_PASSWORD_EXPIRING = 4;
     private static final int NOTIFICATION_ID_PASSWORD_EXPIRED = 5;
+    private static final int NOTIFICATION_ID_SEND_PROGRESS = 6;
 
     private static final int NOTIFICATION_ID_BASE_NEW_MESSAGES = 0x10000000;
     private static final int NOTIFICATION_ID_BASE_LOGIN_WARNING = 0x20000000;
+    private static final int NOTIFICATION_ID_BASE_SEND_FAILED = 0x30000000;
 
     /** Selection to retrieve accounts that should we notify user for changes */
     private final static String NOTIFIED_ACCOUNT_SELECTION =
@@ -228,6 +232,24 @@ public class NotificationController {
             String contentText, Intent intent, int notificationId) {
         Notification.Builder builder = createBaseAccountNotificationBuilder(account, ticker, title,
                 contentText, intent, null, null, true, needsOngoingNotification(notificationId));
+        mNotificationManager.notify(notificationId, builder.getNotification());
+    }
+
+    /**
+     * Generic notifier for any account.  Uses notification rules from account.
+     *
+     * @param account The account this notification is being built for.
+     * @param ticker Text displayed when the notification is first shown. May be {@code null}.
+     * @param title The first line of text. May NOT be {@code null}.
+     * @param contentText The second line of text. May NOT be {@code null}.
+     * @param intent The intent to start if the user clicks on the notification.
+     * @param notificationId The ID of the notification to register with the service.
+     */
+    private void showSendProgressNotification(Account account, String ticker, String title,
+            String contentText, Intent intent, int notificationId) {
+        Notification.Builder builder = createBaseAccountNotificationBuilder(account, ticker, title,
+                contentText, intent, null, null, false, needsOngoingNotification(notificationId));
+        builder.setAutoCancel(true);
         mNotificationManager.notify(notificationId, builder.getNotification());
     }
 
@@ -808,6 +830,120 @@ public class NotificationController {
      */
     public void cancelSecurityNeededNotification() {
         mNotificationManager.cancel(NOTIFICATION_ID_SECURITY_NEEDED);
+    }
+
+    /**
+     * Returns a notification ID for send failed notifications for the given message.
+     */
+    private int getSendFailedNotificationId(long messageId) {
+        return (int) (NOTIFICATION_ID_BASE_SEND_FAILED + messageId);
+    }
+
+    /**
+     * Returns a intent to open the mail list activity for the given mailbox of the account.
+     */
+    private Intent createShowMailListIntent(Account account, int mailboxType) {
+        // Get the mailbox by the mailbox type.
+        Mailbox mailbox = Mailbox.restoreMailboxOfType(mContext, account.mId, mailboxType);
+
+        Uri.Builder b = IntentUtilities.createActivityIntentUrlBuilder(
+                Welcome.VIEW_MAILBOX_INTENT_URL_PATH);
+        IntentUtilities.setAccountUuid(b, account.getUuid());
+        IntentUtilities.setMailboxId(b, mailbox.mId);
+        Intent intent = IntentUtilities.createRestartAppIntent(b.build());
+        return intent;
+    }
+
+    /**
+     * Show (or update) a start send mail notification.
+     */
+    public void showMessageStartSendNotification(Account account) {
+        if (account == null
+                || !SystemProperties.getBoolean("persist.env.email.sendprogress", false)) {
+            return;
+        }
+
+        mNotificationManager.cancel(NOTIFICATION_ID_SEND_PROGRESS);
+
+        Intent intent = createShowMailListIntent(account, Mailbox.TYPE_OUTBOX);
+
+        String accountName = account.getDisplayName();
+        String ticker = mContext.getString(R.string.send_progress_start);
+        String title = ticker;
+        showSendProgressNotification(account, ticker, title, accountName, intent,
+                NOTIFICATION_ID_SEND_PROGRESS);
+    }
+
+    /**
+     * Show (or update) a send failed notification.
+     */
+    public void showMessageSendFailedNotification(Account account, long messageId,
+            MessagingException reason) {
+        if (account == null
+                || reason == null
+                || !SystemProperties.getBoolean("persist.env.email.sendprogress", false)) {
+            return;
+        }
+
+        mNotificationManager.cancel(NOTIFICATION_ID_SEND_PROGRESS);
+
+        Intent intent = createShowMailListIntent(account, Mailbox.TYPE_OUTBOX);
+
+        MessagingException me = null;
+        if (reason instanceof MessagingException) {
+            me = (MessagingException) reason;
+        } else {
+            me = new MessagingException(reason.toString());
+        }
+        String title = MessagingExceptionStrings.getErrorString(mContext, me);
+        // Caused by the error string will be have one period at the end of the string.
+        // But for the notification title, we'd like do not show the period. So sub the string.
+        title = title.substring(0, title.length() - 1);
+        String ticker = mContext.getString(R.string.send_progress_failed);
+        String contentText = null;
+        int notificationId = NOTIFICATION_ID_SEND_PROGRESS;
+        if (messageId != Message.NO_MESSAGE) {
+            Message message = Message.restoreMessageWithId(mContext, messageId);
+            contentText = mContext.getString(R.string.send_progress_failed_detail,
+                    message.mSubject);
+            notificationId = getSendFailedNotificationId(messageId);
+        } else {
+            contentText = mContext.getString(R.string.send_progress_failed_detail,
+                    account.getDisplayName());
+        }
+        showSendProgressNotification(account, ticker, title, contentText, intent, notificationId);
+    }
+
+    /**
+     * Show (or update) a send completed notification.
+     */
+    public void showMessageSendCompletedNotification(Account account, int totalNum, int failNum) {
+        if (account == null
+                || !SystemProperties.getBoolean("persist.env.email.sendprogress", false)) {
+            return;
+        }
+
+        mNotificationManager.cancel(NOTIFICATION_ID_SEND_PROGRESS);
+
+        Intent intent = createShowMailListIntent(account, Mailbox.TYPE_SENT);
+
+        String ticker = mContext.getString(R.string.send_progress_completed);
+        String title = ticker;
+        String contentText = mContext.getString(R.string.send_progress_completed_detail, totalNum,
+                totalNum - failNum, failNum);
+        showSendProgressNotification(account, ticker, title, contentText, intent,
+                NOTIFICATION_ID_SEND_PROGRESS);
+    }
+
+    /**
+     * Cancels the send progress notification.
+     */
+    public void cancelSendProgressNotification(long messageId) {
+        int notificationId = NOTIFICATION_ID_SEND_PROGRESS;
+        if (messageId != Message.NO_MESSAGE) {
+            notificationId = getSendFailedNotificationId(messageId);
+        }
+        mNotificationManager.cancel(notificationId);
     }
 
     /**

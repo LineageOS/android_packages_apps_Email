@@ -1248,4 +1248,11 @@ as <xliff:g id="filename">%s</xliff:g>.</string>
     <string name="alert_attachment_not_complete_message">The attachments haven\'t been downloaded completely.</string>
     <string name="alert_forward_immediately">Direct Forward</string>
     <string name="alert_forward_after_download_complete">Smart Forward</string>
+
+    <!-- Notify the status of sending -->
+    <string name="send_progress_start">Send mail(s)</string>
+    <string name="send_progress_failed">Send mail(s) failed</string>
+    <string name="send_progress_completed">Send mail(s) completed</string>
+    <string name="send_progress_failed_detail">Send failed: \"<xliff:g id="subject">%s</xliff:g>\"</string>
+    <string name="send_progress_completed_detail">Total: <xliff:g id="total">%d</xliff:g>, Success: <xliff:g id="success">%d</xliff:g>, Fail: <xliff:g id="fail">%d</xliff:g></string>
 </resources>
