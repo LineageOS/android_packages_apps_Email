@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.SystemProperties;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -47,7 +48,8 @@ import com.android.emailcommon.utility.Utility;
  * files").
  */
 public class MessageViewFragment extends MessageViewFragmentBase
-        implements MoveMessageToDialog.Callback, OnMenuItemClickListener {
+        implements MoveMessageToDialog.Callback, OnMenuItemClickListener,
+        DeleteMessageConfirmationDialog.Callback {
     /** Argument name(s) */
     private static final String ARG_MESSAGE_ID = "messageId";
 
@@ -487,7 +489,15 @@ public class MessageViewFragment extends MessageViewFragmentBase
                 onMove();
                 return true;
             case R.id.delete:
-                onDelete();
+                if (SystemProperties.getBoolean("persist.env.email.deletealert", false)) {
+                    DeleteMessageConfirmationDialog dialog = DeleteMessageConfirmationDialog
+                            .newInstance(1, null);
+                    dialog.setTargetFragment(MessageViewFragment.this, 0);
+                    dialog.setCancelable(true);
+                    dialog.show(getFragmentManager(), "dialog");
+                } else {
+                    onDelete();
+                }
                 return true;
             case R.id.mark_as_unread:
                 onMarkAsUnread();
@@ -542,5 +552,10 @@ public class MessageViewFragment extends MessageViewFragmentBase
         if ((message.mFlags & Message.FLAG_INCOMING_MEETING_INVITE) != 0) {
             addTabFlags(TAB_FLAGS_HAS_INVITE);
         }
+    }
+
+    @Override
+    public void onDeleteMessageConfirmationDialogOkPressed() {
+        onDelete();
     }
 }
