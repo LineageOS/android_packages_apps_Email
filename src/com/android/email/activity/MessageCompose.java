@@ -33,6 +33,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.os.SystemProperties;
 import android.provider.OpenableColumns;
+import android.provider.ContactsContract.Contacts;
 import android.text.InputFilter;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -50,6 +51,7 @@ import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
@@ -93,7 +95,9 @@ import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
 
@@ -112,6 +116,8 @@ public class MessageCompose extends Activity implements OnClickListener, OnFocus
     private static final String ACTION_REPLY_ALL = "com.android.email.intent.action.REPLY_ALL";
     private static final String ACTION_FORWARD = "com.android.email.intent.action.FORWARD";
     private static final String ACTION_EDIT_DRAFT = "com.android.email.intent.action.EDIT_DRAFT";
+    private static final String ACTION_MULTI_PICK_EMAIL
+            = "com.android.contacts.action.MULTI_PICK_EMAIL";
 
     private static final String EXTRA_ACCOUNT_ID = "account_id";
     private static final String EXTRA_MESSAGE_ID = "message_id";
@@ -132,11 +138,21 @@ public class MessageCompose extends Activity implements OnClickListener, OnFocus
         "com.android.email.activity.MessageCompose.action";
 
     private static final int ACTIVITY_REQUEST_PICK_ATTACHMENT = 1;
+    private static final int ACTIVITY_REQUEST_PICK_CONTACT_TO = 2;
+    private static final int ACTIVITY_REQUEST_PICK_CONTACT_CC = 3;
+    private static final int ACTIVITY_REQUEST_PICK_CONTACT_BCC = 4;
 
     private static final String[] ATTACHMENT_META_SIZE_PROJECTION = {
         OpenableColumns.SIZE
     };
     private static final int ATTACHMENT_META_SIZE_COLUMN_SIZE = 0;
+
+    private static final int EMAIL_NAME_INDEX = 0;
+    private static final int EMAIL_ADDRESS_INDEX = 1;
+    private static final String EMAIL_DOUBLE_QUOTATION = "\"";
+    private static final String EMAIL_QUOTE_START = "<";
+    private static final String EMAIL_QUOTE_END = ">";
+    private static final String EMAIL_SPACE = " ";
 
     /**
      * A registry of the active tasks used to save messages.
@@ -201,6 +217,11 @@ public class MessageCompose extends Activity implements OnClickListener, OnFocus
     private boolean mMessageLoaded;
     private boolean mInitiallyEmpty;
     private boolean mPickingAttachment = false;
+
+    /**
+     * Adding a flag to indicate whether current state is picking contact.
+     */
+    private boolean mPickingContact = false;
     private Boolean mQuickResponsesAvailable = true;
     private final EmailAsyncTask.Tracker mTaskTracker = new EmailAsyncTask.Tracker();
 
@@ -713,6 +734,27 @@ public class MessageCompose extends Activity implements OnClickListener, OnFocus
             mToView = UiUtilities.getView(this, R.id.to);
             mCcView = UiUtilities.getView(this, R.id.cc);
             mBccView = UiUtilities.getView(this, R.id.bcc);
+        }
+
+        ImageButton toPicker = (ImageButton) UiUtilities.getViewOrNull(this,
+                R.id.to_recipients_picker);
+        ImageButton ccPicker = (ImageButton) UiUtilities.getViewOrNull(this,
+                R.id.cc_recipients_picker);
+        ImageButton bccPicker = (ImageButton) UiUtilities.getViewOrNull(this,
+                R.id.bcc_recipients_picker);
+        if (toPicker != null && ccPicker != null && bccPicker != null) {
+            if (SystemProperties.getBoolean("persist.env.email.pickcontacts", true)) {
+                toPicker.setVisibility(View.VISIBLE);
+                toPicker.setOnClickListener(this);
+                ccPicker.setVisibility(View.VISIBLE);
+                ccPicker.setOnClickListener(this);
+                bccPicker.setVisibility(View.VISIBLE);
+                bccPicker.setOnClickListener(this);
+            } else {
+                toPicker.setVisibility(View.GONE);
+                ccPicker.setVisibility(View.GONE);
+                bccPicker.setVisibility(View.GONE);
+            }
         }
 
         mFromView = UiUtilities.getView(this, R.id.from);
@@ -1402,7 +1444,7 @@ public class MessageCompose extends Activity implements OnClickListener, OnFocus
 
         private boolean shouldShowSaveToast() {
             // Don't show the toast when rotating, or when opening an Activity on top of this one.
-            return !isChangingConfigurations() && !mPickingAttachment;
+            return !isChangingConfigurations() && !mPickingAttachment && !mPickingContact;
         }
 
         @Override
@@ -1685,14 +1727,56 @@ public class MessageCompose extends Activity implements OnClickListener, OnFocus
         }
     }
 
+    private void addAddressFromData(MultiAutoCompleteTextView view, Intent data) {
+        Bundle b = data.getExtras();
+        Bundle choiceSet = b.getBundle("result");
+        Set<String> set = choiceSet.keySet();
+        Iterator<String> i = set.iterator();
+        while (i.hasNext()) {
+            String key = i.next();
+            String[] emails = choiceSet.getStringArray(key);
+            StringBuffer strEmail = new StringBuffer();
+            // format as: "name" <address@xxx>
+            strEmail.append(EMAIL_DOUBLE_QUOTATION)         // '"'
+                .append(emails[EMAIL_NAME_INDEX])           // name
+                .append(EMAIL_DOUBLE_QUOTATION)             // '"'
+                .append(EMAIL_SPACE)                        // ' '
+                .append(EMAIL_QUOTE_START)                  // '<'
+                .append(emails[EMAIL_ADDRESS_INDEX])        // address
+                .append(EMAIL_QUOTE_END);                   // '>'
+
+            addAddress(view, strEmail.toString());
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         mPickingAttachment = false;
+        mPickingContact = false;
+
         if (data == null) {
             return;
         }
-        addAttachmentFromUri(data.getData());
-        setMessageChanged(true);
+        MultiAutoCompleteTextView tv = null;
+        switch (requestCode) {
+            case ACTIVITY_REQUEST_PICK_CONTACT_TO:
+                tv = mToView;
+                tv.setError(null);
+                break;
+            case ACTIVITY_REQUEST_PICK_CONTACT_CC:
+                tv = mCcView;
+                break;
+            case ACTIVITY_REQUEST_PICK_CONTACT_BCC:
+                tv = mBccView;
+                break;
+            case ACTIVITY_REQUEST_PICK_ATTACHMENT:
+                addAttachmentFromUri(data.getData());
+                setMessageChanged(true);
+                break;
+        }
+        if (requestCode != ACTIVITY_REQUEST_PICK_ATTACHMENT && tv != null) {
+            addAddressFromData(tv, data);
+        }
     }
 
     private boolean includeQuotedText() {
@@ -1707,6 +1791,11 @@ public class MessageCompose extends Activity implements OnClickListener, OnFocus
         switch (view.getId()) {
             case R.id.remove_attachment:
                 onDeleteAttachmentIconClicked(view);
+                break;
+            case R.id.to_recipients_picker:
+            case R.id.cc_recipients_picker:
+            case R.id.bcc_recipients_picker:
+                onPickContactsClicked(view);
                 break;
         }
     }
@@ -1726,6 +1815,37 @@ public class MessageCompose extends Activity implements OnClickListener, OnFocus
         deleteAttachment(mAttachments, attachment);
         updateAttachmentUi();
         setMessageChanged(true);
+    }
+
+    private void onPickContactsClicked(View view) {
+        int requestCode = -1;
+        MultiAutoCompleteTextView tv = null;
+        switch (view.getId()) {
+            case R.id.to_recipients_picker:
+                tv = mToView;
+                requestCode = ACTIVITY_REQUEST_PICK_CONTACT_TO;
+                break;
+            case R.id.cc_recipients_picker:
+                tv = mCcView;
+                requestCode = ACTIVITY_REQUEST_PICK_CONTACT_CC;
+                break;
+            case R.id.bcc_recipients_picker:
+                tv = mBccView;
+                requestCode = ACTIVITY_REQUEST_PICK_CONTACT_BCC;
+                break;
+        }
+
+        if (tv != null) {
+            tv.requestFocus();
+            String text = tv.getText().toString().trim();
+            // if the text is empty or end with ',' | ';', we needn't append the ','.
+            if (!TextUtils.isEmpty(text) && !text.endsWith(",") && !text.endsWith(";")) {
+                tv.append(",");
+            }
+        }
+        mPickingContact = true;
+        Intent intent = new Intent(ACTION_MULTI_PICK_EMAIL, Contacts.CONTENT_URI);
+        startActivityForResult(intent, requestCode);
     }
 
     /**
