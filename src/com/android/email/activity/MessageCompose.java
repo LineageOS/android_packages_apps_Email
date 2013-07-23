@@ -800,6 +800,11 @@ public class MessageCompose extends Activity implements OnClickListener, OnFocus
         mCcView.setFilters(recipientFilters);
         mBccView.setFilters(recipientFilters);
 
+        // pop-up the list after a single char is typed
+        mToView.setThreshold(1);
+        mCcView.setThreshold(1);
+        mBccView.setThreshold(1);
+
         /*
          * We set this to invisible by default. Other methods will turn it back on if it's
          * needed.
