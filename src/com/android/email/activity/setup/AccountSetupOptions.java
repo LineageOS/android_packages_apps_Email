@@ -135,7 +135,10 @@ public class AccountSetupOptions extends AccountSetupActivity implements OnClick
         if (mServiceInfo.syncCalendar) {
             mSyncCalendarView.setVisibility(View.VISIBLE);
             mSyncCalendarView.setChecked(true);
-            UiUtilities.setVisibilitySafe(this, R.id.account_sync_calendar_divider, View.VISIBLE);
+            mSyncEmailView.setVisibility(View.VISIBLE);
+            mSyncEmailView.setChecked(true);
+            // Show the associated dividers
+            UiUtilities.setVisibilitySafe(this, R.id.account_sync_contacts_divider, View.VISIBLE);
         }
 
         if (!mServiceInfo.offerAttachmentPreload) {
