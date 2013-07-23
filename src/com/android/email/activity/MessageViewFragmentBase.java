@@ -32,6 +32,7 @@ import android.database.ContentObserver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Paint;
+import android.media.MediaFile;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
@@ -1483,8 +1484,9 @@ public abstract class MessageViewFragmentBase extends Fragment implements View.O
             }
             if (attachmentInfo.mAllowView) {
                 // Set the attachment action button text accordingly
-                if (attachmentInfo.mContentType.startsWith("audio/") ||
-                        attachmentInfo.mContentType.startsWith("video/")) {
+                int fileType = MediaFile.getFileTypeForMimeType(attachmentInfo.mContentType);
+                if (MediaFile.isAudioFileType(fileType)
+                        || MediaFile.isVideoFileType(fileType)) {
                     openButton.setText(R.string.message_view_attachment_play_action);
                 } else if (attachmentInfo.mAllowInstall) {
                     openButton.setText(R.string.message_view_attachment_install_action);
