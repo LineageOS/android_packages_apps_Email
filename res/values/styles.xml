@@ -75,7 +75,7 @@
     </style>
 
     <style name="message_details_value_selectable" parent="message_details_value">
-        <item name="android:textIsSelectable">true</item>
+        <item name="android:textIsSelectable">false</item>
     </style>
 
     <style name="message_details_label" parent="message_details_value">
