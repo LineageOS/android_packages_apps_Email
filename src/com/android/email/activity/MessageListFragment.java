@@ -1509,7 +1509,7 @@ public class MessageListFragment extends ListFragment
                     toggleFavorite(selectedConversations);
                     break;
                 case R.id.delete:
-                    if (SystemProperties.getBoolean("persist.env.email.deletealert", false)) {
+                    if (true) {
                         DeleteMessageConfirmationDialog dialog = DeleteMessageConfirmationDialog
                                 .newInstance(selectedConversations.size(), null);
                         dialog.setTargetFragment(MessageListFragment.this, 0);
