@@ -489,7 +489,7 @@ public class MessageViewFragment extends MessageViewFragmentBase
                 onMove();
                 return true;
             case R.id.delete:
-                if (SystemProperties.getBoolean("persist.env.email.deletealert", false)) {
+                if (true) {
                     DeleteMessageConfirmationDialog dialog = DeleteMessageConfirmationDialog
                             .newInstance(1, null);
                     dialog.setTargetFragment(MessageViewFragment.this, 0);
