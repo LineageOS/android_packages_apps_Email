@@ -341,6 +341,12 @@ public class AccountSetupBasics extends AccountSetupActivity
     @Override
     public void onResume() {
         super.onResume();
+
+        // if keep this activity and press HOME_KEY. checkBox's text doesn't
+        // refresh if user change the language.
+        if (mDefaultView != null) {
+            mDefaultView.setText(R.string.account_setup_basics_default_label);
+        }
         mPaused = false;
     }
 
