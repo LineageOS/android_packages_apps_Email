@@ -150,7 +150,17 @@ public class AccountSelectorAdapter extends CursorAdapter {
             final TextView unreadCountView = (TextView) view.findViewById(R.id.unread_count);
             final View chipView = view.findViewById(R.id.color_chip);
 
-            final String displayName = getDisplayName(c);
+            // Reset the display name of combined view for locale reason.
+            // We need to translate the display name of "Combined view" in
+            // different language.
+            String displayName;
+            if (getId(c) == Account.ACCOUNT_ID_COMBINED_VIEW) {
+                displayName = mContext.getResources().getString(
+                              R.string.mailbox_list_account_selector_combined_view);
+            } else {
+                displayName = getDisplayName(c);
+            }
+
             final String emailAddress = getAccountEmailAddress(c);
 
             displayNameView.setText(displayName);
@@ -289,10 +299,9 @@ public class AccountSelectorAdapter extends CursorAdapter {
 
     private static String sCombinedViewDisplayName;
     private static String getCombinedViewDisplayName(Context c) {
-        if (sCombinedViewDisplayName == null) {
-            sCombinedViewDisplayName = c.getResources().getString(
-                    R.string.mailbox_list_account_selector_combined_view);
-        }
+        // Get the combined view display name every time for locale reason.
+        sCombinedViewDisplayName = c.getResources().getString(
+                R.string.mailbox_list_account_selector_combined_view);
         return sCombinedViewDisplayName;
     }
 
