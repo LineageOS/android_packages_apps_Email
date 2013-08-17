@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baee8101_935bbe2e",
+        "filename": "res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1255,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2013-08-17T23:30:38Z",
+      "side": 1,
+      "message": "Those should be plurals. Also some more natural wording (\u0027Sending 5 mesages\u0027) would be appropriate.",
+      "revId": "603d6534809738003ac9421fd0f06eec5f82901a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baee8101_73417a39",
+        "filename": "res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1256,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2013-08-17T23:30:38Z",
+      "side": 1,
+      "message": "Sending the message \u0027\u003csubject\u003e\u0027 failed",
+      "revId": "603d6534809738003ac9421fd0f06eec5f82901a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baee8101_334bf25b",
+        "filename": "res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1257,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2013-08-17T23:30:38Z",
+      "side": 1,
+      "message": "Sent 5 messages, 2 messages failed",
+      "revId": "603d6534809738003ac9421fd0f06eec5f82901a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baee8101_1348ee5a",
+        "filename": "src/com/android/email/NotificationController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2013-08-17T23:30:38Z",
+      "side": 1,
+      "message": "A sysprop for this thing? WTF? If anything, this should be a user option.",
+      "revId": "603d6534809738003ac9421fd0f06eec5f82901a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
