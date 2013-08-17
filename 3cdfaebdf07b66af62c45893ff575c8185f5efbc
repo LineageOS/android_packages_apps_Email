@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baee8101_d3782692",
+        "filename": "res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1248,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2013-08-17T23:33:48Z",
+      "side": 1,
+      "message": "...haven\u0027t yet been...",
+      "revId": "3cdfaebdf07b66af62c45893ff575c8185f5efbc",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baee8101_93729eac",
+        "filename": "res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1249,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2013-08-17T23:33:48Z",
+      "side": 1,
+      "message": "Forward directly",
+      "revId": "3cdfaebdf07b66af62c45893ff575c8185f5efbc",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baee8101_b36da2ce",
+        "filename": "res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1250,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2013-08-17T23:33:48Z",
+      "side": 1,
+      "message": "Forward after download",
+      "revId": "3cdfaebdf07b66af62c45893ff575c8185f5efbc",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baee8101_73685abb",
+        "filename": "src/com/android/email/activity/UIControllerOnePane.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2013-08-17T23:33:48Z",
+      "side": 1,
+      "message": "No, there shouldn\u0027t be a sysprop for this. Also, this should be in MessageCompose.actionForward to not duplicate it.",
+      "revId": "3cdfaebdf07b66af62c45893ff575c8185f5efbc",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
