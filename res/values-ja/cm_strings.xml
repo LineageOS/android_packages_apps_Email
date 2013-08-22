@@ -14,7 +14,12 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="message_compose_attachment_no_size">空のファイル。</string>
     <string name="account_setup_options_mail_check_frequency_2hour">"2時間毎"</string>
     <string name="account_setup_options_mail_check_frequency_4hour">"4時間毎"</string>
     <string name="account_setup_options_mail_check_frequency_1day">"1日毎"</string>
+    <string name="account_settings_notify_light_label">通知LEDを使用する</string>
+    <string name="category_general_security_preferences">セキュリティ</string>
+    <string name="security_preferences_blocked_attachment_extensions_title">添付ファイルをブロック</string>
+    <string name="security_preferences_blocked_attachment_extensions_summary">表示または保存するときにブロックする添付ファイルのタイプを選択</string>
 </resources>
