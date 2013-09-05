@@ -17,4 +17,9 @@
     <string name="account_setup_options_mail_check_frequency_2hour">Co 2 godziny</string>
     <string name="account_setup_options_mail_check_frequency_4hour">Co 4 godziny</string>
     <string name="account_setup_options_mail_check_frequency_1day">Codziennie</string>
+    <string name="account_settings_notify_light_label">Używaj diody powiadomień</string>
+    <string name="message_compose_attachment_no_size">Pusty plik.</string>
+    <string name="category_general_security_preferences">Bezpieczeństwo</string>
+    <string name="security_preferences_blocked_attachment_extensions_title">Zablokowane załączniki</string>
+    <string name="security_preferences_blocked_attachment_extensions_summary">Wskaż typy załączników, których odczytywanie oraz zapisywanie będzie zablokowane.</string>
 </resources>
