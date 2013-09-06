@@ -19,6 +19,7 @@ package com.android.email.activity.setup;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.SystemProperties;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.DigitsKeyListener;
@@ -313,7 +314,8 @@ public class AccountSetupOutgoingFragment extends AccountServerBaseFragment
 
     private int getPortFromSecurityType() {
         int securityType = (Integer)((SpinnerOption)mSecurityTypeView.getSelectedItem()).value;
-        int port = (securityType & HostAuth.FLAG_SSL) != 0 ? SMTP_PORT_SSL : SMTP_PORT_NORMAL;
+        int port = (securityType & HostAuth.FLAG_SSL) != 0 ? SMTP_PORT_SSL :
+                SystemProperties.getInt("persist.env.c.email.defsmtp", SMTP_PORT_NORMAL);
         return port;
     }
 
