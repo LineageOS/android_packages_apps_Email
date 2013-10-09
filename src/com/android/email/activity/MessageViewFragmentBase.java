@@ -1734,8 +1734,10 @@ public abstract class MessageViewFragmentBase extends Fragment implements View.O
         }
 
         // Caused by we want to make least effect on the message view, we will only show the
-        // original mail in the Sent and Outbox for IMAP and POP3 account.
-        if (SystemProperties.getBoolean("persist.env.email.showmail", false)) {
+        // original mail in the Sent and Outbox for IMAP and POP3 account. And if the account
+        // id is 0, it means this mail is the local message. Needn't show the original mail.
+        if (mAccountId > 0
+                && SystemProperties.getBoolean("persist.env.email.showmail", false)) {
             Account account = Account.restoreAccountWithId(mContext, mAccountId);
             HostAuth hostAuth = HostAuth.restoreHostAuthWithId(mContext, account.mHostAuthKeyRecv);
             Mailbox mailbox = Mailbox.restoreMailboxWithId(mContext, mMessage.mMailboxKey);
