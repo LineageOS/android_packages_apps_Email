@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2012-2013 The CyanogenMod Project
+<!-- Copyright (C) 2013 The CyanogenMod Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -14,25 +14,12 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <!-- Toast that appears when an attachment has no size. -->
     <string name="message_compose_attachment_no_size">空的檔案。</string>
-
-    <!-- In Account setup options & Account Settings screens, email check frequency option -->
-    <string name="account_setup_options_mail_check_frequency_2hour">每2小時</string>
-    <!-- In Account setup options & Account Settings screens, email check frequency option -->
-    <string name="account_setup_options_mail_check_frequency_4hour">每4小時</string>
-    <!-- In Account setup options & Account Settings screens, email check frequency option -->
+    <string name="account_setup_options_mail_check_frequency_2hour">每 2 小時</string>
+    <string name="account_setup_options_mail_check_frequency_4hour">每 4 小時</string>
     <string name="account_setup_options_mail_check_frequency_1day">每天</string>
-
-    <string name="account_settings_notify_light_label">使用指示燈通知</string>
-
-    <!-- First category in general security preferences -->
+    <string name="account_settings_notify_light_label">使用通知指示燈</string>
     <string name="category_general_security_preferences">安全性</string>
-
-    <!-- Security preference: The title of the setting with the list of blocked
-         attachment extensions" -->
     <string name="security_preferences_blocked_attachment_extensions_title">被封鎖的附件</string>
-    <!-- Security preference: The summary of the setting with the list of blocked
-         attachment extensions" -->
-    <string name="security_preferences_blocked_attachment_extensions_summary">選擇將被封鎖檢視或儲存的附件類型</string>
+    <string name="security_preferences_blocked_attachment_extensions_summary">選取要被封鎖檢視或儲存的附件類型</string>
 </resources>
