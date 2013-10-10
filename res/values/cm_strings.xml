@@ -35,4 +35,7 @@
     <!-- Security preference: The summary of the setting with the list of blocked
          attachment extensions" -->
     <string name="security_preferences_blocked_attachment_extensions_summary">Select the attachment types that are blocked from viewing or saving</string>
+
+    <!-- Display string for notifications on subfolders (exchange accounts) -->
+    <string name="notification_subfolder_display_string" formatted="false">%s (%s)</string>
 </resources>
