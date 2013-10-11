@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a50d1a3_1fe7a741",
+        "filename": "res/values-zh-rTW/cm_strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 7437
+      },
+      "writtenOn": "2013-10-11T03:21:10Z",
+      "side": 1,
+      "message": "?????????? 2013 ???? (http://review.cyanogenmod.org/#/c/44396/)",
+      "revId": "4f2139af067c5c9eeee2fef17591f3012c95eda6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
