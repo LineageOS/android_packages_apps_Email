@@ -1,0 +1,293 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a50d1a3_d19dae5a",
+        "filename": "emailcommon/src/com/android/emailcommon/provider/Mailbox.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2013-10-16T21:08:21Z",
+      "side": 1,
+      "message": "java.* imports should be last: http://source.android.com/source/code-style.html#order-import-statements",
+      "revId": "60bd309ce2b6486191bb7cdd3bac81ceb69e32aa",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a50d1a3_71a37a9f",
+        "filename": "emailcommon/src/com/android/emailcommon/provider/Mailbox.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2013-10-16T21:08:21Z",
+      "side": 1,
+      "message": "Braces should be on the old line: http://source.android.com/source/code-style.html#use-standard-brace-style",
+      "revId": "60bd309ce2b6486191bb7cdd3bac81ceb69e32aa",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a50d1a3_91a08692",
+        "filename": "emailcommon/src/com/android/emailcommon/provider/Mailbox.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2013-10-16T21:08:21Z",
+      "side": 1,
+      "message": "catch-all clauses shouldn\u0027t be used: http://source.android.com/source/code-style.html#dont-catch-generic-exception\n\nI\u0027d probably just nuke the try-catch, there\u0027s not much that can throw in there anyway.",
+      "revId": "60bd309ce2b6486191bb7cdd3bac81ceb69e32aa",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a50d1a3_31adf288",
+        "filename": "emailcommon/src/com/android/emailcommon/utility/Utility.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1001,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2013-10-16T21:08:21Z",
+      "side": 1,
+      "message": "Please wrap to 100 chars.",
+      "revId": "60bd309ce2b6486191bb7cdd3bac81ceb69e32aa",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a50d1a3_b1afc27c",
+        "filename": "emailcommon/src/com/android/emailcommon/utility/Utility.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1018,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2013-10-16T21:08:21Z",
+      "side": 1,
+      "message": "100 chars",
+      "revId": "60bd309ce2b6486191bb7cdd3bac81ceb69e32aa",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a50d1a3_51aafe71",
+        "filename": "emailcommon/src/com/android/emailcommon/utility/Utility.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1243,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2013-10-16T21:08:21Z",
+      "side": 1,
+      "message": "100 chars",
+      "revId": "60bd309ce2b6486191bb7cdd3bac81ceb69e32aa",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a50d1a3_f1b54ad0",
+        "filename": "emailcommon/src/com/android/emailcommon/utility/Utility.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1250,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2013-10-16T21:08:21Z",
+      "side": 1,
+      "message": "The comment looks useless.",
+      "revId": "60bd309ce2b6486191bb7cdd3bac81ceb69e32aa",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a50d1a3_11bb16c6",
+        "filename": "emailcommon/src/com/android/emailcommon/utility/Utility.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1263,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2013-10-16T21:08:21Z",
+      "side": 1,
+      "message": "Please keep the original formatting of the comment.",
+      "revId": "60bd309ce2b6486191bb7cdd3bac81ceb69e32aa",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a50d1a3_d1b4ced2",
+        "filename": "emailcommon/src/com/android/emailcommon/utility/Utility.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1273,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2013-10-16T21:08:21Z",
+      "side": 1,
+      "message": "Please keep original formatting. It makes tracking your actual changes unnecessarily hard.",
+      "revId": "60bd309ce2b6486191bb7cdd3bac81ceb69e32aa",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a50d1a3_71ca9a51",
+        "filename": "emailcommon/src/com/android/emailcommon/utility/Utility.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1281,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2013-10-16T21:08:21Z",
+      "side": 1,
+      "message": "As above",
+      "revId": "60bd309ce2b6486191bb7cdd3bac81ceb69e32aa",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a50d1a3_91c72645",
+        "filename": "emailcommon/src/com/android/emailcommon/utility/Utility.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1288,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2013-10-16T21:08:21Z",
+      "side": 1,
+      "message": "Those tabs should be spaces.",
+      "revId": "60bd309ce2b6486191bb7cdd3bac81ceb69e32aa",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a50d1a3_51c19e2d",
+        "filename": "src/com/android/email/NotificationController.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2013-10-16T21:08:21Z",
+      "side": 1,
+      "message": "Please nuke the trailing whitespace.",
+      "revId": "60bd309ce2b6486191bb7cdd3bac81ceb69e32aa",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a50d1a3_f1dc6a1a",
+        "filename": "src/com/android/email/NotificationController.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2013-10-16T21:08:21Z",
+      "side": 1,
+      "message": "Indention is off for those braces.",
+      "revId": "60bd309ce2b6486191bb7cdd3bac81ceb69e32aa",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a50d1a3_b1e6e2e6",
+        "filename": "src/com/android/email/NotificationController.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2013-10-16T21:08:21Z",
+      "side": 1,
+      "message": "This string should be a string resource.\n\n(also 100 chars)",
+      "revId": "60bd309ce2b6486191bb7cdd3bac81ceb69e32aa",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a50d1a3_d1eb6eaf",
+        "filename": "src/com/android/email/NotificationController.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2013-10-16T21:08:21Z",
+      "side": 1,
+      "message": "This change is unneeded.",
+      "revId": "60bd309ce2b6486191bb7cdd3bac81ceb69e32aa",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a50d1a3_91ce4659",
+        "filename": "src/com/android/email/NotificationController.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 853,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2013-10-16T21:08:21Z",
+      "side": 1,
+      "message": "Doesn\u0027t the compiler warn for mixed use of || and \u0026\u0026? In any case, this needs some ().",
+      "revId": "60bd309ce2b6486191bb7cdd3bac81ceb69e32aa",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a50d1a3_31dbb21d",
+        "filename": "src/com/android/email/provider/EmailProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2013-10-16T21:08:21Z",
+      "side": 1,
+      "message": "100 chars.",
+      "revId": "60bd309ce2b6486191bb7cdd3bac81ceb69e32aa",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
