@@ -121,17 +121,6 @@ public class Welcome extends Activity {
     }
 
     /**
-     * Create an Intent to open email activity. If <code>mailboxId</code> is not -1, the
-     * specified mailbox will be automatically be opened when the activity starts.
-     */
-    public static Intent createOpenMailboxIntent(Context context, long mailboxId) {
-        final Uri.Builder b = IntentUtilities.createActivityIntentUrlBuilder(
-                VIEW_MAILBOX_INTENT_URL_PATH);
-        IntentUtilities.setMailboxId(b, mailboxId);
-        return IntentUtilities.createRestartAppIntent(b.build());
-    }
-
-    /**
      * Create an Intent to open a message.
      */
     public static Intent createOpenMessageIntent(Context context, long accountId,
