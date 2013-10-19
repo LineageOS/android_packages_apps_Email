@@ -17,7 +17,6 @@
 
 package com.android.emailcommon.provider;
 
-import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
@@ -32,20 +31,14 @@ import com.android.emailcommon.provider.EmailContent.MailboxColumns;
 import com.android.emailcommon.provider.EmailContent.SyncColumns;
 import com.android.emailcommon.utility.Utility;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Mailbox extends EmailContent implements SyncColumns, MailboxColumns, Parcelable {
     public static final String TABLE_NAME = "Mailbox";
     @SuppressWarnings("hiding")
-    public static final Uri NOTIFIER_URI = Uri.parse(EmailContent.CONTENT_NOTIFIER_URI + "/mailbox");
     public static final Uri CONTENT_URI = Uri.parse(EmailContent.CONTENT_URI + "/mailbox");
     public static final Uri ADD_TO_FIELD_URI =
         Uri.parse(EmailContent.CONTENT_URI + "/mailboxIdAddToField");
     public static final Uri FROM_ACCOUNT_AND_TYPE_URI =
         Uri.parse(EmailContent.CONTENT_URI + "/mailboxIdFromAccountAndType");
-    public static final Uri FROM_ACCOUNT =
-            Uri.parse(EmailContent.CONTENT_URI + "/mailboxIdFromAccount");
 
     public String mDisplayName;
     public String mServerId;
@@ -138,7 +131,6 @@ public class Mailbox extends EmailContent implements SyncColumns, MailboxColumns
             };
     private static final int MAILBOX_DISPLAY_NAME_COLUMN = 0;
 
-    public static final long ALL_INBOX_MAILBOXES = -2;
     public static final long NO_MAILBOX = -1;
 
     // Sentinel values for the mSyncInterval field of both Mailbox records
@@ -462,28 +454,6 @@ public class Mailbox extends EmailContent implements SyncColumns, MailboxColumns
         Uri url = ContentUris.withAppendedId(Mailbox.CONTENT_URI, mailboxId);
         return Utility.getFirstRowInt(context, url, MAILBOX_TYPE_PROJECTION,
                 null, null, null, MAILBOX_TYPE_TYPE_COLUMN, -1);
-    }
-
-    /**
-     * @return mailbox id's for account.
-     */
-    public static List<Integer> getMailboxesByAccount(Context context, long accountId) {
-        List<Integer> ids = new ArrayList<Integer>();
-        ContentResolver resolver = context.getContentResolver();
-
-        Cursor c = resolver.query(
-                Mailbox.CONTENT_URI, Mailbox.ID_PROJECTION,
-                MailboxColumns.ACCOUNT_KEY + "=?",
-                new String[] { Long.toString(accountId) },
-                MailboxColumns.ID);
-
-        if (c != null) {
-            while (c.moveToNext()) {
-                ids.add(c.getInt(0));
-            }
-        }
-
-        return ids;
     }
 
     /**

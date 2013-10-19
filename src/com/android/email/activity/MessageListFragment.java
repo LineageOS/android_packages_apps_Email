@@ -1220,12 +1220,10 @@ public class MessageListFragment extends ListFragment
         final long mailboxId = getMailboxId();
         if (mailboxId == Mailbox.QUERY_ALL_INBOXES || mailboxId > 0) {
             if (updateLastSeenKey) {
-                Utility.updateLastSeenMessageKey(mActivity, accountId, mailboxId);
-                Utility.updateLastNotifiedMessageKey(mActivity, mailboxId);
-                Utility.updateLastNotifiedMessageCount(mActivity, mailboxId);
+                Utility.updateLastSeenMessageKey(mActivity, accountId);
             }
             NotificationController notifier = NotificationController.getInstance(mActivity);
-            notifier.suspendMessageNotification(mResumed, accountId, mailboxId);
+            notifier.suspendMessageNotification(mResumed, accountId);
         }
     }
 

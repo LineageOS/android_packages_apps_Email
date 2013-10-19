@@ -172,9 +172,6 @@
     <string name="notification_multiple_new_messages_fmt">
         <xliff:g example="2">%1$d</xliff:g> new messages</string>
 
-    <!-- Display string for notifications on subfolders (exchange accounts) -->
-    <string name="notification_subfolder_display_string" formatted="false">%s (%s)</string>
-
     <!-- Name given to "all accounts" in the account picker for shortcuts and widget [CHAR LIMIT=20] -->
     <string name="account_name_display_all">All accounts</string>
 
