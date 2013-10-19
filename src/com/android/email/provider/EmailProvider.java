@@ -934,9 +934,6 @@ public class EmailProvider extends ContentProvider {
                 case DELETED_MESSAGE:
                 case MESSAGE:
                 case BODY:
-                    String messageId = values.getAsString(BodyColumns.MESSAGE_KEY);
-                    sendNotifierChange(getBaseNotificationUri(MESSAGE_ID), NOTIFICATION_OP_INSERT,
-                            messageId);
                 case ATTACHMENT:
                 case MAILBOX:
                 case ACCOUNT:
