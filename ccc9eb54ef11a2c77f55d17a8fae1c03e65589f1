@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a50d1a3_b9d008cb",
+        "filename": "res/values/strings.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 2597
+      },
+      "writtenOn": "2013-10-20T04:03:42Z",
+      "side": 1,
+      "message": "Please add translatable\u003d\"false\" to this string and move it to res/values/cm_strings.xml",
+      "revId": "ccc9eb54ef11a2c77f55d17a8fae1c03e65589f1",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
