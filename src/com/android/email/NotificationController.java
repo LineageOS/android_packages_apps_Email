@@ -124,6 +124,11 @@ public class NotificationController {
      */
     private static final long MIN_SOUND_INTERVAL_MS = 15 * 1000; // 15 seconds
 
+    // After 5s, we will try to register again. And set the max retry times is 5.
+    private static final long RETRY_INTERVAL_MS = 5000;
+    private static final int RETRY_MAX_TIMES = 5;
+    private static final int MSG_RETRY_REGISTER = 1;
+
     private static boolean isRunningJellybeanOrLater() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN;
     }
@@ -350,7 +355,20 @@ public class NotificationController {
     private static synchronized void ensureHandlerExists() {
         if (sNotificationThread == null) {
             sNotificationThread = new NotificationThread();
-            sNotificationHandler = new Handler(sNotificationThread.getLooper());
+            sNotificationHandler = new Handler(sNotificationThread.getLooper()) {
+                @Override
+                public void handleMessage(android.os.Message msg) {
+                    if (msg.what == MSG_RETRY_REGISTER) {
+                        int retryTimes = msg.arg1;
+                        long accountId = (Long) msg.obj;
+
+                        Log.w(Logging.LOG_TAG, "Try to register the notifications for this account,"
+                                + " accountId = " + accountId + ", retry times = " + retryTimes);
+                        sInstance.registerMessageNotification(accountId, retryTimes);
+                    }
+                    super.handleMessage(msg);
+                }
+            };
         }
     }
 
@@ -363,6 +381,19 @@ public class NotificationController {
      *                  accounts that allow for user notification.
      */
     private void registerMessageNotification(long accountId) {
+        registerMessageNotification(accountId, 0);
+    }
+
+    /**
+     * Registers an observer for changes to the INBOX for the given account. Since accounts
+     * may only have a single INBOX, we will never have more than one observer for an account.
+     * NOTE: This must be called on the notification handler thread.
+     * @param accountId The ID of the account to register the observer for. May be
+     *                  {@link Account#ACCOUNT_ID_COMBINED_VIEW} to register observers for all
+     *                  accounts that allow for user notification.
+     * @param retryTimes The retry times for the given account to register
+     */
+    private void registerMessageNotification(long accountId, int retryTimes) {
         ContentResolver resolver = mContext.getContentResolver();
         if (accountId == Account.ACCOUNT_ID_COMBINED_VIEW) {
             Cursor c = resolver.query(
@@ -383,10 +414,22 @@ public class NotificationController {
             Mailbox mailbox = Mailbox.restoreMailboxOfType(mContext, accountId, Mailbox.TYPE_INBOX);
             if (mailbox == null) {
                 Log.w(Logging.LOG_TAG, "Could not load INBOX for account id: " + accountId);
+                // For sometimes, the account already create, but the INBOX didn't got here.
+                // It's abnormal, so we will retry to register the notifications.
+                if (retryTimes <= RETRY_MAX_TIMES) {
+                    Log.w(Logging.LOG_TAG, "Try to register the notifications for this account");
+                    retryTimes = retryTimes + 1;
+                    android.os.Message msg = sNotificationHandler.obtainMessage(MSG_RETRY_REGISTER);
+                    msg.arg1 = retryTimes;
+                    msg.obj = accountId;
+                    sNotificationHandler.sendMessageDelayed(msg, RETRY_INTERVAL_MS);
+                }
                 return;
             }
+
             if (Email.DEBUG) {
-                Log.i(Logging.LOG_TAG, "Registering for notifications for account " + accountId);
+                Log.i(Logging.LOG_TAG, "Registering for notifications for account " + accountId
+                        + ", and retry times = " + retryTimes);
             }
             ContentObserver observer = new MessageContentObserver(
                     sNotificationHandler, mContext, mailbox.mId, accountId);
