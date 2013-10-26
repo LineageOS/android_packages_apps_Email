@@ -419,12 +419,20 @@ public class AccountCheckSettingsFragment extends Fragment {
          * @param checkAccount account holding values to be checked
          */
         public AccountCheckTask(int mode, Account checkAccount) {
+            Log.d(Logging.LOG_TAG,"AccountCheckTask start");
+            Log.d(Logging.LOG_TAG,"mode = " + mode + " checkAccount = " + checkAccount);
             mContext = getActivity().getApplicationContext();
             mMode = mode;
             mAccount = checkAccount;
+            Log.d(Logging.LOG_TAG,"checkAccount.mHostAuthRecv = " + checkAccount.mHostAuthRecv);
+            Log.d(Logging.LOG_TAG,"checkAccount.mHostAuthRecv.mAddress = " +
+                    checkAccount.mHostAuthRecv.mAddress);
             mStoreHost = checkAccount.mHostAuthRecv.mAddress;
+            Log.d(Logging.LOG_TAG,"checkAccount.mHostAuthRecv.mPassword = " +
+                    checkAccount.mHostAuthRecv.mPassword);
             mCheckEmail = checkAccount.mEmailAddress;
             mCheckPassword = checkAccount.mHostAuthRecv.mPassword;
+            Log.d(Logging.LOG_TAG,"AccountCheckTask end");
         }
 
         @Override
