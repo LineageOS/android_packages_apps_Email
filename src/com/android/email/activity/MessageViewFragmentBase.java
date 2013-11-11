@@ -29,6 +29,7 @@ import android.content.Loader;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.database.ContentObserver;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Paint;
@@ -719,7 +720,7 @@ public abstract class MessageViewFragmentBase extends Fragment implements View.O
             return; // Already clicked, and waiting for the data.
         }
 
-        if (mQuickContactLookupUri != null) {
+        if (isLooupUriValidate(mQuickContactLookupUri)) {
             QuickContact.showQuickContact(mContext, mFromBadge, mQuickContactLookupUri,
                         QuickContact.MODE_MEDIUM, null);
         } else {
@@ -737,6 +738,25 @@ public abstract class MessageViewFragmentBase extends Fragment implements View.O
 
             startActivity(intent);
         }
+    }
+
+    /**
+     * Check whether the lookupUri is validate in contacts'db
+     */
+    private boolean isLooupUriValidate(Uri lookupUri) {
+        if (lookupUri != null) {
+            Cursor cursor = mContext.getContentResolver().query(lookupUri,
+                    null, null, null, null);
+            try {
+                if (cursor != null && cursor.getCount() > 0) {
+                    return true;
+                }
+                return false;
+            } finally {
+                cursor.close();
+            }
+        }
+        return false;
     }
 
     private static class ContactStatusLoaderCallbacks
