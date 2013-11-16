@@ -22,4 +22,25 @@
     <string name="category_general_security_preferences">Beveiliging</string>
     <string name="security_preferences_blocked_attachment_extensions_title">Geblokkeerde bijlagen</string>
     <string name="security_preferences_blocked_attachment_extensions_summary">Kies de typen bijlagen die niet getoond/opgeslagen mogen worden</string>
+
+    <!-- CAF strings -->
+    <string name="alert_attachment_not_complete_title">Bijlage niet compleet</string>
+    <string name="alert_attachment_not_complete_message">De bijlagen zijn niet compleet gedownload.</string>
+    <string name="alert_forward_immediately">Onmiddelijk doorsturen</string>
+    <string name="alert_forward_after_download_complete">Doorsturen na downloaden</string>
+    <string name="send_progress_start">Bericht(en) verzenden</string>
+    <string name="send_progress_failed">Bericht(en) verzenden mislukt</string>
+    <string name="send_progress_completed">Bericht(en) verzenden voltooid</string>
+    <string name="send_progress_failed_detail">Verzenden \"<xliff:g id="subject">%s</xliff:g>\" mislukt</string>
+    <string name="send_progress_completed_detail">Totaal: <xliff:g id="total">%d</xliff:g>, Gelukt: <xliff:g id="success">%d</xliff:g>, Mislukt: <xliff:g id="fail">%d</xliff:g></string>
+    <string name="account_setup_options_mail_sync_size_label">Downloadgrootte per bericht</string>
+    <string name="account_setup_options_mail_sync_size_all">Compleet bericht</string>
+    <string name="account_setup_options_mail_sync_size_20k">20kB</string>
+    <string name="account_setup_options_mail_sync_size_100k">100kB</string>
+    <string name="account_setup_options_mail_sync_size_200k">200kB</string>
+    <string name="account_setup_options_mail_sync_size_500k">500kB</string>
+    <string name="account_setup_options_mail_sync_size_1M">1MB</string>
+    <string name="fetch_entire_mail">Compleet bericht downloaden</string>
+    <string name="no_active_network">Geen netwerk beschikbaar.</string>
+    <string name="clip_message">## Bericht afgekapt ## Download het complete bericht</string>
 </resources>
