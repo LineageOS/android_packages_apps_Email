@@ -22,4 +22,15 @@
     <string name="category_general_security_preferences">Beveiliging</string>
     <string name="security_preferences_blocked_attachment_extensions_title">Geblokkeerde bijlagen</string>
     <string name="security_preferences_blocked_attachment_extensions_summary">Kies de typen bijlagen die niet getoond/opgeslagen mogen worden</string>
+
+    <!-- CAF strings -->
+    <string name="alert_attachment_not_complete_title">Bijlage niet compleet</string>
+    <string name="alert_attachment_not_complete_message">De bijlagen zijn niet compleet gedownload.</string>
+    <string name="alert_forward_immediately">Onmiddelijk doorsturen</string>
+    <string name="alert_forward_after_download_complete">Doorsturen na downloaden</string>
+    <string name="send_progress_start">Bericht(en) verzenden</string>
+    <string name="send_progress_failed">Bericht(en) verzenden mislukt</string>
+    <string name="send_progress_completed">Bericht(en) verzenden voltooid</string>
+    <string name="send_progress_failed_detail">Verzenden \"<xliff:g id="subject">%s</xliff:g>\" mislukt</string>
+    <string name="send_progress_completed_detail">Totaal: <xliff:g id="total">%d</xliff:g>, Gelukt: <xliff:g id="success">%d</xliff:g>, Mislukt: <xliff:g id="fail">%d</xliff:g></string>
 </resources>
