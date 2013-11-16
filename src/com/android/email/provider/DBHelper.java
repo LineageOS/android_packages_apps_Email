@@ -1067,7 +1067,7 @@ public final class DBHelper {
                     LogUtils.w(TAG, "Exception upgrading EmailProvider.db from 38 to 39 " + e);
                 }
             }
-            if (oldVersion <= 39) {
+            if (oldVersion <= 40) {
                 upgradeToEmail2(db);
             }
             if (oldVersion <= 102) {
