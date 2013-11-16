@@ -23,6 +23,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.os.SystemProperties;
 import android.text.TextUtils;
 
 import com.android.emailcommon.provider.EmailContent.HostAuthColumns;
@@ -282,7 +283,7 @@ public final class HostAuth extends EmailContent implements HostAuthColumns, Par
             } else if (SCHEME_EAS.equals(mProtocol)) {
                 mPort = useSSL ? 443 : 80;
             } else if (SCHEME_SMTP.equals(mProtocol)) {
-                mPort = useSSL ? 465 : 587;
+                mPort = useSSL ? 465 : SystemProperties.getInt("persist.env.c.email.defsmtp", 587);
             }
         }
 

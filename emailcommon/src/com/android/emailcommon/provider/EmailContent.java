@@ -643,8 +643,8 @@ public abstract class EmailContent {
          */
         public static final String FLAG_LOADED_SELECTION =
             MessageColumns.FLAG_LOADED + " IN ("
-            +     Message.FLAG_LOADED_PARTIAL + "," + Message.FLAG_LOADED_COMPLETE
-            +     ")";
+            +     Message.FLAG_LOADED_PARTIAL + "," + Message.FLAG_LOADED_COMPLETE + ","
+            +     Message.FLAG_LOADED_SYNC_SIZE_COMPLETE + ")";
 
         public static final String ALL_FAVORITE_SELECTION =
             MessageColumns.FLAG_FAVORITE + "=1 AND "
@@ -753,6 +753,7 @@ public abstract class EmailContent {
         public static final int FLAG_LOADED_COMPLETE = 1;
         public static final int FLAG_LOADED_PARTIAL = 2;
         public static final int FLAG_LOADED_DELETED = 3;
+        public static final int FLAG_LOADED_SYNC_SIZE_COMPLETE = 4;
 
         // Bits used in mFlags
         // The following three states are mutually exclusive, and indicate whether the message is an
@@ -1409,6 +1410,8 @@ public abstract class EmailContent {
         public static final String SYNC_LOOKBACK = "syncLookback";
         // The default sync frequency for this account, in minutes
         public static final String SYNC_INTERVAL = "syncInterval";
+        // The default sync size for this account per mail
+        public static final String SYNC_SIZE = "syncSize";
         // A foreign key into the account manager, having host, login, password, port, and ssl flags
         public static final String HOST_AUTH_KEY_RECV = "hostAuthKeyRecv";
         // (optional) A foreign key into the account manager, having host, login, password, port,

@@ -121,6 +121,25 @@
         <item>6</item>
     </string-array>
 
+    <!-- Mail sync size -->
+    <string-array name="account_setup_options_mail_sync_size_entries_labels">
+        <item>@string/account_setup_options_mail_sync_size_all</item>
+        <item>@string/account_setup_options_mail_sync_size_20k</item>
+        <item>@string/account_setup_options_mail_sync_size_100k</item>
+        <item>@string/account_setup_options_mail_sync_size_200k</item>
+        <item>@string/account_setup_options_mail_sync_size_500k</item>
+        <item>@string/account_setup_options_mail_sync_size_1M</item>
+    </string-array>
+
+    <string-array name="account_setup_options_mail_sync_size_entries_values">
+        <item>-1</item>
+        <item>20480</item>
+        <item>102400</item>
+        <item>204800</item>
+        <item>512000</item>
+        <item>1024000</item>
+    </string-array>
+
     <!-- Auto-advance options (DO NOT change the order.  Code assumes this order)-->
     <string-array name="general_preference_auto_advance_entries">
         <!-- Move to newer -->

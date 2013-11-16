@@ -137,11 +137,12 @@ public class MessageFileViewFragment extends MessageViewFragmentBase {
      * Does exactly same as the super class method, but does an extra sanity check.
      */
     @Override
-    protected void reloadUiFromMessage(Message message, boolean okToFetch) {
+    protected void reloadUiFromMessage(Message message, boolean okToFetch,
+            boolean fetchEntireMailFromUser) {
         // EML file should never be partially loaded.
         if (message.mFlagLoaded != Message.FLAG_LOADED_COMPLETE) {
             throw new IllegalStateException();
         }
-        super.reloadUiFromMessage(message, okToFetch);
+        super.reloadUiFromMessage(message, okToFetch, fetchEntireMailFromUser);
     }
 }

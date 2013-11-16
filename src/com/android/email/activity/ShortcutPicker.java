@@ -89,12 +89,34 @@ public class ShortcutPicker extends Activity implements OnClickListener, PickerC
     @Override
     public void onSelected(Account account, long mailboxId) {
         String shortcutName;
-        if (Account.isNormalAccount(account.mId) &&
-                (Mailbox.getMailboxType(this, mailboxId) != Mailbox.TYPE_INBOX)) {
-            shortcutName = Mailbox.getDisplayName(this, mailboxId);
+        if (Account.isNormalAccount(account.mId)) {
+            switch (Mailbox.getMailboxType(this, mailboxId)) {
+                case Mailbox.TYPE_INBOX:
+                    shortcutName = account.getDisplayName();
+                    break;
+                case Mailbox.TYPE_OUTBOX:
+                    shortcutName = getString(R.string.mailbox_name_display_outbox);
+                    break;
+                case Mailbox.TYPE_DRAFTS:
+                    shortcutName = getString(R.string.mailbox_name_display_drafts);
+                    break;
+                case Mailbox.TYPE_TRASH:
+                    shortcutName = getString(R.string.mailbox_name_display_trash);
+                    break;
+                case Mailbox.TYPE_SENT:
+                    shortcutName = getString(R.string.mailbox_name_display_sent);
+                    break;
+                case Mailbox.TYPE_JUNK:
+                    shortcutName = getString(R.string.mailbox_name_display_junk);
+                    break;
+                default:
+                    shortcutName = Mailbox.getDisplayName(this, mailboxId);
+                    break;
+            }
         } else {
             shortcutName = account.getDisplayName();
         }
+
         setupShortcut(account, mailboxId, shortcutName);
         finish();
     }

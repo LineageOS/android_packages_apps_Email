@@ -20,6 +20,7 @@ import com.android.emailcommon.provider.Account;
 import com.android.emailcommon.provider.Policy;
 
 import android.accounts.AccountAuthenticatorResponse;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -41,6 +42,9 @@ public class SetupData implements Parcelable {
     public static final int FLOW_MODE_RETURN_TO_CALLER = 5;
     public static final int FLOW_MODE_RETURN_TO_MESSAGE_LIST = 6;
 
+    // This mode is used to return to compose after setup flow.
+    public static final int FLOW_MODE_RETURN_TO_COMPOSE = 7;
+
     // For debug logging
     private static final String[] FLOW_MODES = {"normal", "eas", "pop/imap", "edit", "force",
             "rtc", "rtl"};
@@ -61,6 +65,8 @@ public class SetupData implements Parcelable {
     private boolean mAutoSetup = false;
     private boolean mDefault = false;
     private AccountAuthenticatorResponse mAccountAuthenticatorResponse = null;
+    private int mFinishMode = FLOW_MODE_RETURN_TO_MESSAGE_LIST;
+    private Intent mSourceIntent = null;
 
     // We only have one instance of SetupData; if/when the process is destroyed, this data will be
     // saved in the savedInstanceState Bundle
@@ -165,6 +171,19 @@ public class SetupData implements Parcelable {
         getInstance().mAccountAuthenticatorResponse = response;
     }
 
+    static public int getFinishMode() {
+        return getInstance().mFinishMode;
+    }
+
+    static public Intent getSourceIntent() {
+        return getInstance().mSourceIntent;
+    }
+
+    static public void resetFinishMode() {
+        getInstance().mFinishMode = FLOW_MODE_RETURN_TO_MESSAGE_LIST;
+        getInstance().mSourceIntent = null;
+    }
+
     public static void init(int flowMode) {
         SetupData data = getInstance();
         data.commonInit();
@@ -176,6 +195,22 @@ public class SetupData implements Parcelable {
         data.commonInit();
         data.mFlowMode = flowMode;
         data.mAccount = account;
+    }
+
+    public static void init(int flowMode, Account account, Intent srcIntent) {
+        SetupData data = getInstance();
+        data.commonInit();
+        data.mFlowMode = flowMode;
+        data.mAccount = account;
+        data.mSourceIntent = srcIntent;
+    }
+
+    public static void init(int flowMode, int finishMode, Intent srcIntent) {
+        SetupData data = getInstance();
+        data.commonInit();
+        data.mFlowMode = flowMode;
+        data.mFinishMode = finishMode;
+        data.mSourceIntent = srcIntent;
     }
 
     void commonInit() {

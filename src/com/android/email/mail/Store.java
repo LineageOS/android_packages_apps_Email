@@ -91,7 +91,15 @@ public abstract class Store {
         // An existing account might have been deleted
         if (hostAuth == null) return null;
         Store store = sStores.get(hostAuth);
-        if (store == null) {
+        // If the user add the same account which is deleted just a moment ago,
+        // the new hostAuth object will be equal{@link HostAuth#equals(Object)}
+        // to the old hostAuth which belongs to the deleted account.
+        // So we need judge if the got store's id is same as the given account's
+        // id. If they are different, it means there isn't matched store.
+        if (store == null
+                || (account.mId != -1
+                        && store.mAccount != null
+                        && store.mAccount.mId != account.mId)) {
             Context appContext = context.getApplicationContext();
             Class<? extends Store> klass = sStoreClasses.get(hostAuth.mProtocol);
             try {

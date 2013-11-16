@@ -28,5 +28,9 @@
         android:id="@+id/forward"
         android:title="@string/forward_action"
     />
+    <item
+        android:id="@+id/fetch_entire_mail"
+        android:title="@string/fetch_entire_mail"
+    />
 </menu>
 

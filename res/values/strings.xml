@@ -777,6 +777,15 @@ as <xliff:g id="filename">%s</xliff:g>.</string>
     <!-- Per-mailbox sync window setting.  This means "use the account's sync window setting" [CHAR LIMIT=25] -->
     <string name="account_setup_options_mail_window_default">Use account\'s default</string>
 
+    <!-- In Account setup options & Account Settings screens, Email sync size option. -->
+    <string name="account_setup_options_mail_sync_size_label">Sync size per mail</string>
+    <string name="account_setup_options_mail_sync_size_all">Sync entire mail</string>
+    <string name="account_setup_options_mail_sync_size_20k">20KB</string>
+    <string name="account_setup_options_mail_sync_size_100k">100KB</string>
+    <string name="account_setup_options_mail_sync_size_200k">200KB</string>
+    <string name="account_setup_options_mail_sync_size_500k">500KB</string>
+    <string name="account_setup_options_mail_sync_size_1M">1MB</string>
+
     <!-- "Setup could not finish" dialog text; e.g., Username or password incorrect -->
     <string name="account_setup_failed_dlg_auth_message">Username or password incorrect.</string>
     <!-- "Setup could not finish" dialog text; e.g., Username or password incorrect\n(ERR01 Account does not exist) -->
@@ -1225,4 +1234,25 @@ as <xliff:g id="filename">%s</xliff:g>.</string>
     <!-- This is the message warning the user that they must sync manually when roaming. [CHAR LIMIT=none]-->
     <string name="require_manual_sync_message">Background sync for this account is disabled while\
      roaming.</string>
+
+    <!-- This is the title for fetch the entire mail menu -->
+    <string name="fetch_entire_mail">Fetch entire mail</string>
+    <!-- Toast that there isn't any active network when user try to fetch entire mail -->
+    <string name="no_active_network">"There isn't any active network"</string>
+
+    <!-- Alert the mail didn't fetch complete -->
+    <string name="clip_message">## Message clipped ## You could fetch the entire mail</string>
+
+    <!-- Alert the user, the attachment didn't download completely -->
+    <string name="alert_attachment_not_complete_title">Attachment not complete</string>
+    <string name="alert_attachment_not_complete_message">The attachments haven\'t been downloaded completely.</string>
+    <string name="alert_forward_immediately">Direct Forward</string>
+    <string name="alert_forward_after_download_complete">Smart Forward</string>
+
+    <!-- Notify the status of sending -->
+    <string name="send_progress_start">Send mail(s)</string>
+    <string name="send_progress_failed">Send mail(s) failed</string>
+    <string name="send_progress_completed">Send mail(s) completed</string>
+    <string name="send_progress_failed_detail">Send failed: \"<xliff:g id="subject">%s</xliff:g>\"</string>
+    <string name="send_progress_completed_detail">Total: <xliff:g id="total">%d</xliff:g>, Success: <xliff:g id="success">%d</xliff:g>, Fail: <xliff:g id="fail">%d</xliff:g></string>
 </resources>

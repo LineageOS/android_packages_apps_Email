@@ -195,7 +195,8 @@ public class AccountSetupNames extends AccountSetupActivity implements OnClickLi
         } else {
             Account account = SetupData.getAccount();
             if (account != null) {
-                AccountSetupBasics.actionAccountCreateFinished(this, account.mId);
+                AccountSetupBasics.actionAccountCreateFinished(this, account.mId,
+                        SetupData.getFinishMode(), SetupData.getSourceIntent());
             } else {
                 // Safety check here;  If mAccount is null (due to external issues or bugs)
                 // just rewind back to Welcome, which can handle any configuration of accounts

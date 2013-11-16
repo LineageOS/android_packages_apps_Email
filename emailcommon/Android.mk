@@ -38,6 +38,5 @@ LOCAL_SRC_FILES += src/com/android/emailcommon/service/IPolicyService.aidl
 LOCAL_SRC_FILES += src/com/android/emailcommon/service/IEmailServiceCallback.aidl
 LOCAL_SRC_FILES += $(imported_unified_email_files)
 
-LOCAL_SDK_VERSION := current
 
 include $(BUILD_STATIC_JAVA_LIBRARY)

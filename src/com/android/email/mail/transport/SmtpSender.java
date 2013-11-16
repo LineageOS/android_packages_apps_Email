@@ -17,6 +17,7 @@
 package com.android.email.mail.transport;
 
 import android.content.Context;
+import android.os.SystemProperties;
 import android.util.Base64;
 import android.util.Log;
 
@@ -73,7 +74,7 @@ public class SmtpSender extends Sender {
         }
         // defaults, which can be changed by security modifiers
         int connectionSecurity = Transport.CONNECTION_SECURITY_NONE;
-        int defaultPort = 587;
+        int defaultPort = SystemProperties.getInt("persist.env.c.email.defsmtp", 587);
 
         // check for security flags and apply changes
         if ((sendAuth.mFlags & HostAuth.FLAG_SSL) != 0) {

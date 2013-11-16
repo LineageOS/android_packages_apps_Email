@@ -127,6 +127,8 @@ public class AccountSetupBasics extends AccountSetupActivity
     FutureTask<String> mOwnerLookupTask;
 
     public static void actionNewAccount(Activity fromActivity) {
+        SetupData.resetFinishMode();
+
         Intent i = new Intent(fromActivity, AccountSetupBasics.class);
         i.putExtra(EXTRA_FLOW_MODE, SetupData.FLOW_MODE_NORMAL);
         fromActivity.startActivity(i);
@@ -137,6 +139,8 @@ public class AccountSetupBasics extends AccountSetupActivity
      * for exchange accounts.
      */
     public static Intent actionSetupExchangeIntent(Context context) {
+        SetupData.resetFinishMode();
+
         Intent i = new Intent(context, AccountSetupBasics.class);
         i.putExtra(EXTRA_FLOW_MODE, SetupData.FLOW_MODE_ACCOUNT_MANAGER_EAS);
         return i;
@@ -147,15 +151,26 @@ public class AccountSetupBasics extends AccountSetupActivity
      * for pop/imap accounts.
      */
     public static Intent actionSetupPopImapIntent(Context context) {
+        SetupData.resetFinishMode();
+
         Intent i = new Intent(context, AccountSetupBasics.class);
         i.putExtra(EXTRA_FLOW_MODE, SetupData.FLOW_MODE_ACCOUNT_MANAGER_POP_IMAP);
         return i;
+    }
+
+    public static void actionSetupAccountThenCompose(Activity fromActivity, Intent src) {
+        Intent i = new Intent(fromActivity, AccountSetupBasics.class);
+        SetupData.init(SetupData.FLOW_MODE_NORMAL, SetupData.FLOW_MODE_RETURN_TO_COMPOSE, src);
+        i.putExtra(EXTRA_FLOW_MODE, SetupData.FLOW_MODE_NORMAL);
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        fromActivity.startActivity(i);
     }
 
     public static void actionAccountCreateFinishedAccountFlow(Activity fromActivity) {
         // TODO: handle this case - modifying state on SetupData when instantiating an Intent
         // is not safe, since it's not guaranteed that an Activity will run with the Intent, and
         // information can get lost.
+        SetupData.resetFinishMode();
 
         Intent i= new Intent(fromActivity, AccountSetupBasics.class);
         // If we're in the "account flow" (from AccountManager), we want to return to the caller
@@ -166,14 +181,14 @@ public class AccountSetupBasics extends AccountSetupActivity
     }
 
     public static void actionAccountCreateFinished(final Activity fromActivity,
-            final long accountId) {
+            final long accountId, final int finishMode, final Intent srcIntent) {
         Utility.runAsync(new Runnable() {
            public void run() {
                Intent i = new Intent(fromActivity, AccountSetupBasics.class);
                // If we're not in the "account flow" (from AccountManager), we want to show the
                // message list for the new inbox
                Account account = Account.restoreAccountWithId(fromActivity, accountId);
-               SetupData.init(SetupData.FLOW_MODE_RETURN_TO_MESSAGE_LIST, account);
+               SetupData.init(finishMode, account, srcIntent);
                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                fromActivity.startActivity(i);
             }});
@@ -204,7 +219,8 @@ public class AccountSetupBasics extends AccountSetupActivity
             // Return to the caller who initiated account creation
             finish();
             return;
-        } else if (flowMode == SetupData.FLOW_MODE_RETURN_TO_MESSAGE_LIST) {
+        } else if (flowMode == SetupData.FLOW_MODE_RETURN_TO_MESSAGE_LIST
+                || flowMode == SetupData.FLOW_MODE_RETURN_TO_COMPOSE) {
             Account account = SetupData.getAccount();
             if (account != null && account.mId >= 0) {
                 // Show the message list for the new account
@@ -325,6 +341,12 @@ public class AccountSetupBasics extends AccountSetupActivity
     @Override
     public void onResume() {
         super.onResume();
+
+        // if keep this activity and press HOME_KEY. checkBox's text doesn't
+        // refresh if user change the language.
+        if (mDefaultView != null) {
+            mDefaultView.setText(R.string.account_setup_basics_default_label);
+        }
         mPaused = false;
     }
 

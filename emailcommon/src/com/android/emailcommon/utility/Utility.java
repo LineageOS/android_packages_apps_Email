@@ -89,6 +89,9 @@ public class Utility {
     public static final String[] EMPTY_STRINGS = new String[0];
     public static final Long[] EMPTY_LONGS = new Long[0];
 
+    /** Add for the new feature sync size per mail */
+    public static final int ENTIRE_MAIL = -1;
+
     // "GMT" + "+" or "-" + 4 digits
     private static final Pattern DATE_CLEANUP_PATTERN_WRONG_TIMEZONE =
             Pattern.compile("GMT([-+]\\d{4})$");
@@ -327,6 +330,34 @@ public class Utility {
     }
 
     /**
+     * Look for an existing account's sync size.
+     *
+     * @param context a system context
+     * @param allowAccountId this account Id will not trigger (when editing an existing account)
+     * @return -1 = entire mail.  size = the account sync size as user set.
+     */
+    public static int getAccountSyncSize(Context context, long allowAccountId) {
+
+        ContentResolver resolver = context.getContentResolver();
+        String[] projection = new String[]{ Account.ID, Account.SYNC_SIZE };
+        String selection = Account.ID + "=" + allowAccountId;
+        Cursor c = resolver.query(Account.CONTENT_URI, projection, selection, null, null);
+        try {
+            if (c.moveToNext()) {
+                int syncSize = Integer.parseInt(c.getString(1));
+                return syncSize;
+            } else {
+                return -1;
+            }
+        } finally {
+            if (c != null) {
+                c.close();
+                c = null;
+            }
+        }
+    }
+
+    /**
      * Generate a random message-id header for locally-generated messages.
      */
     public static String generateMessageId() {
@@ -364,6 +395,7 @@ public class Utility {
         cal.setTimeZone(TimeZone.getTimeZone("GMT"));
         return cal;
     }
+
     /**
      * Generate a time in milliseconds from an email date string that represents a date/time in GMT
      * @param date string in format 2010-02-23T16:00:00.000Z (ISO 8601, rfc3339)

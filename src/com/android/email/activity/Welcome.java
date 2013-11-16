@@ -34,6 +34,7 @@ import com.android.email.Preferences;
 import com.android.email.R;
 import com.android.email.activity.setup.AccountSettings;
 import com.android.email.activity.setup.AccountSetupBasics;
+import com.android.email.activity.setup.SetupData;
 import com.android.email.service.EmailServiceUtils;
 import com.android.email.service.MailService;
 import com.android.emailcommon.Logging;
@@ -193,18 +194,21 @@ public class Welcome extends Activity {
         UiUtilities.setDebugPaneMode(getDebugPaneMode(intent));
 
         // Reconcile POP/IMAP accounts.  EAS accounts are taken care of by ExchangeService.
-        EmailAsyncTask.runAsyncParallel(new Runnable() {
-            @Override
-            public void run() {
-                // Reconciling can be heavy - so do it in the background.
-                if (MailService.hasMismatchInPopImapAccounts(Welcome.this)) {
+        // Move the runOnUiThread function out of the runAsyncParallel, which will make the
+        // Welcome activity got duplicate finish request.
+        if (MailService.hasMismatchInPopImapAccounts(this)) {
+            EmailAsyncTask.runAsyncParallel(new Runnable() {
+                @Override
+                public void run() {
+                    // Reconciling can be heavy - so do it in the background.
                     MailService.reconcilePopImapAccountsSync(Welcome.this);
                 }
-                Welcome.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        resolveAccount();
-                    }});
+            });
+        }
+        Welcome.this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                resolveAccount();
             }
         });
 
@@ -286,10 +290,12 @@ public class Welcome extends Activity {
         mInboxFinder.startLookup();
 
         // Show "your email will appear shortly" message.
-        mWaitingForSyncView = LayoutInflater.from(this).inflate(
-                R.layout.waiting_for_sync_message, null);
-        addContentView(mWaitingForSyncView, new LayoutParams(
-                LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        if (mWaitingForSyncView == null) {
+            mWaitingForSyncView = LayoutInflater.from(this).inflate(
+                    R.layout.waiting_for_sync_message, null);
+            addContentView(mWaitingForSyncView, new LayoutParams(
+                    LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        }
         invalidateOptionsMenu();
     }
 
@@ -426,7 +432,17 @@ public class Welcome extends Activity {
             cleanUp();
 
             // Okay the account has Inbox now.  Start the main activity.
-            startEmailActivity();
+            if (SetupData.getFlowMode() == SetupData.FLOW_MODE_RETURN_TO_COMPOSE
+                    && SetupData.getSourceIntent() != null) {
+                Intent i = SetupData.getSourceIntent();
+                i.setClass(Welcome.this, MessageCompose.class);
+                startActivity(i);
+
+                SetupData.resetFinishMode();
+                finish();
+            } else {
+                startEmailActivity();
+            }
         }
     };
 }

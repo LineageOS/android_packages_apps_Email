@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--  Copyright (C) 2008 The Android Open Source Project
+      Copyright (c) 2012-2013, The Linux Foundation. All rights reserved.
+
+      Not a Contribution.
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -323,6 +326,8 @@
     <string name="account_setup_options_mail_window_1month" msgid="5846359669750047081">"1 個月"</string>
     <string name="account_setup_options_mail_window_all" msgid="5372861827683632364">"全部"</string>
     <string name="account_setup_options_mail_window_default" msgid="8321351926520165832">"使用帳戶預設值"</string>
+    <string name="account_setup_options_mail_sync_size_label">同步每封郵件的緩存空間</string>
+    <string name="account_setup_options_mail_sync_size_all">同步整封郵件</string>
     <string name="account_setup_failed_dlg_auth_message" msgid="42827150104879570">"使用者名稱或密碼不正確。"</string>
     <string name="account_setup_failed_dlg_auth_message_fmt" msgid="8598560266430207606">"使用者名稱或密碼不正確。"\n"(<xliff:g id="ERROR">%s</xliff:g>)"</string>
     <string name="account_setup_failed_dlg_certificate_message" msgid="3836152264696108805">"無法安全連線至伺服器。"</string>
@@ -465,4 +470,6 @@
     <string name="search_slow_warning_message" msgid="8494483410797387903">"有些伺服器可能需要較長的時間。"</string>
     <string name="action_bar_mailbox_list_title" msgid="7484457755531286333">"資料夾"</string>
     <string name="require_manual_sync_message" msgid="7777357288642785955">"系統會在漫遊時停用這個帳戶的背景同步處理。"</string>
+    <string name="fetch_entire_mail">"獲取整封郵件"</string>
+    <string name="no_active_network">"當前無可用網絡"</string>
 </resources>

@@ -59,6 +59,24 @@
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent" />
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/account_sync_size_row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            >
+            <TextView
+                android:text="@string/account_setup_options_mail_sync_size_label"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="?android:attr/textColorPrimary" />
+            <Spinner
+                android:id="@+id/account_sync_size"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent" />
+        </LinearLayout>
         <CheckBox
             android:id="@+id/account_default"
             android:layout_height="wrap_content"
@@ -85,7 +103,8 @@
             android:id="@+id/account_sync_email"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:text="@string/account_setup_options_sync_email_label" />
+            android:text="@string/account_setup_options_sync_email_label"
+            android:visibility="gone" />
 
         <CheckBox
             android:id="@+id/account_background_attachments"

@@ -26,6 +26,7 @@ import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 
+import java.util.Locale;
 
 // TODO When the UI is settled, cache all strings/drawables
 /**
@@ -44,13 +45,19 @@ public class FolderProperties {
     private final Context mContext;
 
     // Caches for frequently accessed resources.
-    private final String[] mSpecialMailbox;
+    private String[] mSpecialMailbox;
+
     private final TypedArray mSpecialMailboxDrawable;
     private final Drawable mSummaryStarredMailboxDrawable;
     private final Drawable mSummaryCombinedInboxDrawable;
 
+    private Locale mLocale;
+
     private FolderProperties(Context context) {
         mContext = context.getApplicationContext();
+
+        updateMailboxName();
+
         mSpecialMailbox = context.getResources().getStringArray(R.array.mailbox_display_names);
         for (int i = 0; i < mSpecialMailbox.length; ++i) {
             if ("".equals(mSpecialMailbox[i])) {
@@ -98,6 +105,8 @@ public class FolderProperties {
      */
     private String getDisplayName(int type, long mailboxId) {
         String name = getCombinedMailboxName(mailboxId);
+
+        updateMailboxName();
 
         if ((name == null) && (type < mSpecialMailbox.length)) {
             name = mSpecialMailbox[type];
@@ -201,6 +210,15 @@ public class FolderProperties {
     }
 
     /**
+     * @return message count to show for the UI for favorite mailbox.
+     */
+    public static int getFavoriteMessageCount(Context context, long accountId,
+            long mailboxId) {
+        Preconditions.checkState(mailboxId < -1L);
+        return Message.getFavoriteMessageCount(context, accountId);
+    }
+
+    /**
      * Lookup icons of special mailboxes
      */
     public Drawable getIcon(int type, long mailboxId, int mailboxFlags) {
@@ -221,5 +239,24 @@ public class FolderProperties {
         }
         return null; // No icon
     }
+
+    /**
+     * Reload the special folder names when device locale has been changed
+     */
+    private void updateMailboxName() {
+        Locale l = Locale.getDefault();
+        if ((mLocale == null) || !(l.equals(mLocale))) {
+            mLocale = l;
+            mSpecialMailbox = mContext.getResources().getStringArray(
+                    R.array.mailbox_display_names);
+            for (int i = 0; i < mSpecialMailbox.length; ++i) {
+                if ("".equals(mSpecialMailbox[i])) {
+                    // there is no localized name, so use the display name from the server
+                    mSpecialMailbox[i] = null;
+                }
+            }
+        }
+    }
+
 }
 

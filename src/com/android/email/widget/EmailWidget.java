@@ -244,8 +244,36 @@ public class EmailWidget implements RemoteViewsService.RemoteViewsFactory,
     }
 
     private void setTextViewTextAndDesc(RemoteViews views, final int id, String text) {
-        views.setTextViewText(id, text);
-        views.setContentDescription(id, text);
+        String displayName = "";
+        Resources res = mContext.getResources();
+        String inbox = res.getString(R.string.mailbox_name_server_inbox).toLowerCase();
+        String outbox = res.getString(R.string.mailbox_name_server_outbox).toLowerCase();
+        String drafts = res.getString(R.string.mailbox_name_server_drafts).toLowerCase();
+        String trash = res.getString(R.string.mailbox_name_server_trash).toLowerCase();
+        String sent = res.getString(R.string.mailbox_name_server_sent).toLowerCase();
+        String junk = res.getString(R.string.mailbox_name_server_junk).toLowerCase();
+
+        if (!TextUtils.isEmpty(text)) {
+            String mailboxName = text.toLowerCase();
+            if (mailboxName.equals(inbox)) {
+                displayName = res.getString(R.string.mailbox_name_display_inbox);
+            } else if (mailboxName.equals(outbox)) {
+                displayName = res.getString(R.string.mailbox_name_display_outbox);
+            } else if (mailboxName.equals(drafts)) {
+                displayName = res.getString(R.string.mailbox_name_display_drafts);
+            } else if (mailboxName.equals(trash)) {
+                displayName = res.getString(R.string.mailbox_name_display_trash);
+            } else if (mailboxName.equals(sent)) {
+                displayName = res.getString(R.string.mailbox_name_display_sent);
+            } else if (mailboxName.equals(junk)) {
+                displayName = res.getString(R.string.mailbox_name_display_junk);
+            } else {
+                displayName = text;
+            }
+        }
+
+        views.setTextViewText(id, displayName);
+        views.setContentDescription(id, displayName);
     }
 
     private void setupTitleAndCount(RemoteViews views) {

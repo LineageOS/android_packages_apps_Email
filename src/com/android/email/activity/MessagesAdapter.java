@@ -188,6 +188,29 @@ import java.util.Set;
     }
 
     @Override
+    public Cursor swapCursor(Cursor newCursor) {
+        if (newCursor != null && mSelectedSet != null) {
+            if (newCursor.getCount() == 0) {
+                // The new cursor didn't has any item, so the selected item will be null.
+                // Clear the selected set.
+                mSelectedSet.clear();
+            } else {
+                // The new cursor has the items, but may be different from the old items.
+                // Update the selected set.
+                HashSet<Long> messageIds = new HashSet<Long>();
+                for (int i = 0; i < newCursor.getCount(); i++) {
+                    if (newCursor.moveToPosition(i)) {
+                        messageIds.add(newCursor.getLong(COLUMN_ID));
+                    }
+                }
+                mSelectedSet.retainAll(messageIds);
+            }
+        }
+
+        return super.swapCursor(newCursor);
+    }
+
+    @Override
     public void bindView(View view, Context context, Cursor cursor) {
         // Reset the view (in case it was recycled) and prepare for binding
         MessageListItem itemView = (MessageListItem) view;

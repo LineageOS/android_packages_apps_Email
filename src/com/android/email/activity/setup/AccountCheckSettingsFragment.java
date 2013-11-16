@@ -419,12 +419,20 @@ public class AccountCheckSettingsFragment extends Fragment {
          * @param checkAccount account holding values to be checked
          */
         public AccountCheckTask(int mode, Account checkAccount) {
+            Log.d(Logging.LOG_TAG,"AccountCheckTask start");
+            Log.d(Logging.LOG_TAG,"mode = " + mode + " checkAccount = " + checkAccount);
             mContext = getActivity().getApplicationContext();
             mMode = mode;
             mAccount = checkAccount;
+            Log.d(Logging.LOG_TAG,"checkAccount.mHostAuthRecv = " + checkAccount.mHostAuthRecv);
+            Log.d(Logging.LOG_TAG,"checkAccount.mHostAuthRecv.mAddress = " +
+                    checkAccount.mHostAuthRecv.mAddress);
             mStoreHost = checkAccount.mHostAuthRecv.mAddress;
+            Log.d(Logging.LOG_TAG,"checkAccount.mHostAuthRecv.mPassword = " +
+                    checkAccount.mHostAuthRecv.mPassword);
             mCheckEmail = checkAccount.mEmailAddress;
             mCheckPassword = checkAccount.mHostAuthRecv.mPassword;
+            Log.d(Logging.LOG_TAG,"AccountCheckTask end");
         }
 
         @Override
@@ -578,6 +586,9 @@ public class AccountCheckSettingsFragment extends Fragment {
         protected void onPostExecute(MessagingException result) {
             if (isCancelled()) return;
             if (result == null) {
+                // If rotate the screen, the SetupDate will lose the data of current account.
+                // So we need restore the account with the mAccount.
+                SetupData.setAccount(mAccount);
                 reportProgress(STATE_CHECK_OK, null);
             } else {
                 int progressState = STATE_CHECK_ERROR;

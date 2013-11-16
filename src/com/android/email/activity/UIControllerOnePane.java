@@ -17,9 +17,16 @@
 package com.android.email.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
+import android.os.SystemProperties;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,11 +37,11 @@ import com.android.email.MessageListContext;
 import com.android.email.R;
 import com.android.emailcommon.Logging;
 import com.android.emailcommon.provider.Account;
+import com.android.emailcommon.provider.EmailContent.Attachment;
 import com.android.emailcommon.provider.EmailContent.Message;
 import com.android.emailcommon.provider.Mailbox;
 
 import java.util.Set;
-
 
 /**
  * UI Controller for non x-large devices.  Supports a single-pane layout.
@@ -110,6 +117,17 @@ class UIControllerOnePane extends UIControllerBase {
     // MessageViewFragment.Callback
     @Override
     public void onForward() {
+        if (SystemProperties.getBoolean("persist.env.email.forwardalert", false)) {
+            long messageId = getMessageId();
+            Attachment[] list = Attachment.restoreAttachmentsWithMessageId(mActivity, messageId);
+            for (Attachment attachment : list) {
+                if (TextUtils.isEmpty(attachment.mContentUri)) {
+                    // show the alert dialog.
+                    MyAlertDialog.newInstance(messageId).show(mFragmentManager, "dialog");
+                    return;
+                }
+            }
+        }
         MessageCompose.actionForward(mActivity, getMessageId());
     }
 
@@ -647,5 +665,42 @@ class UIControllerOnePane extends UIControllerBase {
 
     @Override protected void updateNavigationArrows() {
         refreshActionBar();
+    }
+
+    public static class MyAlertDialog extends DialogFragment {
+        private static final String MSG_RES_ID = "message_id";
+
+        public static MyAlertDialog newInstance(long messageId) {
+            MyAlertDialog dialog = new MyAlertDialog();
+            Bundle args = new Bundle();
+            args.putLong(MSG_RES_ID, messageId);
+            dialog.setArguments(args);
+
+            return dialog;
+        }
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            final long messageId = getArguments().getLong(MSG_RES_ID);
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setIconAttribute(android.R.attr.alertDialogIcon)
+                   .setTitle(getActivity().getString(R.string.alert_attachment_not_complete_title))
+                   .setMessage(getActivity().getString(R.string.alert_attachment_not_complete_message))
+                   .setCancelable(true)
+                   .setNeutralButton(R.string.alert_forward_immediately, new OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            MessageCompose.actionForwardPartly(getActivity(), messageId);
+                        }
+                   })
+                   .setPositiveButton(R.string.alert_forward_after_download_complete,
+                            new OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            MessageCompose.actionForward(getActivity(), messageId);
+                        }
+                    });
+            return builder.create();
+        }
     }
 }

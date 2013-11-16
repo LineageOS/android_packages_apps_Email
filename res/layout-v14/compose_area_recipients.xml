@@ -20,8 +20,18 @@
 
     <!-- To -->
 
+    <ImageButton android:id="@+id/to_recipients_picker"
+        android:src="@drawable/ic_insert_contacts"
+        android:layout_marginLeft="5dip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignBottom="@id/to_content"
+        android:background="@null" />
+
     <LinearLayout android:id="@+id/to_content"
-        style="@style/RecipientComposeFieldLayout">
+        style="@style/RecipientComposeFieldLayout"
+        android:layout_toLeftOf="@id/to_recipients_picker">
         <LinearLayout android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:addStatesFromChildren="true"
@@ -49,9 +59,19 @@
         android:layout_below="@id/to_content"
         android:visibility="gone">
 
+        <ImageButton android:id="@+id/cc_recipients_picker"
+            android:src="@drawable/ic_insert_contacts"
+            android:layout_marginLeft="5dip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignBottom="@id/cc_content"
+            android:background="@null" />
+
         <LinearLayout style="@style/RecipientComposeFieldLayout"
             android:id="@+id/cc_content"
-            android:layout_alignParentTop="true">
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@id/cc_recipients_picker">
 
             <LinearLayout android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -72,9 +92,19 @@
             <View style="@style/RecipientComposeFieldSpacer"/>
         </LinearLayout>
 
+        <ImageButton android:id="@+id/bcc_recipients_picker"
+            android:src="@drawable/ic_insert_contacts"
+            android:layout_marginLeft="5dip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignBottom="@id/bcc_content"
+            android:background="@null" />
+
         <LinearLayout style="@style/RecipientComposeFieldLayout"
             android:id="@+id/bcc_content"
-            android:layout_below="@id/cc_content">
+            android:layout_below="@id/cc_content"
+            android:layout_toLeftOf="@id/bcc_recipients_picker">
 
             <LinearLayout android:layout_width="match_parent"
                 android:layout_height="wrap_content"

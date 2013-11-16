@@ -24,6 +24,7 @@ import android.database.Cursor;
 import android.net.TrafficStats;
 import android.net.Uri;
 import android.os.Process;
+import android.os.SystemProperties;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -451,8 +452,15 @@ public class MessagingController implements Runnable {
 
         ArrayList<Message> largeMessages = new ArrayList<Message>();
         ArrayList<Message> smallMessages = new ArrayList<Message>();
+        int maxSmallMessageSize = -1;
+        if (account.getSyncSize() != Utility.ENTIRE_MAIL) {
+            maxSmallMessageSize = account.getSyncSize();
+        } else {
+            maxSmallMessageSize = MAX_SMALL_MESSAGE_SIZE;
+        }
         for (Message message : unsyncedMessages) {
-            if (message.getSize() > (MAX_SMALL_MESSAGE_SIZE)) {
+            message.setNeedSyncSize(account.getSyncSize());
+            if (message.getSize() > maxSmallMessageSize) {
                 largeMessages.add(message);
             } else {
                 smallMessages.add(message);
@@ -492,15 +500,22 @@ public class MessagingController implements Runnable {
                 // (hopefully enough to see some/all of the body) and mark the message for
                 // further download.
                 fp.clear();
-                fp.add(FetchProfile.Item.BODY_SANE);
+                int flag = EmailContent.Message.FLAG_LOADED_UNLOADED;
+                if ( account.getSyncSize() == Utility.ENTIRE_MAIL) {
+                    // if the user set the account sync the entire mail, need sync all the body.
+                    fp.add(FetchProfile.Item.BODY);
+                    flag = EmailContent.Message.FLAG_LOADED_COMPLETE;
+                } else {
+                    fp.add(FetchProfile.Item.BODY_SANE);
+                    flag = EmailContent.Message.FLAG_LOADED_PARTIAL;
+                }
                 //  TODO a good optimization here would be to make sure that all Stores set
                 //  the proper size after this fetch and compare the before and after size. If
                 //  they equal we can mark this SYNCHRONIZED instead of PARTIALLY_SYNCHRONIZED
                 remoteFolder.fetch(new Message[] { message }, fp, null);
 
                 // Store the partially-loaded message and mark it partially loaded
-                copyOneMessageToProvider(message, account, toMailbox,
-                        EmailContent.Message.FLAG_LOADED_PARTIAL);
+                copyOneMessageToProvider(message, account, toMailbox, flag);
             } else {
                 // We have a structure to deal with, from which
                 // we can pull down the parts we want to actually store.
@@ -510,16 +525,21 @@ public class MessagingController implements Runnable {
                 ArrayList<Part> attachments = new ArrayList<Part>();
                 MimeUtility.collectParts(message, viewables, attachments);
                 // Download the viewables immediately
+                boolean syncEntireMail = true;
                 for (Part part : viewables) {
                     fp.clear();
                     fp.add(part);
+                    if (part.getSize() > account.getSyncSize()) {
+                        syncEntireMail = false;
+                    }
                     // TODO what happens if the network connection dies? We've got partial
                     // messages with incorrect status stored.
                     remoteFolder.fetch(new Message[] { message }, fp, null);
                 }
                 // Store the updated message locally and mark it fully loaded
                 copyOneMessageToProvider(message, account, toMailbox,
-                        EmailContent.Message.FLAG_LOADED_COMPLETE);
+                        syncEntireMail ? EmailContent.Message.FLAG_LOADED_COMPLETE
+                                : EmailContent.Message.FLAG_LOADED_SYNC_SIZE_COMPLETE);
             }
         }
 
@@ -852,7 +872,7 @@ public class MessagingController implements Runnable {
             }
         }
 
-        // 8.  Download basic info about the new/unloaded messages (if any)
+        // 8.  Download basic info about the new/unloaded messages (if any) fetch FLAGS && ENVELOPE
         /*
          * Fetch the flags and envelope only of the new messages. This is intended to get us
          * critical data as fast as possible, and then we'll fill in the details.
@@ -863,6 +883,7 @@ public class MessagingController implements Runnable {
         }
 
         // 9. Refresh the flags for any messages in the local store that we didn't just download.
+        // Fetch FLAGS
         FetchProfile fp = new FetchProfile();
         fp.add(FetchProfile.Item.FLAGS);
         remoteFolder.fetch(remoteMessages, fp, null);
@@ -939,6 +960,7 @@ public class MessagingController implements Runnable {
             resolver.delete(deletERowToDelete, null, null);
         }
 
+        // Fetch BODY
         loadUnsyncedMessages(account, remoteFolder, unsyncedMessages, mailbox);
 
         // 14. Clean up and report results
@@ -1842,7 +1864,8 @@ public class MessagingController implements Runnable {
      * @param messageId the message to load
      * @param listener the callback by which results will be reported
      */
-    public void loadMessageForView(final long messageId, MessagingListener listener) {
+    public void loadMessageForView(final long messageId, final int flag,
+            MessagingListener listener) {
         mListeners.loadMessageForViewStarted(messageId);
         put("loadMessageForViewRemote", listener, new Runnable() {
             public void run() {
@@ -1880,15 +1903,55 @@ public class MessagingController implements Runnable {
                     Folder remoteFolder = remoteStore.getFolder(remoteServerId);
                     remoteFolder.open(OpenMode.READ_WRITE);
 
-                    // 3. Set up to download the entire message
+                    // 3. Set up to download the entire message or partial message
+                    // Try to sync the entire mail. Ask the server to provide the message structure,
+                    // but not all the attachments.
                     Message remoteMessage = remoteFolder.getMessage(message.mServerId);
-                    FetchProfile fp = new FetchProfile();
-                    fp.add(FetchProfile.Item.BODY);
-                    remoteFolder.fetch(new Message[] { remoteMessage }, fp, null);
+                    int newFlag = flag;
+
+                    if (SystemProperties.getBoolean("persist.env.email.syncsize", true)) {
+                        FetchProfile fp = new FetchProfile();
+                        fp.add(FetchProfile.Item.STRUCTURE);
+                        remoteFolder.fetch(new Message[] { remoteMessage }, fp, null);
+                        if (remoteMessage.getBody() == null) {
+                            // POP doesn't support STRUCTURE mode,
+                            // so if go there, it must be a pop account,
+                            // we'll just do a entire download for view message.
+                            // set the flag value for pop account.
+                            newFlag = EmailContent.Message.FLAG_LOADED_COMPLETE;
+                            fp.clear();
+                            fp.add(FetchProfile.Item.BODY);
+                            remoteFolder.fetch(new Message[] { remoteMessage }, fp, null);
+                        } else {
+                            // We have a structure to deal with,
+                            // from which we can pull down the parts we want to actually store.
+                            // Build a list of parts we are interested in.
+                            // Text parts will be downloaded right now,
+                            // and the attachments will be not to download.
+                            ArrayList<Part> viewables = new ArrayList<Part>();
+                            ArrayList<Part> attachments = new ArrayList<Part>();
+                            MimeUtility.collectParts(remoteMessage, viewables, attachments);
+
+                            if (EmailContent.Message.FLAG_LOADED_SYNC_SIZE_COMPLETE == flag) {
+                                remoteMessage.setNeedSyncSize(account.getSyncSize());
+                            } else {
+                                remoteMessage.setNeedSyncSize(Utility.ENTIRE_MAIL);
+                            }
+                            for (Part part : viewables) {
+                                fp.clear();
+                                fp.add(part);
+                                remoteFolder.fetch(new Message[] { remoteMessage }, fp, null);
+                            }
+                        }
+                    } else {
+                        newFlag = EmailContent.Message.FLAG_LOADED_COMPLETE; // reset the flag.
+                        FetchProfile fp = new FetchProfile();
+                        fp.add(FetchProfile.Item.BODY);
+                        remoteFolder.fetch(new Message[] { remoteMessage }, fp, null);
+                    }
 
                     // 4. Write to provider
-                    copyOneMessageToProvider(remoteMessage, account, mailbox,
-                            EmailContent.Message.FLAG_LOADED_COMPLETE);
+                    copyOneMessageToProvider(remoteMessage, account, mailbox, newFlag);
 
                     // 5. Notify UI
                     mListeners.loadMessageForViewFinished(messageId);
@@ -2050,10 +2113,19 @@ public class MessagingController implements Runnable {
             }
 
             // 4.  loop through the available messages and send them
+            // Clear send progress notification
+            nc.cancelSendProgressNotification(-1);
+            // Show send progress notification for this account
+            nc.showMessageStartSendNotification(account);
+
+            int needSendCount = c.getCount();
+            int failedSendCount = 0;
             while (c.moveToNext()) {
                 long messageId = -1;
                 try {
                     messageId = c.getLong(0);
+                    // Clear send progress notification for this message
+                    nc.cancelSendProgressNotification(messageId);
                     mListeners.sendPendingMessagesStarted(account.mId, messageId);
                     // Don't send messages with unloaded attachments
                     if (Utility.hasUnloadedAttachments(mContext, messageId)) {
@@ -2065,17 +2137,29 @@ public class MessagingController implements Runnable {
                     }
                     sender.sendMessage(messageId);
                 } catch (MessagingException me) {
+                    // Update the failed send message count.
+                    failedSendCount = failedSendCount + 1;
+
                     // report error for this message, but keep trying others
                     if (me instanceof AuthenticationFailedException) {
                         nc.showLoginFailedNotification(account.mId);
                     }
                     mListeners.sendPendingMessagesFailed(account.mId, messageId, me);
+
+                    boolean needShowFailedNotify = true;
                     if (me.getExceptionType() == MessagingException.GENERAL_SECURITY) {
                         final Object exceptionData = me.getExceptionData();
                         if (exceptionData != null && exceptionData instanceof Attachment) {
                             nc.showDownloadForwardFailedNotification((Attachment) exceptionData);
+                            needShowFailedNotify = false;
                         }
                     }
+
+                    // Show send failed notification for this message
+                    if (needShowFailedNotify) {
+                        nc.showMessageSendFailedNotification(account, messageId, me);
+                    }
+
                     continue;
                 }
                 // 5. move to sent, or delete
@@ -2104,11 +2188,15 @@ public class MessagingController implements Runnable {
             // 6. report completion/success
             mListeners.sendPendingMessagesCompleted(account.mId);
             nc.cancelLoginFailedNotification(account.mId);
+            // Show send completed notification for this account
+            nc.showMessageSendCompletedNotification(account, needSendCount, failedSendCount);
         } catch (MessagingException me) {
             if (me instanceof AuthenticationFailedException) {
                 nc.showLoginFailedNotification(account.mId);
             }
             mListeners.sendPendingMessagesFailed(account.mId, -1, me);
+            // Show send failed notification for this account
+            nc.showMessageSendFailedNotification(account, -1, me);
         } finally {
             c.close();
         }

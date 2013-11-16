@@ -33,11 +33,17 @@
         android:src="@drawable/ic_reply_all_holo_dark"
         android:contentDescription="@string/reply_all_action"
         />
-
     <ImageButton
         android:id="@+id/forward"
         style="@style/message_view_action_buttons"
         android:src="@drawable/ic_forward_holo_dark"
         android:contentDescription="@string/forward_action"
+        />
+    <ImageButton
+        android:id="@+id/fetch_entire_mail"
+        style="@style/message_view_action_buttons"
+        android:src="@drawable/ic_fetch_entire_mail"
+        android:contentDescription="@string/fetch_entire_mail"
+        android:visibility="gone"
         />
 </merge>

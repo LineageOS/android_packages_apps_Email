@@ -20,8 +20,13 @@ import android.app.Service;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.database.ContentObserver;
+import android.net.Uri;
+import android.os.Handler;
+import android.provider.Settings;
 import android.util.Log;
 import android.widget.RemoteViewsService;
 
@@ -35,13 +40,38 @@ import java.io.FileDescriptor;
 import java.io.PrintWriter;
 
 public class WidgetProvider extends AppWidgetProvider {
+
+    private Context mContext;
+
     @Override
     public void onEnabled(final Context context) {
         if (Logging.DEBUG_LIFECYCLE && Email.DEBUG) {
             Log.d(EmailWidget.TAG, "onEnabled");
         }
         super.onEnabled(context);
+
+        mContext = context;
+        // Uri for Settings system table.
+        Uri uri = Settings.NameValueTable.getUriFor(
+                Settings.System.CONTENT_URI, Settings.System.TIME_12_24);
+        // Register for changes to the system time format.
+        ContentResolver resolver = context.getContentResolver();
+        resolver.registerContentObserver(uri, true,
+                mDataFormatChangeObserver);
     }
+
+    /**
+     * Receives notifications when system time format change.
+     */
+    private final ContentObserver mDataFormatChangeObserver = new ContentObserver(new Handler()) {
+        @Override
+        public void onChange(boolean formatChange) {
+             final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(mContext);
+             final ComponentName component = new ComponentName(mContext, WidgetProvider.class);
+             final int[] widgetIds = appWidgetManager.getAppWidgetIds(component);
+             appWidgetManager.notifyAppWidgetViewDataChanged(widgetIds, R.id.message_list);
+        }
+    };
 
     @Override
     public void onDisabled(Context context) {
