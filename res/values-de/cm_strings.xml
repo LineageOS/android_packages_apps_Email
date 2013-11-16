@@ -21,5 +21,24 @@
     <string name="account_settings_notify_light_label">Benachrichtigungs-LED verwenden</string>
     <string name="security_preferences_blocked_attachment_extensions_title">Gesperrte Anhänge</string>
     <string name="security_preferences_blocked_attachment_extensions_summary">Auswahl der Dateitypen, die für das Ansehen und Speichern gesperrt sind</string>
-    <string name="message_compose_attachment_no_size">Leere Datei.</string>
+    <string name="message_compose_attachment_no_size">Leere Datei</string>
+    <string name="account_setup_options_mail_sync_size_label">Synchronisierungsgröße pro E-Mail</string>
+    <string name="account_setup_options_mail_sync_size_all">E-Mail komplett herunterladen</string>
+    <string name="account_setup_options_mail_sync_size_20k">20 KB</string>
+    <string name="account_setup_options_mail_sync_size_100k">100 KB</string>
+    <string name="account_setup_options_mail_sync_size_200k">200 KB</string>
+    <string name="account_setup_options_mail_sync_size_500k">500 KB</string>
+    <string name="account_setup_options_mail_sync_size_1M">1 MB</string>
+    <string name="fetch_entire_mail">E-Mail herunterladen</string>
+    <string name="no_active_network">Keine Netzwerkverbindung vorhanden</string>
+    <string name="clip_message">## Nachricht beschnitten ## Bitte E-Mail vollständig herunterladen</string>
+    <string name="alert_attachment_not_complete_title">Anhang nicht vollständig</string>
+    <string name="alert_attachment_not_complete_message">Die Anhänge wurden nicht vollständig heruntergeladen</string>
+    <string name="alert_forward_immediately">Direkt Weiterleiten</string>
+    <string name="alert_forward_after_download_complete">\'Smart\'-Weiterleiten</string>
+    <string name="send_progress_start">Sende E-Mail(s)\u2026</string>
+    <string name="send_progress_failed">Versenden fehlgeschlagen</string>
+    <string name="send_progress_completed">Versenden abgeschlossen</string>
+    <string name="send_progress_failed_detail">Versenden fehlgeschlagen: \"<xliff:g id="subject">%s</xliff:g>\"</string>
+    <string name="send_progress_completed_detail">Gesamt: <xliff:g id="total">%d</xliff:g>, Erfolgreich: <xliff:g id="success">%d</xliff:g>, Fehlgeschlagen: <xliff:g id="fail">%d</xliff:g></string>
 </resources>
