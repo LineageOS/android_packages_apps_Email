@@ -22,4 +22,10 @@
     <string name="category_general_security_preferences">Beveiliging</string>
     <string name="security_preferences_blocked_attachment_extensions_title">Geblokkeerde bijlagen</string>
     <string name="security_preferences_blocked_attachment_extensions_summary">Kies de typen bijlagen die niet getoond/opgeslagen mogen worden</string>
+
+    <!-- CAF strings -->
+    <string name="alert_attachment_not_complete_title">Bijlage niet compleet</string>
+    <string name="alert_attachment_not_complete_message">De bijlagen zijn niet compleet gedownload.</string>
+    <string name="alert_forward_immediately">Onmiddelijk doorsturen</string>
+    <string name="alert_forward_after_download_complete">Doorsturen na download</string>
 </resources>
