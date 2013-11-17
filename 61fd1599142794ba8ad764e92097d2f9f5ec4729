@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "da20952f_f3623016",
+        "filename": "res/values-nl/cm_strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 2881
+      },
+      "writtenOn": "2013-11-17T15:03:32Z",
+      "side": 1,
+      "message": "Volledig wat? Hier vind ik het onduidelijk wat er niet volledig is.",
+      "parentUuid": "da20952f_5348bc5b",
+      "revId": "61fd1599142794ba8ad764e92097d2f9f5ec4729",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da20952f_736860bb",
         "filename": "res/values-nl/cm_strings.xml",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2013-11-17T10:39:01Z",
       "side": 1,
       "message": "volledig?",
+      "revId": "61fd1599142794ba8ad764e92097d2f9f5ec4729",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da20952f_136804f5",
+        "filename": "res/values-nl/cm_strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 2881
+      },
+      "writtenOn": "2013-11-17T15:03:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da20952f_736860bb",
       "revId": "61fd1599142794ba8ad764e92097d2f9f5ec4729",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "da20952f_537e7caf",
+        "filename": "res/values-nl/cm_strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 2881
+      },
+      "writtenOn": "2013-11-17T15:03:32Z",
+      "side": 1,
+      "message": "dan zou het \n\n- Bericht(en) succesvol verzonden\n\nmoeten zijn.\n\nMaar dan vind ik voltooid mooier en beter passen bij mislukt",
+      "parentUuid": "da20952f_f37310b3",
+      "revId": "61fd1599142794ba8ad764e92097d2f9f5ec4729",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da20952f_1379e493",
         "filename": "res/values-nl/cm_strings.xml",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2013-11-17T10:39:01Z",
       "side": 1,
       "message": "Enkele aanhalingstekens: \\\u0027",
+      "revId": "61fd1599142794ba8ad764e92097d2f9f5ec4729",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da20952f_53a75c4f",
+        "filename": "res/values-nl/cm_strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 2881
+      },
+      "writtenOn": "2013-11-17T15:03:32Z",
+      "side": 1,
+      "message": "- Bericht \\\u0027\u003cxliff:g id\u003d\"subject\"\u003e%s\u003c/xliff:g\u003e\\\u0027 verzenden mislukt\n\nNaar aanleiding van comment in Engelse patch",
+      "parentUuid": "da20952f_1379e493",
       "revId": "61fd1599142794ba8ad764e92097d2f9f5ec4729",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "da20952f_33aae81a",
+        "filename": "res/values-nl/cm_strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 2881
+      },
+      "writtenOn": "2013-11-17T15:03:32Z",
+      "side": 1,
+      "message": "Ja er is/was ook discussie bij de Engelse patch, maar Steve heeft gewoon de lelijke CAF strings gemerged, mag best wat mooier!\n\nIk vind al die leestekens maar niks, dit komt in een notificatie te staan dus past al bijna niet.\n\n- \u003cxliff:g id\u003d\"total\"\u003e%d\u003c/xliff:g\u003e berichten verzonden, \u003cxliff:g id\u003d\"fail\"\u003e%d\u003c/xliff:g\u003e mislukt",
+      "parentUuid": "da20952f_b36d98ce",
+      "revId": "61fd1599142794ba8ad764e92097d2f9f5ec4729",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da20952f_d3728cad",
         "filename": "res/values-nl/cm_strings.xml",
         "patchSetId": 3
@@ -98,6 +188,24 @@
       "writtenOn": "2013-11-17T10:39:01Z",
       "side": 1,
       "message": "Volledig",
+      "revId": "61fd1599142794ba8ad764e92097d2f9f5ec4729",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da20952f_b36cb809",
+        "filename": "res/values-nl/cm_strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 2881
+      },
+      "writtenOn": "2013-11-17T15:03:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da20952f_d3728cad",
       "revId": "61fd1599142794ba8ad764e92097d2f9f5ec4729",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "da20952f_d3712ce2",
+        "filename": "res/values-nl/cm_strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 2881
+      },
+      "writtenOn": "2013-11-17T15:03:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da20952f_9365f4e2",
+      "revId": "61fd1599142794ba8ad764e92097d2f9f5ec4729",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da20952f_535f5c0e",
         "filename": "res/values-nl/cm_strings.xml",
         "patchSetId": 3
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "da20952f_737700d5",
+        "filename": "res/values-nl/cm_strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 2881
+      },
+      "writtenOn": "2013-11-17T15:03:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da20952f_535f5c0e",
+      "revId": "61fd1599142794ba8ad764e92097d2f9f5ec4729",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da20952f_13a004f4",
         "filename": "res/values-nl/cm_strings.xml",
         "patchSetId": 3
@@ -149,6 +293,24 @@
       "writtenOn": "2013-11-17T10:39:01Z",
       "side": 1,
       "message": "volledige?",
+      "revId": "61fd1599142794ba8ad764e92097d2f9f5ec4729",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da20952f_937414d0",
+        "filename": "res/values-nl/cm_strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 2881
+      },
+      "writtenOn": "2013-11-17T15:03:32Z",
+      "side": 1,
+      "message": "ik weet niet waar deze string precies staat, maar Done",
+      "parentUuid": "da20952f_13a004f4",
       "revId": "61fd1599142794ba8ad764e92097d2f9f5ec4729",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
