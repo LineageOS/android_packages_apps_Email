@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2012-2013 The CyanogenMod Project
+<!--
+     Copyright (C) 2012-2013 The CyanogenMod Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -14,6 +15,25 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="account_setup_options_mail_sync_size_label">Sincronizar parte del mensaje</string>
+    <string name="account_setup_options_mail_sync_size_all">Mensaje completo</string>
+    <string name="account_setup_options_mail_sync_size_20k">20KB</string>
+    <string name="account_setup_options_mail_sync_size_100k">100KB</string>
+    <string name="account_setup_options_mail_sync_size_200k">200KB</string>
+    <string name="account_setup_options_mail_sync_size_500k">500KB</string>
+    <string name="account_setup_options_mail_sync_size_1M">1MB</string>
+    <string name="fetch_entire_mail">Recuperar mensaje completo</string>
+    <string name="no_active_network">No hay una conexión de red activa</string>
+    <string name="clip_message">## Mensaje truncado ## Toca aquí para recuperar el mensaje completo</string>
+    <string name="alert_attachment_not_complete_title">Adjunto incompleto</string>
+    <string name="alert_attachment_not_complete_message">Los archivos adjuntos no han sido descargados completamente.</string>
+    <string name="alert_forward_immediately">Avance directo</string>
+    <string name="alert_forward_after_download_complete">Avance inteligente</string>
+    <string name="send_progress_start">Envío de mensaje(s)</string>
+    <string name="send_progress_failed">Falló el envío de mensaje(s)</string>
+    <string name="send_progress_completed">Envío de mensaje(s) completado</string>
+    <string name="send_progress_failed_detail">Falló el envío: \"<xliff:g id="subject">%s</xliff:g>\"</string>
+    <string name="send_progress_completed_detail">Total: <xliff:g id="total">%d</xliff:g>, Correctos: <xliff:g id="success">%d</xliff:g>, Fallidos: <xliff:g id="fail">%d</xliff:g></string>
     <string name="account_setup_options_mail_check_frequency_2hour">Cada 2 horas</string>
     <string name="account_setup_options_mail_check_frequency_4hour">Cada 4 horas</string>
     <string name="account_setup_options_mail_check_frequency_1day">Cada día</string>
