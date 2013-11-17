@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da20952f_5348bc5b",
+        "filename": "res/values-nl/cm_strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 2597
+      },
+      "writtenOn": "2013-11-17T10:39:01Z",
+      "side": 1,
+      "message": "volledig?",
+      "revId": "61fd1599142794ba8ad764e92097d2f9f5ec4729",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da20952f_736860bb",
+        "filename": "res/values-nl/cm_strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 2597
+      },
+      "writtenOn": "2013-11-17T10:39:01Z",
+      "side": 1,
+      "message": "volledig?",
+      "revId": "61fd1599142794ba8ad764e92097d2f9f5ec4729",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da20952f_f37310b3",
+        "filename": "res/values-nl/cm_strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 2597
+      },
+      "writtenOn": "2013-11-17T10:39:01Z",
+      "side": 1,
+      "message": "- Bericht(en) verzenden succesvol?",
+      "revId": "61fd1599142794ba8ad764e92097d2f9f5ec4729",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da20952f_1379e493",
+        "filename": "res/values-nl/cm_strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 2597
+      },
+      "writtenOn": "2013-11-17T10:39:01Z",
+      "side": 1,
+      "message": "Enkele aanhalingstekens: \\\u0027",
+      "revId": "61fd1599142794ba8ad764e92097d2f9f5ec4729",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da20952f_b36d98ce",
+        "filename": "res/values-nl/cm_strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 2597
+      },
+      "writtenOn": "2013-11-17T10:39:01Z",
+      "side": 1,
+      "message": "Ik zou kleine letters gebruiken, want dan wordt het iets als:\n\n- Totaal: 10, gelukt: 5, mislukt: 5\n\nMisschien zelfs met puntkomma\u0027s:\n\n- - Totaal: 10; gelukt: 5; mislukt: 5",
+      "revId": "61fd1599142794ba8ad764e92097d2f9f5ec4729",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da20952f_d3728cad",
+        "filename": "res/values-nl/cm_strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 2597
+      },
+      "writtenOn": "2013-11-17T10:39:01Z",
+      "side": 1,
+      "message": "Volledig",
+      "revId": "61fd1599142794ba8ad764e92097d2f9f5ec4729",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da20952f_9365f4e2",
+        "filename": "res/values-nl/cm_strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 2597
+      },
+      "writtenOn": "2013-11-17T10:39:01Z",
+      "side": 1,
+      "message": "Spatie tussen getal en eenheid (r. 38 t/m 42)",
+      "revId": "61fd1599142794ba8ad764e92097d2f9f5ec4729",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da20952f_535f5c0e",
+        "filename": "res/values-nl/cm_strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 2597
+      },
+      "writtenOn": "2013-11-17T10:39:01Z",
+      "side": 1,
+      "message": "Volledig?",
+      "revId": "61fd1599142794ba8ad764e92097d2f9f5ec4729",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da20952f_13a004f4",
+        "filename": "res/values-nl/cm_strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 2597
+      },
+      "writtenOn": "2013-11-17T10:39:01Z",
+      "side": 1,
+      "message": "volledige?",
+      "revId": "61fd1599142794ba8ad764e92097d2f9f5ec4729",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
