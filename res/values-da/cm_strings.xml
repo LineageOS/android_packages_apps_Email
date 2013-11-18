@@ -22,4 +22,23 @@
     <string name="category_general_security_preferences">Sikkerhed</string>
     <string name="security_preferences_blocked_attachment_extensions_title">Blokerede vedhæftninger</string>
     <string name="security_preferences_blocked_attachment_extensions_summary">Vælg vedhæftningstyperne, som er blokeret fra visning og gemning</string>
+    <string name="account_setup_options_mail_sync_size_label">Synk.-størrelse pr. mail</string>
+    <string name="account_setup_options_mail_sync_size_all">Synk. hele mailen</string>
+    <string name="account_setup_options_mail_sync_size_20k">20KB</string>
+    <string name="account_setup_options_mail_sync_size_100k">100KB</string>
+    <string name="account_setup_options_mail_sync_size_200k">200KB</string>
+    <string name="account_setup_options_mail_sync_size_500k">500KB</string>
+    <string name="account_setup_options_mail_sync_size_1M">1MB</string>
+    <string name="fetch_entire_mail">Hent hele mailen</string>
+    <string name="no_active_network">Der er ikke nogen aktiv netværksforbindelse</string>
+    <string name="clip_message">## Besked beskåret ## Du kan hente hele mailen</string>
+    <string name="alert_attachment_not_complete_title">Vedhæftning ikke fuldført</string>
+    <string name="alert_attachment_not_complete_message">De vedhæftede filer er ikke helt hentet.</string>
+    <string name="alert_forward_immediately">Direkte Videresend</string>
+    <string name="alert_forward_after_download_complete">Smart Videresend</string>
+    <string name="send_progress_start">Send mail(s)</string>
+    <string name="send_progress_failed">Send mail(s) mislykkedes</string>
+    <string name="send_progress_completed">Send mail(s) fuldført</string>
+    <string name="send_progress_failed_detail">Send mislykkedes: \"<xliff:g id="subject">%s</xliff:g>\"</string>
+    <string name="send_progress_completed_detail">Total: <xliff:g id="total">%d</xliff:g>, Vellykket: <xliff:g id="success">%d</xliff:g>, Mislykket: <xliff:g id="fail">%d</xliff:g></string>
 </resources>
