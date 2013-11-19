@@ -344,7 +344,10 @@ public class Utility {
         Cursor c = resolver.query(Account.CONTENT_URI, projection, selection, null, null);
         try {
             if (c.moveToNext()) {
-                int syncSize = Integer.parseInt(c.getString(1));
+                int syncSize = -1;
+                String confVal = c.getString(1);
+                if (confVal != null)
+                    syncSize = Integer.parseInt(confVal);
                 return syncSize;
             } else {
                 return -1;
