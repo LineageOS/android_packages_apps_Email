@@ -944,6 +944,8 @@ public final class DBHelper {
                 try {
                     db.execSQL("alter table " + Account.TABLE_NAME
                             + " add column " + Account.SYNC_SIZE + " integer;");
+                    db.execSQL("update " + Account.TABLE_NAME + " set "
+                            + Account.SYNC_SIZE + " = -1");
                 } catch (SQLException e) {
                     // Shouldn't be needed unless we're debugging and interrupt the process
                     Log.w(TAG, "Exception upgrading EmailProvider.db from 39 to 40 " + e);

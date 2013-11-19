@@ -343,12 +343,15 @@ public class Utility {
         String selection = Account.ID + "=" + allowAccountId;
         Cursor c = resolver.query(Account.CONTENT_URI, projection, selection, null, null);
         try {
-            if (c.moveToNext()) {
-                int syncSize = Integer.parseInt(c.getString(1));
-                return syncSize;
-            } else {
-                return -1;
+            try {
+                if (c.moveToNext()) {
+                    int syncSize = Integer.parseInt(c.getString(1));
+                    return syncSize;
+                }
+            } catch (NumberFormatException nfex) {
+                // Ignore
             }
+            return -1;
         } finally {
             if (c != null) {
                 c.close();
