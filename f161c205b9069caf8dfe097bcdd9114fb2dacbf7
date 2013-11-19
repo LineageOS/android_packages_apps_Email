@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da20952f_1b9a5615",
+        "filename": "res/values-da/cm_strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 3848
+      },
+      "writtenOn": "2013-11-19T10:35:12Z",
+      "side": 1,
+      "message": "I do not think that you wanted to add the \"-\" character.",
+      "revId": "f161c205b9069caf8dfe097bcdd9114fb2dacbf7",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
