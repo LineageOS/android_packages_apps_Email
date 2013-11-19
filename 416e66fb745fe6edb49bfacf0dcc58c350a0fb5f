@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "da20952f_db0dbe38",
+        "filename": "res/values-hu/cm_strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 5393
+      },
+      "writtenOn": "2013-11-19T04:07:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da20952f_d8a3844e",
+      "revId": "416e66fb745fe6edb49bfacf0dcc58c350a0fb5f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da20952f_98866cb8",
         "filename": "res/values-hu/cm_strings.xml",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "da20952f_7b13525d",
+        "filename": "res/values-hu/cm_strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 5393
+      },
+      "writtenOn": "2013-11-19T04:07:12Z",
+      "side": 1,
+      "message": "Done, természetesen alább mindegyiknél.",
+      "parentUuid": "da20952f_98866cb8",
+      "revId": "416e66fb745fe6edb49bfacf0dcc58c350a0fb5f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da20952f_3893a0fc",
         "filename": "res/values-hu/cm_strings.xml",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2013-11-19T02:31:59Z",
       "side": 1,
       "message": "letöltése",
+      "revId": "416e66fb745fe6edb49bfacf0dcc58c350a0fb5f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da20952f_9b10a650",
+        "filename": "res/values-hu/cm_strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5393
+      },
+      "writtenOn": "2013-11-19T04:07:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da20952f_3893a0fc",
       "revId": "416e66fb745fe6edb49bfacf0dcc58c350a0fb5f",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
