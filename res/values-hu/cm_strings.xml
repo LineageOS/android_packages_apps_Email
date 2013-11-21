@@ -22,4 +22,23 @@
     <string name="category_general_security_preferences">Biztonság</string>
     <string name="security_preferences_blocked_attachment_extensions_title">Blokkolt mellékletek</string>
     <string name="security_preferences_blocked_attachment_extensions_summary">Válassza ki azokat a melléklet típusokat, melyek megtekintését vagy mentését blokkolni kívánja</string>
+    <string name="account_setup_options_mail_sync_size_label">E-mail letöltési méret</string>
+    <string name="account_setup_options_mail_sync_size_all">Mind</string>
+    <string name="account_setup_options_mail_sync_size_20k">20 kB</string>
+    <string name="account_setup_options_mail_sync_size_100k">100 kB</string>
+    <string name="account_setup_options_mail_sync_size_200k">200 kB</string>
+    <string name="account_setup_options_mail_sync_size_500k">500 kB</string>
+    <string name="account_setup_options_mail_sync_size_1M">1 MB</string>
+    <string name="fetch_entire_mail">Teljes e-mail letöltése</string>
+    <string name="no_active_network">Nincs hálózati kapcsolat</string>
+    <string name="clip_message">## Üzenet részlet ## Most már le tudja tölteni a teljes levelet</string>
+    <string name="alert_attachment_not_complete_title">Melléklet nem teljes</string>
+    <string name="alert_attachment_not_complete_message">A melléklet nem lett teljesen letöltve.</string>
+    <string name="alert_forward_immediately">Azonnali továbbítás</string>
+    <string name="alert_forward_after_download_complete">Okos továbbítás</string>
+    <string name="send_progress_start">Üzenet(ek) küldése</string>
+    <string name="send_progress_failed">Sikertelen az üzenet(ek) elküldése</string>
+    <string name="send_progress_completed">Az üzenet(ek) sikeresen elküldve</string>
+    <string name="send_progress_failed_detail">Küldés sikertelen: \"<xliff:g id="subject">%s</xliff:g>\"</string>
+    <string name="send_progress_completed_detail">Teljes: <xliff:g id="total">%d</xliff:g>, Sikeres: <xliff:g id="success">%d</xliff:g>, Sikertelen: <xliff:g id="fail">%d</xliff:g></string>
 </resources>
