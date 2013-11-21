@@ -14,6 +14,23 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- CAF strings -->
+    <string name="account_setup_options_mail_sync_size_label">Synchronizovat e-maily jen určité velikosti</string>
+    <string name="account_setup_options_mail_sync_size_all">Synchronizovat celý e-mail</string>
+    <string name="fetch_entire_mail">Stáhnout celý e-mail</string>
+    <string name="no_active_network">Není dostupné žádné síťové připojení</string>
+    <string name="clip_message">## Zpráva oříznuta ## Je potřeba stáhnout celý e-mail</string>
+    <string name="alert_attachment_not_complete_title">Příloha není kompletní</string>
+    <string name="alert_attachment_not_complete_message">Přílohy nebyly stáhnuty celé.</string>
+    <string name="alert_forward_immediately">Přímé přeposlání</string>
+    <string name="alert_forward_after_download_complete">Chytré přeposlání</string>
+    <string name="send_progress_start">Odesílání e-mailu</string>
+    <string name="send_progress_failed">Odesílání selhalo</string>
+    <string name="send_progress_completed">Odeslání dokončeno</string>
+    <string name="send_progress_failed_detail">Odeslání selhalo: \u201e<xliff:g id="subject">%s</xliff:g>\u201c</string>
+    <string name="send_progress_completed_detail">Celkem: <xliff:g id="total">%d</xliff:g>, úspěšně: <xliff:g id="success">%d</xliff:g>, selhalo: <xliff:g id="fail">%d</xliff:g></string>
+
+    <!-- CM strings -->
     <string name="message_compose_attachment_no_size">Prázdný soubor.</string>
 
     <string name="account_setup_options_mail_check_frequency_2hour">Každé 2 hodiny</string>
