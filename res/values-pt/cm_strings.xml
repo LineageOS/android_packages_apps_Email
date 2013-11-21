@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2012-2013 The CyanogenMod Project
+<!-- Copyright (C) 2013 The CyanogenMod Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -22,4 +22,23 @@
     <string name="category_general_security_preferences">Segurança</string>
     <string name="security_preferences_blocked_attachment_extensions_title">Anexos bloqueados</string>
     <string name="security_preferences_blocked_attachment_extensions_summary">Selecione os tipos de anexo que são bloqueados de visualização ou armazenagem</string>
+    <string name="account_setup_options_mail_sync_size_label">Tamanho do e-mail p/ sinc.</string>
+    <string name="account_setup_options_mail_sync_size_all">Sincronizar e-mail inteiro</string>
+    <string name="account_setup_options_mail_sync_size_20k">20KB</string>
+    <string name="account_setup_options_mail_sync_size_100k">100KB</string>
+    <string name="account_setup_options_mail_sync_size_200k">200KB</string>
+    <string name="account_setup_options_mail_sync_size_500k">500KB</string>
+    <string name="account_setup_options_mail_sync_size_1M">1MB</string>
+    <string name="fetch_entire_mail">Baixar e-mail inteiro</string>
+    <string name="no_active_network">"Não existe nenhuma rede ativa"</string>
+    <string name="clip_message">## Messagem parcial ## Você pode baixar o e-mail inteiro</string>
+    <string name="alert_attachment_not_complete_title">Anexo não está completo</string>
+    <string name="alert_attachment_not_complete_message">Os anexos não foram baixados completamente</string>
+    <string name="alert_forward_immediately">Encaminhamente direto</string>
+    <string name="alert_forward_after_download_complete">Encaminhamento inteligente</string>
+    <string name="send_progress_start">Envio de e-mail(s)</string>
+    <string name="send_progress_failed">Falha no envio de e-mail(s)</string>
+    <string name="send_progress_completed">E-mail(s) enviados com sucesso</string>
+    <string name="send_progress_failed_detail">Falha ao enviar: \"<xliff:g id="subject" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%s</xliff:g>\"</string>
+    <string name="send_progress_completed_detail">Total: <xliff:g id="total" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%d</xliff:g>, Sucesso: <xliff:g id="success" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%d</xliff:g>, Falha: <xliff:g id="fail" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%d</xliff:g></string>
 </resources>
