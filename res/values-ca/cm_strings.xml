@@ -22,4 +22,23 @@
     <string name="category_general_security_preferences">Seguretat</string>
     <string name="security_preferences_blocked_attachment_extensions_title">Adjunts Bloquejats</string>
     <string name="security_preferences_blocked_attachment_extensions_summary">Selecciona els tipus d\'adjunts que estan bloquejats per veure\'ls o desar-los</string>
+    <string name="account_setup_options_mail_sync_size_label">Mida de sincr. per cada correu</string>
+    <string name="account_setup_options_mail_sync_size_all">Sincr. tot el correu</string>
+    <string name="account_setup_options_mail_sync_size_20k">20KB</string>
+    <string name="account_setup_options_mail_sync_size_100k">100KB</string>
+    <string name="account_setup_options_mail_sync_size_200k">200KB</string>
+    <string name="account_setup_options_mail_sync_size_500k">500KB</string>
+    <string name="account_setup_options_mail_sync_size_1M">1MB</string>
+    <string name="fetch_entire_mail">Recull tot el correu</string>
+    <string name="no_active_network">"No hi ha cap xarxa activa"</string>
+    <string name="clip_message">## Missatge retallat ## Podries recollir tot el correu</string>
+    <string name="alert_attachment_not_complete_title">Adjunt no complet</string>
+    <string name="alert_attachment_not_complete_message">Els adjunts no han estat descarregats completament.</string>
+    <string name="alert_forward_immediately">Reenviament directe</string>
+    <string name="alert_forward_after_download_complete">Reenviament intel·ligent</string>
+    <string name="send_progress_start">Enviament de correu(s)</string>
+    <string name="send_progress_failed">L\'enviament de correu(s) ha fallat</string>
+    <string name="send_progress_completed">Enviament de correu(s) completat</string>
+    <string name="send_progress_failed_detail">L\'enviament ha fallat: \"<xliff:g id="subject">%s</xliff:g>\"</string>
+    <string name="send_progress_completed_detail">Total: <xliff:g id="total">%d</xliff:g>, Exitosos: <xliff:g id="success">%d</xliff:g>, Fallats: <xliff:g id="fail">%d</xliff:g></string>
 </resources>
