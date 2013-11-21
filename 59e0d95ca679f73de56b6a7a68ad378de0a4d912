@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a29b11f_f7e1bad1",
+        "filename": "res/values-de/cm_strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2013-11-21T22:42:24Z",
+      "side": 1,
+      "message": "\u0027Maximal zu synchronisierende Nachrichtengröße\u0027?\n\n(in K-9 heißt\u0027s übrigens \u0027Nachrichten automatisch laden bis\u0027)",
+      "revId": "59e0d95ca679f73de56b6a7a68ad378de0a4d912",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a29b11f_97e646e7",
+        "filename": "res/values-de/cm_strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2013-11-21T22:42:24Z",
+      "side": 1,
+      "message": "kleines k",
+      "revId": "59e0d95ca679f73de56b6a7a68ad378de0a4d912",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a29b11f_b7eb42b0",
+        "filename": "res/values-de/cm_strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2013-11-21T22:42:24Z",
+      "side": 1,
+      "message": "kleines w",
+      "revId": "59e0d95ca679f73de56b6a7a68ad378de0a4d912",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a29b11f_57d18efa",
+        "filename": "res/values-de/cm_strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2013-11-21T22:42:24Z",
+      "side": 1,
+      "message": "\u0027Nach herunterladen weiterleiten\u0027? Unter \u0027Smart\u0027 kann sich doch keiner etwas vorstellen...",
+      "revId": "59e0d95ca679f73de56b6a7a68ad378de0a4d912",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
