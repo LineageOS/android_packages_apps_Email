@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3a29b11f_3dbb9310",
+        "filename": "res/values-nl/cm_strings.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 2881
+      },
+      "writtenOn": "2013-11-22T13:53:39Z",
+      "side": 1,
+      "message": "Dit zijn mededelingen die worden gedaan in een pop-up. Die hebben soms een vraagstelling (Weet u het zeker?) en soms alleen een melding. \n\nEen vraagteken is ook een leesteken, net als een punt. Vandaar dat de punt hier staat denk ik.",
+      "parentUuid": "da20952f_4c3492dd",
+      "revId": "d67a4573a5182d5f445ef52acad6cd544bff6cc8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da20952f_0c4d3a72",
         "filename": "res/values-nl/cm_strings.xml",
         "patchSetId": 4
