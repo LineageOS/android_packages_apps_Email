@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3a29b11f_5d20cf49",
+        "filename": "res/values-nl/cm_strings.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 7630
+      },
+      "writtenOn": "2013-11-22T15:08:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a29b11f_3dbb9310",
+      "revId": "d67a4573a5182d5f445ef52acad6cd544bff6cc8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da20952f_0c4d3a72",
         "filename": "res/values-nl/cm_strings.xml",
         "patchSetId": 4
