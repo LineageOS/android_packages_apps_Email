@@ -33,6 +33,24 @@
       "revId": "a7a367dc54dbe54c1021a1d93ca09d4ccca60f93",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a29b11f_e84c7b78",
+        "filename": "res/values-de/cm_strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1053
+      },
+      "writtenOn": "2013-11-23T09:37:17Z",
+      "side": 1,
+      "message": "Prinzipiell wird das schon groß geschrieben, aber ich dachte das sieht so irgendwie übersichtlicher aus.",
+      "parentUuid": "3a29b11f_3dd8731d",
+      "revId": "a7a367dc54dbe54c1021a1d93ca09d4ccca60f93",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
