@@ -21,5 +21,24 @@
     <string name="account_settings_notify_light_label">Používať notifikačnú LED</string>
     <string name="category_general_security_preferences">Zabezpečenie</string>
     <string name="security_preferences_blocked_attachment_extensions_title">Blokované prílohy</string>
-    <string name="security_preferences_blocked_attachment_extensions_summary">Vyberte typy príloh, ktoré chcete zablokovať, a tým zakážete ich zobrazenie, či prevzatie</string>
+    <string name="security_preferences_blocked_attachment_extensions_summary">Vyberte typy príloh, ktoré chcete zablokovať, a tým zakážete ich zobrazenie či prevzatie</string>
+    <string name="account_setup_options_mail_sync_size_label">Veľkosť synchronizácie na správu</string>
+    <string name="account_setup_options_mail_sync_size_all">Synchronizovať celú správu</string>
+    <string name="account_setup_options_mail_sync_size_20k">20KB</string>
+    <string name="account_setup_options_mail_sync_size_100k">100KB</string>
+    <string name="account_setup_options_mail_sync_size_200k">200KB</string>
+    <string name="account_setup_options_mail_sync_size_500k">500KB</string>
+    <string name="account_setup_options_mail_sync_size_1M">1MB</string>
+    <string name="fetch_entire_mail">Prevziať celú správu</string>
+    <string name="no_active_network">Žiadna aktívna sieť</string>
+    <string name="clip_message">Správa bola pripnutá. Môžete prevziať celú správu.</string>
+    <string name="alert_attachment_not_complete_title">Nekompletná príloha</string>
+    <string name="alert_attachment_not_complete_message">Prílohy neboli kompletne prevzaté.</string>
+    <string name="alert_forward_immediately">Priamo preposlať</string>
+    <string name="alert_forward_after_download_complete">Chytro preposlať</string>
+    <string name="send_progress_start">Odosielanie správ</string>
+    <string name="send_progress_failed">Odosielanie správ zlyhalo</string>
+    <string name="send_progress_completed">Dokončené odosielanie správ</string>
+    <string name="send_progress_failed_detail">Odosielanie zlyhalo: \"<xliff:g id="subject">%s</xliff:g>\"</string>
+    <string name="send_progress_completed_detail">Celkom: <xliff:g id="total">%d</xliff:g>, Úspech: <xliff:g id="success">%d</xliff:g>, Zlyhanie: <xliff:g id="fail">%d</xliff:g></string>
 </resources>
