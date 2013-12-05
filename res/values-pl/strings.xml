@@ -465,4 +465,23 @@
     <string name="search_slow_warning_message" msgid="8494483410797387903">"Niektóre serwery mogą zwracać wyniki po dłuższym czasie."</string>
     <string name="action_bar_mailbox_list_title" msgid="7484457755531286333">"Foldery"</string>
     <string name="require_manual_sync_message" msgid="7777357288642785955">"Synchronizacja w tle z tym kontem jest podczas roamingu wyłączona."</string>
+    <string name="account_setup_options_mail_sync_size_label">Rozmiar pobranych wiadomości</string>
+    <string name="account_setup_options_mail_sync_size_all">Synchronizuj całą pocztę</string>
+    <string name="account_setup_options_mail_sync_size_20k">20 KB</string>
+    <string name="account_setup_options_mail_sync_size_100k">100 KB</string>
+    <string name="account_setup_options_mail_sync_size_200k">200 KB</string>
+    <string name="account_setup_options_mail_sync_size_500k">500 KB</string>
+    <string name="account_setup_options_mail_sync_size_1M">1 MB</string>
+    <string name="fetch_entire_mail">Pobierz całą pocztę</string>
+    <string name="no_active_network">"Brak połączenia z siecią"</string>
+    <string name="clip_message">## Wiadomość ucięta ## Możesz pobrać całą wiadomość</string>
+    <string name="alert_attachment_not_complete_title">Niekompletne załączniki</string>
+    <string name="alert_attachment_not_complete_message">Załączniki nie zostały w pełni pobrane</string>
+    <string name="alert_forward_immediately">Bezpośrednie przekazywanie</string>
+    <string name="alert_forward_after_download_complete">Inteligentne przekazywanie</string>
+    <string name="send_progress_start">Wysyłanie wiadomości</string>
+    <string name="send_progress_failed">Wysyłanie wiadomości nie powiodło się</string>
+    <string name="send_progress_completed">Wysyłanie wiadomości zakończone sukcesem</string>
+    <string name="send_progress_failed_detail">Wysyłanie nieudane: \"<xliff:g id="subject">%s</xliff:g>\"</string>
+    <string name="send_progress_completed_detail">Łącznie: <xliff:g id="total">%d</xliff:g>, Powodzenie: <xliff:g id="success">%d</xliff:g>, Niepowodzenie: <xliff:g id="fail">%d</xliff:g></string>
 </resources>
