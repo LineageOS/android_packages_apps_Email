@@ -193,8 +193,12 @@ public class AccountCheckSettingsFragment extends Fragment {
             Utility.cancelTaskInterrupt(mAccountCheckTask);
             mAccountCheckTask = null;
         }
-        // Make doubly sure that the dialog is gone before we're removed from the fragment manager
-        recoverAndDismissCheckingDialog();
+        // Make doubly sure that the dialog isn't pointing at us before we're removed from the
+        // fragment manager
+        final Fragment f = getFragmentManager().findFragmentByTag(CheckingDialog.TAG);
+        if (f != null) {
+            f.setTargetFragment(null, 0);
+        }
     }
 
     /**
@@ -312,6 +316,9 @@ public class AccountCheckSettingsFragment extends Fragment {
                     getFragmentManager().findFragmentByTag(CheckingDialog.TAG);
         }
         if (mCheckingDialog != null) {
+            // TODO: dismissAllowingStateLoss() can cause the fragment to return later as a zombie
+            // after the fragment manager restores state, if it happens that this call is executed
+            // after the state is saved. Figure out a way to clean this up later. b/11435698
             mCheckingDialog.dismissAllowingStateLoss();
             mCheckingDialog = null;
         }
@@ -574,7 +581,7 @@ public class AccountCheckSettingsFragment extends Fragment {
     }
 
     private static String getErrorString(Context context, MessagingException ex) {
-        int id;
+        final int id;
         String message = ex.getMessage();
         if (message != null) {
             message = message.trim();
@@ -588,8 +595,10 @@ public class AccountCheckSettingsFragment extends Fragment {
                         : R.string.account_setup_failed_dlg_certificate_message_fmt;
                 break;
             case MessagingException.AUTHENTICATION_FAILED:
+                id = R.string.account_setup_failed_dlg_auth_message;
+                break;
             case MessagingException.AUTODISCOVER_AUTHENTICATION_FAILED:
-                id = R.string.account_settings_login_dialog_title;
+                id = R.string.account_setup_autodiscover_dlg_authfail_message;
                 break;
             case MessagingException.AUTHENTICATION_FAILED_OR_SERVER_ERROR:
                 id = R.string.account_setup_failed_check_credentials_message;
@@ -700,8 +709,6 @@ public class AccountCheckSettingsFragment extends Fragment {
             if (mProgressString == null) {
                 mProgressString = getProgressString(getTargetRequestCode());
             }
-            final AccountCheckSettingsFragment target =
-                (AccountCheckSettingsFragment) getTargetFragment();
 
             final ProgressDialog dialog = new ProgressDialog(context);
             dialog.setIndeterminate(true);
@@ -712,7 +719,12 @@ public class AccountCheckSettingsFragment extends Fragment {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dismiss();
-                            target.onCheckingDialogCancel();
+
+                            final AccountCheckSettingsFragment target =
+                                    (AccountCheckSettingsFragment) getTargetFragment();
+                            if (target != null) {
+                                target.onCheckingDialogCancel();
+                            }
                         }
                     });
             return dialog;
@@ -726,7 +738,9 @@ public class AccountCheckSettingsFragment extends Fragment {
         public void onCancel(DialogInterface dialog) {
             final AccountCheckSettingsFragment target =
                 (AccountCheckSettingsFragment) getTargetFragment();
-            target.onCheckingDialogCancel();
+            if (target != null) {
+                target.onCheckingDialogCancel();
+            }
             super.onCancel(dialog);
         }
 
@@ -799,8 +813,11 @@ public class AccountCheckSettingsFragment extends Fragment {
                 .setMessage(message)
                 .setCancelable(true);
 
-            // Hide title when we get MessagingException.AUTODISCOVER_AUTHENTICATION_FAILED
-            if (exceptionId != MessagingException.AUTODISCOVER_AUTHENTICATION_FAILED) {
+            // Use a different title when we get
+            // MessagingException.AUTODISCOVER_AUTHENTICATION_FAILED
+            if (exceptionId == MessagingException.AUTODISCOVER_AUTHENTICATION_FAILED) {
+                builder.setTitle(R.string.account_setup_autodiscover_dlg_authfail_title);
+            } else {
                 builder.setIconAttribute(android.R.attr.alertDialogIcon)
                     .setTitle(context.getString(R.string.account_setup_failed_dlg_title));
             }

@@ -17,9 +17,9 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="permission_read_attachment_label" msgid="9208086010625033590">"ईमेल अनुलग्‍नक पढ़ें"</string>
-    <string name="permission_read_attachment_desc" msgid="3394721085306308972">"एप्स को आपके ईमेल अनुलग्नक पढ़ने देता है."</string>
+    <string name="permission_read_attachment_desc" msgid="3394721085306308972">"ऐप्स  को आपके ईमेल अनुलग्नक पढ़ने देता है."</string>
     <string name="permission_access_provider_label" msgid="378256653525377586">"ईमेल प्रदाता के डेटा तक पहुंचें"</string>
-    <string name="permission_access_provider_desc" msgid="6296566558584670348">"इस एप्‍स को प्राप्‍त संदेशों, भेजे गए संदेशों, उपयोगकर्ता नाम और पासवर्ड सहित आपके ईमेल डेटाबेस में पहुंच देता है."</string>
+    <string name="permission_access_provider_desc" msgid="6296566558584670348">"इस ऐप्स को प्राप्‍त संदेशों, भेजे गए संदेशों, उपयोगकर्ता नाम और पासवर्ड सहित आपके ईमेल डेटाबेस में पहुंच देता है."</string>
     <string name="app_name" msgid="5815426892327290362">"ईमेल"</string>
     <string name="debug_title" msgid="5175710493691536719">"डीबग करें"</string>
     <string name="next_action" msgid="3931301986364184415">"अगला"</string>
@@ -158,6 +158,8 @@
     <string name="account_setup_options_mail_window_default" msgid="2540360826995543134">"उपयोगकर्ता खाता डिफ़ॉल्ट"</string>
     <string name="account_setup_failed_dlg_auth_message" msgid="426627755590431364">"उपयोगकर्ता नाम या पासवर्ड गलत है."</string>
     <string name="account_setup_failed_dlg_auth_message_fmt" msgid="2081384892947238930">"प्रवेश विफल रहा.\n(<xliff:g id="ERROR">%s</xliff:g>)"</string>
+    <string name="account_setup_autodiscover_dlg_authfail_title" msgid="7365992662150541370">"खाता सेटअप के साथ समस्या"</string>
+    <string name="account_setup_autodiscover_dlg_authfail_message" msgid="8354874879956702097">"पुष्टि करें कि उपयोगकर्तानाम, पासवर्ड, और खाता सेटिंग सही हैं."</string>
     <string name="account_setup_failed_dlg_certificate_message" msgid="3836152264696108805">"सर्वर से सुरक्षित रूप से कनेक्‍ट नहीं हो सकता."</string>
     <string name="account_setup_failed_dlg_certificate_message_fmt" msgid="2121921642915593041">"सर्वर से सुरक्षित रूप से कनेक्‍ट नहीं हो सकता.\n(<xliff:g id="ERROR">%s</xliff:g>)"</string>
     <string name="account_setup_failed_certificate_required" msgid="2689944595775206006">"एक क्लाइंट प्रमाणपत्र की आवश्यकता है. क्या आप क्लाइंट प्रमाणपत्र के साथ सर्वर से कनेक्ट होना चाहते हैं?"</string>
@@ -175,7 +177,7 @@
     <string name="account_setup_security_policies_required_fmt" msgid="5410714107656671761">"सर्वर <xliff:g id="SERVER">%s</xliff:g> के लिए आवश्‍यक है कि आप अपने Android उपकरण की कुछ सुरक्षा सुविधाओं को दूरस्थ रूप से नियंत्रित करने दें. क्‍या आप यह खाता सेट करना पूर्ण करना चाहते हैं?"</string>
     <string name="account_setup_failed_security_policies_unsupported" msgid="3210264746877120355">"इस सर्वर को ऐसी सुरक्षा सुविधाओं की आवश्यकता है जिनका समर्थन आपका Android उपकरण नहीं करता, जिनमें शामिल हैं: <xliff:g id="ERROR">%s</xliff:g>"</string>
     <string name="account_setup_username_uneditable_error" msgid="1618869759801584109">"आप किसी खाते का उपयोगकर्ता नाम नहीं बदल सकते. किसी दूसरे उपयोगकर्ता नाम से खाता जोड़ने के लिए, खाता जोड़ें को स्‍पर्श करें."</string>
-    <string name="disable_admin_warning" msgid="6196985268695592382">"चेतावनी: आपके उपकरण को प्रबंधित करने के लिए ईमेल एप्‍स का प्राधिकार प्रयोग में नहीं कर देने से उसके लिए आवश्यक सभी ईमेल खाते, उनके ईमेल, संपर्क, कैलेंडर ईवेंट, और अन्‍य डेटा सहित, हटा दिए जाएंगे."</string>
+    <string name="disable_admin_warning" msgid="6196985268695592382">"चेतावनी: आपके उपकरण को प्रबंधित करने के लिए ईमेल ऐप्स का प्राधिकार प्रयोग में नहीं कर देने से उसके लिए आवश्यक सभी ईमेल खाते, उनके ईमेल, संपर्क, कैलेंडर ईवेंट, और अन्‍य डेटा सहित, हटा दिए जाएंगे."</string>
     <string name="account_security_dialog_title" msgid="430041952584831904">"सुरक्षा अपडेट"</string>
     <string name="account_security_dialog_content_fmt" msgid="8843806143923278214">"आपको <xliff:g id="ACCOUNT">%s</xliff:g> के लिए अपनी सुरक्षा सेटिंग अपडेट करने की आवश्यकता है."</string>
     <string name="security_unsupported_ticker_fmt" msgid="5166579214529283975">"सुरक्षा आवश्‍यकताओं के कारण खाता \"<xliff:g id="ACCOUNT">%s</xliff:g>\" समन्‍वयित नहीं किया जा सकता."</string>
