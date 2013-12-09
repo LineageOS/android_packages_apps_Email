@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "da85f559_51ca1451",
+        "filename": "res/values-pl/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 4449
+      },
+      "writtenOn": "2013-12-09T05:18:53Z",
+      "side": 1,
+      "message": "\"poczte\" -\u003e \"wiadomosc\" (?)",
+      "revId": "d3177bf5154a1b7c2b778219f96786a5891c6945",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa80f949_83525edc",
         "filename": "res/values-pl/strings.xml",
         "patchSetId": 1
