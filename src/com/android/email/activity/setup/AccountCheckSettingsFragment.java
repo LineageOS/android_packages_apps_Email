@@ -860,6 +860,16 @@ public class AccountCheckSettingsFragment extends Fragment {
             return builder.create();
         }
 
+         @Override
+        public void onCancel(DialogInterface dialog) {
+            super.onCancel(dialog);
+            final AccountCheckSettingsFragment target =
+                    (AccountCheckSettingsFragment) getTargetFragment();
+            //Show edit settings fragment if user
+            //cancels the error dialog
+            target.onErrorDialogEditButton();
+        }
+
     }
 
     /**
