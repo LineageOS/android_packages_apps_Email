@@ -412,12 +412,14 @@
 
         <receiver
             android:name=".service.EmailBroadcastReceiver"
-            android:enabled="true">
+            android:enabled="true"
+            android:permission="com.android.email.permission.ACCESS_PROVIDER">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.DEVICE_STORAGE_LOW" />
                 <action android:name="android.intent.action.DEVICE_STORAGE_OK" />
                 <action android:name="android.accounts.LOGIN_ACCOUNTS_CHANGED" />
+                <action android:name="org.codeaurora.email.intent.action.MAIL_SERVICE_WAKEUP" />
             </intent-filter>
             <!-- To handle new message notifications -->
             <intent-filter>
@@ -544,6 +546,22 @@
             <intent-filter>
                 <action
                     android:name="com.android.email.IMAP_INTENT" />
+            </intent-filter>
+            <intent-filter>
+                <action
+                    android:name="org.codeaurora.email.intent.action.MAIL_SERVICE_DELETE_MESSAGE" />
+            </intent-filter>
+            <intent-filter>
+                <action
+                    android:name="org.codeaurora.email.intent.action.MAIL_SERVICE_MOVE_MESSAGE" />
+            </intent-filter>
+            <intent-filter>
+                <action
+                    android:name="org.codeaurora.email.intent.action.MAIL_SERVICE_MESSAGE_READ" />
+            </intent-filter>
+            <intent-filter>
+                <action
+                    android:name="org.codeaurora.email.intent.action.MAIL_SERVICE_SEND_PENDING" />
             </intent-filter>
         </service>
 
