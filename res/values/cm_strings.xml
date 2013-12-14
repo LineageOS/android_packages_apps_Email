@@ -17,4 +17,9 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- On Settings screen, notify on every message pop-up menu label -->
     <string name="account_settings_notify_every_message_label">Notify for every message</string>
+
+    <!-- In Account setup options & Account Settings screens, email check frequency option -->
+    <string name="account_setup_options_mail_check_frequency_2hour">Every 2 hours</string>
+    <string name="account_setup_options_mail_check_frequency_4hour">Every 4 hours</string>
+    <string name="account_setup_options_mail_check_frequency_1day">Every day</string>
 </resources>
