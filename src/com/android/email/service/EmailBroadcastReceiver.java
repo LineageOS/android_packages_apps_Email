@@ -41,8 +41,8 @@ import android.util.Log;
  */
 public class EmailBroadcastReceiver extends BroadcastReceiver {
 
-private static final String ACTION_CHECK_MAIL = "org.codeaurora.email.intent.action.MAIL_SERVICE_WAKEUP";
-private static final String EXTRA_ACCOUNT = "org.codeaurora.email.intent.extra.ACCOUNT";
+private static final String ACTION_CHECK_MAIL = "com.android.email.intent.action.MAIL_SERVICE_WAKEUP";
+private static final String EXTRA_ACCOUNT = "com.android.email.intent.extra.ACCOUNT";
 private static final String TAG = "EmailBroadcastReceiver";
 
     @Override

@@ -419,7 +419,7 @@
                 <action android:name="android.intent.action.DEVICE_STORAGE_LOW" />
                 <action android:name="android.intent.action.DEVICE_STORAGE_OK" />
                 <action android:name="android.accounts.LOGIN_ACCOUNTS_CHANGED" />
-                <action android:name="org.codeaurora.email.intent.action.MAIL_SERVICE_WAKEUP" />
+                <action android:name="com.android.email.intent.action.MAIL_SERVICE_WAKEUP" />
             </intent-filter>
             <!-- To handle new message notifications -->
             <intent-filter>

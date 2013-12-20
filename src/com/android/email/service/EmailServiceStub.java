@@ -179,7 +179,11 @@ public abstract class EmailServiceStub extends IEmailService.Stub implements IEm
             cv.put(EmailContent.MessageColumns.MAILBOX_KEY, trashFolder.mId);
              mContext.getContentResolver().update(uri, cv, null, null);
         }
-
+        try {
+            startSync(mailbox.mId,true,0);
+        } catch (RemoteException e){
+            LogUtils.d(Logging.LOG_TAG,"RemoteException " +e);
+        }
     }
 /**
      * Moves messages to a new mailbox.
