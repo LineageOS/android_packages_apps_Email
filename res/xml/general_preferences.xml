@@ -17,54 +17,71 @@
 <!-- App-wide preferences -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <CheckBoxPreference
-        android:key="confirm_delete"
-        android:persistent="true"
-        android:defaultValue="false"
-        android:title="@string/general_preference_confirm_delete_label" />
+    <PreferenceCategory
+        android:key="general_settings"
+        android:title="@string/category_label_general_settings">
 
-    <CheckBoxPreference
-        android:key="confirm_send"
-        android:persistent="true"
-        android:defaultValue="false"
-        android:title="@string/general_preference_confirm_send_label" />
+        <CheckBoxPreference
+            android:key="confirm_delete"
+            android:persistent="true"
+            android:defaultValue="false"
+            android:title="@string/general_preference_confirm_delete_label" />
 
-    <ListPreference
-        android:key="auto_advance"
-        android:title="@string/auto_advance_label"
-        android:summary="@string/auto_advance_summary"
-        android:entries="@array/prefEntries_autoAdvance"
-        android:entryValues="@array/prefValues_autoAdvance"
-        android:dialogTitle="@string/auto_advance_help_title" />
+        <CheckBoxPreference
+            android:key="confirm_send"
+            android:persistent="true"
+            android:defaultValue="false"
+            android:title="@string/general_preference_confirm_send_label" />
 
-    <!-- Note, summary is set dynamically in GeneralPreferences.java -->
-    <ListPreference
-        android:key="text_zoom"
-        android:title="@string/general_preference_text_zoom_label"
-        android:entries="@array/general_preference_text_zoom_entries"
-        android:entryValues="@array/general_preference_text_zoom_values"
-        android:dialogTitle="@string/general_preference_text_zoom_dialog_title" />
+        <ListPreference
+            android:key="auto_advance"
+            android:title="@string/auto_advance_label"
+            android:summary="@string/auto_advance_summary"
+            android:entries="@array/prefEntries_autoAdvance"
+            android:entryValues="@array/prefValues_autoAdvance"
+            android:dialogTitle="@string/auto_advance_help_title" />
 
-    <CheckBoxPreference
-        android:key="conversation_list_icon"
-        android:persistent="false"
-        android:defaultValue="true"
-        android:title="@string/preference_sender_image_title"
-        android:summary="@string/preference_sender_image_description" />
+        <!-- Note, summary is set dynamically in GeneralPreferences.java -->
+        <ListPreference
+            android:key="text_zoom"
+            android:title="@string/general_preference_text_zoom_label"
+            android:entries="@array/general_preference_text_zoom_entries"
+            android:entryValues="@array/general_preference_text_zoom_values"
+            android:dialogTitle="@string/general_preference_text_zoom_dialog_title" />
 
-    <!-- This may be removed in GeneralPreferences.java -->
-    <CheckBoxPreference
-        android:key="default-reply-all"
-        android:persistent="false"
-        android:defaultValue="false"
-        android:title="@string/preferences_default_reply_all_title"
-        android:summary="@string/preferences_default_reply_all_summary" />
+        <CheckBoxPreference
+            android:key="conversation_list_icon"
+            android:persistent="false"
+            android:defaultValue="true"
+            android:title="@string/preference_sender_image_title"
+            android:summary="@string/preference_sender_image_description" />
 
-    <CheckBoxPreference
-        android:key="conversation-list-swipe"
-        android:persistent="false"
-        android:defaultValue="true"
-        android:title="@string/preference_swipe_title_delete"
-        android:summary="@string/preference_swipe_description" />
+        <!-- This may be removed in GeneralPreferences.java -->
+        <CheckBoxPreference
+            android:key="default-reply-all"
+            android:persistent="false"
+            android:defaultValue="false"
+            android:title="@string/preferences_default_reply_all_title"
+            android:summary="@string/preferences_default_reply_all_summary" />
 
+        <CheckBoxPreference
+            android:key="conversation-list-swipe"
+            android:persistent="false"
+            android:defaultValue="true"
+            android:title="@string/preference_swipe_title_delete"
+            android:summary="@string/preference_swipe_description" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="enhancement_settings"
+        android:title="@string/category_label_enhancement_settings">
+
+        <CheckBoxPreference
+            android:key="add_attachment"
+            android:persistent="true"
+            android:defaultValue="true"
+            android:title="@string/general_preference_add_attachment_label" />
+
+    </PreferenceCategory>
 </PreferenceScreen>

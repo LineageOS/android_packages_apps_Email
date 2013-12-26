@@ -30,4 +30,7 @@
   <string name="account_setup_options_mail_sync_size_200k">200KB</string>
   <string name="account_setup_options_mail_sync_size_500k">500KB</string>
   <string name="account_setup_options_mail_sync_size_1M">1MB</string>
+  <string name="category_label_general_settings">一般設定</string>
+  <string name="category_label_enhancement_settings">附加設定</string>
+  <string name="general_preference_add_attachment_label">附加任意文件為附件</string>
 </resources>
