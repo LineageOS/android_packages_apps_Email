@@ -62,6 +62,7 @@ public class Preferences {
     private static final String REPLY_ALL = "reply_all";
 
     private static final String ADD_ATTACHMENT = "add_attachment";
+    private static final String SELECT_RECIPIENTS = "select_recipients";
 
     public static final int AUTO_ADVANCE_NEWER = 0;
     public static final int AUTO_ADVANCE_OLDER = 1;
@@ -85,6 +86,7 @@ public class Preferences {
     public static final String CONV_LIST_ICON_DEFAULT = CONV_LIST_ICON_SENDER_IMAGE;
 
     private static final boolean ADD_ATTACHMENT_DEFAULT = true;
+    private static final boolean SELECT_RECIPIENTS_DEFAULT = true;
 
     private static Preferences sPreferences;
 
@@ -249,6 +251,14 @@ public class Preferences {
 
     public void setAddAttachmentEnabled(boolean enabled) {
         mSharedPreferences.edit().putBoolean(ADD_ATTACHMENT, enabled).apply();
+    }
+
+    public boolean getSelectRecipientsEnabled() {
+        return mSharedPreferences.getBoolean(SELECT_RECIPIENTS, SELECT_RECIPIENTS_DEFAULT);
+    }
+
+    public void setSelectRecipientsEnabled(boolean enabled) {
+        mSharedPreferences.edit().putBoolean(SELECT_RECIPIENTS, enabled).apply();
     }
 
     public int getTextZoom() {
