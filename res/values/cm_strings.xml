@@ -61,4 +61,6 @@
     <string name="category_label_enhancement_settings">Enhancement settings</string>
     <!-- General preference: Label of the setting for adding any file as attachment CHAR LIMIT=32] -->
     <string name="general_preference_add_attachment_label">Add any file as attachment</string>
+    <!-- General preference: Label of the setting for select recipients from Contact CHAR LIMIT=32] -->
+    <string name="general_preference_select_recipients_label">Select recipients from Contact</string>
 </resources>
