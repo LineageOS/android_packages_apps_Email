@@ -34,6 +34,7 @@ import android.os.RemoteException;
 import android.text.TextUtils;
 
 import com.android.emailcommon.provider.EmailContent.AccountColumns;
+import com.android.emailcommon.service.SyncSize;
 import com.android.emailcommon.utility.Utility;
 import com.android.mail.utils.LogUtils;
 
@@ -153,6 +154,10 @@ public final class Account extends EmailContent implements AccountColumns, Parce
     public transient HostAuth mHostAuthSend;
     public transient Policy mPolicy;
 
+    // To save the sync size of this account.
+    public int mSetSyncSizeEnabled;
+    public int mSyncSize;
+
     public static final int CONTENT_ID_COLUMN = 0;
     public static final int CONTENT_DISPLAY_NAME_COLUMN = 1;
     public static final int CONTENT_EMAIL_ADDRESS_COLUMN = 2;
@@ -173,6 +178,8 @@ public final class Account extends EmailContent implements AccountColumns, Parce
     public static final int CONTENT_PING_DURATION_COLUMN = 17;
     public static final int CONTENT_MAX_ATTACHMENT_SIZE_COLUMN = 18;
     public static final int CONTENT_AUTO_FETCH_ATTACHMENTS_COLUMN = 19;
+    public static final int CONTENT_SET_SYNC_SIZE_ENABLED_COLUMN = 20;
+    public static final int CONTENT_SYNC_SIZE_COLUMN = 21;
 
     public static final String[] CONTENT_PROJECTION = new String[] {
         RECORD_ID, AccountColumns.DISPLAY_NAME,
@@ -183,7 +190,8 @@ public final class Account extends EmailContent implements AccountColumns, Parce
         AccountColumns.RINGTONE_URI, AccountColumns.PROTOCOL_VERSION,
         AccountColumns.NEW_MESSAGE_COUNT, AccountColumns.SECURITY_SYNC_KEY,
         AccountColumns.SIGNATURE, AccountColumns.POLICY_KEY, AccountColumns.PING_DURATION,
-        AccountColumns.MAX_ATTACHMENT_SIZE, AccountColumns.AUTO_FETCH_ATTACHMENTS
+        AccountColumns.MAX_ATTACHMENT_SIZE, AccountColumns.AUTO_FETCH_ATTACHMENTS,
+        AccountColumns.SET_SYNC_SIZE_ENABLED, AccountColumns.SYNC_SIZE
     };
 
     public static final int CONTENT_MAILBOX_TYPE_COLUMN = 1;
@@ -227,6 +235,8 @@ public final class Account extends EmailContent implements AccountColumns, Parce
         mSyncLookback = -1;
         mFlags = 0;
         mCompatibilityUuid = UUID.randomUUID().toString();
+        mSetSyncSizeEnabled = SyncSize.ENABLED_DEFAULT_VALUE;
+        mSyncSize = SyncSize.SYNC_SIZE_ENTIRE_MAIL;
     }
 
     public static Account restoreAccountWithId(Context context, long id) {
@@ -282,6 +292,8 @@ public final class Account extends EmailContent implements AccountColumns, Parce
         mPolicyKey = cursor.getLong(CONTENT_POLICY_KEY_COLUMN);
         mPingDuration = cursor.getInt(CONTENT_PING_DURATION_COLUMN);
         mAutoFetchAttachments = cursor.getInt(CONTENT_AUTO_FETCH_ATTACHMENTS_COLUMN);
+        mSetSyncSizeEnabled = cursor.getInt(CONTENT_SET_SYNC_SIZE_ENABLED_COLUMN);
+        mSyncSize = cursor.getInt(CONTENT_SYNC_SIZE_COLUMN);
     }
 
     private static long getId(Uri u) {
@@ -406,6 +418,39 @@ public final class Account extends EmailContent implements AccountColumns, Parce
      */
     public void setAutoFetchAttachments(int value) {
         mAutoFetchAttachments = value;
+    }
+
+    /**
+     * @return If this account enabled the sync size function, return true.
+     */
+    public boolean isSetSyncSizeEnabled() {
+        return mSetSyncSizeEnabled == SyncSize.ENABLED ? true : false;
+    }
+
+    /**
+     * Set the sync size function if enabled for this account.
+     * @param enabled the state of sync size function for this account.
+     */
+    public void setSyncSizeEnabled(boolean enabled) {
+        mSetSyncSizeEnabled = enabled ? SyncSize.ENABLED : SyncSize.DISABLED;
+    }
+
+    /**
+     * @return The max size per mail will be sync from service
+     * TODO define the values for "all", "20KB", "100KB", etc. See arrays.xml
+     */
+    public int getSyncSize() {
+        return mSyncSize;
+    }
+
+    /**
+     * Set the max size per mail will be sync from service. Be sure to call save() to
+     * commit to database.
+     * TODO define the values for "all", "20KB", "100KB", etc. See arrays.xml
+     * @param size the max size per mail would be sync from service.
+     */
+    public void setSyncSize(int size) {
+        mSyncSize = size;
     }
 
     /**
@@ -845,6 +890,8 @@ public final class Account extends EmailContent implements AccountColumns, Parce
         values.put(AccountColumns.POLICY_KEY, mPolicyKey);
         values.put(AccountColumns.PING_DURATION, mPingDuration);
         values.put(AccountColumns.AUTO_FETCH_ATTACHMENTS, mAutoFetchAttachments);
+        values.put(AccountColumns.SET_SYNC_SIZE_ENABLED, mSetSyncSizeEnabled);
+        values.put(AccountColumns.SYNC_SIZE, mSyncSize);
         return values;
     }
 
@@ -895,6 +942,8 @@ public final class Account extends EmailContent implements AccountColumns, Parce
         dest.writeString(mSecuritySyncKey);
         dest.writeString(mSignature);
         dest.writeLong(mPolicyKey);
+        dest.writeInt(mSetSyncSizeEnabled);
+        dest.writeInt(mSyncSize);
 
         if (mHostAuthRecv != null) {
             dest.writeByte((byte)1);
@@ -934,6 +983,8 @@ public final class Account extends EmailContent implements AccountColumns, Parce
         mSecuritySyncKey = in.readString();
         mSignature = in.readString();
         mPolicyKey = in.readLong();
+        mSetSyncSizeEnabled = in.readInt();
+        mSyncSize = in.readInt();
 
         mHostAuthRecv = null;
         if (in.readByte() == 1) {

@@ -30,6 +30,7 @@ interface IEmailService {
     void sendMail(long accountId);
     oneway void loadAttachment(IEmailServiceCallback cb, long accountId, long attachmentId,
             boolean background);
+    oneway void loadMore(long messageId);
     oneway void updateFolderList(long accountId);
 
     void sync(long accountId, boolean updateFolderList, int mailboxType, in long[] foldersToSync);

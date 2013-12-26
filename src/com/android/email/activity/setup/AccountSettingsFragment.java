@@ -114,6 +114,8 @@ public class AccountSettingsFragment extends PreferenceFragment
     private static final String PREFERENCE_SYNC_CONTACTS = "account_sync_contacts";
     private static final String PREFERENCE_SYNC_CALENDAR = "account_sync_calendar";
     private static final String PREFERENCE_SYNC_EMAIL = "account_sync_email";
+    private static final String PREFERENCE_SYNC_SIZE_ENABLE = "account_sync_size_enable";
+    private static final String PREFERENCE_SYNC_SIZE = "account_sync_size";
 
     private static final String PREFERENCE_SYSTEM_FOLDERS = "system_folders";
     private static final String PREFERENCE_SYSTEM_FOLDERS_TRASH = "system_folders_trash";
@@ -135,6 +137,8 @@ public class AccountSettingsFragment extends PreferenceFragment
     private ListPreference mSyncWindow;
     private CheckBoxPreference mAccountBackgroundAttachments;
     private ListPreference mAutoFetchAttachments;
+    private CheckBoxPreference mSyncSizeEnable;
+    private ListPreference mSyncSize;
     private CheckBoxPreference mInboxNotify;
     private CheckBoxPreference mInboxVibrate;
     private CheckBoxPreference mInboxNotifyEveryMessage;
@@ -421,6 +425,11 @@ public class AccountSettingsFragment extends PreferenceFragment
                 preferenceChanged(PREFERENCE_NAME, summary);
             }
             return false;
+        } else if (key.equals(PREFERENCE_SYNC_SIZE_ENABLE)) {
+            final boolean enabled = (Boolean) newValue;
+            mSyncSize.setEnabled(enabled);
+            preferenceChanged(PREFERENCE_SYNC_SIZE_ENABLE, newValue);
+            return true;
         } else if (FolderPreferences.PreferenceKeys.NOTIFICATION_VIBRATE.equals(key)) {
             final boolean vibrateSetting = (Boolean) newValue;
             mInboxVibrate.setChecked(vibrateSetting);
@@ -676,6 +685,21 @@ public class AccountSettingsFragment extends PreferenceFragment
                                 // Should only happen if we've aborted the settings screen
                                 return;
                             }
+
+                            // Set sync size configurations
+                            mSyncSize.setValue(String.valueOf(mAccount.getSyncSize()));
+                            mSyncSize.setSummary(mSyncSize.getEntry());
+
+                            if (mAccount.isSetSyncSizeEnabled()) {
+                                mSyncSizeEnable.setChecked(true);
+                                mSyncSize.setEnabled(true);
+                            } else {
+                                mSyncSizeEnable.setChecked(false);
+                                mSyncSize.setEnabled(false);
+                            }
+                            mSyncSizeEnable.setEnabled(true);
+
+                            // Set the notification
                             mInboxNotify.setChecked(
                                     mInboxFolderPreferences.areNotificationsEnabled());
                             mInboxVibrate.setChecked(
@@ -860,6 +884,20 @@ public class AccountSettingsFragment extends PreferenceFragment
                     mAccount.mAutoFetchAttachments]);
             mAutoFetchAttachments.setOnPreferenceChangeListener(this);
         }
+
+        mSyncSizeEnable = (CheckBoxPreference) findPreference(PREFERENCE_SYNC_SIZE_ENABLE);
+        mSyncSizeEnable.setOnPreferenceChangeListener(this);
+        mSyncSize = (ListPreference) findPreference(PREFERENCE_SYNC_SIZE);
+        mSyncSize.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                final String summary = newValue.toString();
+                int index = mSyncSize.findIndexOfValue(summary);
+                mSyncSize.setSummary(mSyncSize.getEntries()[index]);
+                mSyncSize.setValue(summary);
+                preferenceChanged(preference.getKey(), newValue);
+                return false;
+            }
+        });
 
         mInboxNotify = (CheckBoxPreference) findPreference(
                 FolderPreferences.PreferenceKeys.NOTIFICATIONS_ENABLED);
@@ -1057,6 +1095,8 @@ public class AccountSettingsFragment extends PreferenceFragment
             mAccount.setSyncLookback(Integer.parseInt(mSyncWindow.getValue()));
         }
         mAccount.setFlags(newFlags);
+        mAccount.setSyncSizeEnabled(mSyncSizeEnable.isChecked());
+        mAccount.setSyncSize(Integer.parseInt(mSyncSize.getValue()));
 
         mAccount.setAutoFetchAttachments(mAutoFetchAttachments == null
                 ? 0 : Integer.parseInt(mAutoFetchAttachments.getValue()));

@@ -42,6 +42,19 @@ import java.util.ArrayList;
 
 public class Utilities {
     /**
+     * Update the local message's load status.
+     *
+     * @param messageId the local message's id
+     * @param loadStatus the new load status
+     */
+    public static void updateMessageLoadStatus(Context context, long messageId, int loadStatus) {
+        ContentValues cv = new ContentValues();
+        cv.put(EmailContent.MessageColumns.FLAG_LOADED, loadStatus);
+        Uri uri = ContentUris.withAppendedId(EmailContent.Message.CONTENT_URI, messageId);
+        context.getContentResolver().update(uri, cv, null, null);
+    }
+
+    /**
      * Copy one downloaded message (which may have partially-loaded sections)
      * into a newly created EmailProvider Message, given the account and mailbox
      *
