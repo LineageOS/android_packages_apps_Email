@@ -3122,6 +3122,11 @@ public class EmailProvider extends ContentProvider {
             values.put(UIProvider.AccountColumns.SettingsColumns.ADD_ATTACHMENT,
                     prefs.getAddAttachmentEnabled() ? "1" : "0");
         }
+        if (projectionColumns.contains(
+                UIProvider.AccountColumns.SettingsColumns.SELECT_RECIPIENTS)) {
+            values.put(UIProvider.AccountColumns.SettingsColumns.SELECT_RECIPIENTS,
+                    prefs.getSelectRecipientsEnabled() ? "1" : "0");
+        }
         if (projectionColumns.contains(UIProvider.AccountColumns.SettingsColumns.SWIPE)) {
             values.put(UIProvider.AccountColumns.SettingsColumns.SWIPE,
                     mailPrefs.getConversationListSwipeActionInteger(false));
@@ -3404,6 +3409,10 @@ public class EmailProvider extends ContentProvider {
         if (colPosMap.containsKey(UIProvider.AccountColumns.SettingsColumns.ADD_ATTACHMENT)) {
             values[colPosMap.get(UIProvider.AccountColumns.SettingsColumns.ADD_ATTACHMENT)] =
                     prefs.getAddAttachmentEnabled() ? 1 : 0;
+        }
+        if (colPosMap.containsKey(UIProvider.AccountColumns.SettingsColumns.SELECT_RECIPIENTS)) {
+            values[colPosMap.get(UIProvider.AccountColumns.SettingsColumns.SELECT_RECIPIENTS)] =
+                    prefs.getSelectRecipientsEnabled() ? 1 : 0;
         }
         if (colPosMap.containsKey(UIProvider.AccountColumns.SettingsColumns.DEFAULT_INBOX)) {
             values[colPosMap.get(UIProvider.AccountColumns.SettingsColumns.DEFAULT_INBOX)] =
