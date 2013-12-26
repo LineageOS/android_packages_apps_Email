@@ -83,5 +83,11 @@
             android:defaultValue="true"
             android:title="@string/general_preference_add_attachment_label" />
 
+        <CheckBoxPreference
+            android:key="select_recipients"
+            android:persistent="true"
+            android:defaultValue="true"
+            android:title="@string/general_preference_select_recipients_label" />
+
     </PreferenceCategory>
 </PreferenceScreen>
