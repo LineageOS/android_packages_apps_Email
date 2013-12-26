@@ -53,4 +53,12 @@
     <string name="account_setup_options_mail_sync_size_200k">200KB</string>
     <string name="account_setup_options_mail_sync_size_500k">500KB</string>
     <string name="account_setup_options_mail_sync_size_1M">1MB</string>
+
+    <!-- Additional General Preferences Screen -->
+    <!-- Label of general settings category to describe general preferences [CHAR LIMIT=32] -->
+    <string name="category_label_general_settings">General settings</string>
+    <!-- Label of enhancement settings category to describe general preferences [CHAR LIMIT=32] -->
+    <string name="category_label_enhancement_settings">Enhancement settings</string>
+    <!-- General preference: Label of the setting for adding any file as attachment CHAR LIMIT=32] -->
+    <string name="general_preference_add_attachment_label">Add any file as attachment</string>
 </resources>
