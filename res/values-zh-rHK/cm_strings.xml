@@ -20,4 +20,14 @@
   <string name="account_setup_options_mail_check_frequency_2hour">每 2 小時</string>
   <string name="account_setup_options_mail_check_frequency_4hour">每 4 小時</string>
   <string name="account_setup_options_mail_check_frequency_1day">每天</string>
+  <string name="account_settings_sync_size_enable">配置郵件的同步緩存大小</string>
+  <string name="account_settings_sync_size_enable_summary">您可以自由定義該帳戶中的郵件的同步緩存大小，從而節約數據流量</string>
+  <string name="account_settings_sync_size_label">選擇同步緩存大小</string>
+  <string name="account_settings_sync_size_category_label">同步緩存大小配置</string>
+  <string name="account_setup_options_mail_sync_size_all">同步整封郵件</string>
+  <string name="account_setup_options_mail_sync_size_20k">20KB</string>
+  <string name="account_setup_options_mail_sync_size_100k">100KB</string>
+  <string name="account_setup_options_mail_sync_size_200k">200KB</string>
+  <string name="account_setup_options_mail_sync_size_500k">500KB</string>
+  <string name="account_setup_options_mail_sync_size_1M">1MB</string>
 </resources>

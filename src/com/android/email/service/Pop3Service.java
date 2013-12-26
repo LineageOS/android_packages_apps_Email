@@ -52,6 +52,7 @@ import com.android.emailcommon.provider.EmailContent.SyncColumns;
 import com.android.emailcommon.provider.Mailbox;
 import com.android.emailcommon.service.EmailServiceStatus;
 import com.android.emailcommon.service.IEmailServiceCallback;
+import com.android.emailcommon.service.SyncSize;
 import com.android.emailcommon.utility.AttachmentUtilities;
 import com.android.mail.providers.UIProvider;
 import com.android.mail.providers.UIProvider.AttachmentState;
@@ -77,7 +78,6 @@ public class Pop3Service extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
            Log.d(TAG,"Inside onStartCommand");
            final String action = intent.getAction();
            Log.d(TAG,"action is " + action);
@@ -132,6 +132,10 @@ public class Pop3Service extends Service {
             if (inboxId == Mailbox.NO_MAILBOX) return;
             // We load attachments during a sync
             requestSync(inboxId, true, 0);
+        }
+
+        @Override
+        public void loadMore(long messageId) throws RemoteException {
         }
     };
 
@@ -223,7 +227,18 @@ public class Pop3Service extends Service {
             // They are in most recent to least recent order, process them that way.
             for (int i = 0; i < cnt; i++) {
                 final Pop3Message message = unsyncedMessages.get(i);
-                remoteFolder.fetchBody(message, getFetchBodySize(context, account), null);
+
+                // Get the sync lines of this account's message.
+                int allowSyncLines = -1;
+                if (account.isSetSyncSizeEnabled()) {
+                    if (account.getSyncSize() != SyncSize.SYNC_SIZE_ENTIRE_MAIL) {
+                        allowSyncLines = account.getSyncSize() / 76;
+                    }
+                } else {
+                    allowSyncLines = Pop3Store.FETCH_BODY_SANE_SUGGESTED_SIZE / 76;
+                }
+
+                remoteFolder.fetchBody(message, allowSyncLines, null);
                 int flag = EmailContent.Message.FLAG_LOADED_COMPLETE;
                 if (!message.isComplete()) {
                     // TODO: when the message is not complete, this should mark the message as
@@ -231,7 +246,7 @@ public class Pop3Service extends Service {
                     // 1) Partial messages are shown in the conversation list
                     // 2) We are able to download the rest of the message/attachment when the
                     //    user requests it.
-                     flag = EmailContent.Message.FLAG_LOADED_PARTIAL;
+                     flag = EmailContent.Message.FLAG_LOADED_PARTIAL_COMPLETE;
                 }
                 if (MailActivityEmail.DEBUG) {
                     LogUtils.d(TAG, "Message is " + (message.isComplete() ? "" : "NOT ")
