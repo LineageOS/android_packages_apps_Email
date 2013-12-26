@@ -257,6 +257,7 @@ public class EmailProvider extends ContentProvider {
     private static final int UI_DEFAULT_RECENT_FOLDERS = UI_BASE + 16;
     private static final int UI_FULL_FOLDERS = UI_BASE + 17;
     private static final int UI_ALL_FOLDERS = UI_BASE + 18;
+    private static final int UI_MESSAGE_LOAD_MORE = UI_BASE + 19;
 
     private static final int BODY_BASE = 0xA000;
     private static final int BODY = BODY_BASE;
@@ -1111,6 +1112,8 @@ public class EmailProvider extends ContentProvider {
             sURIMatcher.addURI(EmailContent.AUTHORITY, "uirecentfolders/#", UI_RECENT_FOLDERS);
             sURIMatcher.addURI(EmailContent.AUTHORITY, "uidefaultrecentfolders/#",
                     UI_DEFAULT_RECENT_FOLDERS);
+            sURIMatcher.addURI(EmailContent.AUTHORITY, "uimessageloadmore/#",
+                    UI_MESSAGE_LOAD_MORE);
             sURIMatcher.addURI(EmailContent.AUTHORITY, "pickTrashFolder/#",
                     ACCOUNT_PICK_TRASH_FOLDER);
             sURIMatcher.addURI(EmailContent.AUTHORITY, "pickSentFolder/#",
@@ -1227,6 +1230,9 @@ public class EmailProvider extends ContentProvider {
                     return c;
                 case UI_FOLDER_REFRESH:
                     c = uiFolderRefresh(getMailbox(uri), 0);
+                    return c;
+                case UI_MESSAGE_LOAD_MORE:
+                    c = uiMessageLoadMore(getMessageFromLastSegment(uri));
                     return c;
                 case MAILBOX_NOTIFICATION:
                     c = notificationQuery(uri);
@@ -2334,6 +2340,10 @@ public class EmailProvider extends ContentProvider {
                 .add(UIProvider.MessageColumns.SPAM_WARNING_LINK_TYPE,
                         Integer.toString(UIProvider.SpamWarningLinkType.NO_LINK))
                 .add(UIProvider.MessageColumns.VIA_DOMAIN, null)
+                .add(UIProvider.MessageColumns.MESSAGE_FLAG_LOADED,
+                        EmailContent.MessageColumns.FLAG_LOADED)
+                .add(UIProvider.MessageColumns.MESSAGE_LOAD_MORE_URI,
+                        uriWithFQId("uimessageloadmore", Message.TABLE_NAME))
                 .build();
         }
         return sMessageViewMap;
@@ -5388,6 +5398,35 @@ public class EmailProvider extends ContentProvider {
         } else {
             uiFolderRefresh(mailbox, VISIBLE_LIMIT_INCREMENT);
         }
+        return null;
+    }
+
+    private Cursor uiMessageLoadMore(final Message msg) {
+        if (msg == null) return null;
+
+        LogUtils.d(TAG, "Run load more task. account: " + msg.mAccountKey);
+
+        // Update the message loaded status as partial before load entire content.
+        Utilities.updateMessageLoadStatus(getContext(), msg.mId,
+                EmailContent.Message.FLAG_LOADED_PARTIAL_FETCHING);
+
+        // Start the fetch process running in the background
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            public Void doInBackground(Void... params) {
+                final EmailServiceProxy service =
+                        EmailServiceUtils.getServiceForAccount(getContext(), msg.mAccountKey);
+                if (service != null) {
+                    try {
+                        service.loadMore(msg.mId);
+                    } catch (RemoteException e) {
+                        LogUtils.e("loadMore", "RemoteException", e);
+                    }
+                }
+                return null;
+            }
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
         return null;
     }
 

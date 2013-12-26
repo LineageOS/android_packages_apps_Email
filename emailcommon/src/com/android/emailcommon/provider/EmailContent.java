@@ -136,7 +136,6 @@ public abstract class EmailContent {
      */
     public static String DEVICE_FRIENDLY_NAME = "deviceFriendlyName";
 
-
     public static String PROVIDER_PERMISSION;
 
     public static synchronized void init(Context context) {
@@ -599,7 +598,6 @@ public abstract class EmailContent {
         // We'd like to get rid of this column when the other changes mentioned in that bug
         // can be addressed.
         public static final String MAIN_MAILBOX_KEY = "mainMailboxKey";
-
     }
 
     public static final class Message extends EmailContent implements SyncColumns, MessageColumns {
@@ -728,8 +726,9 @@ public abstract class EmailContent {
          */
         public static final String FLAG_LOADED_SELECTION =
             MessageColumns.FLAG_LOADED + " IN ("
-            +     Message.FLAG_LOADED_PARTIAL + "," + Message.FLAG_LOADED_COMPLETE
-            +     ")";
+            +     Message.FLAG_LOADED_PARTIAL + "," + Message.FLAG_LOADED_COMPLETE + ","
+            +     Message.FLAG_LOADED_PARTIAL_COMPLETE + ","
+            +     Message.FLAG_LOADED_PARTIAL_FETCHING +")";
 
         public static final String ALL_FAVORITE_SELECTION =
             MessageColumns.FLAG_FAVORITE + "=1 AND "
@@ -843,8 +842,10 @@ public abstract class EmailContent {
         public static final int FLAG_LOADED_UNLOADED = 0;
         public static final int FLAG_LOADED_COMPLETE = 1;
         public static final int FLAG_LOADED_PARTIAL = 2;
-        public static final int FLAG_LOADED_DELETED = 3;
-        public static final int FLAG_LOADED_UNKNOWN = 4;
+        public static final int FLAG_LOADED_PARTIAL_COMPLETE = 3;
+        public static final int FLAG_LOADED_PARTIAL_FETCHING = 4;
+        public static final int FLAG_LOADED_DELETED = 5;
+        public static final int FLAG_LOADED_UNKNOWN = 6;
 
         // Bits used in mFlags
         // The following three states are mutually exclusive, and indicate whether the message is an
@@ -1625,6 +1626,10 @@ public abstract class EmailContent {
         public static final String PING_DURATION = "pingDuration";
         // Current duration of the Exchange ping
         public static final String AUTO_FETCH_ATTACHMENTS = "autoFetchAttachments";
+        // If the user could set the sync size for this account.
+        public static final String SET_SYNC_SIZE_ENABLED = "setSyncSizeEnabled";
+        // The sync size for each message of this account.
+        public static final String SYNC_SIZE = "syncSize";
     }
 
     public interface QuickResponseColumns {

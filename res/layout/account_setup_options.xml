@@ -89,6 +89,23 @@
             android:layout_width="match_parent"
             android:text="@string/account_setup_options_background_attachments_label" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <CheckBox
+                android:id="@+id/account_sync_size_enable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/account_settings_sync_size_enable" />
+            <Spinner
+                android:id="@+id/account_sync_size"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:visibility="gone" />
+        </LinearLayout>
+
         <include layout="@layout/account_setup_buttons" />
 
     </LinearLayout>

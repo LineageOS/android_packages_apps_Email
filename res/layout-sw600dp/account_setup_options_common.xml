@@ -139,8 +139,25 @@
         android:text="@string/account_setup_options_background_attachments_label" />
     <View
         android:id="@+id/account_background_attachments_divider"
-        android:layout_below="@+id/account_sync_email"
+        android:layout_below="@+id/account_background_attachments"
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/account_setup_divider_color" />
+    <CheckBox
+        android:id="@+id/account_sync_size_enable"
+        android:layout_below="@+id/account_background_attachments_divider"
+        android:layout_marginTop="16dip"
+        android:layout_marginBottom="16dip"
+        android:layout_marginLeft="32dip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/account_settings_sync_size_enable" />
+    <Spinner
+        android:id="@+id/account_sync_size"
+        android:layout_below="@+id/account_sync_size_enable"
+        android:layout_marginBottom="16dip"
+        android:layout_marginLeft="32dip"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:visibility="gone" />
 </RelativeLayout>
