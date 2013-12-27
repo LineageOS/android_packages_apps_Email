@@ -46,6 +46,7 @@ import com.android.emailcommon.provider.EmailContent.Attachment;
 import com.android.emailcommon.provider.EmailContent.Message;
 import com.android.emailcommon.provider.Mailbox;
 import com.android.emailcommon.utility.EmailAsyncTask;
+import com.android.emailcommon.utility.NotifyIconUtilities;
 import com.android.mail.preferences.FolderPreferences;
 import com.android.mail.providers.Folder;
 import com.android.mail.providers.UIProvider;
@@ -142,6 +143,10 @@ public class NotificationController {
                     mContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         }
 
+        Account account = Account.restoreAccountWithId(mContext, accountId);
+
+        int iconResId = NotifyIconUtilities.findNotifyIconForAccountDomain(mContext,
+                R.drawable.stat_notify_email, account.mEmailAddress, R.drawable.stat_notify_email);
         // NOTE: the ticker is not shown for notifications in the Holo UX
         final NotificationCompat.Builder builder = new NotificationCompat.Builder(mContext)
                 .setContentTitle(title)
@@ -149,13 +154,12 @@ public class NotificationController {
                 .setContentIntent(pending)
                 .setLargeIcon(largeIcon)
                 .setNumber(number == null ? 0 : number)
-                .setSmallIcon(R.drawable.stat_notify_email)
+                .setSmallIcon(iconResId)
                 .setWhen(mClock.getTime())
                 .setTicker(ticker)
                 .setOngoing(ongoing);
 
         if (enableAudio) {
-            Account account = Account.restoreAccountWithId(mContext, accountId);
             setupSoundAndVibration(builder, account);
         }
 
