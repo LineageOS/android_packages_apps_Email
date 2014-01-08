@@ -63,4 +63,6 @@
     <string name="general_preference_add_attachment_label">Add any file as attachment</string>
     <!-- General preference: Label of the setting for select recipients from Contact CHAR LIMIT=32] -->
     <string name="general_preference_select_recipients_label">Select recipients from Contact</string>
+    <!-- General preference: Label of the setting for confirm before forward CHAR LIMIT=32] -->
+    <string name="general_preference_confirm_forward_label">Confirm before forwarding</string>
 </resources>
