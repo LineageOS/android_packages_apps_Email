@@ -61,6 +61,8 @@ public class Preferences {
     @Deprecated
     private static final String REPLY_ALL = "reply_all";
 
+    // Enhancement settings
+    private static final String CONFIRM_FORWARD = "confirm_forward";
     private static final String ADD_ATTACHMENT = "add_attachment";
     private static final String SELECT_RECIPIENTS = "select_recipients";
 
@@ -85,6 +87,7 @@ public class Preferences {
     public static final String CONV_LIST_ICON_NONE = "none";
     public static final String CONV_LIST_ICON_DEFAULT = CONV_LIST_ICON_SENDER_IMAGE;
 
+    private static final boolean CONFIRM_FORWARD_DEFAULT = false;
     private static final boolean ADD_ATTACHMENT_DEFAULT = true;
     private static final boolean SELECT_RECIPIENTS_DEFAULT = true;
 
@@ -243,6 +246,14 @@ public class Preferences {
     @Deprecated
     public boolean getReplyAll() {
         return mSharedPreferences.getBoolean(REPLY_ALL, false);
+    }
+
+    public boolean getConfirmForward() {
+        return mSharedPreferences.getBoolean(CONFIRM_FORWARD, CONFIRM_FORWARD_DEFAULT);
+    }
+
+    public void setConfirmForward(boolean set) {
+        mSharedPreferences.edit().putBoolean(CONFIRM_FORWARD, set).apply();
     }
 
     public boolean getAddAttachmentEnabled() {
