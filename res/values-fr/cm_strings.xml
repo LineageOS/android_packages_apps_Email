@@ -22,4 +22,23 @@
     <string name="category_general_security_preferences">Sécurité</string>
     <string name="security_preferences_blocked_attachment_extensions_title">Bloquer les pièces jointes</string>
     <string name="security_preferences_blocked_attachment_extensions_summary">Sélectionner les types de fichiers joints qui seront bloqués à l\'affichage ou à l\'enregistrement</string>
+    <string name="account_setup_options_mail_sync_size_label">Taille de synchronisation par e-mail</string>
+    <string name="account_setup_options_mail_sync_size_all">Synchroniser entièrement</string>
+    <string name="account_setup_options_mail_sync_size_20k">20 KB</string>
+    <string name="account_setup_options_mail_sync_size_100k">100 KB</string>
+    <string name="account_setup_options_mail_sync_size_200k">200 KB</string>
+    <string name="account_setup_options_mail_sync_size_500k">500 KB</string>
+    <string name="account_setup_options_mail_sync_size_1M">1 MB</string>
+    <string name="fetch_entire_mail">Récupérer l\'e-mail intégralement</string>
+    <string name="no_active_network">Aucun réseau actif</string>
+    <string name="clip_message">## Message coupé ## Vous pouvez récupérer l\'intégralité de l\'e-mail</string>
+    <string name="alert_attachment_not_complete_title">Pièce jointe non complète</string>
+    <string name="alert_attachment_not_complete_message">La pièce jointe n\'a pas été complètement téléchargée.</string>
+    <string name="alert_forward_immediately">Transfert direct</string>
+    <string name="alert_forward_after_download_complete">Transfert différé</string>
+    <string name="send_progress_start">Envoi d\'e-mail(s)</string>
+    <string name="send_progress_failed">Envoi d\'e-mail(s) échoué</string>
+    <string name="send_progress_completed">Envoi d\'e-mail(s) terminé</string>
+    <string name="send_progress_failed_detail">Envoi échoué : \"<xliff:g id="subject">%s</xliff:g>\"</string>
+    <string name="send_progress_completed_detail">Total : <xliff:g id="total">%d</xliff:g>, Réussi : <xliff:g id="success">%d</xliff:g>, Échoué : <xliff:g id="fail">%d</xliff:g></string>
 </resources>
