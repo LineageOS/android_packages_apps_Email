@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2012-2013 The CyanogenMod Project
+<!--
+     Copyright (C) 2012-2013 The CyanogenMod Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -20,8 +21,8 @@
     <string name="account_setup_options_mail_check_frequency_1day">Kas dieną</string>
     <string name="account_settings_notify_light_label">Perspėjimui naudoti LED</string>
     <string name="category_general_security_preferences">Saugumas</string>
-    <string name="security_preferences_blocked_attachment_extensions_title">Blokuojami priedai</string>
-    <string name="security_preferences_blocked_attachment_extensions_summary">Pasirinkite priedus, kuriuos blokuoti norint juos peržiūrėti ar atsisiųsti</string>
+    <string name="security_preferences_blocked_attachment_extensions_title">Užblokuoti priedai</string>
+    <string name="security_preferences_blocked_attachment_extensions_summary">Pasirinkite priedų tipus, kurie yra užblokuoti nuo peržiūros ar išsaugojimo</string>
     <string name="account_setup_options_mail_sync_size_label">Sinchronizavimo dydis vienam laiškui</string>
     <string name="account_setup_options_mail_sync_size_all">Sinchronizuoti visą laišką</string>
     <string name="account_setup_options_mail_sync_size_20k">20KB</string>
@@ -30,15 +31,15 @@
     <string name="account_setup_options_mail_sync_size_500k">500KB</string>
     <string name="account_setup_options_mail_sync_size_1M">1MB</string>
     <string name="fetch_entire_mail">Parsisiųsti visą laišką</string>
-    <string name="no_active_network">"Nėra jokių aktyvių tinklų"</string>
+    <string name="no_active_network">Nėra jokių aktyvių tinklų</string>
     <string name="clip_message">## Pranešimas iškirptas ## galite parsisiųsti visą laišką</string>
     <string name="alert_attachment_not_complete_title">Priedas nebaigtas</string>
     <string name="alert_attachment_not_complete_message">Priedai nebuvo pilnai atsisiųsti.</string>
     <string name="alert_forward_immediately">Tiesioginis persiųntimas</string>
     <string name="alert_forward_after_download_complete">Sumanus persiųntimas</string>
-    <string name="send_progress_start">Siųsti laišką(-us)</string>
-    <string name="send_progress_failed">Nepavyko siųsti laiško(-ų)</string>
-    <string name="send_progress_completed">Užbaigta siųsti laišką(-us)</string>
-    <string name="send_progress_failed_detail">Nepavyko siųsti: \"<xliff:g id="subject">%s</xliff:g>\"</string>
-    <string name="send_progress_completed_detail">Iš viso: <xliff:g id="total">%d</xliff:g>, Pavyko: <xliff:g id="success">%d</xliff:g>, Nepavyko: <xliff:g id="fail">%d</xliff:g></string>
+    <string name="send_progress_start">Siųsti laišką (-us)</string>
+    <string name="send_progress_failed">Nepavyko išsiųsti laiško (-ų)</string>
+    <string name="send_progress_completed">Užbaigta siųsti laišką (-us)</string>
+    <string name="send_progress_failed_detail">"Nepavyko išsiųsti: „<xliff:g id="subject">%s</xliff:g>“"</string>
+    <string name="send_progress_completed_detail">Viso: <xliff:g id="total">%d</xliff:g>, Pavyko: <xliff:g id="success">%d</xliff:g>, Nepavyko: <xliff:g id="fail">%d</xliff:g></string>
 </resources>
