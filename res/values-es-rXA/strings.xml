@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2014 The CyanogenMod Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="permission_read_attachment_label" msgid="9208086010625033590">Lleer ficheros axuntos de correos-e</string>
+    <string name="permission_read_attachment_desc" msgid="3394721085306308972">Permite que l\'aplicación consulte los ficheros axuntos de los correos electrónicos.</string>
+    <string name="permission_access_provider_label" msgid="378256653525377586">Acceder a los datos del fornidor de corréu electrónicu</string>
+    <string name="permission_access_provider_desc" msgid="6296566558584670348">Permite que l\'aplicación acceda a la base de datos del to corréu electrónicu, incluyíos los mensaxes recibíos, los mensaxes unviaos, los nomes d\'usuariu y les contraseñes.</string>
+    <string name="app_name" msgid="5815426892327290362">Corréu</string>
+    <string name="debug_title" msgid="5175710493691536719">Depurar</string>
+    <string name="next_action" msgid="3931301986364184415">Siguiente</string>
+    <string name="okay_action" msgid="8365197396795675617">Aceutar</string>
+    <string name="cancel_action" msgid="6967435583794021865">Encaboxar</string>
+    <string name="previous_action" msgid="5181616311579820981">Anterior</string>
+    <string name="done_action" msgid="7497990549515580249">Fecho</string>
+    <string name="create_action" msgid="3062715563215392251">Crear nueva</string>
+    <string name="quick_responses_empty_view" msgid="3960050972306132367">Nun hai rempuestes rápides.</string>
+    <string name="account_settings_action" msgid="4494079183315085171">Axustes de la cuenta</string>
+    <string name="menu_folder_options" msgid="2871906096248843471">Axustes de sincronización</string>
+    <string name="status_network_error" msgid="2611654064403817391">Fallu de conexón</string>
+  <plurals name="move_messages">
+    <item quantity="one" msgid="320885379869442589">Mover mensaxe</item>
+    <item quantity="other" msgid="371256717624461324">Mover mensaxes</item>
+  </plurals>
+    <string name="cannot_move_protocol_not_supported_toast" msgid="6558083148128616292">Les cuentes POP3 nun permiten mover mensaxes.</string>
+    <string name="cannot_move_multiple_accounts_toast" msgid="7922594026384944163">Nun pue movese porque la seleición contién varies cuentes.</string>
+    <string name="cannot_move_special_mailboxes_toast" msgid="7093107954841896970">Nun puen movese los mensaxes de les carpetes Borradores, Por Unviar nin Unviaos.</string>
+    <string name="mailbox_name_display_inbox" msgid="3542327124749861736">Recibíos</string>
+    <string name="mailbox_name_display_outbox" msgid="2826214174661417662">Por Unviar</string>
+    <string name="mailbox_name_display_drafts" msgid="4868718300700514319">Borradores</string>
+    <string name="mailbox_name_display_trash" msgid="9139069064580630647">Papelera</string>
+    <string name="mailbox_name_display_sent" msgid="3426058998191869523">Unviaos</string>
+    <string name="mailbox_name_display_junk" msgid="9046762505977999288">Corréu puxarra</string>
+    <string name="mailbox_name_display_starred" msgid="7788694947644186069">Destacaos</string>
+    <string name="mailbox_name_display_unread" msgid="1015674989793998695">Non lleíu</string>
+    <string name="account_folder_list_summary_inbox" msgid="7518263761297423255">Recibíos</string>
+    <string name="account_folder_list_summary_starred" msgid="3134312269246375723">Destacaos</string>
+    <string name="account_folder_list_summary_drafts" msgid="5514845993247300437">Borradores</string>
+    <string name="account_folder_list_summary_outbox" msgid="3059836696049399377">Por Unviar</string>
+    <string name="mailbox_list_account_selector_combined_view" msgid="1556327299894225044">Vista combinada</string>
+    <string name="message_compose_fwd_header_fmt" msgid="5181300290654579434">\n\n"-------- Mensaxe Orixinal --------\nAsuntu: <xliff:g id="SUBJECT">%1$s</xliff:g>\nDe: <xliff:g id="SENDER">%2$s</xliff:g>\nPa: <xliff:g id="TO">%3$s</xliff:g>\nCc: <xliff:g id="CC_0">%4$s</xliff:g>\n\n</string>
+    <string name="message_compose_insert_quick_response_list_title" msgid="5314107302508728189">Usar rempuesta rápida</string>
+    <string name="message_compose_insert_quick_response_menu_title" msgid="5817075097532919955">Usar rempuesta rápida</string>
+    <string name="message_view_attachment_background_load" msgid="7906875687519445185">Ún o dellos de los ficheros axuntos del mensaxe reunviáu van descargase enantes d\'unviase.</string>
+    <string name="attachment_not_found" msgid="7155322700141145123">Nun pudo descargase\'l ficheru axuntu.</string>
+    <string name="message_decode_error" msgid="5016042255170947834">Hebo un fallu al decodificar el mensaxe.</string>
+    <string name="forward_download_failed_ticker" msgid="6176608320359303255">Fallu al unviar ún o varios ficheros axuntos</string>
+    <string name="forward_download_failed_title" msgid="6139701848515572511">Ficheru axuntu non reunviáu</string>
+    <string name="login_failed_ticker" msgid="2169365211566829350">Fallu al aniciar sesión en <xliff:g id="ACCOUNT_NAME">%s</xliff:g></string>
+    <string name="login_failed_title" msgid="7624349996212476176">Fallu al aniciar sesión</string>
+  <plurals name="message_view_attachment_bytes">
+    <item quantity="one" msgid="8914124732074848509"><xliff:g id="SIZE_IN_BYTES">%d</xliff:g> B</item>
+    <item quantity="other" msgid="4613385949384337840"><xliff:g id="SIZE_IN_BYTES">%d</xliff:g> B</item>
+  </plurals>
+  <plurals name="message_view_attachment_kilobytes">
+    <item quantity="one" msgid="869981846437074463"><xliff:g id="SIZE_IN_KILOBYTES">%d</xliff:g> KB</item>
+    <item quantity="other" msgid="8869993299924901593"><xliff:g id="SIZE_IN_KILOBYTES">%d</xliff:g> KB</item>
+  </plurals>
+  <plurals name="message_view_attachment_megabytes">
+    <item quantity="one" msgid="7527095670565758434"><xliff:g id="SIZE_IN_MEGABYTES">%d</xliff:g> MB</item>
+    <item quantity="other" msgid="4365876866570165282"><xliff:g id="SIZE_IN_MEGABYTES">%d</xliff:g> MB</item>
+  </plurals>
+  <plurals name="message_view_attachment_gigabytes">
+    <item quantity="one" msgid="6261986598249539093"><xliff:g id="SIZE_IN_GIGABYTES">%d</xliff:g> GB</item>
+    <item quantity="other" msgid="1041353825053598633"><xliff:g id="SIZE_IN_GIGABYTES">%d</xliff:g> GB</item>
+  </plurals>
+    <string name="account_setup_basics_title" msgid="3578333196594678422">Axustes de la cuenta</string>
+    <string name="account_setup_basics_headline" msgid="6726590205905464015">Cuenta de corréu-e</string>
+    <string name="accounts_welcome" msgid="8337750045270269649">Pues configurar la to cuenta en pocos pasos.</string>
+    <string name="account_setup_basics_email_label" msgid="3454164053624112047">Direición de corréu-e</string>
+    <string name="account_setup_basics_password_label" msgid="9133549799291519298">Contraseña</string>
+    <string name="account_setup_basics_manual_setup_action" msgid="8053852205391155912">Axustes manuales</string>
+    <string name="account_setup_username_password_toast" msgid="3968270274727947460">Introduz una direición de corréu-e y una contraseña válides.</string>
+    <string name="account_duplicate_dlg_title" msgid="8089732986912704425">Cuenta duplicada</string>
+    <string name="account_duplicate_dlg_message_fmt" msgid="6447629283679935840">Yá tas usando esti nome d\'usuariu pa la cuenta \"<xliff:g id="DUPLICATE">%s</xliff:g>\".</string>
+    <string name="account_password_spaces_error" msgid="8928309156658903257">Esta contraseña contién ún o varios espacios al entamu o al final. Munchos sirvidores nun almiten contraseñes con espacios.</string>
+    <string name="account_setup_check_settings_retr_info_msg" msgid="4121970450267725664">Recuperando la información de la cuenta...</string>
+    <string name="account_setup_check_settings_check_incoming_msg" msgid="2869198335297585862">Validando los axustes del sirvidor…</string>
+    <string name="account_setup_check_settings_check_outgoing_msg" msgid="4566131393776891419">Validando los axustes de SMTP…</string>
+    <string name="account_setup_creating_account_msg" msgid="6235569720466839946">Creando cuenta…</string>
+    <string name="account_setup_names_title" msgid="8483517350241119291">Axustes de la cuenta</string>
+    <string name="account_setup_names_headline" msgid="914858472109729140">La to cuenta yá ta configurada y vas ver el to corréu de secute.</string>
+    <string name="account_setup_names_account_name_label" msgid="8033895024273259196">Da-y un nome a esta cuenta (opcional)</string>
+    <string name="account_setup_names_user_name_label" msgid="8967410178488604770">El to nome (como va vese nos mensaxes unviaos)</string>
+    <string name="account_setup_names_user_name_empty_error" msgid="6791427018325367364">Esti campu nun pue dexase baleru.</string>
+    <string name="account_setup_account_type_title" msgid="7156551693961182124">Axustes de la cuenta</string>
+    <string name="account_setup_account_type_headline" msgid="3574102329184831086">Tipu de cuenta</string>
+    <string name="account_setup_account_type_instructions" msgid="114515540798408760">¿Qué tipu de cuenta tienes?</string>
+    <string name="account_setup_incoming_title" msgid="6796626791039136005">Axustes de la cuenta</string>
+    <string name="account_setup_incoming_headline" msgid="6183711037633407184">Axustes del sirvidor d\'entrada</string>
+    <string name="account_setup_incoming_username_label" msgid="5700581386104070302">Nome d\'usuariu</string>
+    <string name="account_setup_incoming_password_label" msgid="6365327603172559859">Contraseña</string>
+    <string name="account_setup_incoming_server_label" msgid="1480342966630002638">Sirvidor</string>
+    <string name="account_setup_incoming_port_label" msgid="8214738923690447796">Puertu</string>
+    <string name="account_setup_incoming_security_label" msgid="2110260791086007424">Tipu de seguridá</string>
+    <string name="account_setup_incoming_security_none_label" msgid="8300169413118264895">Nenguna</string>
+    <string name="account_setup_incoming_security_ssl_trust_certificates_label" msgid="6151855090123117538">SSL/TLS (aceutar tolos certif.)</string>
+    <string name="account_setup_incoming_security_ssl_label" msgid="2798501138420163861">SSL/TLS</string>
+    <string name="account_setup_incoming_security_tls_trust_certificates_label" msgid="6149084428423662620">STARTTLS (aceutar tolos certif.)</string>
+    <string name="account_setup_incoming_security_tls_label" msgid="6573498431821879660">STARTTLS</string>
+    <string name="account_setup_incoming_delete_policy_label" msgid="9213590134693857912">Desaniciar corréu-e del sirvidor</string>
+    <string name="account_setup_incoming_delete_policy_never_label" msgid="3222897501875871041">Enxamás</string>
+    <string name="account_setup_incoming_delete_policy_delete_label" msgid="222216840911785631">Al desaniciar mensaxes</string>
+    <string name="account_setup_incoming_imap_path_prefix_label" msgid="401167247072926810">Prefixu de ruta IMAP</string>
+    <string name="account_setup_incoming_imap_path_prefix_hint" msgid="9190845919067906033">Opcional</string>
+    <string name="account_setup_outgoing_title" msgid="7208495965665711539">Axustes de la cuenta</string>
+    <string name="account_setup_outgoing_headline" msgid="2025001060935366394">Axustes del sirvidor de salida</string>
+    <string name="account_setup_outgoing_smtp_server_label" msgid="6035137446691195177">Sirvidor SMTP</string>
+    <string name="account_setup_outgoing_port_label" msgid="7573207437835827876">Puertu</string>
+    <string name="account_setup_outgoing_security_label" msgid="911398071120720589">Tipu de seguridá</string>
+    <string name="account_setup_outgoing_require_login_label" msgid="7779484127897397562">Solicitar aniciu de sesión</string>
+    <string name="account_setup_outgoing_username_label" msgid="3309680794731596981">Nome d\'usuariu</string>
+    <string name="account_setup_outgoing_password_label" msgid="227844585493317550">Contraseña</string>
+    <string name="account_setup_exchange_certificate_title" msgid="8473793588405277962">Certificáu de veceru</string>
+    <string name="account_setup_exchange_select_certificate" msgid="1536103662037268683">Seleicionar</string>
+    <string name="account_setup_exchange_use_certificate" msgid="8690682770083161349">Usar certificáu de veceru</string>
+    <string name="account_setup_exchange_remove_certificate" msgid="5633249155510301766">Desaniciar</string>
+    <string name="account_setup_exchange_no_certificate" msgid="1119542961954780872">Nengún</string>
+    <string name="account_setup_exchange_device_id_label" msgid="1646827333223157658">ID del preséu móvil</string>
+    <string name="account_setup_options_title" msgid="9016600767888846051">Axustes de la cuenta</string>
+    <string name="account_setup_options_headline" msgid="4181274232835368085">Opciones de cuenta</string>
+    <string name="account_setup_options_mail_check_frequency_label" msgid="4824859792882810053">Comprobar mensaxes nuevos</string>
+    <string name="account_setup_options_mail_check_frequency_never" msgid="287951859480505416">Enxamás</string>
+    <string name="account_setup_options_mail_check_frequency_push" msgid="5934525907736008673">Comprobación automática</string>
+    <string name="account_setup_options_mail_check_frequency_5min" msgid="6388939895878539307">Cada 5 minutos</string>
+    <string name="account_setup_options_mail_check_frequency_10min" msgid="5344463157247877480">Cada 10 minutos</string>
+    <string name="account_setup_options_mail_check_frequency_15min" msgid="5052776740089741793">Cada 15 minutos</string>
+    <string name="account_setup_options_mail_check_frequency_30min" msgid="1097088928685931864">Cada 30 minutos</string>
+    <string name="account_setup_options_mail_check_frequency_1hour" msgid="3767715356039692899">Cada hora</string>
+    <string name="account_setup_options_notify_label" msgid="7046146571560728829">Notificame cuando aporte un corréu</string>
+    <string name="account_setup_options_sync_contacts_label" msgid="276492345599531778">Sincronizar contautos d\'esta cuenta</string>
+    <string name="account_setup_options_sync_calendar_label" msgid="3222151135467189411">Sincronizar calendariu d\'esta cuenta</string>
+    <string name="account_setup_options_sync_email_label" msgid="8585177128405004068">Sincronizar corréu d\'esta cuenta</string>
+    <string name="account_setup_options_background_attachments_label" msgid="5247749298276451846">Descargar axuntos automáticamente al coneutar a una rede Wi-Fi</string>
+    <string name="account_setup_failed_dlg_title" msgid="9083263347962940552">Fallu al completar la configuración</string>
+    <string name="account_setup_options_mail_window_label" msgid="7582247646138987328">Díes pa sincronizar</string>
+    <string name="account_setup_options_mail_window_auto" msgid="4188895354366183790">Automática</string>
+    <string name="account_setup_options_mail_window_1day" msgid="7727436096227637646">Caberu día</string>
+    <string name="account_setup_options_mail_window_3days" msgid="1841106793912850270">Los caberos trés díes</string>
+    <string name="account_setup_options_mail_window_1week" msgid="5804121771990249346">La cabera pasada</string>
+    <string name="account_setup_options_mail_window_2weeks" msgid="3583478100026382495">Les caberes dos selmanes</string>
+    <string name="account_setup_options_mail_window_1month" msgid="4289585173153789717">El mes pasáu</string>
+    <string name="account_setup_options_mail_window_all" msgid="5372861827683632364">Too</string>
+    <string name="account_setup_options_mail_window_default" msgid="2540360826995543134">Usar valores predeterminaos de la cuenta</string>
+    <string name="account_setup_failed_dlg_auth_message" msgid="426627755590431364">Nome d\'usuariu o contraseña incorreutos</string>
+    <string name="account_setup_failed_dlg_auth_message_fmt" msgid="2081384892947238930">Fallu d\'aniciu de sesión\n(<xliff:g id="ERROR">%s</xliff:g>)</string>
+    <string name="account_setup_autodiscover_dlg_authfail_title" msgid="7365992662150541370">Problema al configurar la cuenta</string>
+    <string name="account_setup_autodiscover_dlg_authfail_message" msgid="8354874879956702097">Los axustes de cuenta, contraseña y nome d\'usuariu de confirmación son correutos.</string>
+    <string name="account_setup_failed_dlg_certificate_message" msgid="3836152264696108805">Nun pue afitase una conexón de mou seguru col sirvidor.</string>
+    <string name="account_setup_failed_dlg_certificate_message_fmt" msgid="2121921642915593041">Nun pue afitase conexón de mou seguru col sirvidor.\n(<xliff:g id="ERROR">%s</xliff:g>)</string>
+    <string name="account_setup_failed_certificate_required" msgid="2689944595775206006">Necesítase un certificáu de veceru. ¿Quies coneutate al sirvidor con un certificáu de veceru?</string>
+    <string name="account_setup_failed_certificate_inaccessible" msgid="3563840279690749547">El certificáu nun ye válidu o nun pue accedese a él.</string>
+    <string name="account_setup_failed_check_credentials_message" msgid="6531658092540248067">El sirvidor devolvió un fallu. Comprueba\'l nome d\'usuariu y la to contraseña y vuelvi a intentalo.</string>
+    <string name="account_setup_failed_dlg_server_message" msgid="4942810054116129684">Nun pue afitase conexón col sirvidor.</string>
+    <string name="account_setup_failed_dlg_server_message_fmt" msgid="2525425638303883232">Nun pue afitase conexón col sirvidor.\n(<xliff:g id="ERROR">%s</xliff:g>)</string>
+    <string name="account_setup_failed_tls_required" msgid="307030406688611327">El protocolu TLS ye obligatoriu, pero\'l sirvidor nun lu almite.</string>
+    <string name="account_setup_failed_auth_required" msgid="6799839150250217566">El sirvidor nun almite métodos d\'autenticación.</string>
+    <string name="account_setup_failed_security" msgid="925820957665764964">Nun pudo afitase conexón col sirvidor por un fallu de seguridá.</string>
+    <string name="account_setup_failed_ioerror" msgid="7802604687451830378">Nun pudo afitase conexón col sirvidor.</string>
+    <string name="account_setup_failed_protocol_unsupported" msgid="4607759927226943569">Introduxisti una direición de sirvidor incorreuta o\'l sirvidor requier una versión de protocolu non compatible con l\'aplicación Corréu.</string>
+    <string name="account_setup_failed_access_denied" msgid="6835358740050287051">Nun tienes permisu pa facer la sincronización con esti sirvidor. Pa obtener más información, ponte en contautu col alministrador del sirvidor.</string>
+    <string name="account_setup_security_required_title" msgid="1850321535870447468">Alministración de seguridá remota</string>
+    <string name="account_setup_security_policies_required_fmt" msgid="5410714107656671761">Ye necesario que permitas que\'l sirvidor <xliff:g id="SERVER">%s</xliff:g> remane de mou remotu dalgunes funciones de seguridá del to preséu Android. ¿Quies terminar de configurar esta cuenta?</string>
+    <string name="account_setup_failed_security_policies_unsupported" msgid="3210264746877120355">Esti sirvidor requier funciones de seguridá que nun son compatibles col to preséu Android (por exemplu: <xliff:g id="ERROR">%s</xliff:g>).</string>
+    <string name="account_setup_username_uneditable_error" msgid="1618869759801584109">Nun pues modificar el nome d\'usuariu d\'una cuenta. P\'amestar una cuenta con otru nome d\'usuariu, toca Amestar cuenta.</string>
+    <string name="disable_admin_warning" msgid="6196985268695592382">AVISU: si desactives el permisu de l\'aplicación Corréu p\'alministrar el to preséu, van desaniciase toles cuentes d\'esta aplicación que requieran el so usu, asina como les direiciones de corréu-e, los contautos, los eventos de calendariu y otra mena de datos.</string>
+    <string name="account_security_dialog_title" msgid="430041952584831904">Anovamientu de seguridá</string>
+    <string name="account_security_dialog_content_fmt" msgid="8843806143923278214"><xliff:g id="ACCOUNT">%s</xliff:g> necesita qu\'anueves la configuración de seguridá.</string>
+    <string name="security_unsupported_ticker_fmt" msgid="5166579214529283975">Los requisitos de seguridá de la cuenta \"<xliff:g id="ACCOUNT">%s</xliff:g>\" nun permiten la so sincronización.</string>
+    <string name="security_needed_ticker_fmt" msgid="2120499087897133665">Ye necesario anovar la configuración de seguridá de la cuenta \"<xliff:g id="ACCOUNT">%s</xliff:g>\".</string>
+    <string name="security_changed_ticker_fmt" msgid="2609435447352755285">Modificóse la configuración de seguridá de la cuenta \"<xliff:g id="ACCOUNT">%s</xliff:g>\" (nun fai falta l\'intervención del usuariu).</string>
+    <string name="security_notification_content_update_title" msgid="2429762903228690154">Anovamientu seguridá necesariu</string>
+    <string name="security_notification_content_change_title" msgid="443490921895642130">Polítiques de seguridá modificaes</string>
+    <string name="security_notification_content_unsupported_title" msgid="7315219208043169233">Fallu al cumplir polítiques seguridá</string>
+    <string name="account_security_title" msgid="3511543138560418587">Seguridá del preséu</string>
+    <string name="account_security_policy_explanation_fmt" msgid="6932627044314460766">Ye necesario que permitas que\'l sirvidor <xliff:g id="SERVER">%s</xliff:g> remane de mou remotu dalgunes funciones de seguridá del to preséu Android.</string>
+    <string name="account_setup_failed_dlg_edit_details_action" msgid="5355993309841479360">Aceutar</string>
+    <string name="password_expire_warning_ticker_fmt" msgid="2459977229180023773">\"<xliff:g id="ACCOUNT">%s</xliff:g>\" necesita que modifiques la contraseña o\'l PIN de la pantalla de bloquéu.</string>
+    <string name="password_expire_warning_content_title" msgid="7174669014074849304">Contraseña bloquéu pantalla va caducar</string>
+    <string name="password_expired_ticker" msgid="4230570412974108968">La contraseña o\'l PIN de la pantalla de bloquéu ha caducado.</string>
+    <string name="password_expired_content_title" msgid="4349518706602252979">Contraseña bloquéu caducada</string>
+    <string name="password_expire_warning_dialog_title" msgid="1687074175399798189">Contraseña bloquéu pantalla va caducar</string>
+    <string name="password_expire_warning_dialog_content_fmt" msgid="4293446611405084436">Vas tener de modificar la contraseña o\'l PIN de la pantalla de bloquéu aína, o van desaniciase los datos de <xliff:g id="ACCOUNT">%s</xliff:g>. ¿Quies camudala agora?</string>
+    <string name="password_expired_dialog_title" msgid="2186547998125938084">Contraseña bloquéu caducada</string>
+    <string name="password_expired_dialog_content_fmt" msgid="6538210092073931079">Los datos de <xliff:g id="ACCOUNT">%s</xliff:g> tán desaniciándose del preséu. Pa restauralos, modifica la contraseña o\'l PIN de la pantalla de bloquéu. ¿Quies camudalos agora?</string>
+    <string name="account_settings_exit_server_settings" msgid="8006323251094711431">¿Quies descartar los cambeos non guardaos?</string>
+    <string name="account_settings_login_dialog_title" msgid="4024422579146302775">Fallu al aniciar sesión</string>
+    <string name="account_settings_login_dialog_content_fmt" msgid="8849649646111167377">El nome d\'usuariu o la contraseña de <xliff:g id="ACCOUNT">%s</xliff:g> son incorreutos. ¿Quies anovalos agora?</string>
+    <string name="account_settings_login_dialog_reason_fmt" msgid="4266359321648406752">Hebo un fallu al aniciar sesión en <xliff:g id="ACCOUNT">%s</xliff:g>. Respuesta del servidor: <xliff:g id="REASON">%s</xliff:g>. ¿Quies anovar el to nome d\'usuariu o la contraseña?</string>
+    <string name="account_settings_background_attachments_label" msgid="2980317599840958688">Descargar axuntos</string>
+    <string name="account_settings_background_attachments_summary" msgid="5954218549226189376">Descargar automáticamente axuntos de correos recientes por Wi-Fi</string>
+    <string name="account_settings_notify_label" msgid="1630001017303007974">Notificaciones de corréu</string>
+    <string name="account_settings_summary" msgid="8403582255413830007">Frecuencia de sincronización, notificaciones, etc.</string>
+    <string name="account_settings_notify_summary" msgid="8134339460923068254">Unviar notificación cuando aporte un corréu-e</string>
+    <string name="account_settings_mail_check_frequency_label" msgid="4322235101687302250">Frecuencia de sincronización</string>
+    <string name="account_settings_incoming_label" msgid="7858928031806297542">Axustes d\'entrada</string>
+    <string name="account_settings_incoming_summary" msgid="2923044634831881068">Nome d\'usuariu, contraseña y otros axustes del sirvidor d\'entrada</string>
+    <string name="account_settings_outgoing_label" msgid="4464829249980026745">Axustes de salida</string>
+    <string name="account_settings_outgoing_summary" msgid="3572093624332724311">Nome d\'usuariu, contraseña y otros axustes del sirvidor de salida</string>
+    <string name="account_settings_enforced_label" msgid="7429582254433588882">Polítiques aplicaes</string>
+    <string name="account_settings_enforced_summary" msgid="8140860420440447771">Nengún</string>
+    <string name="account_settings_unsupported_label" msgid="1954091071454235577">Polítiques non almitíes</string>
+    <string name="account_settings_unsupported_summary" msgid="2107633813351863608">Nengún</string>
+    <string name="account_settings_retry_label" msgid="1104680719299842829">Intentar sincronización</string>
+    <string name="account_settings_retry_summary" msgid="2703599639846201913">Toca pa sincronizar esta cuenta.</string>
+    <string name="account_settings_description_label" msgid="8894815221204511715">Nome de la cuenta</string>
+    <string name="account_settings_name_label" msgid="8186406122590008449">El to nome</string>
+    <string name="account_settings_edit_quick_responses_label" msgid="3106019627675996480">Rempuestes rápides</string>
+    <string name="account_settings_edit_quick_responses_summary" msgid="8056686122888722591">Testu qu\'aveces usar nos tos correos</string>
+    <string name="account_settings_notifications" msgid="1042620094281375043">Axustes de notificaciones</string>
+    <string name="account_settings_data_usage" msgid="6669107430575866736">Usu de datos</string>
+    <string name="account_settings_policies" msgid="6292833636418641840">Polítiques de seguridá</string>
+    <string name="system_folders_title" msgid="2934406494244347991">Carpetes del sistema</string>
+    <string name="system_folders_trash_title" msgid="8470058000681188327">Carpeta de la papelera</string>
+    <string name="system_folders_trash_summary" msgid="1258919809198485244">Esbilla la to carpeta de papelera del sirvidor</string>
+    <string name="system_folders_trash_dlg" msgid="4461220303400833402">Esbilla la to carpeta de papelera del sirvidor</string>
+    <string name="system_folders_sent_title" msgid="4265722817877075367">Carpeta d\'elementos unviaos</string>
+    <string name="system_folders_sent_summary" msgid="5529250353569545181">Esbillar la to carpeta d\'elementos unviaos del sirvidor</string>
+    <string name="system_folders_sent_dlg" msgid="7071006714702094762">Esbillar la to carpeta d\'elementos unviaos del sirvidor</string>
+    <string name="edit_quick_response_dialog" msgid="6479106007607928450">Rempuestes rápides</string>
+    <string name="save_action" msgid="1988862706623227093">Guardar</string>
+    <string name="account_settings_sync_contacts_enable" msgid="1369272986009573218">Sincronizar contautos</string>
+    <string name="account_settings_sync_contacts_summary" msgid="816919452270997919">Sincronizar contautos d\'esta cuenta</string>
+    <string name="account_settings_sync_calendar_enable" msgid="6855333393468628003">Sincronizar calendariu</string>
+    <string name="account_settings_sync_calendar_summary" msgid="7606340353079301703">Sincronizar eventos de calendariu pa esta cuenta</string>
+    <string name="account_settings_sync_email_enable" msgid="3754115565685222477">Sincronizar corréu</string>
+    <string name="account_settings_sync_email_summary" msgid="262964076412310990">Sincronizar corréu d\'esta cuenta</string>
+    <string name="account_settings_vibrate_when_label" msgid="708477308761702671">Vibrar</string>
+    <string name="account_settings_ringtone" msgid="8229878374785575207">Esbillar tonu</string>
+    <string name="account_settings_servers" msgid="4925493817981624242">Axustes del sirvidor</string>
+    <string name="mailbox_settings_activity_title" msgid="4705845931573373274">Axustes de sincronización</string>
+    <string name="mailbox_settings_activity_title_with_mailbox" msgid="6485481250424219240">Axustes de sincronización (<xliff:g id="MAILBOXX_NAME">%s</xliff:g>)</string>
+    <string name="mailbox_settings_sync_enabled_label" msgid="1180866791599296994">Sincronizar esta carpeta</string>
+    <string name="mailbox_settings_sync_enabled_summary" msgid="345878979425044320">Los mensaxes van descargase automáticamente al coneutate</string>
+    <string name="mailbox_settings_mailbox_sync_window_label" msgid="851180833264474141">Díes pa sincronizar corréu</string>
+    <string name="prefDialogTitle_conversationListIcon" msgid="4601797400885989153">Imaxe del remitente</string>
+    <string name="provider_note_live" msgid="2995297671709325333">Namái dalgunes cuentes \"Plus\" inclúin accesu POP pa permitir qu\'esti programa se coneute. Si nun pues acceder cola to direición de corréu-e y contraseña, ye dable que nun tengas una cuenta \"Plus\" de pagu. Usa\'l restolador web p\'acceder a estes cuentes de corréu.</string>
+    <string name="provider_note_t_online" msgid="1630642061431427894">Pa configurar esta cuenta de corréu-e, accedi al sitiu web de T-Online y crea una contraseña p\'acceder al corréu electrónicu POP3.</string>
+    <string name="exchange_name" msgid="1190783774800310346">Cuenta de trabayu</string>
+    <string name="exchange_name_alternate" msgid="5772529644749041052">Microsoft Exchange ActiveSync</string>
+    <string name="system_account_create_failed" msgid="3673792980526246177">Nun pudo crease la cuenta. Inténtalo de nueves.</string>
+    <string name="device_admin_label" msgid="8680224994637869414">Corréu-e</string>
+    <string name="device_admin_description" msgid="426727923791430306">Permite les polítiques de seguridá especificaes pol sirvidor.</string>
+    <string name="settings_activity_title" msgid="5185915603716333904">Axustes</string>
+    <string name="header_label_general_preferences" msgid="8243724566056800991">Axustes xenerales</string>
+    <string name="general_preference_confirm_delete_label" msgid="1863245465244241907">Confirmar pa desaniciar</string>
+    <string name="general_preference_confirm_delete_summary" msgid="6710240861010766643">Mensaxes</string>
+    <string name="general_preference_confirm_send_label" msgid="4548277349553989930">Confirmar pa unviar</string>
+    <string name="general_preference_confirm_send_summary" msgid="2695471027185506093">Mensaxes</string>
+    <string name="general_preference_text_zoom_label" msgid="4021955890499565713">Tamañu de testu del mensaxe</string>
+  <string-array name="general_preference_text_zoom_summary_array">
+    <item msgid="4693576184223089069">Testu mui pequeñu</item>
+    <item msgid="4415205108584620118">Testu pequeñ</item>
+    <item msgid="4550219696381691112">Testu normal</item>
+    <item msgid="6227813549949219991">Testu grande</item>
+    <item msgid="1197917420815786571">Testu enorme</item>
+  </string-array>
+    <string name="general_preference_text_zoom_dialog_title" msgid="7446841758331151643">Tamañu de testu del mensaxe</string>
+    <string name="general_preference_text_zoom_tiny" msgid="2948174583663330937">Mui pequeñu</string>
+    <string name="general_preference_text_zoom_small" msgid="6618520238223144876">Pequeñu</string>
+    <string name="general_preference_text_zoom_normal" msgid="1765540147950855479">Normal</string>
+    <string name="general_preference_text_zoom_large" msgid="6874323663381586918">Grande</string>
+    <string name="general_preference_text_zoom_huge" msgid="4270503132355963031">Mui grande</string>
+    <string name="more_than_999" msgid="8704425397397918798">999+</string>
+    <string name="search_hint" msgid="2200412192574686497">Guetar corréu</string>
+    <string name="policy_dont_allow_camera" msgid="5744573062306937302">Nun permitir usar cámara del preséu</string>
+    <string name="policy_require_password" msgid="7177274900480984702">Solicitar contraseña del preséu</string>
+    <string name="policy_password_history" msgid="5743544498302303181">Restrinxir nuevu usu contraseñes recientes</string>
+    <string name="policy_password_expiration" msgid="1248123255253649199">Forciar vencimientu de contraseñes</string>
+    <string name="policy_screen_timeout" msgid="414869965358468080">Preséu inactivu necesariu pa bloquéu</string>
+    <string name="policy_calendar_age" msgid="627405158087482302">Llendar númberu d\'eventos que se sincronicen</string>
+    <string name="policy_email_age" msgid="7144148367145424963">Llendar númberu de correos que se sincronicen</string>
+    <string name="quick_1" msgid="3426057697353380951">¡Gracies!</string>
+    <string name="quick_2" msgid="4188036352885736617">Paezme bien, ¡gracies!</string>
+    <string name="quick_3" msgid="8061819976353395585">Lléolo dempués y respuéndote.</string>
+    <string name="quick_4" msgid="3988974084396883051">Hai de facer una reunión pa falar d\'esti tema.</string>
+    <string name="require_manual_sync_message" msgid="7777357288642785955">Inhabilitóse la sincronización en segundu planu d\'esta cuenta n\'itinerancia.</string>
+    <string name="confirm_response" msgid="9151965975158906286">Unviando rempuesta…</string>
+    <string name="no_conversations" msgid="5559527390337162819">Nun hai nengún mensaxe.</string>
+    <string name="imap_name" msgid="5030473997603483793">IMAP</string>
+    <string name="pop3_name" msgid="4037602724794932807">POP3</string>
+    <string name="folder_picker_title" msgid="860241987640527156">Seleutor de carpetes</string>
+    <string name="trash_folder_selection_title" msgid="8052880079616386185">Esbilla la papelera del sirvidor de <xliff:g id="ACCOUNT">%s</xliff:g></string>
+    <string name="sent_folder_selection_title" msgid="2668629667423320684">Esbillar carpeta sirvidor de <xliff:g id="ACCOUNT">%s</xliff:g></string>
+    <string name="account_waiting_for_folders_msg" msgid="6504836014579036923">Cargando llista de carpetes…</string>
+</resources>
