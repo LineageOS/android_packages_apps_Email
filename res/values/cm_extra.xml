@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2014 The CyanogenMod Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Do not translate - Dummy strings to prevent aapt warnings -->
+    <string name="account_delete_dlg_instructions_fmt"></string>
+    <string name="account_delete_dlg_title"></string>
+    <string name="account_name_display_all"></string>
+    <string name="account_settings_category_delete_account"></string>
+    <string name="account_settings_delete_account_label"></string>
+    <string name="account_setup_basics_default_label"></string>
+    <string name="account_setup_exchange_headline"></string>
+    <string name="account_setup_exchange_server_label"></string>
+    <string name="account_setup_exchange_ssl_label"></string>
+    <string name="account_setup_exchange_title"></string>
+    <string name="account_setup_exchange_trust_certificates_label"></string>
+    <string name="account_setup_exchange_username_label"></string>
+    <string name="account_shortcut_picker_name"></string>
+    <string name="account_shortcut_picker_title"></string>
+    <string name="action_bar_mailbox_list_title"></string>
+    <string name="add_cc_bcc_menu"></string>
+    <string name="airplane_mode_on"></string>
+    <string name="ap_overflow_format"></string>
+    <string name="attachment_info_apk_install_disabled"></string>
+    <string name="attachment_info_application_settings"></string>
+    <string name="attachment_info_dialog_default_title"></string>
+    <string name="attachment_info_dialog_wifi_title"></string>
+    <string name="attachment_info_malware"></string>
+    <string name="attachment_info_no_intent"></string>
+    <string name="attachment_info_policy"></string>
+    <string name="attachment_info_sideload_disabled"></string>
+    <string name="attachment_info_unknown"></string>
+    <string name="attachment_info_wifi_only"></string>
+    <string name="attachment_info_wifi_settings"></string>
+    <string name="category_general_preferences"></string>
+    <string name="choose_attachment_dialog_title"></string>
+    <string name="close_action"></string>
+    <string name="compose_action"></string>
+    <string name="compose_title"></string>
+    <string name="conversation_count"></string>
+    <string name="conversation_newer"></string>
+    <string name="conversation_older"></string>
+    <string name="create_new_folder"></string>
+    <string name="debug_version_fmt"></string>
+    <string name="delete_action"></string>
+    <string name="delete_quick_response_action"></string>
+    <string name="discard_action"></string>
+    <string name="eml_view_title"></string>
+    <string name="error_loading_message_body"></string>
+    <string name="favorite_action"></string>
+    <string name="forward_action"></string>
+    <string name="gal_searching_fmt"></string>
+    <string name="general_preferences_clear_trusted_senders_summary"></string>
+    <string name="info_attachment"></string>
+    <string name="mailbox_list_account_selector_account_header"></string>
+    <string name="mailbox_list_account_selector_mailbox_header_fmt"></string>
+    <string name="mailbox_list_account_selector_show_all_folders"></string>
+    <string name="mailbox_list_recent_mailboxes"></string>
+    <string name="mailbox_list_user_mailboxes"></string>
+    <string name="mailbox_preferences_header"></string>
+    <string name="mailbox_shortcut_picker_title"></string>
+    <string name="mark_as_unread_action"></string>
+    <string name="message_compose_attachment_size"></string>
+    <string name="message_compose_bcc_hint"></string>
+    <string name="message_compose_cc_hint"></string>
+    <string name="message_compose_display_name"></string>
+    <string name="message_compose_error_invalid_email"></string>
+    <string name="message_compose_error_no_recipients"></string>
+    <string name="message_compose_from_label"></string>
+    <string name="message_compose_include_quoted_text_checkbox_label"></string>
+    <string name="message_compose_quoted_text_label"></string>
+    <string name="message_compose_reply_header_fmt"></string>
+    <string name="message_compose_subject_hint"></string>
+    <string name="message_compose_to_hint"></string>
+    <string name="message_delete_dialog_title"></string>
+    <string name="message_discarded_toast"></string>
+    <string name="message_is_empty_description"></string>
+    <string name="message_list_load_more_messages_action"></string>
+    <string name="message_list_no_messages"></string>
+    <string name="message_list_send_pending_messages_action"></string>
+    <string name="message_list_subject_snippet_divider"></string>
+    <string name="message_saved_toast"></string>
+    <string name="message_subject_description"></string>
+    <string name="message_view_always_show_pictures_button"></string>
+    <string name="message_view_always_show_pictures_confirmation"></string>
+    <string name="message_view_always_show_pictures_prompt"></string>
+    <string name="message_view_attachment_cancel_action"></string>
+    <string name="message_view_attachment_info_action"></string>
+    <string name="message_view_attachment_install_action"></string>
+    <string name="message_view_attachment_load_action"></string>
+    <string name="message_view_attachment_play_action"></string>
+    <string name="message_view_attachment_save_action"></string>
+    <string name="message_view_attachment_saved"></string>
+    <string name="message_view_attachment_view_action"></string>
+    <string name="message_view_bcc_label"></string>
+    <string name="message_view_cc_label"></string>
+    <string name="message_view_date_label"></string>
+    <string name="message_view_display_attachment_toast"></string>
+    <string name="message_view_from_label"></string>
+    <string name="message_view_invite_accept"></string>
+    <string name="message_view_invite_decline"></string>
+    <string name="message_view_invite_maybe"></string>
+    <string name="message_view_invite_text"></string>
+    <string name="message_view_invite_title"></string>
+    <string name="message_view_invite_toast_maybe"></string>
+    <string name="message_view_invite_toast_no"></string>
+    <string name="message_view_invite_toast_yes"></string>
+    <string name="message_view_invite_view"></string>
+    <string name="message_view_load_attachment_failed_toast"></string>
+    <string name="message_view_message_details_dialog_title"></string>
+    <string name="message_view_move_to_newer"></string>
+    <string name="message_view_move_to_older"></string>
+    <string name="message_view_parse_message_toast"></string>
+    <string name="message_view_show_details"></string>
+    <string name="message_view_show_invite_action"></string>
+    <string name="message_view_show_message_action"></string>
+    <string name="message_view_show_pictures_action"></string>
+    <string name="message_view_status_attachment_not_saved"></string>
+    <string name="message_view_status_attachment_saved"></string>
+    <string name="message_view_subject_label"></string>
+    <string name="message_view_to_label"></string>
+    <string name="move_action"></string>
+    <string name="move_to_folder_dialog_title"></string>
+    <string name="new_incoming_messages_many"></string>
+    <string name="notification_multiple_new_messages_fmt"></string>
+    <string name="notification_to_account"></string>
+    <string name="picker_combined_view_fmt"></string>
+    <string name="picker_mailbox_name_all_inbox"></string>
+    <string name="picker_mailbox_name_all_unread"></string>
+    <string name="position_of_count"></string>
+    <string name="preference_attachment_previews_description"></string>
+    <string name="preference_attachment_previews_title"></string>
+    <string name="preference_conversation_list_icon_summary"></string>
+    <string name="preference_conversation_list_icon_title"></string>
+    <string name="read_action"></string>
+    <string name="recent_folders"></string>
+    <string name="refresh_action"></string>
+    <string name="remove_star_action"></string>
+    <string name="reply_action"></string>
+    <string name="reply_all_action"></string>
+    <string name="save_draft_action"></string>
+    <string name="search_action"></string>
+    <string name="search_header_text_fmt"></string>
+    <string name="search_mailbox_hint"></string>
+    <string name="search_slow_warning_message"></string>
+    <string name="search_slow_warning_title"></string>
+    <string name="send_action"></string>
+    <string name="set_star_action"></string>
+    <string name="settings_action"></string>
+    <string name="show"></string>
+    <string name="show_quick_text_list_dialog_action"></string>
+    <string name="status_loading_messages"></string>
+    <string name="sync_all"></string>
+    <string name="sync_none"></string>
+    <string name="toast_account_not_found"></string>
+    <string name="toast_mailbox_not_found"></string>
+    <string name="unread_action"></string>
+    <string name="waitinf_for_sync_message_1"></string>
+    <string name="waitinf_for_sync_message_2"></string>
+    <string name="widget_all_mail"></string>
+    <string name="widget_loading"></string>
+    <string name="widget_no_accounts"></string>
+    <string name="widget_other_views"></string>
+    <string name="widget_starred"></string>
+    <string name="widget_touch_to_configure"></string>
+    <string name="widget_unread"></string>
+</resources>
