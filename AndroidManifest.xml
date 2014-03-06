@@ -355,9 +355,10 @@
         </provider>
 
         <provider
-                android:authorities="@string/eml_attachment_provider"
-                android:exported="false"
-                android:name="com.android.mail.providers.EmlAttachmentProvider" >
+            android:authorities="com.android.email.provider.eml.attachment"
+            android:label="@string/eml_attachment_provider"
+            android:exported="false"
+            android:name="com.android.mail.providers.EmlAttachmentProvider" >
             <grant-uri-permission android:pathPattern=".*" />
         </provider>
 
