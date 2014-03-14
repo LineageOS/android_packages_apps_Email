@@ -5225,6 +5225,10 @@ public class EmailProvider extends ContentProvider {
         notifyUI(UIPROVIDER_FOLDER_NOTIFIER,
                 getVirtualMailboxId(COMBINED_ACCOUNT_ID, Mailbox.TYPE_INBOX));
         notifyUI(UIPROVIDER_FOLDERLIST_NOTIFIER, COMBINED_ACCOUNT_ID);
+       // Notify for unread mailbox
+        notifyUI(UIPROVIDER_FOLDER_NOTIFIER, getVirtualMailboxId(accountId, Mailbox.TYPE_UNREAD));
+        notifyUI(UIPROVIDER_CONVERSATION_NOTIFIER,
+                getVirtualMailboxId(accountId, Mailbox.TYPE_UNREAD));
 
         // TODO: temporary workaround for ConversationCursor
         synchronized (this) {
