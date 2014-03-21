@@ -404,11 +404,13 @@ public class AttachmentUtilities {
         long size;
         try {
             ContentResolver resolver = context.getContentResolver();
-            if (attachment.mUiDestination == UIProvider.AttachmentDestination.CACHE) {
+            if (attachment.mUiState != UIProvider.AttachmentState.SAVED) {
                 Uri attUri = getAttachmentUri(accountId, attachmentId);
                 size = copyFile(in, resolver.openOutputStream(attUri));
                 contentUri = attUri.toString();
-            } else if (Utility.isExternalStorageMounted()) {
+            }
+            if (attachment.mUiDestination == UIProvider.AttachmentDestination.EXTERNAL
+                    && Utility.isExternalStorageMounted()) {
                 if (attachment.mFileName == null) {
                     // TODO: This will prevent a crash but does not surface the underlying problem
                     // to the user correctly.
@@ -420,7 +422,8 @@ public class AttachmentUtilities {
                         Environment.DIRECTORY_DOWNLOADS);
                 downloads.mkdirs();
                 File file = Utility.createUniqueFile(downloads, attachment.mFileName);
-                size = copyFile(in, new FileOutputStream(file));
+                Uri attUri = getAttachmentUri(accountId, attachmentId);
+                size = copyFile(resolver.openInputStream(attUri), new FileOutputStream(file));
                 String absolutePath = file.getAbsolutePath();
 
                 // Although the download manager can scan media files, scanning only happens
@@ -437,7 +440,6 @@ public class AttachmentUtilities {
                         attachment.mMimeType, absolutePath, size,
                         true /* show notification */);
                 contentUri = dm.getUriForDownloadedFile(id).toString();
-
             } else {
                 LogUtils.w(Logging.LOG_TAG,
                         "Trying to save an attachment without external storage?");
