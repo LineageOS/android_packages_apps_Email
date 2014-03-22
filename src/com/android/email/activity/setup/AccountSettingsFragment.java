@@ -1017,6 +1017,10 @@ public class AccountSettingsFragment extends PreferenceFragment
                 Settings.System.DEFAULT_NOTIFICATION_URI);
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, true);
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION);
+        // RingtoneManager#EXTRA_RINGTONE_DIALOG_THEME is hidden for the public api, and
+        // Email is not compiled through current CyanogenMod api, so jus use the action string
+        // instead the constant
+        intent.putExtra("android.intent.extra.ringtone.DIALOG_THEME", R.style.Theme_RingtoneDialog);
         startActivityForResult(intent, RINGTONE_REQUEST_CODE);
     }
 }

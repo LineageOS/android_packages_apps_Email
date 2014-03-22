@@ -46,5 +46,8 @@
         <item name="android:textColor">@color/account_setup_info_text_color</item>
     </style>
 
+    <style name="Theme.RingtoneDialog" parent="@*android:style/Theme.Holo.Light.Dialog.Alert">
+    </style>
+
 </resources>
 
