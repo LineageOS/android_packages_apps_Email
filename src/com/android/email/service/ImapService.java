@@ -106,18 +106,24 @@ public class ImapService extends Service {
      * We write this into the serverId field of messages that will never be upsynced.
      */
     private static final String LOCAL_SERVERID_PREFIX = "Local-";
-    private static final String ACTION_CHECK_MAIL = "com.android.email.intent.action.MAIL_SERVICE_WAKEUP";
-    private static final String EXTRA_ACCOUNT = "com.android.email.intent.extra.ACCOUNT";
+
+    private static final String EXTRA_ACCOUNT =
+            "com.android.email.intent.extra.ACCOUNT";
+    private static final String EXTRA_MESSAGE_ID =
+            "org.codeaurora.email.intent.extra.MESSAGE_ID";
+    private static final String EXTRA_MESSAGE_INFO =
+            "org.codeaurora.email.intent.extra.MESSAGE_INFO";
+
+    private static final String ACTION_CHECK_MAIL =
+            "com.android.email.intent.action.MAIL_SERVICE_WAKEUP";
     private static final String ACTION_DELETE_MESSAGE =
-        "org.codeaurora.email.intent.action.MAIL_SERVICE_DELETE_MESSAGE";
+            "org.codeaurora.email.intent.action.MAIL_SERVICE_DELETE_MESSAGE";
     private static final String ACTION_MOVE_MESSAGE =
-        "org.codeaurora.email.intent.action.MAIL_SERVICE_MOVE_MESSAGE";
+            "org.codeaurora.email.intent.action.MAIL_SERVICE_MOVE_MESSAGE";
     private static final String ACTION_MESSAGE_READ =
-        "org.codeaurora.email.intent.action.MAIL_SERVICE_MESSAGE_READ";
+            "org.codeaurora.email.intent.action.MAIL_SERVICE_MESSAGE_READ";
     private static final String ACTION_SEND_PENDING_MAIL =
-        "org.codeaurora.email.intent.action.MAIL_SERVICE_SEND_PENDING";
-    private static final String EXTRA_MESSAGE_ID = "org.codeaurora.email.intent.extra.MESSAGE_ID";
-    private static final String EXTRA_MESSAGE_INFO = "org.codeaurora.email.intent.extra.MESSAGE_INFO";
+            "org.codeaurora.email.intent.action.MAIL_SERVICE_SEND_PENDING";
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -129,83 +135,84 @@ public class ImapService extends Service {
         Context context = getApplicationContext();
         if (ACTION_CHECK_MAIL.equals(action)) {
             final long inboxId = Mailbox.findMailboxOfType(context, accountId,
-                Mailbox.TYPE_INBOX);
+                    Mailbox.TYPE_INBOX);
             if (Logging.LOGD) {
-               LogUtils.d(Logging.LOG_TAG,"accountId is " + accountId);
-               LogUtils.d(Logging.LOG_TAG,"inboxId is " + inboxId);
+                LogUtils.d(Logging.LOG_TAG, "accountId is " + accountId);
+                LogUtils.d(Logging.LOG_TAG, "inboxId is " + inboxId);
             }
-            if (accountId <= -1 || inboxId <= -1 ){
-               return START_NOT_STICKY;
+            if (accountId <= -1 || inboxId <= -1) {
+                return START_NOT_STICKY;
             }
             mBinder.init(context);
-            mBinder.requestSync(inboxId,true,0);
+            mBinder.requestSync(inboxId, true, 0);
         } else if (ACTION_DELETE_MESSAGE.equals(action)) {
             final long messageId = intent.getLongExtra(EXTRA_MESSAGE_ID, -1);
             if (Logging.LOGD) {
                 LogUtils.d(Logging.LOG_TAG, "action: Delete Message mail");
-                LogUtils.d(Logging.LOG_TAG, "action: delmsg "+messageId);
+                LogUtils.d(Logging.LOG_TAG, "action: delmsg " + messageId);
             }
-            if (accountId <= -1 || messageId <= -1 ){
-               return START_NOT_STICKY;
+            if (accountId <= -1 || messageId <= -1) {
+                return START_NOT_STICKY;
             }
             try {
                 mBinder.init(context);
                 mBinder.deleteMessage(messageId);
                 processPendingActionsSynchronous(context,
-                   Account.getAccountForMessageId(context, messageId));
-            } catch (Exception e){
-                LogUtils.d(Logging.LOG_TAG,"RemoteException " +e);
+                        Account.getAccountForMessageId(context, messageId));
+            } catch (Exception e) {
+                LogUtils.d(Logging.LOG_TAG, "RemoteException " + e);
             }
         } else if (ACTION_MESSAGE_READ.equals(action)) {
             final long messageId = intent.getLongExtra(EXTRA_MESSAGE_ID, -1);
             final int flagRead = intent.getIntExtra(EXTRA_MESSAGE_INFO, 0);
             if (Logging.LOGD) {
                 LogUtils.d(Logging.LOG_TAG, "action: Message Mark Read or UnRead ");
-                LogUtils.d(Logging.LOG_TAG, "action: delmsg "+messageId);
+                LogUtils.d(Logging.LOG_TAG, "action: delmsg " + messageId);
             }
-            if (accountId <= -1 || messageId <= -1 ) {
+            if (accountId <= -1 || messageId <= -1) {
                 return START_NOT_STICKY;
             }
             try {
-               mBinder.init(context);
-               mBinder.setMessageRead(messageId, (flagRead == 1)? true:false);
-               processPendingActionsSynchronous(context,
-                  Account.getAccountForMessageId(context, messageId));
-            } catch (Exception e){
-               LogUtils.d(Logging.LOG_TAG,"RemoteException " +e);
+                mBinder.init(context);
+                mBinder.setMessageRead(messageId, (flagRead == 1) ? true : false);
+                processPendingActionsSynchronous(context,
+                        Account.getAccountForMessageId(context, messageId));
+            } catch (Exception e) {
+                LogUtils.d(Logging.LOG_TAG, "RemoteException " + e);
             }
         } else if (ACTION_MOVE_MESSAGE.equals(action)) {
             final long messageId = intent.getLongExtra(EXTRA_MESSAGE_ID, -1);
-            final int  mailboxType = intent.getIntExtra(EXTRA_MESSAGE_INFO, Mailbox.TYPE_INBOX);
+            final int mailboxType = intent.getIntExtra(EXTRA_MESSAGE_INFO, Mailbox.TYPE_INBOX);
             final long mailboxId = Mailbox.findMailboxOfType(context, accountId, mailboxType);
             if (Logging.LOGD) {
                 LogUtils.d(Logging.LOG_TAG, "action:  Move Message mail");
-                LogUtils.d(Logging.LOG_TAG, "action: movemsg "+ messageId + "mailbox: " + mailboxType +
-                            "accountId: "+accountId + " mailboxId: " + mailboxId);
+                LogUtils.d(Logging.LOG_TAG, "action: movemsg " + messageId + "mailbox: "
+                        + mailboxType +
+                        "accountId: " + accountId + " mailboxId: " + mailboxId);
             }
-            if (accountId <= -1 || messageId <= -1 || mailboxId <= -1){
+            if (accountId <= -1 || messageId <= -1 || mailboxId <= -1) {
                 return START_NOT_STICKY;
             }
             try {
                 mBinder.init(context);
                 mBinder.MoveMessages(messageId, mailboxId);
                 processPendingActionsSynchronous(context,
-                    Account.getAccountForMessageId(context, messageId));
-            } catch (Exception e){
-               LogUtils.d(Logging.LOG_TAG,"RemoteException " +e);
+                        Account.getAccountForMessageId(context, messageId));
+            } catch (Exception e) {
+                LogUtils.d(Logging.LOG_TAG, "RemoteException " + e);
             }
         } else if (ACTION_SEND_PENDING_MAIL.equals(action)) {
             if (Logging.LOGD) {
-                LogUtils.d(Logging.LOG_TAG, "action: Send Pending Mail "+accountId);
+                LogUtils.d(Logging.LOG_TAG, "action: Send Pending Mail " + accountId);
             }
-            if (accountId <= -1 ) {
-                 return START_NOT_STICKY;
+            if (accountId <= -1) {
+                return START_NOT_STICKY;
             }
             try {
                 mBinder.init(context);
                 mBinder.sendMail(accountId);
             } catch (Exception e) {
-               LogUtils.e(Logging.LOG_TAG,"RemoteException " +e);
+                LogUtils.e(Logging.LOG_TAG, "RemoteException " + e);
             }
         }
 
