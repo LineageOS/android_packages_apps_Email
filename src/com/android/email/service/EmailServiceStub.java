@@ -120,21 +120,19 @@ public abstract class EmailServiceStub extends IEmailService.Stub implements IEm
 
     /**
      * Delete a single message by moving it to the trash, or really delete it if it's already in
-     * trash or a draft message.
-     *
-     * This function has no callback, no result reporting, because the desired outcome
-     * is reflected entirely by changes to one or more cursors.
+     * trash or a draft message. This function has no callback, no result reporting, because the
+     * desired outcome is reflected entirely by changes to one or more cursors.
      *
      * @param messageId The id of the message to "delete".
      */
-     public void deleteMessage(long messageId) {
-
+    public void deleteMessage(long messageId) {
         final EmailContent.Message message =
-            EmailContent.Message.restoreMessageWithId(mContext, messageId);
-         if (message == null) {
+                EmailContent.Message.restoreMessageWithId(mContext, messageId);
+        if (message == null) {
             if (Logging.LOGD) LogUtils.v(Logging.LOG_TAG, "dletMsg message NULL");
             return;
-         }
+        }
+
         // 1. Get the message's account
         final Account account = Account.restoreAccountWithId(mContext, message.mAccountKey);
         // 2. Get the message's original mailbox
@@ -143,60 +141,67 @@ public abstract class EmailServiceStub extends IEmailService.Stub implements IEm
             if (Logging.LOGD) LogUtils.v(Logging.LOG_TAG, "dletMsg account or mailbox NULL");
             return;
         }
-        if(Logging.LOGD)
-           LogUtils.d(Logging.LOG_TAG, "AccountKey "+account.mId + "oirigMailbix: "+mailbox.mId);
-        // 3. Confirm that there is a trash mailbox available.  If not, create one
-        Mailbox trashFolder =  Mailbox.restoreMailboxOfType(mContext, account.mId, Mailbox.TYPE_TRASH);
+        if (Logging.LOGD) {
+            LogUtils.d(Logging.LOG_TAG, "AccountKey " + account.mId + "oirigMailbix: "
+                    + mailbox.mId);
+        }
+
+        // 3. Confirm that there is a trash mailbox available. If not, create one
+        Mailbox trashFolder = Mailbox.restoreMailboxOfType(mContext, account.mId,
+                Mailbox.TYPE_TRASH);
         if (trashFolder == null) {
             if (Logging.LOGD) LogUtils.v(Logging.LOG_TAG, "dletMsg Trash mailbox NULL");
-        }else
-            LogUtils.d(Logging.LOG_TAG, "TrasMailbix: "+ trashFolder.mId);
-        // 4.  Drop non-essential data for the message (e.g. attachment files)
+        } else {
+            LogUtils.d(Logging.LOG_TAG, "TrasMailbix: " + trashFolder.mId);
+        }
+
+        // 4. Drop non-essential data for the message (e.g. attachment files)
         AttachmentUtilities.deleteAllAttachmentFiles(mContext, account.mId,
                 messageId);
 
+        // 5. Perform "delete" as appropriate
         Uri uri = ContentUris.withAppendedId(EmailContent.Message.SYNCED_CONTENT_URI,
                 messageId);
-
-        // 5. Perform "delete" as appropriate
         if ((mailbox.mId == trashFolder.mId) || (mailbox.mType == Mailbox.TYPE_DRAFTS)) {
             // 5a. Really delete it
-             mContext.getContentResolver().delete(uri, null, null);
+            mContext.getContentResolver().delete(uri, null, null);
         } else {
             // 5b. Move to trash
             ContentValues cv = new ContentValues();
             cv.put(EmailContent.MessageColumns.MAILBOX_KEY, trashFolder.mId);
-             mContext.getContentResolver().update(uri, cv, null, null);
+            mContext.getContentResolver().update(uri, cv, null, null);
         }
-        requestSync(mailbox.mId,true,0);
+
+        requestSync(mailbox.mId, true, 0);
     }
-/**
-     * Moves messages to a new mailbox.
-     *
-     * This function has no callback, no result reporting, because the desired outcome
-     * is reflected entirely by changes to one or more cursors.
-     *
-     * Note this method assumes all of the given message and mailbox IDs belong to the same
-     * account.
+
+    /**
+     * Moves messages to a new mailbox. This function has no callback, no result reporting, because
+     * the desired outcome is reflected entirely by changes to one or more cursors. Note this method
+     * assumes all of the given message and mailbox IDs belong to the same account.
      *
      * @param messageIds IDs of the messages that are to be moved
      * @param newMailboxId ID of the new mailbox that the messages will be moved to
      * @return an asynchronous task that executes the move (for testing only)
      */
-     public void MoveMessages(long messageId, long newMailboxId) {
+    public void MoveMessages(long messageId, long newMailboxId) {
         Account account = Account.getAccountForMessageId(mContext, messageId);
         if (account != null) {
-            if (Logging.LOGD)
-               LogUtils.d(Logging.LOG_TAG, "moveMessage Acct "+account.mId + "messageId:" + messageId);
+            if (Logging.LOGD) {
+                LogUtils.d(Logging.LOG_TAG, "moveMessage Acct " + account.mId + "messageId:"
+                        + messageId);
+            }
             ContentValues cv = new ContentValues();
             cv.put(EmailContent.MessageColumns.MAILBOX_KEY, newMailboxId);
             ContentResolver resolver = mContext.getContentResolver();
             Uri uri = ContentUris.withAppendedId(
-                EmailContent.Message.SYNCED_CONTENT_URI, messageId);
+                    EmailContent.Message.SYNCED_CONTENT_URI, messageId);
             resolver.update(uri, cv, null, null);
-        } else
+        } else {
             LogUtils.d(Logging.LOG_TAG, "moveMessage Cannot find account");
-     }
+        }
+    }
+
     /**
      * Set/clear boolean columns of a message
      *
