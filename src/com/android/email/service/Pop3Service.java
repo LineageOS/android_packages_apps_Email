@@ -40,6 +40,7 @@ import com.android.email2.ui.MailActivityEmail;
 import com.android.emailcommon.Logging;
 import com.android.emailcommon.TrafficFlags;
 import com.android.emailcommon.mail.AuthenticationFailedException;
+import com.android.emailcommon.mail.Flag;
 import com.android.emailcommon.mail.Folder.OpenMode;
 import com.android.emailcommon.mail.MessagingException;
 import com.android.emailcommon.provider.Account;
@@ -67,6 +68,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+
+import android.text.TextUtils;
 
 public class Pop3Service extends Service {
     private static final String TAG = "Pop3Service";
@@ -135,6 +138,52 @@ public class Pop3Service extends Service {
 
         @Override
         public void loadMore(long messageId) throws RemoteException {
+            LogUtils.i(TAG, "Try to load more content for message: " + messageId);
+            try {
+                final Message message = Message.restoreMessageWithId(mContext, messageId);
+                if (message == null || message.mFlagLoaded == Message.FLAG_LOADED_COMPLETE) {
+                    return;
+                }
+
+                // Open the remote folder.
+                final Account account = Account.restoreAccountWithId(mContext, message.mAccountKey);
+                final Mailbox mailbox = Mailbox.restoreMailboxWithId(mContext, message.mMailboxKey);
+                if (account == null || mailbox == null) {
+                    return;
+                }
+                TrafficStats.setThreadStatsTag(TrafficFlags.getSyncFlags(mContext, account));
+
+                final Pop3Store remoteStore = (Pop3Store) Store.getInstance(account, mContext);
+                final String remoteServerId;
+                // If this is a search result, use the protocolSearchInfo field to get the
+                // correct remote location
+                if (!TextUtils.isEmpty(message.mProtocolSearchInfo)) {
+                    remoteServerId = message.mProtocolSearchInfo;
+                } else {
+                    remoteServerId = mailbox.mServerId;
+                }
+                final Pop3Folder remoteFolder = (Pop3Folder) remoteStore.getFolder(remoteServerId);
+                remoteFolder.open(OpenMode.READ_WRITE);
+
+                // Download the entire message
+                final Pop3Message remoteMessage = (Pop3Message) remoteFolder
+                        .getMessage(message.mServerId);
+                remoteFolder.fetchBody(remoteMessage, -1 /* entire mail */, null);
+
+                if (message.mFlagSeen) {
+                    // Set the SEEN flag to this message as it must be read.
+                    remoteMessage.setFlag(Flag.SEEN, true);
+                }
+                // Store the updated message locally and mark it fully loaded
+                Utilities.copyOneMessageToProvider(mContext, remoteMessage, account, mailbox,
+                        EmailContent.Message.FLAG_LOADED_COMPLETE);
+            } catch (MessagingException me) {
+                LogUtils.d(Logging.LOG_TAG, "Pop3Service loadMore: ", me);
+            } catch (RuntimeException rte) {
+                LogUtils.d(Logging.LOG_TAG, "Pop3Service loadMore: ", rte);
+            } catch (IOException ioe) {
+                LogUtils.d(Logging.LOG_TAG, "Pop3Service loadMore: ", ioe);
+            }
         }
     };
 
@@ -426,7 +475,7 @@ public class Pop3Service extends Service {
                 // localMessage == null -> message has never been created (not even headers)
                 // mFlagLoaded != FLAG_LOADED_COMPLETE -> message failed to sync completely
                 if (localMessage == null ||
-                        (localMessage.mFlagLoaded != EmailContent.Message.FLAG_LOADED_COMPLETE &&
+                        (localMessage.mFlagLoaded != Message.FLAG_LOADED_COMPLETE &&
                                 localMessage.mFlagLoaded != Message.FLAG_LOADED_PARTIAL)) {
                     LogUtils.d(Logging.LOG_TAG, "need to sync " + uid);
                     unsyncedMessages.add(message);
