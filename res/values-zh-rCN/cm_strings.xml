@@ -34,7 +34,7 @@
   <string name="account_settings_sync_size_enable_summary">您可以自定义该账户中的邮件的同步缓存大小，从而节约数据流量</string>
   <string name="account_settings_sync_size_label">选择同步缓存大小</string>
   <string name="account_settings_sync_size_category_label">同步缓存大小配置</string>
-  <string name="account_setup_options_mail_sync_size_all">同步整封邮件</string>
+  <string name="account_setup_options_mail_sync_size_all">全部</string>
   <string name="account_setup_options_mail_sync_size_20k">20KB</string>
   <string name="account_setup_options_mail_sync_size_100k">100KB</string>
   <string name="account_setup_options_mail_sync_size_200k">200KB</string>

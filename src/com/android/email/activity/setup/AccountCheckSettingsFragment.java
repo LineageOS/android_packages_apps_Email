@@ -869,11 +869,9 @@ public class AccountCheckSettingsFragment extends Fragment {
             super.onCancel(dialog);
             final AccountCheckSettingsFragment target =
                     (AccountCheckSettingsFragment) getTargetFragment();
-            //Show edit settings fragment if user
-            //cancels the error dialog
+            // Show edit settings fragment if user cancels the error dialog
             target.onErrorDialogEditButton();
         }
-
     }
 
     /**

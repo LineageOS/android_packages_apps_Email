@@ -92,7 +92,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             >
             <CheckBox
                 android:id="@+id/account_sync_size_enable"
@@ -101,9 +101,10 @@
                 android:text="@string/account_settings_sync_size_enable" />
             <Spinner
                 android:id="@+id/account_sync_size"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:visibility="gone" />
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:visibility="invisible" />
         </LinearLayout>
 
         <include layout="@layout/account_setup_buttons" />
