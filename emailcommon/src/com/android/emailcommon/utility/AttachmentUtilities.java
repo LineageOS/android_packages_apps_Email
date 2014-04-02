@@ -401,16 +401,29 @@ public class AttachmentUtilities {
         long attachmentId = attachment.mId;
         long accountId = attachment.mAccountKey;
         String contentUri = null;
-        long size;
+        long size = attachment.mSize;
         try {
             ContentResolver resolver = context.getContentResolver();
-            if (attachment.mUiState != UIProvider.AttachmentState.SAVED) {
+            // As we changed the save attachment process to use the cached content first,
+            // if the cached do not exist, we will try to download it. Then under this case
+            // we need save the content to cache and external both.
+            boolean savedToCache = false;
+            if (!Utility.attachmentExists(context, attachment)) {
                 Uri attUri = getAttachmentUri(accountId, attachmentId);
                 size = copyFile(in, resolver.openOutputStream(attUri));
                 contentUri = attUri.toString();
+                savedToCache = true;
             }
-            if (attachment.mUiDestination == UIProvider.AttachmentDestination.EXTERNAL
-                    && Utility.isExternalStorageMounted()) {
+
+            // If the destination is cache, we will do nothing, but if it is external,
+            // we will try to save the content to external again.
+            if (attachment.mUiDestination == UIProvider.AttachmentDestination.CACHE) {
+                if (!savedToCache) {
+                    LogUtils.w(Logging.LOG_TAG,
+                            "Trying to save an attachment to cache, but do not saved?");
+                    throw new IOException();
+                }
+            } else if (Utility.isExternalStorageMounted()) {
                 if (attachment.mFileName == null) {
                     // TODO: This will prevent a crash but does not surface the underlying problem
                     // to the user correctly.
@@ -422,8 +435,7 @@ public class AttachmentUtilities {
                         Environment.DIRECTORY_DOWNLOADS);
                 downloads.mkdirs();
                 File file = Utility.createUniqueFile(downloads, attachment.mFileName);
-                Uri attUri = getAttachmentUri(accountId, attachmentId);
-                size = copyFile(resolver.openInputStream(attUri), new FileOutputStream(file));
+                size = copyFile(in, new FileOutputStream(file));
                 String absolutePath = file.getAbsolutePath();
 
                 // Although the download manager can scan media files, scanning only happens

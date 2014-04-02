@@ -135,7 +135,7 @@ public class AccountSetupOptions extends AccountSetupActivity implements OnClick
         mSyncSizeEnableView.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mSyncSizeView.setVisibility(isChecked ? View.VISIBLE : View.GONE);
+                mSyncSizeView.setVisibility(isChecked ? View.VISIBLE : View.INVISIBLE);
             }
         });
         buildSyncSizeSpinner(account);
@@ -144,7 +144,7 @@ public class AccountSetupOptions extends AccountSetupActivity implements OnClick
             mSyncSizeView.setVisibility(View.VISIBLE);
         } else {
             mSyncSizeEnableView.setChecked(false);
-            mSyncSizeView.setVisibility(View.GONE);
+            mSyncSizeView.setVisibility(View.INVISIBLE);
         }
 
         mNotifyView.setChecked(true); // By default, we want notifications on

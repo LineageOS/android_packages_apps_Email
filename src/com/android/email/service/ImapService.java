@@ -34,7 +34,6 @@ import android.text.format.DateUtils;
 import com.android.email.LegacyConversions;
 import com.android.email.NotificationController;
 import com.android.email.mail.Store;
-import com.android.email.mail.store.imap.ImapConstants;
 import com.android.email.provider.Utilities;
 import com.android.email2.ui.MailActivityEmail;
 import com.android.emailcommon.Logging;
@@ -225,6 +224,7 @@ public class ImapService extends Service {
     private final EmailServiceStub mBinder = new EmailServiceStub() {
         @Override
         public void loadMore(long messageId) throws RemoteException {
+            LogUtils.i(TAG, "Try to load more content for message: " + messageId);
             try {
                 final EmailContent.Message message =
                         EmailContent.Message.restoreMessageWithId(mContext, messageId);
@@ -255,11 +255,12 @@ public class ImapService extends Service {
 
                 // Download the entire message
                 final Message remoteMessage = remoteFolder.getMessage(message.mServerId);
-                loadEntireViewableContent(mContext, account, remoteFolder, remoteMessage, mailbox);
+                loadEntireViewableContent(mContext, account, remoteFolder, remoteMessage, mailbox,
+                        message.mFlagSeen);
             } catch (MessagingException me) {
-                if (Logging.LOGD) LogUtils.v(Logging.LOG_TAG, "", me);
+                LogUtils.v(Logging.LOG_TAG, "ImapService loadMore: ", me);
             } catch (RuntimeException rte) {
-                LogUtils.d(Logging.LOG_TAG, "RTE During loadMore");
+                LogUtils.d(Logging.LOG_TAG, "ImapService loadMore: ", rte);
             }
         }
 
@@ -368,7 +369,7 @@ public class ImapService extends Service {
      * @throws MessagingException
      */
     static void loadEntireViewableContent(final Context context, final Account account,
-                Folder remoteFolder, Message message, final Mailbox toMailbox)
+                Folder remoteFolder, Message message, final Mailbox toMailbox, boolean seen)
                 throws MessagingException {
         FetchProfile fp = new FetchProfile();
         fp.add(FetchProfile.Item.STRUCTURE);
@@ -381,9 +382,16 @@ public class ImapService extends Service {
         MimeUtility.collectParts(message, viewables, attachments);
         // Download the viewables immediately
         for (Part part : viewables) {
-            fp.clear();
-            fp.add(part);
-            remoteFolder.fetch(oneMessageArray, fp, null);
+            if (part.getMimeType().startsWith("text")) {
+                fp.clear();
+                fp.add(part);
+                remoteFolder.fetch(oneMessageArray, fp, null);
+            }
+        }
+
+        if (seen) {
+            // Set the SEEN flag to this message as it must be read.
+            message.setFlag(Flag.SEEN, true);
         }
         // Store the updated message locally and mark it fully loaded
         Utilities.copyOneMessageToProvider(context, message, account, toMailbox,
@@ -425,8 +433,7 @@ public class ImapService extends Service {
                 fp.add(part);
                 // We will only try to limit the sync size for text part.
                 if (account.getSyncSize() != SyncSize.SYNC_SIZE_ENTIRE_MAIL
-                        && part.getMimeType().toLowerCase()
-                                .contains(ImapConstants.TEXT.toLowerCase())) {
+                        && part.getMimeType().startsWith("text")) {
                     LogUtils.d(Logging.LOG_TAG, "Try to fetch the text part as limit the size"
                             + ", part size: " + part.getSize()
                             + ", allow sync size: " + allowSyncSize);
@@ -437,7 +444,7 @@ public class ImapService extends Service {
                         // If the allow sync size is less than 0, it means this part needn't sync.
                         if (allowSyncSize <= 0) continue;
                     }
-                    // Try to sync the viewables part, we need set the allow sync size for fp.
+                    // Try to sync the viewable part, we need set the allow sync size for fp.
                     fp.setAllowSyncSize(allowSyncSize);
                     allowSyncSize = allowSyncSize - part.getSize();
                 }

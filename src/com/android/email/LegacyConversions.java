@@ -21,6 +21,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.text.TextUtils;
 
 import com.android.emailcommon.Logging;
 import com.android.emailcommon.internet.MimeBodyPart;
@@ -276,7 +277,10 @@ public class LegacyConversions {
             localMessage.mAttachments = new ArrayList<Attachment>();
         }
         localMessage.mAttachments.add(localAttachment);
-        localMessage.mFlagAttachment = true;
+        if (TextUtils.isEmpty(localAttachment.mContentId)) {
+            // This isn't the viewable part, set the local message has attachment.
+            localMessage.mFlagAttachment = true;
+        }
     }
 
     /**
