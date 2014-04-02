@@ -21,6 +21,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.text.TextUtils;
 
 import com.android.email.LegacyConversions;
 import com.android.emailcommon.Logging;
@@ -128,6 +129,7 @@ public class Utilities {
                 ArrayList<Part> attachments = new ArrayList<Part>();
                 MimeUtility.collectParts(message, viewables, attachments);
 
+                addViewableImagesToAttachments(viewables, attachments);
                 final ConversionUtilities.BodyFieldData data =
                         ConversionUtilities.parseBodyFields(viewables);
 
@@ -140,17 +142,20 @@ public class Utilities {
                 body.mTextReply = data.textReply;
                 body.mIntroText = data.introText;
 
-                // Commit the message & body to the local store immediately
+                // Commit the message to the local store immediately
                 saveOrUpdate(localMessage, context);
                 body.mMessageKey = localMessage.mId;
-                saveOrUpdate(body, context);
 
-                // process (and save) attachments
+                // process (and save) attachments(include the viewable parts)
                 if (loadStatus != EmailContent.Message.FLAG_LOADED_PARTIAL
                         && loadStatus != EmailContent.Message.FLAG_LOADED_UNKNOWN) {
                     // TODO(pwestbro): What should happen with unknown status?
                     LegacyConversions.updateAttachments(context, localMessage, attachments);
-                } else {
+                }
+
+                // if the message didn't loaded complete, add a dummy attachment.
+                if (loadStatus == EmailContent.Message.FLAG_LOADED_PARTIAL
+                        || loadStatus == EmailContent.Message.FLAG_LOADED_PARTIAL_COMPLETE) {
                     EmailContent.Attachment att = new EmailContent.Attachment();
                     // Since we haven't actually loaded the attachment, we're just putting
                     // a dummy placeholder here. When the user taps on it, we'll load the attachment
@@ -175,8 +180,16 @@ public class Utilities {
                     att.mAccountKey = localMessage.mAccountKey;
                     att.mFlags = Attachment.FLAG_DUMMY_ATTACHMENT;
                     att.save(context);
-                    localMessage.mFlagAttachment = true;
+                    // localMessage.mFlagAttachment = true;
                 }
+
+                // update the message's body according to the viewable parts, then commit it.
+                String newContent = EmailContent.Message.updateHTMLContentForInlineAtts(context,
+                        body.mHtmlContent, body.mMessageKey);
+                if (newContent != null) {
+                    body.mHtmlContent = newContent;
+                }
+                saveOrUpdate(body, context);
 
                 // One last update of message with two updated flags
                 localMessage.mFlagLoaded = loadStatus;
@@ -191,7 +204,6 @@ public class Utilities {
             } catch (MessagingException me) {
                 LogUtils.e(Logging.LOG_TAG, "Error while copying downloaded message." + me);
             }
-
         } catch (RuntimeException rte) {
             LogUtils.e(Logging.LOG_TAG, "Error while storing downloaded message." + rte.toString());
         } catch (IOException ioe) {
@@ -207,4 +219,15 @@ public class Utilities {
         }
     }
 
+    private static void addViewableImagesToAttachments(ArrayList<Part> viewables,
+            ArrayList<Part> attachments) throws MessagingException {
+        for (Part part : viewables) {
+            String mimeType = part.getMimeType();
+            if (mimeType != null && mimeType.startsWith("image")) {
+                // save this viewable image as the attachment.
+                attachments.add(part);
+                LogUtils.d(Logging.LOG_TAG, "Transfer this viewable image as attachment.");
+            }
+        }
+    }
 }

@@ -30,9 +30,11 @@ import android.os.Environment;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.RemoteException;
+import android.text.TextUtils;
 
 import com.android.emailcommon.utility.TextUtilities;
 import com.android.emailcommon.utility.Utility;
+import com.android.emailcommon.Logging;
 import com.android.emailcommon.R;
 import com.android.mail.providers.UIProvider;
 import com.android.mail.utils.LogUtils;
@@ -1181,6 +1183,38 @@ public abstract class EmailContent {
                 selection.append(" AND ").append(Message.FLAG_LOADED_SELECTION);
             }
             return selection.toString();
+        }
+
+        /**
+         * Update the HTML content if there is in-line or viewable parts of this message.
+         *
+         * @param context
+         * @param htmlContent
+         * @param msgId
+         * @return null if do not update
+         */
+        public static String updateHTMLContentForInlineAtts(Context context,
+                String htmlContent, long msgId) {
+            if (TextUtils.isEmpty(htmlContent) || msgId < 1) return null;
+
+            boolean update = false;
+            Attachment[] attachments = Attachment.restoreAttachmentsWithMessageId(context, msgId);
+            for (Attachment att : attachments) {
+                if (TextUtils.isEmpty(att.mContentId)) continue;
+
+                // This attachment is viewable part, need update the body content.
+                if (TextUtils.isEmpty(att.getContentUri())) {
+                    LogUtils.e(Logging.LOG_TAG, "Found one inline att, but contentUri is null.");
+                    continue;
+                }
+
+                // update the contents.
+                String contentIdRe = "\\s+(?i)src=\"cid(?-i):\\Q" + att.mContentId + "\\E\"";
+                String srcContentUri = " src=\"" + att.getContentUri() + "\"";
+                htmlContent = htmlContent.replaceAll(contentIdRe, srcContentUri);
+                update = true;
+            }
+            return update ? htmlContent : null;
         }
 
         public void setFlags(boolean quotedReply, boolean quotedForward) {

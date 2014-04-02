@@ -47,7 +47,7 @@
     <string name="account_settings_sync_size_label">Choose sync size</string>
     <string name="account_settings_sync_size_category_label">Sync size settings</string>
 
-    <string name="account_setup_options_mail_sync_size_all">Sync entire mail</string>
+    <string name="account_setup_options_mail_sync_size_all">Entire</string>
     <string name="account_setup_options_mail_sync_size_20k">20KB</string>
     <string name="account_setup_options_mail_sync_size_100k">100KB</string>
     <string name="account_setup_options_mail_sync_size_200k">200KB</string>
