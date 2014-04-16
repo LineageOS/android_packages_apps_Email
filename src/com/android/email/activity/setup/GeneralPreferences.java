@@ -17,6 +17,7 @@
 package com.android.email.activity.setup;
 
 import android.content.ContentResolver;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
@@ -28,12 +29,12 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-
 import com.android.email.Preferences;
 import com.android.email.R;
 import com.android.email.provider.EmailProvider;
 import com.android.mail.preferences.MailPrefs;
 import com.android.mail.ui.settings.ClearPictureApprovalsDialogFragment;
+import com.android.mail.utils.Utils;
 
 public class GeneralPreferences extends PreferenceFragment implements
         OnPreferenceChangeListener {
@@ -177,6 +178,12 @@ public class GeneralPreferences extends PreferenceFragment implements
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
         inflater.inflate(R.menu.general_prefs_fragment_menu, menu);
+        MenuItem feedbackMenuItem = menu.findItem(R.id.feedback_menu_item);
+        Uri feedbackUri = Utils.getValidUri(getString(R.string.email_feedback_uri));
+
+        if (feedbackMenuItem != null) {
+            feedbackMenuItem.setVisible(!Uri.EMPTY.equals(feedbackUri));
+        }
     }
 
     @Override
