@@ -110,6 +110,15 @@ public class PopImapSyncAdapterService extends Service {
         String protocol = account.getProtocol(context);
         if ((mailbox.mType != Mailbox.TYPE_OUTBOX) &&
                 !loadsFromServer(context, mailbox, protocol)) {
+            // Clear our sync state and update sync time.
+            EmailServiceStatus.syncMailboxStatus(resolver, extras, mailboxId,
+                    EmailServiceStatus.SUCCESS, 0, UIProvider.LastSyncResult.SUCCESS);
+
+            ContentValues values = new ContentValues();
+            values.put(Mailbox.UI_SYNC_STATUS, EmailContent.SYNC_STATUS_NONE);
+            values.put(Mailbox.SYNC_TIME, System.currentTimeMillis());
+            mailbox.update(context, values);
+
             // This is an update to a message in a non-syncing mailbox; delete this from the
             // updates table and return
             resolver.delete(Message.UPDATED_CONTENT_URI, Message.MAILBOX_KEY + "=?",
