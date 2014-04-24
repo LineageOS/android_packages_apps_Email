@@ -65,4 +65,5 @@
     <string name="general_preference_select_recipients_label">Select recipients from Contact</string>
     <!-- General preference: Label of the setting for confirm before forward CHAR LIMIT=32] -->
     <string name="general_preference_confirm_forward_label">Confirm before forwarding</string>
+    <string name="general_preference_confirm_forward_summary">If the message to forward contains one or more attachments, downloading needs to be prior to sending</string>
 </resources>
