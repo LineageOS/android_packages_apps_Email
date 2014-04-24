@@ -73,7 +73,8 @@
             android:key="confirm_forward"
             android:persistent="true"
             android:defaultValue="false"
-            android:title="@string/general_preference_confirm_forward_label" />
+            android:title="@string/general_preference_confirm_forward_label"
+            android:summary="@string/general_preference_confirm_forward_summary" />
 
         <CheckBoxPreference
             android:key="add_attachment"
