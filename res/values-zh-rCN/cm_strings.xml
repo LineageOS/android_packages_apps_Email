@@ -45,4 +45,5 @@
   <string name="general_preference_add_attachment_label">添加任意文件为附件</string>
   <string name="general_preference_select_recipients_label">从联系人中选择收件人</string>
   <string name="general_preference_confirm_forward_label">转发前先确认</string>
+  <string name="general_preference_confirm_forward_summary">如果邮件中包含一个或者多个附件，转发邮件之前系统需要先下载附件</string>
 </resources>
