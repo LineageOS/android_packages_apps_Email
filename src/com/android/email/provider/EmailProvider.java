@@ -4299,14 +4299,25 @@ public class EmailProvider extends ContentProvider {
                     c = getVirtualMailboxCursor(mailboxId);
                     notifyUri = UIPROVIDER_FOLDER_NOTIFIER.buildUpon().appendPath(id).build();
                 } else {
-                    c = db.rawQuery(genQueryMailbox(uiProjection, id), new String[]{id});
-                    final List<String> projectionList = Arrays.asList(uiProjection);
-                    final int nameColumn = projectionList.indexOf(UIProvider.FolderColumns.NAME);
-                    final int typeColumn = projectionList.indexOf(UIProvider.FolderColumns.TYPE);
-                    if (c.moveToFirst()) {
-                        c = getUiFolderCursorRowFromMailboxCursorRow(
-                                new MatrixCursorWithCachedColumns(uiProjection),
-                                uiProjection.length, c, nameColumn, typeColumn);
+                    final Cursor cMailbox = db.rawQuery(genQueryMailbox(uiProjection, id),
+                            new String[] {
+                                id
+                            });
+                    try {
+                        final List<String> projectionList = Arrays.asList(uiProjection);
+                        final int nameColumn = projectionList
+                                .indexOf(UIProvider.FolderColumns.NAME);
+                        final int typeColumn = projectionList
+                                .indexOf(UIProvider.FolderColumns.TYPE);
+                        if (cMailbox.moveToFirst()) {
+                            c = getUiFolderCursorRowFromMailboxCursorRow(
+                                    new MatrixCursorWithCachedColumns(uiProjection),
+                                    uiProjection.length, cMailbox, nameColumn, typeColumn);
+                        } else {
+                            c = null;
+                        }
+                    } finally {
+                        cMailbox.close();
                     }
                     notifyUri = UIPROVIDER_FOLDER_NOTIFIER.buildUpon().appendPath(id).build();
                 }
