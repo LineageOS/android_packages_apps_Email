@@ -16,8 +16,8 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="account_settings_notify_every_message_label">新着メールごとに通知する</string>
-  <string name="account_setup_options_mail_check_frequency_2hour">2時間ごと</string>
-  <string name="account_setup_options_mail_check_frequency_4hour">4時間ごと</string>
-  <string name="account_setup_options_mail_check_frequency_1day">毎日</string>
+  <string name="account_settings_notify_every_message_label">Notificar todas as mensaxes</string>
+  <string name="account_setup_options_mail_check_frequency_2hour">Cada 2 horas</string>
+  <string name="account_setup_options_mail_check_frequency_4hour">Cada 4 horas</string>
+  <string name="account_setup_options_mail_check_frequency_1day">Cada día</string>
 </resources>

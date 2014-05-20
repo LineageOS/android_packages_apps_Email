@@ -15,7 +15,7 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="account_settings_notify_every_message_label">Обавести за сваку поруку</string>
   <string name="account_setup_options_mail_check_frequency_2hour">Свака 2 сата</string>
   <string name="account_setup_options_mail_check_frequency_4hour">Свака 4 сата</string>
