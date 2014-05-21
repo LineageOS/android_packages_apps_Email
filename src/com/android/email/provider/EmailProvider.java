@@ -3068,7 +3068,8 @@ public class EmailProvider extends ContentProvider {
 
         // If the configuration states that feedback is supported, add that capability
         final Resources res = context.getResources();
-        if (res.getBoolean(R.bool.feedback_supported)) {
+        Uri feedbackUri = Utils.getValidUri(res.getString(R.string.email_feedback_uri));
+        if (res.getBoolean(R.bool.feedback_supported) && !Uri.EMPTY.equals(feedbackUri)) {
             capabilities |= UIProvider.AccountCapabilities.SEND_FEEDBACK;
         }
         // TODO: Should this be stored per-account, or some other mechanism?
