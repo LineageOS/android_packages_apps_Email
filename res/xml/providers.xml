@@ -343,21 +343,21 @@
 
     <!-- Germany -->
     <provider id="freenet" label="Freenet" domain="freenet.de">
-        <incoming uri="pop3://mx.freenet.de" username="$user" />
+        <incoming uri="imap+ssl://mx.freenet.de" username="$user" />
         <outgoing uri="smtp+ssl://mx.freenet.de" username="$email" />
     </provider>
     <provider id="gmx" label="GMX" domain="gmx.de">
-        <incoming uri="pop3://pop.gmx.net" username="$email" />
-        <outgoing uri="smtp://mail.gmx.net" username="$email" />
+        <incoming uri="imap+ssl://imap.gmx.net" username="$email" />
+        <outgoing uri="smtp+tls+://mail.gmx.net" username="$email" />
     </provider>
     <provider id="T-Online" label="T-Online" domain="t-online.de"
               note="@string/provider_note_t_online">
-        <incoming uri="pop3://popmail.t-online.de" username="$email" />
-        <outgoing uri="smtp://smtpmail.t-online.de" username="$email" />
+        <incoming uri="imap+ssl://imap.t-online.de" username="$email" />
+        <outgoing uri="smtp+ssl://securesmtp.t-online.de" username="$email" />
     </provider>
     <provider id="web.de" label="Web.de" domain="web.de">
-        <incoming uri="pop3://pop3.web.de" username="$user" />
-        <outgoing uri="smtp://smtp.web.de" username="$user" />
+        <incoming uri="imap+ssl://imap.web.de" username="$user" />
+        <outgoing uri="smtp+tls+://smtp.web.de" username="$user" />
     </provider>
 
     <!-- Poland -->
