@@ -155,7 +155,10 @@ public class AccountSetupNames extends AccountSetupActivity {
             @Override
             public void onSuccess(String result) {
                 // Views can only be modified on the main thread.
-                mName.setText(result);
+                // Get the name from database,if name is not null,set it into text view.
+                if (!TextUtils.isEmpty(result)) {
+                    mName.setText(result);
+                }
             }
         }.executeParallel((Void[]) null);
     }
