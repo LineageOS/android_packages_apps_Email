@@ -17,7 +17,7 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="account_settings_notify_every_message_label">Informuoti dėl kiekvieno pranešimo</string>
-  <string name="account_setup_options_mail_check_frequency_2hour">Kas 2 valandas</string>
-  <string name="account_setup_options_mail_check_frequency_4hour">Kas 4 valandas</string>
+  <string name="account_setup_options_mail_check_frequency_2hour">Kas 2 val.</string>
+  <string name="account_setup_options_mail_check_frequency_4hour">Kas 4 val.</string>
   <string name="account_setup_options_mail_check_frequency_1day">Kas dieną</string>
 </resources>
