@@ -1294,6 +1294,13 @@ public class EmailProvider extends ContentProvider {
                     id = uri.getPathSegments().get(2);
                     c = uiQuickResponseAccount(projection, id);
                     break;
+                case ATTACHMENTS_CACHED_FILE_ACCESS:
+                    // The cachedFile in the database is saved as URI of AttachmentProvider
+                    final String AUTHORITY = "com.android.email.attachmentprovider";
+                    final String where = AttachmentColumns.CACHED_FILE + " = \""
+                            + uri.toString().replace(EmailContent.AUTHORITY, AUTHORITY) + "\"";
+                    c = db.query(tableName, projection, where, null, null, null, null, limit);
+                    break;
                 default:
                     throw new IllegalArgumentException("Unknown URI " + uri);
             }
@@ -1310,8 +1317,8 @@ public class EmailProvider extends ContentProvider {
                 // TODO: There are actually cases where c == null is expected, for example
                 // UI_FOLDER_LOAD_MORE.
                 // Demoting this to a warning for now until we figure out what to do with it.
-                LogUtils.w(TAG, "Query returning null for uri: " + uri + ", selection: "
-                        + selection);
+                LogUtils.w(TAG, "Query returning null for uri: %s, selection: %s",
+                        uri.toString(), selection);
             }
         }
 
@@ -4443,9 +4450,11 @@ public class EmailProvider extends ContentProvider {
         att.setContentUri(uiAtt.contentUri.toString());
 
         if (!TextUtils.isEmpty(cachedFile)) {
+            // Since URI of EmailProvider is not allowed to share, use AttachmentProvider instead.
+            final String AUTHORITY = "com.android.email.attachmentprovider";
             // Generate the content provider uri for this cached file
             final Uri.Builder cachedFileBuilder = Uri.parse(
-                    "content://" + EmailContent.AUTHORITY + "/attachment/cachedFile").buildUpon();
+                    "content://" + AUTHORITY + "/attachment/cachedFile").buildUpon();
             cachedFileBuilder.appendQueryParameter(Attachment.CACHED_FILE_QUERY_PARAM, cachedFile);
             att.setCachedFileUri(cachedFileBuilder.build().toString());
         }
