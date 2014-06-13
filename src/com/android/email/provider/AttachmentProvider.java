@@ -21,6 +21,7 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.graphics.Bitmap;
@@ -74,8 +75,14 @@ public class AttachmentProvider extends ContentProvider {
     private static final String[] PROJECTION_QUERY = new String[] { AttachmentColumns.FILENAME,
             AttachmentColumns.SIZE, AttachmentColumns.CONTENT_URI };
 
+    private static final int ATTACHMENTS_CACHED_FILE_ACCESS = 1;
+    private static final String AUTHORITY = "com.android.email.attachmentprovider";
+    private static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+
     @Override
     public boolean onCreate() {
+        sURIMatcher.addURI(AUTHORITY, "attachment/cachedFile", ATTACHMENTS_CACHED_FILE_ACCESS);
+
         /*
          * We use the cache dir as a temporary directory (since Android doesn't give us one) so
          * on startup we'll clean up any .tmp files from the last run.
@@ -105,11 +112,13 @@ public class AttachmentProvider extends ContentProvider {
         try {
             List<String> segments = uri.getPathSegments();
             String id = segments.get(1);
-            String format = segments.get(2);
+            int match = sURIMatcher.match(uri);
+            String format = (match == ATTACHMENTS_CACHED_FILE_ACCESS) ? null : segments.get(2) ;
             if (AttachmentUtilities.FORMAT_THUMBNAIL.equals(format)) {
                 return "image/png";
             } else {
-                uri = ContentUris.withAppendedId(Attachment.CONTENT_URI, Long.parseLong(id));
+                uri = (match == ATTACHMENTS_CACHED_FILE_ACCESS) ? rebuildUri(uri)
+                        : ContentUris.withAppendedId(Attachment.CONTENT_URI, Long.parseLong(id));
                 Cursor c = getContext().getContentResolver().query(uri, MIME_TYPE_PROJECTION, null,
                         null, null);
                 try {
@@ -142,6 +151,15 @@ public class AttachmentProvider extends ContentProvider {
      */
     @Override
     public ParcelFileDescriptor openFile(Uri uri, String mode) throws FileNotFoundException {
+        int match = sURIMatcher.match(uri);
+        if (match == ATTACHMENTS_CACHED_FILE_ACCESS) {
+            long callingId = Binder.clearCallingIdentity();
+            try {
+                return getContext().getContentResolver().openFileDescriptor(rebuildUri(uri), "r");
+            } finally{
+                Binder.restoreCallingIdentity(callingId);
+            }
+        }
         // If this is a write, the caller must have the EmailProvider permission, which is
         // based on signature only
         if (mode.equals("w")) {
@@ -248,25 +266,35 @@ public class AttachmentProvider extends ContentProvider {
             String sortOrder) {
         long callingId = Binder.clearCallingIdentity();
         try {
+            int match = sURIMatcher.match(uri);
             if (projection == null) {
                 projection =
                     new String[] {
                         Columns._ID,
                         Columns.DATA,
+                        Columns.DISPLAY_NAME,
+                        Columns.SIZE,
                 };
             }
 
             List<String> segments = uri.getPathSegments();
             String accountId = segments.get(0);
             String id = segments.get(1);
-            String format = segments.get(2);
             String name = null;
             int size = -1;
             String contentUri = null;
+            Cursor c = null;
 
-            uri = ContentUris.withAppendedId(Attachment.CONTENT_URI, Long.parseLong(id));
-            Cursor c = getContext().getContentResolver().query(uri, PROJECTION_QUERY,
-                    null, null, null);
+            if (match == ATTACHMENTS_CACHED_FILE_ACCESS) {
+                uri = rebuildUri(uri);
+                c = getContext().getContentResolver().query(uri,
+                    PROJECTION_QUERY, null, null, null);
+            } else {
+                uri = ContentUris.withAppendedId(Attachment.CONTENT_URI, Long.parseLong(id));
+                c = getContext().getContentResolver().query(uri,
+                    PROJECTION_QUERY, null, null, null);
+            }
+
             try {
                 if (c.moveToFirst()) {
                     name = c.getString(0);
@@ -334,5 +362,19 @@ public class AttachmentProvider extends ContentProvider {
     @Override
     public void shutdown() {
         // Don't call super.shutdown(), which emits a warning...
+    }
+
+    /**
+     * Rebuild the cachedFileUri to handover to EmailProvider
+     */
+    private static Uri rebuildUri(Uri uri) {
+        // Parse the cache file path out from the uri
+        final String cachedFilePath =
+                uri.getQueryParameter(EmailContent.Attachment.CACHED_FILE_QUERY_PARAM);
+        final Uri.Builder cachedFileBuilder = Uri.parse(
+                "content://" + EmailContent.AUTHORITY + "/attachment/cachedFile").buildUpon();
+        cachedFileBuilder.appendQueryParameter(Attachment.CACHED_FILE_QUERY_PARAM, cachedFilePath);
+
+        return cachedFileBuilder.build();
     }
 }
