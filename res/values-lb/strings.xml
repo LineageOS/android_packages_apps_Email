@@ -16,8 +16,22 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="app_name">E-Mail</string>
+  <string name="next_action">Weider</string>
+  <string name="okay_action">OK</string>
+  <string name="cancel_action">Ofbriechen</string>
+  <string name="done_action">Fäerdeg</string>
+  <string name="account_setup_basics_password_label">Passwuert</string>
+  <string name="account_setup_incoming_password_label">Passwuert</string>
+  <string name="account_setup_incoming_security_none_label">Keen</string>
+  <string name="account_setup_incoming_delete_policy_never_label">Ni</string>
+  <string name="account_setup_outgoing_password_label">Passwuert</string>
   <string name="account_setup_exchange_remove_certificate">Ewechhuelen</string>
+  <string name="account_setup_exchange_no_certificate">Keen</string>
+  <string name="account_setup_options_mail_check_frequency_never">Ni</string>
+  <string name="account_setup_options_mail_window_1month">Leschte Mount</string>
   <string name="account_setup_options_mail_window_all">All</string>
+  <string name="account_settings_enforced_summary">Keen</string>
+  <string name="account_settings_unsupported_summary">Keen</string>
   <string name="account_settings_edit_quick_responses_label">Séier Äntwerten</string>
   <string name="edit_quick_response_dialog">Séier Äntwert</string>
   <string name="save_action">Späicheren</string>
@@ -25,4 +39,5 @@
   <string name="account_settings_vibrate_when_label">Vibréieren</string>
   <string name="device_admin_label">E-Mail</string>
   <string name="settings_activity_title">Astellungen</string>
+  <string name="more_than_999">999+</string>
 </resources>
