@@ -15,5 +15,32 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="debug_title">هەڵدۆز</string>
+  <string name="next_action">دواتر</string>
+  <string name="okay_action">باشه‌</string>
+  <string name="cancel_action">هەڵوەشاندنەوە</string>
+  <string name="previous_action">پێشتر</string>
+  <string name="done_action">ئه‌نجامدرا</string>
+  <string name="mailbox_name_display_starred">پەیوەستبوون</string>
+  <string name="account_folder_list_summary_starred">پەیوەستبوون</string>
+  <string name="account_setup_basics_password_label">تێپەڕەوشە</string>
+  <string name="account_setup_incoming_password_label">تێپەڕەوشە</string>
+  <string name="account_setup_incoming_security_none_label">هیچ</string>
+  <string name="account_setup_incoming_delete_policy_never_label">هەرگیز</string>
+  <string name="account_setup_outgoing_password_label">تێپەڕەوشە</string>
+  <string name="account_setup_exchange_remove_certificate">سڕینەوە</string>
+  <string name="account_setup_exchange_no_certificate">هیچ</string>
+  <string name="account_setup_options_mail_check_frequency_never">هەرگیز</string>
+  <string name="account_setup_options_mail_window_1month">مانگی دوایین</string>
+  <string name="account_setup_options_mail_window_all">هەموو</string>
+  <string name="account_settings_enforced_summary">هیچ</string>
+  <string name="account_settings_unsupported_summary">هیچ</string>
   <string name="save_action">پاشەکەوتکردن</string>
+  <string name="settings_activity_title">ڕێکخستنه‌کان</string>
+  <string name="general_preference_text_zoom_tiny">بچکۆلە</string>
+  <string name="general_preference_text_zoom_small">بچوک</string>
+  <string name="general_preference_text_zoom_normal">ئاسای</string>
+  <string name="general_preference_text_zoom_large">گه‌وره‌</string>
+  <string name="general_preference_text_zoom_huge">زه‌به‌لاح</string>
+  <string name="more_than_999">999+</string>
 </resources>
