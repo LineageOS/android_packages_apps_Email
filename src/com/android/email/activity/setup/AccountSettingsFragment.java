@@ -16,10 +16,13 @@
 
 package com.android.email.activity.setup;
 
+import android.accounts.AccountManager;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -28,11 +31,14 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.Vibrator;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
+import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceCategory;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
@@ -42,6 +48,8 @@ import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.Window;
+import android.widget.Toast;
 
 import com.android.email.R;
 import com.android.email.SecurityPolicy;
@@ -78,7 +86,7 @@ import java.util.Map;
  *       could reduce flicker.
  */
 public class AccountSettingsFragment extends PreferenceFragment
-        implements Preference.OnPreferenceChangeListener {
+        implements OnPreferenceChangeListener, OnPreferenceClickListener {
 
     // Keys used for arguments bundle
     private static final String BUNDLE_KEY_ACCOUNT_ID = "AccountSettingsFragment.AccountId";
@@ -108,8 +116,14 @@ public class AccountSettingsFragment extends PreferenceFragment
     private static final String PREFERENCE_SYSTEM_FOLDERS_TRASH = "system_folders_trash";
     private static final String PREFERENCE_SYSTEM_FOLDERS_SENT = "system_folders_sent";
 
+    private static final String PREFERENCE_DELETE_ACCOUNT = "delete_account";
+
+
     // Request code to start different activities.
     private static final int RINGTONE_REQUEST_CODE = 0;
+
+    // Message codes
+    private static final int MSG_DELETE_ACCOUNT = 0;
 
     private EditTextPreference mAccountDescription;
     private EditTextPreference mAccountName;
@@ -125,8 +139,10 @@ public class AccountSettingsFragment extends PreferenceFragment
     private CheckBoxPreference mSyncContacts;
     private CheckBoxPreference mSyncCalendar;
     private CheckBoxPreference mSyncEmail;
+    private Preference mDeleteAccount;
 
     private Context mContext;
+    private Handler mHandler;
 
     /**
      * mAccount is email-specific, transition to using mUiAccount instead
@@ -170,6 +186,16 @@ public class AccountSettingsFragment extends PreferenceFragment
         @Override public void abandonEdit() {}
     }
 
+    private final android.os.Handler.Callback mHandlerCallback = new android.os.Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            if (msg.what == MSG_DELETE_ACCOUNT) {
+                deleteAccount();
+            }
+            return false;
+        }
+    };
+
     /**
      * If launching with an arguments bundle, use this method to build the arguments.
      */
@@ -200,6 +226,7 @@ public class AccountSettingsFragment extends PreferenceFragment
             LogUtils.d(Logging.LOG_TAG, "AccountSettingsFragment onCreate");
         }
         super.onCreate(savedInstanceState);
+        mHandler = new Handler(mHandlerCallback);
 
         setHasOptionsMenu(true);
 
@@ -404,6 +431,30 @@ public class AccountSettingsFragment extends PreferenceFragment
             preferenceChanged(key, newValue);
             return true;
         }
+    }
+
+    @Override
+    public boolean onPreferenceClick(Preference preference) {
+        final String key = preference.getKey();
+        if (key.equals(PREFERENCE_DELETE_ACCOUNT)){
+            AlertDialog.Builder alertBuilder = new AlertDialog.Builder(mContext);
+            alertBuilder.setTitle(R.string.delete_account_title);
+            String msg = getString(R.string.delete_account_confirmation_msg, mAccountEmail);
+            alertBuilder.setMessage(msg);
+            alertBuilder.setCancelable(true);
+            final DialogInterface.OnClickListener cb = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    mHandler.dispatchMessage(Message.obtain(mHandler, MSG_DELETE_ACCOUNT));
+                }
+            };
+            alertBuilder.setPositiveButton(android.R.string.ok, cb);
+            alertBuilder.setNegativeButton(android.R.string.cancel, null);
+            alertBuilder.create().show();
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -918,6 +969,9 @@ public class AccountSettingsFragment extends PreferenceFragment
             dataUsageCategory.removePreference(mSyncCalendar);
             dataUsageCategory.removePreference(mSyncEmail);
         }
+
+        mDeleteAccount = findPreference(PREFERENCE_DELETE_ACCOUNT);
+        mDeleteAccount.setOnPreferenceClickListener(this);
     }
 
     /**
@@ -1022,5 +1076,39 @@ public class AccountSettingsFragment extends PreferenceFragment
         // instead the constant
         intent.putExtra("android.intent.extra.ringtone.DIALOG_THEME", R.style.Theme_RingtoneDialog);
         startActivityForResult(intent, RINGTONE_REQUEST_CODE);
+    }
+
+    private void deleteAccount() {
+        // Display an alert dialog to advise the user that the operation is in progress
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(mContext);
+        alertBuilder.setMessage(R.string.deleting_account_msg);
+        alertBuilder.setCancelable(false);
+        AlertDialog dialog = alertBuilder.create();
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.show();
+
+        try {
+            ContentResolver resolver = mContext.getContentResolver();
+            int ret = resolver.delete(mUiAccount.uri, null, null);
+            if (ret <= 0) {
+                Toast.makeText(mContext, R.string.delete_account_failed, Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // And now we remove the system account that holds the email service
+            AccountManager accountManager = (AccountManager)getActivity().getSystemService(
+                    Context.ACCOUNT_SERVICE);
+            android.accounts.Account account = mUiAccount.getAccountManagerAccount();
+            NotificationUtils.clearAccountNotifications(mContext, account);
+            accountManager.removeAccount(account, null, null);
+
+            // We deleted the account, so we need to clear the activity stack, so just show
+            // the settings fragment and clear the activity stack
+            Intent intent = new Intent(getActivity(), AccountSettings.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            getActivity().startActivity(intent);
+        } finally {
+            dialog.dismiss();
+        }
     }
 }

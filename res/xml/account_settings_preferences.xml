@@ -171,4 +171,14 @@
             android:summary="@string/account_settings_retry_summary" />
     </PreferenceCategory>
 
+    <PreferenceCategory
+        android:key="account_settings"
+        android:title="@string/account_settings">
+
+        <Preference
+            android:key="delete_account"
+            android:title="@string/delete_account_title"
+            android:summary="@string/delete_account_summary" />
+    </PreferenceCategory>
+
 </PreferenceScreen>
