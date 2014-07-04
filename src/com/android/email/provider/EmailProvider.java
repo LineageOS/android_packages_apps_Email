@@ -869,7 +869,9 @@ public class EmailProvider extends ContentProvider {
                                 flags = values.getAsInteger(Attachment.FLAGS);
                             }
                             // Report all new attachments to the download service
-                            if (TextUtils.isEmpty(values.getAsString(Attachment.LOCATION))) {
+                            final int dummyFlag = Attachment.FLAG_DUMMY_ATTACHMENT;
+                            if ((dummyFlag & flags) != dummyFlag && TextUtils.isEmpty(
+                                    values.getAsString(Attachment.LOCATION))) {
                                 LogUtils.w(TAG, new Throwable(), "attachment with blank location");
                             }
                             mAttachmentService.attachmentChanged(getContext(), longId, flags);

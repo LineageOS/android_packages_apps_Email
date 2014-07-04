@@ -266,6 +266,7 @@ public class LegacyConversions {
 
         // Save the attachment (so far) in order to obtain an id
         if (!attachmentFoundInDb) {
+            localAttachment.mFlags = Attachment.FLAG_DUMMY_ATTACHMENT; // Still a dummy attachment
             localAttachment.save(context);
         }
 
