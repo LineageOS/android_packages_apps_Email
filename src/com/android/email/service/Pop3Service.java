@@ -57,6 +57,9 @@ import com.android.mail.utils.LogUtils;
 
 import org.apache.james.mime4j.EOLConvertingInputStream;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -98,7 +101,31 @@ public class Pop3Service extends Service {
         public void loadAttachment(final IEmailServiceCallback callback, final long accountId,
                 final long attachmentId, final boolean background) throws RemoteException {
             Attachment att = Attachment.restoreAttachmentWithId(mContext, attachmentId);
-            if (att == null || att.mUiState != AttachmentState.DOWNLOADING) return;
+            if (att == null) return;
+            File attFile = AttachmentUtilities.getAttachmentFilename(mContext, accountId,
+                    attachmentId);
+            boolean requested = (att.mFlags & EmailContent.Attachment.FLAG_DOWNLOAD_USER_REQUEST) ==
+                    EmailContent.Attachment.FLAG_DOWNLOAD_USER_REQUEST;
+            if (requested && attFile.exists()) {
+                try {
+                    // Remove the download user request flag
+                    ContentValues values = new ContentValues();
+                    values.put(AttachmentColumns.FLAGS,
+                            att.mFlags &= ~Attachment.FLAG_DOWNLOAD_USER_REQUEST);
+                    att.update(mContext, values);
+
+                    // Save the attachment locally
+                    AttachmentUtilities.saveAttachment(mContext, new FileInputStream(attFile), att);
+
+                    // Notify to the callback that all was successfully
+                    callback.loadAttachmentStatus(att.mMessageKey, attachmentId,
+                            EmailServiceStatus.SUCCESS, 0);
+                    return;
+                } catch (FileNotFoundException e) {
+                    // Ignored. It was checked previously;
+                }
+            }
+            if (att.mUiState != AttachmentState.DOWNLOADING) return;
             long inboxId = Mailbox.findMailboxOfType(mContext, att.mAccountKey, Mailbox.TYPE_INBOX);
             if (inboxId == Mailbox.NO_MAILBOX) return;
             // We load attachments during a sync
