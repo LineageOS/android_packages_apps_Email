@@ -4356,7 +4356,7 @@ public class EmailProvider extends ContentProvider {
                 c = db.rawQuery(genQueryConversation(uiProjection), new String[] {id});
                 break;
         }
-        if (notifyUri != null) {
+        if (c != null && notifyUri != null) {
             c.setNotificationUri(resolver, notifyUri);
         }
         return c;
