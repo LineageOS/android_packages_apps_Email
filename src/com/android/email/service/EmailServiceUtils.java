@@ -203,6 +203,7 @@ public class EmailServiceUtils {
         public boolean offerMoveTo;
         public boolean requiresSetup;
         public boolean hide;
+        public boolean supportAutoFetchAttachments;
 
         @Override
         public String toString() {
@@ -580,6 +581,8 @@ public class EmailServiceUtils {
                                 ta.getBoolean(R.styleable.EmailServiceInfo_offerMoveTo, false);
                         info.requiresSetup =
                                 ta.getBoolean(R.styleable.EmailServiceInfo_requiresSetup, false);
+                        info.supportAutoFetchAttachments = ta.getBoolean(
+                                R.styleable.EmailServiceInfo_supportAutoFetchAttachments, false);
 
                         // Must have either "class" (local) or "intent" (remote)
                         if (klass != null) {

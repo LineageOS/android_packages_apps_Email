@@ -91,6 +91,7 @@ public class AccountSettingsUtils {
         cv.put(AccountColumns.FLAGS, account.mFlags);
         cv.put(AccountColumns.SYNC_LOOKBACK, account.mSyncLookback);
         cv.put(AccountColumns.SECURITY_SYNC_KEY, account.mSecuritySyncKey);
+        cv.put(AccountColumns.AUTO_FETCH_ATTACHMENTS, account.mAutoFetchAttachments);
         return cv;
     }
 

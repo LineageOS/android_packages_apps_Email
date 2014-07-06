@@ -99,6 +99,7 @@ public class AccountSettingsFragment extends PreferenceFragment
     private static final String PREFERENCE_FREQUENCY = "account_check_frequency";
     private static final String PREFERENCE_BACKGROUND_ATTACHMENTS =
             "account_background_attachments";
+    private static final String PREFERENCE_AUTO_FETCH_ATTACHMENTS = "account_auto_fetch_attachments";
     private static final String PREFERENCE_CATEGORY_DATA_USAGE = "data_usage";
     private static final String PREFERENCE_CATEGORY_NOTIFICATIONS = "account_notifications";
     private static final String PREFERENCE_CATEGORY_SERVER = "account_servers";
@@ -131,6 +132,7 @@ public class AccountSettingsFragment extends PreferenceFragment
     private ListPreference mCheckFrequency;
     private ListPreference mSyncWindow;
     private CheckBoxPreference mAccountBackgroundAttachments;
+    private ListPreference mAutoFetchAttachments;
     private CheckBoxPreference mInboxNotify;
     private CheckBoxPreference mInboxVibrate;
     private CheckBoxPreference mInboxNotifyEveryMessage;
@@ -388,6 +390,13 @@ public class AccountSettingsFragment extends PreferenceFragment
             mCheckFrequency.setSummary(mCheckFrequency.getEntries()[index]);
             mCheckFrequency.setValue(summary);
             preferenceChanged(PREFERENCE_FREQUENCY, newValue);
+            return false;
+        } else if (key.equals(PREFERENCE_AUTO_FETCH_ATTACHMENTS)) {
+            final String summary = newValue.toString();
+            final int index = mAutoFetchAttachments.findIndexOfValue(summary);
+            mAutoFetchAttachments.setSummary(mAutoFetchAttachments.getEntries()[index]);
+            mAutoFetchAttachments.setValue(summary);
+            preferenceChanged(PREFERENCE_AUTO_FETCH_ATTACHMENTS, newValue);
             return false;
         } else if (key.equals(PREFERENCE_SIGNATURE)) {
             // Clean up signature if it's only whitespace (which is easy to do on a
@@ -834,6 +843,17 @@ public class AccountSettingsFragment extends PreferenceFragment
             mAccountBackgroundAttachments.setOnPreferenceChangeListener(this);
         }
 
+        mAutoFetchAttachments = (ListPreference) findPreference(PREFERENCE_AUTO_FETCH_ATTACHMENTS);
+        if (!info.supportAutoFetchAttachments) {
+            dataUsageCategory.removePreference(mAutoFetchAttachments);
+            mAutoFetchAttachments = null;
+        } else {
+            mAutoFetchAttachments.setValue(String.valueOf(mAccount.mAutoFetchAttachments));
+            mAutoFetchAttachments.setSummary(mAutoFetchAttachments.getEntries()[
+                    mAccount.mAutoFetchAttachments]);
+            mAutoFetchAttachments.setOnPreferenceChangeListener(this);
+        }
+
         mInboxNotify = (CheckBoxPreference) findPreference(
                 FolderPreferences.PreferenceKeys.NOTIFICATIONS_ENABLED);
         mInboxNotify.setOnPreferenceChangeListener(this);
@@ -1030,6 +1050,9 @@ public class AccountSettingsFragment extends PreferenceFragment
             mAccount.setSyncLookback(Integer.parseInt(mSyncWindow.getValue()));
         }
         mAccount.setFlags(newFlags);
+
+        mAccount.setAutoFetchAttachments(mAutoFetchAttachments == null
+                ? 0 : Integer.parseInt(mAutoFetchAttachments.getValue()));
 
         if (info.syncContacts || info.syncCalendar) {
             ContentResolver.setSyncAutomatically(androidAcct, ContactsContract.AUTHORITY,

@@ -164,7 +164,8 @@ public final class DBHelper {
     // Version 123: Changed the duplicateMesage deletion trigger to ignore accounts that aren't
     //              exchange accounts.
     // Version 124: Added MAX_ATTACHMENT_SIZE to the account table
-    public static final int DATABASE_VERSION = 124;
+    // Version 125: Added autoFetchAttachments to the account table
+    public static final int DATABASE_VERSION = 125;
 
     // Any changes to the database format *must* include update-in-place code.
     // Original version: 2
@@ -483,7 +484,8 @@ public final class DBHelper {
             + AccountColumns.SIGNATURE + " text, "
             + AccountColumns.POLICY_KEY + " integer, "
             + AccountColumns.MAX_ATTACHMENT_SIZE + " integer, "
-            + AccountColumns.PING_DURATION + " integer"
+            + AccountColumns.PING_DURATION + " integer, "
+            + AccountColumns.AUTO_FETCH_ATTACHMENTS + " integer"
             + ");";
         db.execSQL("create table " + Account.TABLE_NAME + s);
         // Deleting an account deletes associated Mailboxes and HostAuth's
@@ -1330,6 +1332,20 @@ public final class DBHelper {
                 } catch (final SQLException e) {
                     // Shouldn't be needed unless we're debugging and interrupt the process
                     LogUtils.w(TAG, "Exception upgrading EmailProvider.db from v123 to v124", e);
+                }
+            }
+
+            if (oldVersion <= 124) {
+                try {
+                    db.execSQL("alter table " + Account.TABLE_NAME
+                            + " add column " + AccountColumns.AUTO_FETCH_ATTACHMENTS
+                            + " integer" + ";");
+                    final ContentValues cv = new ContentValues(1);
+                    cv.put(AccountColumns.AUTO_FETCH_ATTACHMENTS, Account.AUTO_FETCH_ATTACHMENT_NEVER);
+                    db.update(Account.TABLE_NAME, cv, null, null);
+                } catch (final SQLException e) {
+                    // Shouldn't be needed unless we're debugging and interrupt the process
+                    LogUtils.w(TAG, "Exception upgrading EmailProvider.db from v124 to v125", e);
                 }
             }
         }

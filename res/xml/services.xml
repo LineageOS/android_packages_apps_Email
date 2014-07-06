@@ -58,6 +58,7 @@
         email:syncIntervalStrings="@array/account_settings_check_frequency_entries"
         email:syncIntervals="@array/account_settings_check_frequency_values"
         email:defaultSyncInterval="mins15"
+        email:supportAutoFetchAttachments="true"
 
         email:offerTls="true"
         email:usesSmtp="true"

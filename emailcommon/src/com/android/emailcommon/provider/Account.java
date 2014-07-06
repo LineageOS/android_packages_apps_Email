@@ -113,6 +113,10 @@ public final class Account extends EmailContent implements AccountColumns, Parce
     public static final int CHECK_INTERVAL_NEVER = -1;
     public static final int CHECK_INTERVAL_PUSH = -2;
 
+    public static final int AUTO_FETCH_ATTACHMENT_NEVER = 0;
+    public static final int AUTO_FETCH_ATTACHMENT_WIFI = 1;
+    public static final int AUTO_FETCH_ATTACHMENT_ALWAYS = 2;
+
     public static Uri CONTENT_URI;
     public static Uri RESET_NEW_MESSAGE_COUNT_URI;
     public static Uri NOTIFIER_URI;
@@ -142,6 +146,7 @@ public final class Account extends EmailContent implements AccountColumns, Parce
     public String mSignature;
     public long mPolicyKey;
     public long mPingDuration;
+    public int mAutoFetchAttachments;
 
     // Convenience for creating/working with an account
     public transient HostAuth mHostAuthRecv;
@@ -167,6 +172,7 @@ public final class Account extends EmailContent implements AccountColumns, Parce
     public static final int CONTENT_POLICY_KEY_COLUMN = 16;
     public static final int CONTENT_PING_DURATION_COLUMN = 17;
     public static final int CONTENT_MAX_ATTACHMENT_SIZE_COLUMN = 18;
+    public static final int CONTENT_AUTO_FETCH_ATTACHMENTS_COLUMN = 19;
 
     public static final String[] CONTENT_PROJECTION = new String[] {
         RECORD_ID, AccountColumns.DISPLAY_NAME,
@@ -177,7 +183,7 @@ public final class Account extends EmailContent implements AccountColumns, Parce
         AccountColumns.RINGTONE_URI, AccountColumns.PROTOCOL_VERSION,
         AccountColumns.NEW_MESSAGE_COUNT, AccountColumns.SECURITY_SYNC_KEY,
         AccountColumns.SIGNATURE, AccountColumns.POLICY_KEY, AccountColumns.PING_DURATION,
-        AccountColumns.MAX_ATTACHMENT_SIZE
+        AccountColumns.MAX_ATTACHMENT_SIZE, AccountColumns.AUTO_FETCH_ATTACHMENTS
     };
 
     public static final int CONTENT_MAILBOX_TYPE_COLUMN = 1;
@@ -274,7 +280,8 @@ public final class Account extends EmailContent implements AccountColumns, Parce
         mSecuritySyncKey = cursor.getString(CONTENT_SECURITY_SYNC_KEY_COLUMN);
         mSignature = cursor.getString(CONTENT_SIGNATURE_COLUMN);
         mPolicyKey = cursor.getLong(CONTENT_POLICY_KEY_COLUMN);
-        mPingDuration = cursor.getLong(CONTENT_PING_DURATION_COLUMN);
+        mPingDuration = cursor.getInt(CONTENT_PING_DURATION_COLUMN);
+        mAutoFetchAttachments = cursor.getInt(CONTENT_AUTO_FETCH_ATTACHMENTS_COLUMN);
     }
 
     private static long getId(Uri u) {
@@ -385,6 +392,20 @@ public final class Account extends EmailContent implements AccountColumns, Parce
      */
     public void setPingDuration(long value) {
         mPingDuration = value;
+    }
+
+    /**
+     * @return the current auto fetch attachment value.
+     */
+    public int getAutoFetchAttachments() {
+        return mAutoFetchAttachments;
+    }
+
+    /**
+     * Set the auto fetch attachment value. Be sure to call save() to commit to database.
+     */
+    public void setAutoFetchAttachments(int value) {
+        mAutoFetchAttachments = value;
     }
 
     /**
@@ -823,6 +844,7 @@ public final class Account extends EmailContent implements AccountColumns, Parce
         values.put(AccountColumns.SIGNATURE, mSignature);
         values.put(AccountColumns.POLICY_KEY, mPolicyKey);
         values.put(AccountColumns.PING_DURATION, mPingDuration);
+        values.put(AccountColumns.AUTO_FETCH_ATTACHMENTS, mAutoFetchAttachments);
         return values;
     }
 
@@ -887,6 +909,7 @@ public final class Account extends EmailContent implements AccountColumns, Parce
         } else {
             dest.writeByte((byte)0);
         }
+        dest.writeInt(mAutoFetchAttachments);
     }
 
     /**
@@ -921,6 +944,8 @@ public final class Account extends EmailContent implements AccountColumns, Parce
         if (in.readByte() == 1) {
             mHostAuthSend = new HostAuth(in);
         }
+
+        mAutoFetchAttachments = in.readInt();
     }
 
     /**

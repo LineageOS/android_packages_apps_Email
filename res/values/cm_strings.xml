@@ -33,4 +33,12 @@
     <string name="deleting_account_msg">Deleting account\u2026</string>
     <string name="delete_account_failed">Couldn\'t delete the account</string>
 
+    <!-- Auto fetch attachments preference label -->
+    <string name="account_auto_fetch_attachments_label">Auto fetch attachments</string>
+
+    <!-- Auto fetch attachments preference options -->
+    <string name="account_auto_fetch_attachments_entries_never">Never</string>
+    <string name="account_auto_fetch_attachments_entries_wifi">Only over Wi-Fi</string>
+    <string name="account_auto_fetch_attachments_entries_always">Always</string>
+
 </resources>

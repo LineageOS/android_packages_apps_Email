@@ -64,5 +64,6 @@
         </attr>
         <attr name="inferPrefix" format="string"/>
         <attr name="requiresSetup" format="boolean"/>
+        <attr name="supportAutoFetchAttachments" format="boolean"/>
     </declare-styleable>
 </resources>

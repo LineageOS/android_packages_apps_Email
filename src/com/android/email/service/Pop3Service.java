@@ -23,6 +23,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.TrafficStats;
 import android.net.Uri;
 import android.os.IBinder;
@@ -221,8 +223,7 @@ public class Pop3Service extends Service {
             // They are in most recent to least recent order, process them that way.
             for (int i = 0; i < cnt; i++) {
                 final Pop3Message message = unsyncedMessages.get(i);
-                remoteFolder.fetchBody(message, Pop3Store.FETCH_BODY_SANE_SUGGESTED_SIZE / 76,
-                        null);
+                remoteFolder.fetchBody(message, getFetchBodySize(context, account), null);
                 int flag = EmailContent.Message.FLAG_LOADED_COMPLETE;
                 if (!message.isComplete()) {
                     // TODO: when the message is not complete, this should mark the message as
@@ -517,5 +518,19 @@ public class Pop3Service extends Service {
 
         // Clean up and report results
         remoteFolder.close(false);
+    }
+
+    private static int getFetchBodySize(Context context, Account account) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(
+                Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = cm.getActiveNetworkInfo();
+        boolean wifi = info != null && info.getType() == ConnectivityManager.TYPE_WIFI;
+        if ((account.mAutoFetchAttachments == Account.AUTO_FETCH_ATTACHMENT_NEVER) ||
+                (account.mAutoFetchAttachments == Account.AUTO_FETCH_ATTACHMENT_WIFI && !wifi)) {
+            // Return pop3 sane suggested size
+            return Pop3Store.FETCH_BODY_SANE_SUGGESTED_SIZE / 76;
+        }
+        // Do a full body fetch
+        return -1;
     }
 }
