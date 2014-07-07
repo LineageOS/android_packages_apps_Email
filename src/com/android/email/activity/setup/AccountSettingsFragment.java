@@ -48,6 +48,7 @@ import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.Window;
 import android.widget.Toast;
 
@@ -69,6 +70,7 @@ import com.android.mail.preferences.AccountPreferences;
 import com.android.mail.preferences.FolderPreferences;
 import com.android.mail.providers.Folder;
 import com.android.mail.providers.UIProvider;
+import com.android.mail.providers.UIProvider.AccountCapabilities;
 import com.android.mail.ui.settings.SettingsUtils;
 import com.android.mail.utils.LogUtils;
 import com.android.mail.utils.NotificationUtils;
@@ -492,6 +494,11 @@ public class AccountSettingsFragment extends PreferenceFragment
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
         inflater.inflate(R.menu.settings_fragment_menu, menu);
+        MenuItem sendFeedbackItem = menu.findItem(R.id.feedback_menu_item);
+        if (sendFeedbackItem != null) {
+            sendFeedbackItem.setVisible(mUiAccount != null
+                    && mUiAccount.supportsCapability(AccountCapabilities.SEND_FEEDBACK));
+        }
     }
 
     /**

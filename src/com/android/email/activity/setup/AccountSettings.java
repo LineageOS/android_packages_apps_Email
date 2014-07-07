@@ -302,8 +302,6 @@ public class AccountSettings extends PreferenceActivity implements FeedbackEnabl
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.settings_menu, menu);
-
-        mFeedbackMenuItem = menu.findItem(R.id.feedback_menu_item);
         return true;
     }
 
@@ -311,6 +309,7 @@ public class AccountSettings extends PreferenceActivity implements FeedbackEnabl
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
 
+        mFeedbackMenuItem = menu.findItem(R.id.feedback_menu_item);
         if (mFeedbackMenuItem != null) {
             // We only want to enable the feedback menu item, if there is a valid feedback uri
             mFeedbackMenuItem.setVisible(!Uri.EMPTY.equals(mFeedbackUri));
