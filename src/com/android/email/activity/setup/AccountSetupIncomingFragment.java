@@ -592,6 +592,15 @@ public class AccountSetupIncomingFragment extends AccountServerBaseFragment
     @Override
     public void onAutoDiscoverComplete(int result, SetupData setupData) {
         mSetupData = setupData;
+
+        // Update the server info from the autodiscover data, prior to validate any info
+        if (mSetupData.isAllowAutodiscover() &&
+                result == AccountCheckSettingsFragment.AUTODISCOVER_OK) {
+            final HostAuth hostAuth = mSetupData.getAccount().mHostAuthRecv;
+            mServerView.setText(hostAuth.mAddress);
+            mPortView.setText(String.valueOf(hostAuth.mPort));
+        }
+
         final AccountSetupIncoming activity = (AccountSetupIncoming) getActivity();
         activity.onAutoDiscoverComplete(result, setupData);
     }

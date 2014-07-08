@@ -266,6 +266,10 @@ public class AccountCheckSettingsFragment extends Fragment {
                     break;
                 case STATE_AUTODISCOVER_RESULT:
                     final HostAuth autoDiscoverResult = ((AutoDiscoverResults) ex).mHostAuth;
+                    if (autoDiscoverResult != null) {
+                        mSetupData.getAccount().mHostAuthRecv = autoDiscoverResult;
+                    }
+
                     // 1. get rid of progress dialog (if any)
                     recoverAndDismissCheckingDialog();
                     // 2. exit self
