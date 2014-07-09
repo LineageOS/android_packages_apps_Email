@@ -16,7 +16,7 @@
 -->
 <resources>
     <!-- Auto fetch attachments options -->
-    <string-array name="account_auto_fetch_attachments_entries">
+    <string-array name="account_auto_fetch_attachments_entries" translatable="false">
         <item>@string/account_auto_fetch_attachments_entries_never</item>
         <item>@string/account_auto_fetch_attachments_entries_wifi</item>
         <item>@string/account_auto_fetch_attachments_entries_always</item>
