@@ -20,4 +20,14 @@
   <string name="account_setup_options_mail_check_frequency_2hour">Кожні 2 години</string>
   <string name="account_setup_options_mail_check_frequency_4hour">Кожні 4 години</string>
   <string name="account_setup_options_mail_check_frequency_1day">Щодня</string>
+  <string name="account_settings">Параметри облікового запису</string>
+  <string name="delete_account_title">Видалити обліковий запис</string>
+  <string name="delete_account_summary">Видалити цей обліковий запис і всі свої налаштування та дані</string>
+  <string name="delete_account_confirmation_msg">Будуть видалені всі налаштування і листи облікового запису <xliff:g id="account">%s</xliff:g>. Ця операція не може бути відмінена.\n\nПродовжити?</string>
+  <string name="deleting_account_msg">Видалення облікового запису\u2026</string>
+  <string name="delete_account_failed">Не вдалося видалити обліковий запис</string>
+  <string name="account_auto_fetch_attachments_label">Автоматично завантажувати вкладення</string>
+  <string name="account_auto_fetch_attachments_entries_never">Ніколи</string>
+  <string name="account_auto_fetch_attachments_entries_wifi">Тільки через Wi-Fi</string>
+  <string name="account_auto_fetch_attachments_entries_always">Завжди</string>
 </resources>

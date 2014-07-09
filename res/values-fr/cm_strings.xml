@@ -20,4 +20,9 @@
   <string name="account_setup_options_mail_check_frequency_2hour">Toutes les 2 heures</string>
   <string name="account_setup_options_mail_check_frequency_4hour">Toutes les 4 heures</string>
   <string name="account_setup_options_mail_check_frequency_1day">Tous les jours</string>
+  <string name="account_settings">Paramètres du compte</string>
+  <string name="delete_account_title">Supprimer le compte</string>
+  <string name="delete_account_summary">Supprimer ce compte et tous ses paramètres et données</string>
+  <string name="deleting_account_msg">Suppression du compte\u2026</string>
+  <string name="delete_account_failed">Impossible de supprimer le compte</string>
 </resources>
