@@ -20,4 +20,14 @@
   <string name="account_setup_options_mail_check_frequency_2hour">Setiap 2 jam</string>
   <string name="account_setup_options_mail_check_frequency_4hour">Setiap 4 jam</string>
   <string name="account_setup_options_mail_check_frequency_1day">Setiap hari</string>
+  <string name="account_settings">Pengaturan Akun</string>
+  <string name="delete_account_title">Hapus akun</string>
+  <string name="delete_account_summary">Hapus akun ini dan semua pengaturan dan data</string>
+  <string name="delete_account_confirmation_msg">Ini akan menghapus semua pengaturan dan email dari account <xliff:g id="account">%s</xliff:g>. Operasi ini tidak dapat dibatalkan.\n\nLanjutkan?</string>
+  <string name="deleting_account_msg">Menghapus akun\u2026</string>
+  <string name="delete_account_failed">Tidak dapat menghapus akun</string>
+  <string name="account_auto_fetch_attachments_label">Otomatis mengambil lampiran</string>
+  <string name="account_auto_fetch_attachments_entries_never">Jangan pernah</string>
+  <string name="account_auto_fetch_attachments_entries_wifi">Hanya melalui Wi-Fi</string>
+  <string name="account_auto_fetch_attachments_entries_always">Selalu</string>
 </resources>

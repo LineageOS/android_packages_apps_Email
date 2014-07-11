@@ -16,8 +16,18 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="account_settings_notify_every_message_label">Her mesajda uyar</string>
+  <string name="account_settings_notify_every_message_label">Her mesajda bildir</string>
   <string name="account_setup_options_mail_check_frequency_2hour">Her 2 saatte</string>
   <string name="account_setup_options_mail_check_frequency_4hour">Her 4 saatte</string>
   <string name="account_setup_options_mail_check_frequency_1day">Her gün</string>
+  <string name="account_settings">Hesap ayarları</string>
+  <string name="delete_account_title">Hesabı sil</string>
+  <string name="delete_account_summary">Bu hesabı, tüm ayar ve verisini siler</string>
+  <string name="delete_account_confirmation_msg"><xliff:g id="account">%s</xliff:g> hesabının tüm ayarları ve e-postaları silinecek. Bu işlem geri alınamaz.\n\nDevam edilsin mi?</string>
+  <string name="deleting_account_msg">Hesap siliniyor\u2026</string>
+  <string name="delete_account_failed">Hesap silinemedi</string>
+  <string name="account_auto_fetch_attachments_label">Ekleri otomatik olarak al</string>
+  <string name="account_auto_fetch_attachments_entries_never">Asla</string>
+  <string name="account_auto_fetch_attachments_entries_wifi">Sadece Wi-Fi üzerinden</string>
+  <string name="account_auto_fetch_attachments_entries_always">Her zaman</string>
 </resources>

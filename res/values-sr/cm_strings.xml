@@ -20,4 +20,15 @@
   <string name="account_setup_options_mail_check_frequency_2hour">Свака 2 сата</string>
   <string name="account_setup_options_mail_check_frequency_4hour">Свака 4 сата</string>
   <string name="account_setup_options_mail_check_frequency_1day">Сваки дан</string>
+  <string name="account_settings">Подешавања налога</string>
+  <string name="delete_account_title">Избриши налог</string>
+  <string name="delete_account_summary">Избриши овај налог и сва његова подешавања и податке</string>
+  <string name="delete_account_confirmation_msg">Ово ће избрисати сва подешавања и е-пошту
+налога <xliff:g id="account">%s</xliff:g>. Ова операција не може да се опозове.\n\nНастави?</string>
+  <string name="deleting_account_msg">Брисање налога\u2026</string>
+  <string name="delete_account_failed">Није могуће избрисати налог</string>
+  <string name="account_auto_fetch_attachments_label">Аутоматски преузимај прилоге</string>
+  <string name="account_auto_fetch_attachments_entries_never">Никада</string>
+  <string name="account_auto_fetch_attachments_entries_wifi">Само преко Wi-Fi</string>
+  <string name="account_auto_fetch_attachments_entries_always">Увек</string>
 </resources>

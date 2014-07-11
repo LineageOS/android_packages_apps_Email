@@ -20,4 +20,10 @@
   <string name="account_setup_options_mail_check_frequency_2hour">Elke 2 ure</string>
   <string name="account_setup_options_mail_check_frequency_4hour">Elke 4 ure</string>
   <string name="account_setup_options_mail_check_frequency_1day">Elke dag</string>
+  <string name="account_settings">Rekening instellings</string>
+  <string name="delete_account_title">Verwyder rekening</string>
+  <string name="delete_account_summary">Verwyder hierdie rekening met al sy instellings en data</string>
+  <string name="delete_account_confirmation_msg">Hierdie sal alle instellings en e-posse verwyder van die volgende rekening <xliff:g id="account">%s</xliff:g>. Hierdie aksie kan nie ontdoen word nie.\n\nGaan voort?</string>
+  <string name="deleting_account_msg">Verwydering van rekening\u2026</string>
+  <string name="delete_account_failed">Kon nie rekening verwyder nie</string>
 </resources>

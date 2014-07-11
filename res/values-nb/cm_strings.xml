@@ -20,4 +20,14 @@
   <string name="account_setup_options_mail_check_frequency_2hour">Hver 2 time</string>
   <string name="account_setup_options_mail_check_frequency_4hour">Hver 4 time</string>
   <string name="account_setup_options_mail_check_frequency_1day">hver dag</string>
+  <string name="account_settings">Kontoinnstillinger</string>
+  <string name="delete_account_title">Slett konto</string>
+  <string name="delete_account_summary">Slette kontoen, alle innstillinger og data</string>
+  <string name="delete_account_confirmation_msg">Dette vil slette alle innstillingene og e-post for kontoen <xliff:g id="account"> %s </xliff:g>. Denne operasjonen kan ikke være omgjøres.\n\nVil du fortsette?</string>
+  <string name="deleting_account_msg">Sletter konto\u2026</string>
+  <string name="delete_account_failed">Kan ikke slette kontoen</string>
+  <string name="account_auto_fetch_attachments_label">Automatisk hente vedlegg</string>
+  <string name="account_auto_fetch_attachments_entries_never">Aldri</string>
+  <string name="account_auto_fetch_attachments_entries_wifi">Bare via Wi-Fi</string>
+  <string name="account_auto_fetch_attachments_entries_always">Alltid</string>
 </resources>

@@ -20,4 +20,14 @@
   <string name="account_setup_options_mail_check_frequency_2hour">每隔 2 小时</string>
   <string name="account_setup_options_mail_check_frequency_4hour">每隔 2 小时</string>
   <string name="account_setup_options_mail_check_frequency_1day">每天</string>
+  <string name="account_settings">帐户设置</string>
+  <string name="delete_account_title">删除帐户</string>
+  <string name="delete_account_summary">删除此帐户和所有的设置和数据</string>
+  <string name="delete_account_confirmation_msg">这将删除 <xliff:g id="account">%s</xliff:g> 帐户所有的设置和邮件。此操作不能撤销。\n\n要继续吗？</string>
+  <string name="deleting_account_msg">正在删除帐户\u2026</string>
+  <string name="delete_account_failed">无法删除该帐户</string>
+  <string name="account_auto_fetch_attachments_label">自动获取附件</string>
+  <string name="account_auto_fetch_attachments_entries_never">永不</string>
+  <string name="account_auto_fetch_attachments_entries_wifi">仅通过 Wi-Fi</string>
+  <string name="account_auto_fetch_attachments_entries_always">总是</string>
 </resources>

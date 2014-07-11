@@ -20,4 +20,14 @@
   <string name="account_setup_options_mail_check_frequency_2hour">සෑම පැය 2 වරක්</string>
   <string name="account_setup_options_mail_check_frequency_4hour">සෑම පැය 4 වරක්</string>
   <string name="account_setup_options_mail_check_frequency_1day">සෑම දිනකටම වරක්</string>
+  <string name="account_settings">ගිණුමේ සැකසීම්</string>
+  <string name="delete_account_title">ගිණුම මකන්න</string>
+  <string name="delete_account_summary">මෙම ගිණුම සහ එහි සියලු සැකසීම් සහ දත්ත මකාදමන්න</string>
+  <string name="delete_account_confirmation_msg">මෙමගින් <xliff:g id="account">%s</xliff:g> ගිණුමේ සියලු සැකසීම් සහ ඊ-තැපෑලයන් මකාදැමෙනු ඇත. මෙම ක්‍රියාකරණය නිෂ්ප්‍රභ කළ නොහැක.\n\nඉදිරියට යන්නද?</string>
+  <string name="deleting_account_msg">ගිණුම මකමින්\u2026</string>
+  <string name="delete_account_failed">ගිණුම මැකීමට නොහැකිවිය</string>
+  <string name="account_auto_fetch_attachments_label">ඇමුණුම් ඉබේ ගෙන එන්න</string>
+  <string name="account_auto_fetch_attachments_entries_never">කිසි විටෙකත් එපා</string>
+  <string name="account_auto_fetch_attachments_entries_wifi">Wi-Fi හරහා පමණි</string>
+  <string name="account_auto_fetch_attachments_entries_always">සැමවිටම</string>
 </resources>

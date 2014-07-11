@@ -20,4 +20,14 @@
   <string name="account_setup_options_mail_check_frequency_2hour">Ogni 2 ore</string>
   <string name="account_setup_options_mail_check_frequency_4hour">Ogni 4 ore</string>
   <string name="account_setup_options_mail_check_frequency_1day">Ogni giorno</string>
+  <string name="account_settings">Impostazioni account</string>
+  <string name="delete_account_title">Elimina account</string>
+  <string name="delete_account_summary">Elimina questo account e le relative impostazioni e dati</string>
+  <string name="delete_account_confirmation_msg">Tutte le impostazioni e le email dell\'account <xliff:g id="account">%s</xliff:g> verranno eliminate. Questa operazione non è reversibile.\n\nContinuare?</string>
+  <string name="deleting_account_msg">Eliminazione account\u2026</string>
+  <string name="delete_account_failed">Impossibile eliminare l\'account</string>
+  <string name="account_auto_fetch_attachments_label">Recupera allegati automaticamente</string>
+  <string name="account_auto_fetch_attachments_entries_never">Mai</string>
+  <string name="account_auto_fetch_attachments_entries_wifi">Solo su Wi-Fi</string>
+  <string name="account_auto_fetch_attachments_entries_always">Sempre</string>
 </resources>

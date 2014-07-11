@@ -20,4 +20,14 @@
   <string name="account_setup_options_mail_check_frequency_2hour">Každé 2 hodiny</string>
   <string name="account_setup_options_mail_check_frequency_4hour">Každé 4 hodiny</string>
   <string name="account_setup_options_mail_check_frequency_1day">Každý deň</string>
+  <string name="account_settings">Nastavenia účtu</string>
+  <string name="delete_account_title">Vymazať účet</string>
+  <string name="delete_account_summary">Vymazať tento účet a všetky jeho nastavenia a údaje</string>
+  <string name="delete_account_confirmation_msg">Vymažú sa všetky nastavenia a e-maily účtu <xliff:g id="account">%s</xliff:g>. Túto operáciu nemožno vrátiť späť.\n\nPokračovať?</string>
+  <string name="deleting_account_msg">Vymazávanie účtu\u2026</string>
+  <string name="delete_account_failed">Nemožno vymazať účet</string>
+  <string name="account_auto_fetch_attachments_label">Automaticky načítať prílohy</string>
+  <string name="account_auto_fetch_attachments_entries_never">Nikdy</string>
+  <string name="account_auto_fetch_attachments_entries_wifi">Iba cez Wi-Fi</string>
+  <string name="account_auto_fetch_attachments_entries_always">Vždy</string>
 </resources>
