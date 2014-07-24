@@ -26,4 +26,8 @@
   <string name="delete_account_confirmation_msg">Dette vil slette alle kontoen <xliff:g id="account">%s</xliff:g>s indstillinger og e-mails. Denne handling kan ikke fortrydes.\n\nFortsæt?</string>
   <string name="deleting_account_msg">Sletter konto\u2026</string>
   <string name="delete_account_failed">Kunne ikke slette kontoen</string>
+  <string name="account_auto_fetch_attachments_label">Hent automatisk vedhæftede filer</string>
+  <string name="account_auto_fetch_attachments_entries_never">Aldrig</string>
+  <string name="account_auto_fetch_attachments_entries_wifi">Kun via Wi-Fi</string>
+  <string name="account_auto_fetch_attachments_entries_always">Altid</string>
 </resources>

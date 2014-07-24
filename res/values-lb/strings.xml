@@ -19,7 +19,9 @@
   <string name="next_action">Weider</string>
   <string name="okay_action">OK</string>
   <string name="cancel_action">Ofbriechen</string>
+  <string name="previous_action">Zréck</string>
   <string name="done_action">Fäerdeg</string>
+  <string name="quick_responses_empty_view">Keng séier Äntwerten.</string>
   <string name="account_setup_basics_password_label">Passwuert</string>
   <string name="account_setup_incoming_password_label">Passwuert</string>
   <string name="account_setup_incoming_security_none_label">Keen</string>

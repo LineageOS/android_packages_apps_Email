@@ -26,4 +26,8 @@
   <string name="delete_account_confirmation_msg">Hierdie sal alle instellings en e-posse verwyder van die volgende rekening <xliff:g id="account">%s</xliff:g>. Hierdie aksie kan nie ontdoen word nie.\n\nGaan voort?</string>
   <string name="deleting_account_msg">Verwydering van rekening\u2026</string>
   <string name="delete_account_failed">Kon nie rekening verwyder nie</string>
+  <string name="account_auto_fetch_attachments_label">Outo kry van aanhegsels</string>
+  <string name="account_auto_fetch_attachments_entries_never">Nooit</string>
+  <string name="account_auto_fetch_attachments_entries_wifi">Slegs oor Wi-Fi</string>
+  <string name="account_auto_fetch_attachments_entries_always">Altyd</string>
 </resources>

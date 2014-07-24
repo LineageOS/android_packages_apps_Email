@@ -26,4 +26,8 @@
   <string name="delete_account_confirmation_msg">Detta kommer att ta bort alla inställningar och email på kontot <xliff:g id="account">%s</xliff:g>. Denna åtgärd kan inte ångras.\n\nFortsätt?</string>
   <string name="deleting_account_msg">Tar bort konto\u2026</string>
   <string name="delete_account_failed">Kunde inte ta bort kontot</string>
+  <string name="account_auto_fetch_attachments_label">Hämta bifogade filer automatiskt</string>
+  <string name="account_auto_fetch_attachments_entries_never">Aldrig</string>
+  <string name="account_auto_fetch_attachments_entries_wifi">Endast över Wi-Fi</string>
+  <string name="account_auto_fetch_attachments_entries_always">Alltid</string>
 </resources>

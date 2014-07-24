@@ -23,6 +23,11 @@
   <string name="account_settings">Fiók beállítások</string>
   <string name="delete_account_title">Fiók törlése</string>
   <string name="delete_account_summary">Törli ezt a fiókot, valamint minden beállítását és adatát</string>
+  <string name="delete_account_confirmation_msg">Törölni fog minden beállítást és az e-maileket ebből a fiókból: <xliff:g id="account">%s</xliff:g>. Ezt a műveletet nem lehet visszavonni.\n\nFolytatja?</string>
   <string name="deleting_account_msg">Fiók törlése\u2026</string>
   <string name="delete_account_failed">Nem lehet törölni a fiókot</string>
+  <string name="account_auto_fetch_attachments_label">Csatolmányok automatikus letöltése</string>
+  <string name="account_auto_fetch_attachments_entries_never">Soha</string>
+  <string name="account_auto_fetch_attachments_entries_wifi">Csak Wi-Fin</string>
+  <string name="account_auto_fetch_attachments_entries_always">Mindig</string>
 </resources>

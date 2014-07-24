@@ -26,8 +26,8 @@
   <string name="delete_account_confirmation_msg">Esto eliminará todos los ajustes y mensajes de la cuenta <xliff:g id="account">%s</xliff:g>. Esta operación no se puede deshacer.\n\n¿Continuar?</string>
   <string name="deleting_account_msg">Eliminando cuenta\u2026</string>
   <string name="delete_account_failed">No ha sido posible eliminar la cuenta</string>
-  <string name="account_auto_fetch_attachments_label">Descargar adjuntos</string>
-  <string name="account_auto_fetch_attachments_entries_never">Nunca automáticamente</string>
-  <string name="account_auto_fetch_attachments_entries_wifi">Automáticamente solo por Wi-Fi</string>
-  <string name="account_auto_fetch_attachments_entries_always">Automáticamente siempre</string>
+  <string name="account_auto_fetch_attachments_label">Descargar adjuntos automáticamente</string>
+  <string name="account_auto_fetch_attachments_entries_never">Nunca</string>
+  <string name="account_auto_fetch_attachments_entries_wifi">Solo por Wi-Fi</string>
+  <string name="account_auto_fetch_attachments_entries_always">Siempre</string>
 </resources>

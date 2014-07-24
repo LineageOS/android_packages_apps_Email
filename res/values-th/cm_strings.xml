@@ -26,4 +26,8 @@
   <string name="delete_account_confirmation_msg">นี่จะลบการตั้งค่าและอีเมลทั้งหมดของบัญชี <xliff:g id="account">%s</xliff:g> การกระทำนี้ไม่สาราถรยกเลิกได้ \n\nดำเนินการต่อ?</string>
   <string name="deleting_account_msg">กำลังลบบัญชีผู้ใช้\u2026</string>
   <string name="delete_account_failed">ไม่สามารถลบบัญชีผู้ใช้ได้</string>
+  <string name="account_auto_fetch_attachments_label">รับสิ่งที่แนบมาอัตโนมัติ</string>
+  <string name="account_auto_fetch_attachments_entries_never">ไม่เลย</string>
+  <string name="account_auto_fetch_attachments_entries_wifi">เฉพาะเมื่อใช้ Wi-Fi เท่านั้น</string>
+  <string name="account_auto_fetch_attachments_entries_always">ทุกครั้ง</string>
 </resources>

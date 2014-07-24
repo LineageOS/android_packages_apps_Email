@@ -23,6 +23,11 @@
   <string name="account_settings">Axustes de la cuenta</string>
   <string name="delete_account_title">Desaniciar cuenta</string>
   <string name="delete_account_summary">Desaniciar esta cuenta xunto con tolos axustes y datos</string>
+  <string name="delete_account_confirmation_msg">Esto va desaniciará tolos axustes y los correos de la cuenta <xliff:g id="account">%s</xliff:g>. Esta operación nun pue desfacese.\n\n¿Continuar?</string>
   <string name="deleting_account_msg">Desaniciando cuenta\u2026</string>
   <string name="delete_account_failed">Nun pudo desaniciase la cuenta</string>
+  <string name="account_auto_fetch_attachments_label">Auto descargar los ficheros axuntos</string>
+  <string name="account_auto_fetch_attachments_entries_never">Enxamás</string>
+  <string name="account_auto_fetch_attachments_entries_wifi">Namái con Wi-Fi</string>
+  <string name="account_auto_fetch_attachments_entries_always">Siempre</string>
 </resources>
