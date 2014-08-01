@@ -28,6 +28,6 @@
   <string name="delete_account_failed">Nem lehet törölni a fiókot</string>
   <string name="account_auto_fetch_attachments_label">Csatolmányok automatikus letöltése</string>
   <string name="account_auto_fetch_attachments_entries_never">Soha</string>
-  <string name="account_auto_fetch_attachments_entries_wifi">Csak Wi-Fin</string>
+  <string name="account_auto_fetch_attachments_entries_wifi">Csak WiFi-n</string>
   <string name="account_auto_fetch_attachments_entries_always">Mindig</string>
 </resources>
