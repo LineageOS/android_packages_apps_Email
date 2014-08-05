@@ -62,13 +62,30 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import android.util.Log;
 
 public class Pop3Service extends Service {
     private static final String TAG = "Pop3Service";
     private static final int DEFAULT_SYNC_COUNT = 100;
+    private static final String ACTION_CHECK_MAIL =
+            "org.codeaurora.email.intent.action.MAIL_SERVICE_WAKEUP";
+    private static final String EXTRA_ACCOUNT = "org.codeaurora.email.intent.extra.ACCOUNT";
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.d(TAG,"Inside onStartCommand");
+        final String action = intent.getAction();
+        Log.d(TAG,"action is " + action);
+        Context context = getApplicationContext();
+        if (ACTION_CHECK_MAIL.equals(action)) {
+            final long accountId = intent.getLongExtra(EXTRA_ACCOUNT, -1);
+            Log.d(TAG,"accountId is " + accountId);
+            final long inboxId = Mailbox.findMailboxOfType(context, accountId,
+                    Mailbox.TYPE_INBOX);
+            Log.d(TAG,"inboxId is " + inboxId);
+            mBinder.init(context);
+            mBinder.requestSync(inboxId, true, 0);
+        }
         return Service.START_STICKY;
     }
 
