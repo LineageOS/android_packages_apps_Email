@@ -15,6 +15,7 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="permission_read_attachment_label">E-Mail-Unhäng liesen</string>
   <string name="app_name">E-Mail</string>
   <string name="next_action">Weider</string>
   <string name="okay_action">OK</string>
@@ -22,9 +23,15 @@
   <string name="previous_action">Zréck</string>
   <string name="done_action">Fäerdeg</string>
   <string name="quick_responses_empty_view">Keng séier Äntwerten.</string>
+  <string name="status_network_error">Connectiounsproblem.</string>
+  <string name="mailbox_name_display_drafts">Brouillonen</string>
+  <string name="mailbox_name_display_trash">Poubelle</string>
+  <string name="account_folder_list_summary_drafts">Brouillonen</string>
   <string name="account_setup_basics_password_label">Passwuert</string>
   <string name="account_setup_incoming_password_label">Passwuert</string>
   <string name="account_setup_incoming_security_none_label">Keen</string>
+  <string name="account_setup_incoming_security_ssl_label">SSL/TLS</string>
+  <string name="account_setup_incoming_security_tls_label">STARTTLS</string>
   <string name="account_setup_incoming_delete_policy_never_label">Ni</string>
   <string name="account_setup_outgoing_password_label">Passwuert</string>
   <string name="account_setup_exchange_remove_certificate">Ewechhuelen</string>
@@ -41,5 +48,6 @@
   <string name="account_settings_vibrate_when_label">Vibréieren</string>
   <string name="device_admin_label">E-Mail</string>
   <string name="settings_activity_title">Astellungen</string>
+  <string name="header_label_general_preferences">Allgemeng Astellungen</string>
   <string name="more_than_999">999+</string>
 </resources>

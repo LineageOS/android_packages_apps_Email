@@ -55,7 +55,7 @@
   <string name="account_folder_list_summary_drafts">ڕه‌شنووسه‌کان</string>
   <string name="account_folder_list_summary_outbox">ده‌رسندوق</string>
   <string name="mailbox_list_account_selector_combined_view">بینینی تێکه‌ڵکراو</string>
-  <string name="message_compose_fwd_header_fmt">\n\n-----نامه‌ی بنه‌ڕه‌ت ------\nسه‌ردێڕ:<xliff:g id="subject">%1$s</xliff:g>\nله‌لایه‌ن:<xliff:g id="sender">%2$s</xliff:g>\nبۆ:<xliff:g id="to">%3$s</xliff:g>\nوه‌:<xliff:g id="cc">%4$s</xliff:g>\n</string>
+  <string name="message_compose_fwd_header_fmt">\n\n-----نامه‌ی بنێڕه‌ت ------\nسه‌ردێڕ:<xliff:g id="subject">%1$s</xliff:g>\nله‌لایه‌ن:<xliff:g id="sender">%2$s</xliff:g>\nبۆ:<xliff:g id="to">%3$s</xliff:g>\nوه‌:<xliff:g id="cc">%4$s</xliff:g>\n</string>
   <string name="message_compose_insert_quick_response_list_title">هاورده‌کردنی وه‌ڵامی خێرا</string>
   <string name="message_compose_insert_quick_response_menu_title">هاورده‌کردنی وه‌ڵامی خێرا</string>
   <string name="message_view_attachment_background_load">دانه‌یه‌ک یان زیاتر له‌
@@ -166,7 +166,7 @@
   <string name="account_setup_options_sync_calendar_label">گواستنه‌وه‌ی ڕۆژژمێر له‌م هه‌ژماره‌وه‌</string>
   <string name="account_setup_options_sync_email_label">گواستنه‌وه‌ی پۆستی ئه‌لیکترۆنی له‌م هه‌ژماره‌وه‌</string>
   <string name="account_setup_options_background_attachments_label">
-        خۆکارانه‌ دابه‌زاندنی هاوپێچ کاتێک په‌یوه‌ندی هه‌یه‌ له‌گه‌ڵ Wi-Fi</string>
+        خۆکارانه‌ داگرتنی هاوپێچ کاتێک په‌یوه‌ندی هه‌یه‌ له‌گه‌ڵ Wi-Fi</string>
   <string name="account_setup_failed_dlg_title">نه‌توانرا ته‌واوبکرێت</string>
   <string name="account_setup_options_mail_window_label">ڕۆژ بۆ گواستنه‌وه‌</string>
   <string name="account_setup_options_mail_window_auto">خۆکارانە</string>
@@ -176,7 +176,7 @@
   <string name="account_setup_options_mail_window_2weeks">دوو هه‌فته‌ی کۆتایی</string>
   <string name="account_setup_options_mail_window_1month">مانگی دوایین</string>
   <string name="account_setup_options_mail_window_all">هەموو</string>
-  <string name="account_setup_options_mail_window_default">به‌کارهێنانی هه‌ژماری بنه‌ڕه‌تی</string>
+  <string name="account_setup_options_mail_window_default">به‌کارهێنانی هه‌ژماری بنێڕه‌تی</string>
   <string name="account_setup_failed_dlg_auth_message">ناو و وشه‌ی نهێنی هه‌ڵه‌یه‌.</string>
   <string name="account_setup_failed_dlg_auth_message_fmt">چونه‌ژوره‌وه‌ هه‌ڵه‌یه‌.\n<xliff:g id="error">%s</xliff:g></string>
   <string name="account_setup_autodiscover_dlg_authfail_title">هه‌ڵه‌ هه‌یه‌ له‌کاتی دامه‌زراندنی هه‌ژمار</string>
@@ -336,7 +336,7 @@
   <string name="general_preference_text_zoom_dialog_title">قەبارەی دەقی نامە</string>
   <string name="general_preference_text_zoom_tiny">بچکۆلە</string>
   <string name="general_preference_text_zoom_small">بچوک</string>
-  <string name="general_preference_text_zoom_normal">ئاسای</string>
+  <string name="general_preference_text_zoom_normal">ئاسایی</string>
   <string name="general_preference_text_zoom_large">گه‌وره‌</string>
   <string name="general_preference_text_zoom_huge">زه‌به‌لاح</string>
   <string name="more_than_999">999+</string>
