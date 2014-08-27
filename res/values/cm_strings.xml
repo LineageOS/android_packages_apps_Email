@@ -58,11 +58,11 @@
     <!-- Label of general settings category to describe general preferences [CHAR LIMIT=32] -->
     <string name="category_label_general_settings">General settings</string>
     <!-- Label of enhancement settings category to describe general preferences [CHAR LIMIT=32] -->
-    <string name="category_label_enhancement_settings">Enhancement settings</string>
+    <string name="category_label_attachment_settings">Attachment settings</string>
     <!-- General preference: Label of the setting for adding any file as attachment CHAR LIMIT=32] -->
-    <string name="general_preference_add_attachment_label">Add any file as attachment</string>
+    <string name="general_preference_add_attachment_label">Add any file type</string>
     <!-- General preference: Label of the setting for select recipients from Contact CHAR LIMIT=32] -->
-    <string name="general_preference_select_recipients_label">Select recipients from Contact</string>
+    <string name="general_preference_select_recipients_label">Select recipients from Contacts</string>
     <!-- General preference: Label of the setting for confirm before forward CHAR LIMIT=32] -->
     <string name="general_preference_confirm_forward_label">Confirmation before forwarding</string>
     <string name="general_preference_confirm_forward_summary">Choose whether to use attachments from mail server, or download to device prior to forwarding</string>
