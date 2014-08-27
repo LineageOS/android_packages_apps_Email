@@ -31,7 +31,7 @@
   <string name="account_setup_options_mail_sync_size_500k">500KB</string>
   <string name="account_setup_options_mail_sync_size_1M">1MB</string>
   <string name="category_label_general_settings">一般設定</string>
-  <string name="category_label_enhancement_settings">附加設定</string>
+  <string name="category_label_attachment_settings">附加設定</string>
   <string name="general_preference_add_attachment_label">附加任意文件為附件</string>
   <string name="general_preference_select_recipients_label">從聯繫人中選擇收件人</string>
   <string name="general_preference_confirm_forward_label">轉寄前須確認</string>
