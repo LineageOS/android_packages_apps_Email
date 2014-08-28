@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a1b2928_138818e7",
+        "filename": "res/values/cm_strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 4550
+      },
+      "writtenOn": "2014-08-28T07:57:16Z",
+      "side": 1,
+      "message": "Select recipients from Contacts",
+      "revId": "a7060130d23530021057ce892140f6ef7095c28a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
