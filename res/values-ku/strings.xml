@@ -27,7 +27,7 @@
   <string name="okay_action">باشه‌</string>
   <string name="cancel_action">هەڵوەشاندنەوە</string>
   <string name="previous_action">پێشتر</string>
-  <string name="done_action">ئه‌نجامدرا</string>
+  <string name="done_action">ئه‌نجام درا</string>
   <string name="create_action">دروستکردنی دانه‌یه‌کی نوێ</string>
   <string name="quick_responses_empty_view">هیچ وه‌ڵامێکی خێرا نییه‌.</string>
   <string name="account_settings_action">ڕێکخستنەکانی هەژمار</string>
@@ -48,10 +48,10 @@
   <string name="mailbox_name_display_trash">سه‌له‌ی خۆڵ</string>
   <string name="mailbox_name_display_sent">نێردرا</string>
   <string name="mailbox_name_display_junk">زبڵ</string>
-  <string name="mailbox_name_display_starred">پەیوەستبوون</string>
+  <string name="mailbox_name_display_starred">ئه‌ستێره‌دار</string>
   <string name="mailbox_name_display_unread">نه‌خوێنراوه‌</string>
   <string name="account_folder_list_summary_inbox">نامە هاتووەکان</string>
-  <string name="account_folder_list_summary_starred">پەیوەستبوون</string>
+  <string name="account_folder_list_summary_starred">ئه‌ستێره‌دار</string>
   <string name="account_folder_list_summary_drafts">ڕه‌شنووسه‌کان</string>
   <string name="account_folder_list_summary_outbox">ده‌رسندوق</string>
   <string name="mailbox_list_account_selector_combined_view">بینینی تێکه‌ڵکراو</string>
@@ -293,7 +293,7 @@
   <string name="system_folders_sent_summary">بوخچه‌ی ڕاژه‌ی نێردراو دیاری بکه‌</string>
   <string name="system_folders_sent_dlg">بوخچه‌ی ڕاژه‌ی نێردراو دیاری بکه‌</string>
   <string name="edit_quick_response_dialog">وه‌ڵامی خێرا</string>
-  <string name="save_action">پاشەکەوتکردن</string>
+  <string name="save_action">پاشەکەوت</string>
   <string name="account_settings_sync_contacts_enable">گواستنەوەی پەیوەندیەکان</string>
   <string name="account_settings_sync_contacts_summary">گواستنەوەی پەیوەندیەکان لەم هەژمارەوە</string>
   <string name="account_settings_sync_calendar_enable">هاوکاتسازی ڕۆژژمێر</string>
