@@ -62,7 +62,6 @@ public class AccountSetupOptions extends AccountSetupActivity implements OnClick
 
     private Spinner mCheckFrequencyView;
     private Spinner mSyncWindowView;
-    private CheckBox mSyncSizeEnableView;
     private Spinner mSyncSizeView;
     private CheckBox mNotifyView;
     private CheckBox mSyncContactsView;
@@ -95,7 +94,6 @@ public class AccountSetupOptions extends AccountSetupActivity implements OnClick
 
         mCheckFrequencyView = UiUtilities.getView(this, R.id.account_check_frequency);
         mSyncWindowView = UiUtilities.getView(this, R.id.account_sync_window);
-        mSyncSizeEnableView = (CheckBox) UiUtilities.getView(this, R.id.account_sync_size_enable);
         mSyncSizeView = (Spinner) UiUtilities.getView(this, R.id.account_sync_size);
         mNotifyView = UiUtilities.getView(this, R.id.account_notify);
         mSyncContactsView = UiUtilities.getView(this, R.id.account_sync_contacts);
@@ -131,21 +129,7 @@ public class AccountSetupOptions extends AccountSetupActivity implements OnClick
             enableLookbackSpinner();
         }
 
-        // To configure the sync size
-        mSyncSizeEnableView.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mSyncSizeView.setVisibility(isChecked ? View.VISIBLE : View.INVISIBLE);
-            }
-        });
         buildSyncSizeSpinner(account);
-        if (account.isSetSyncSizeEnabled()) {
-            mSyncSizeEnableView.setChecked(true);
-            mSyncSizeView.setVisibility(View.VISIBLE);
-        } else {
-            mSyncSizeEnableView.setChecked(false);
-            mSyncSizeView.setVisibility(View.INVISIBLE);
-        }
 
         mNotifyView.setChecked(true); // By default, we want notifications on
         SpinnerOption.setSpinnerOptionValue(mCheckFrequencyView, account.getSyncInterval());
@@ -247,7 +231,6 @@ public class AccountSetupOptions extends AccountSetupActivity implements OnClick
         account.setFlags(newFlags);
         account.setSyncInterval((Integer)((SpinnerOption)mCheckFrequencyView
                 .getSelectedItem()).value);
-        account.setSyncSizeEnabled(mSyncSizeEnableView.isChecked());
         account.setSyncSize((Integer)((SpinnerOption)mSyncSizeView
                 .getSelectedItem()).value);
         if (mAccountSyncWindowRow.getVisibility() == View.VISIBLE) {

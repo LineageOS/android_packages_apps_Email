@@ -30,13 +30,6 @@
 package com.android.emailcommon.service;
 
 public class SyncSize {
-    /**
-     * 1 means the sync size function is enabled, others means the sync size
-     * function is disabled.
-     */
-    public static final int ENABLED = 1;
-    public static final int DISABLED = 0;
-
     public static final int SYNC_SIZE_ENTIRE_MAIL = Integer.MAX_VALUE;
     public static final int SYNC_SIZE_20_K = 20480;
     public static final int SYNC_SIZE_100_K = 102400;
@@ -44,6 +37,5 @@ public class SyncSize {
     public static final int SYNC_SIZE_500_K = 512000;
     public static final int SYNC_SIZE_1_M = 1024000;
 
-    public static final int ENABLED_DEFAULT_VALUE = ENABLED;
-    public static final int SYNC_SIZE_DEFAULT_VALUE = SYNC_SIZE_200_K;
+    public static final int SYNC_SIZE_DEFAULT_VALUE = SYNC_SIZE_ENTIRE_MAIL;
 }
