@@ -235,7 +235,6 @@ public final class Account extends EmailContent implements AccountColumns, Parce
         mSyncLookback = -1;
         mFlags = 0;
         mCompatibilityUuid = UUID.randomUUID().toString();
-        mSetSyncSizeEnabled = SyncSize.ENABLED_DEFAULT_VALUE;
         mSyncSize = SyncSize.SYNC_SIZE_ENTIRE_MAIL;
     }
 
@@ -418,21 +417,6 @@ public final class Account extends EmailContent implements AccountColumns, Parce
      */
     public void setAutoFetchAttachments(int value) {
         mAutoFetchAttachments = value;
-    }
-
-    /**
-     * @return If this account enabled the sync size function, return true.
-     */
-    public boolean isSetSyncSizeEnabled() {
-        return mSetSyncSizeEnabled == SyncSize.ENABLED ? true : false;
-    }
-
-    /**
-     * Set the sync size function if enabled for this account.
-     * @param enabled the state of sync size function for this account.
-     */
-    public void setSyncSizeEnabled(boolean enabled) {
-        mSetSyncSizeEnabled = enabled ? SyncSize.ENABLED : SyncSize.DISABLED;
     }
 
     /**

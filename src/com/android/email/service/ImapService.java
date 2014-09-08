@@ -422,12 +422,7 @@ public class ImapService extends Service {
             // Download the viewables immediately
             oneMessageArray[0] = message;
             boolean syncedEntireMail = true;
-            int allowSyncSize;
-            if (account.isSetSyncSizeEnabled()) {
-                allowSyncSize = account.getSyncSize();
-            } else {
-                allowSyncSize = SyncSize.SYNC_SIZE_ENTIRE_MAIL;
-            }
+            int allowSyncSize = account.getSyncSize();
             for (Part part : viewables) {
                 fp.clear();
                 fp.add(part);

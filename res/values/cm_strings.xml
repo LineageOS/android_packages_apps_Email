@@ -42,9 +42,7 @@
     <string name="account_auto_fetch_attachments_entries_always">Always</string>
 
     <!-- In Account setup options & Account Settings screens, Email sync size option. -->
-    <string name="account_settings_sync_size_enable">Configure max mail sync size</string>
-    <string name="account_settings_sync_size_enable_summary">Maximum email size to sync</string>
-    <string name="account_settings_sync_size_label">Max sync size</string>
+    <string name="account_settings_sync_size_label">Maximum email size to sync</string>
     <string name="account_settings_sync_size_category_label">Sync size settings</string>
 
     <string name="account_setup_options_mail_sync_size_all">No limit</string>

@@ -1356,7 +1356,7 @@ public final class DBHelper {
                 try {
                     db.execSQL("alter table " + Account.TABLE_NAME
                             + " add column " + AccountColumns.SET_SYNC_SIZE_ENABLED + " integer"
-                            + " default " + SyncSize.ENABLED_DEFAULT_VALUE + ";");
+                            + " default " + 1 + ";");
                     db.execSQL("alter table " + Account.TABLE_NAME
                             + " add column " + AccountColumns.SYNC_SIZE + " integer"
                             + " default " + SyncSize.SYNC_SIZE_DEFAULT_VALUE + ";");

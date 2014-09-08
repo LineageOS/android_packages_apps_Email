@@ -277,14 +277,8 @@ public class Pop3Service extends Service {
                 final Pop3Message message = unsyncedMessages.get(i);
 
                 // Get the sync lines of this account's message.
-                int allowSyncLines = -1;
-                if (account.isSetSyncSizeEnabled()) {
-                    if (account.getSyncSize() != SyncSize.SYNC_SIZE_ENTIRE_MAIL) {
-                        allowSyncLines = account.getSyncSize() / 76;
-                    }
-                } else {
-                    allowSyncLines = Pop3Store.FETCH_BODY_SANE_SUGGESTED_SIZE / 76;
-                }
+                int allowSyncLines =  account.getSyncSize() != SyncSize.SYNC_SIZE_ENTIRE_MAIL ?
+                    account.getSyncSize() / 76 : Pop3Store.FETCH_BODY_SANE_SUGGESTED_SIZE / 76;;
 
                 remoteFolder.fetchBody(message, allowSyncLines, null);
                 int flag = EmailContent.Message.FLAG_LOADED_COMPLETE;
