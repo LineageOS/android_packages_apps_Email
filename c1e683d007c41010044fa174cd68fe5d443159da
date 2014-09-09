@@ -19,6 +19,41 @@
     },
     {
       "key": {
+        "uuid": "7a1b2928_1559075b",
+        "filename": "res/values/cm_strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 2881
+      },
+      "writtenOn": "2014-09-09T06:27:16Z",
+      "side": 1,
+      "message": "yes, this checkbox is not necessary if the \u0027Entire\u0027  option can be added to the Sync Size array",
+      "parentUuid": "7a1b2928_956d1707",
+      "revId": "c1e683d007c41010044fa174cd68fe5d443159da",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a1b2928_953b57eb",
+        "filename": "res/values/cm_strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 2881
+      },
+      "writtenOn": "2014-09-09T06:27:16Z",
+      "side": 1,
+      "message": "mail \u003e email\nor\nmail -\u003e message",
+      "revId": "c1e683d007c41010044fa174cd68fe5d443159da",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a1b2928_d5778fd2",
         "filename": "res/values/cm_strings.xml",
         "patchSetId": 1
@@ -47,6 +82,24 @@
       "writtenOn": "2014-09-09T06:16:50Z",
       "side": 1,
       "message": "What does this do, BTW?",
+      "revId": "c1e683d007c41010044fa174cd68fe5d443159da",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a1b2928_f5556b1d",
+        "filename": "res/values/cm_strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 2881
+      },
+      "writtenOn": "2014-09-09T06:27:16Z",
+      "side": 1,
+      "message": "ability to add a contact to the To field while composing a message.",
+      "parentUuid": "7a1b2928_1582a794",
       "revId": "c1e683d007c41010044fa174cd68fe5d443159da",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
