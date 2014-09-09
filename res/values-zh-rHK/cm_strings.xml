@@ -20,20 +20,4 @@
   <string name="account_setup_options_mail_check_frequency_2hour">每 2 小時</string>
   <string name="account_setup_options_mail_check_frequency_4hour">每 4 小時</string>
   <string name="account_setup_options_mail_check_frequency_1day">每天</string>
-  <string name="account_settings_sync_size_enable">配置郵件的同步緩存大小</string>
-  <string name="account_settings_sync_size_enable_summary">您可以自由定義該帳戶中的郵件的同步緩存大小，從而節約數據流量</string>
-  <string name="account_settings_sync_size_label">選擇同步緩存大小</string>
-  <string name="account_settings_sync_size_category_label">同步緩存大小配置</string>
-  <string name="account_setup_options_mail_sync_size_all">全部</string>
-  <string name="account_setup_options_mail_sync_size_20k">20KB</string>
-  <string name="account_setup_options_mail_sync_size_100k">100KB</string>
-  <string name="account_setup_options_mail_sync_size_200k">200KB</string>
-  <string name="account_setup_options_mail_sync_size_500k">500KB</string>
-  <string name="account_setup_options_mail_sync_size_1M">1MB</string>
-  <string name="category_label_general_settings">一般設定</string>
-  <string name="category_label_attachment_settings">附加設定</string>
-  <string name="general_preference_add_attachment_label">附加任意文件為附件</string>
-  <string name="general_preference_select_recipients_label">從聯繫人中選擇收件人</string>
-  <string name="general_preference_confirm_forward_label">轉寄前須確認</string>
-  <string name="general_preference_confirm_forward_summary">如果郵件中包含一個或多個附件，在轉寄郵件之前系統需要先下載附件</string>
 </resources>
