@@ -42,12 +42,12 @@
     <string name="account_auto_fetch_attachments_entries_always">Always</string>
 
     <!-- In Account setup options & Account Settings screens, Email sync size option. -->
-    <string name="account_settings_sync_size_enable">Configure sync size per mail</string>
-    <string name="account_settings_sync_size_enable_summary">To save the data, you could configure the sync size per mail of the account</string>
-    <string name="account_settings_sync_size_label">Choose sync size</string>
+    <string name="account_settings_sync_size_enable">Configure max mail sync size</string>
+    <string name="account_settings_sync_size_enable_summary">Maximum email size to sync</string>
+    <string name="account_settings_sync_size_label">Max sync size</string>
     <string name="account_settings_sync_size_category_label">Sync size settings</string>
 
-    <string name="account_setup_options_mail_sync_size_all">Entire</string>
+    <string name="account_setup_options_mail_sync_size_all">No limit</string>
     <string name="account_setup_options_mail_sync_size_20k">20KB</string>
     <string name="account_setup_options_mail_sync_size_100k">100KB</string>
     <string name="account_setup_options_mail_sync_size_200k">200KB</string>
@@ -60,10 +60,10 @@
     <!-- Label of enhancement settings category to describe general preferences [CHAR LIMIT=32] -->
     <string name="category_label_attachment_settings">Attachment settings</string>
     <!-- General preference: Label of the setting for adding any file as attachment CHAR LIMIT=32] -->
-    <string name="general_preference_add_attachment_label">Add any file type</string>
+    <string name="general_preference_add_attachment_label">Add other file type</string>
     <!-- General preference: Label of the setting for select recipients from Contact CHAR LIMIT=32] -->
-    <string name="general_preference_select_recipients_label">Select recipients from Contacts</string>
+    <string name="general_preference_select_recipients_label">Select recipients from contacts</string>
     <!-- General preference: Label of the setting for confirm before forward CHAR LIMIT=32] -->
-    <string name="general_preference_confirm_forward_label">Confirmation before forwarding</string>
+    <string name="general_preference_confirm_forward_label">Confirm before forwarding</string>
     <string name="general_preference_confirm_forward_summary">Choose whether to use attachments from mail server, or download to device prior to forwarding</string>
 </resources>
