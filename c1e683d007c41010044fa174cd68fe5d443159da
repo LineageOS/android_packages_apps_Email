@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a1b2928_956d1707",
+        "filename": "res/values/cm_strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2014-09-09T06:16:50Z",
+      "side": 1,
+      "message": "Should probably nuke this check box altogether...",
+      "revId": "c1e683d007c41010044fa174cd68fe5d443159da",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a1b2928_d5778fd2",
+        "filename": "res/values/cm_strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2014-09-09T06:16:50Z",
+      "side": 1,
+      "message": "\u0027Complete mail\u0027 / \u0027Everything\u0027?",
+      "revId": "c1e683d007c41010044fa174cd68fe5d443159da",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a1b2928_1582a794",
+        "filename": "res/values/cm_strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2014-09-09T06:16:50Z",
+      "side": 1,
+      "message": "What does this do, BTW?",
+      "revId": "c1e683d007c41010044fa174cd68fe5d443159da",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a1b2928_b57493cf",
+        "filename": "res/values/cm_strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2014-09-09T06:16:50Z",
+      "side": 1,
+      "message": "Consider using different summaries for on and off?",
+      "revId": "c1e683d007c41010044fa174cd68fe5d443159da",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
