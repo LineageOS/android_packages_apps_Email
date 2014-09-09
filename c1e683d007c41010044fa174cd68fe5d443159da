@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "7a1b2928_900fe5e0",
+        "filename": "res/values/cm_strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2014-09-09T11:55:26Z",
+      "side": 1,
+      "message": "Removed the checkbox in a later commit.",
+      "parentUuid": "7a1b2928_1559075b",
+      "revId": "c1e683d007c41010044fa174cd68fe5d443159da",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a1b2928_953b57eb",
         "filename": "res/values/cm_strings.xml",
         "patchSetId": 1
@@ -65,6 +83,24 @@
       "writtenOn": "2014-09-09T06:16:50Z",
       "side": 1,
       "message": "\u0027Complete mail\u0027 / \u0027Everything\u0027?",
+      "revId": "c1e683d007c41010044fa174cd68fe5d443159da",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a1b2928_7014c9f4",
+        "filename": "res/values/cm_strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2014-09-09T11:55:26Z",
+      "side": 1,
+      "message": "Changed it to \u0027No limit\u0027",
+      "parentUuid": "7a1b2928_d5778fd2",
       "revId": "c1e683d007c41010044fa174cd68fe5d443159da",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
