@@ -175,7 +175,7 @@
   <string name="account_setup_options_mail_window_1week">هه‌فته‌ی کۆتایی</string>
   <string name="account_setup_options_mail_window_2weeks">دوو هه‌فته‌ی کۆتایی</string>
   <string name="account_setup_options_mail_window_1month">مانگی دوایین</string>
-  <string name="account_setup_options_mail_window_all">هەموو</string>
+  <string name="account_setup_options_mail_window_all">گشت</string>
   <string name="account_setup_options_mail_window_default">به‌کارهێنانی هه‌ژماری بنێڕه‌تی</string>
   <string name="account_setup_failed_dlg_auth_message">ناو و وشه‌ی نهێنی هه‌ڵه‌یه‌.</string>
   <string name="account_setup_failed_dlg_auth_message_fmt">چونه‌ژوره‌وه‌ هه‌ڵه‌یه‌.\n<xliff:g id="error">%s</xliff:g></string>
