@@ -26,7 +26,9 @@
   <string name="status_network_error">Connectiounsproblem.</string>
   <string name="mailbox_name_display_drafts">Brouillonen</string>
   <string name="mailbox_name_display_trash">Poubelle</string>
+  <string name="mailbox_name_display_starred">Markéiert</string>
   <string name="mailbox_name_display_unread">Ongelies</string>
+  <string name="account_folder_list_summary_starred">Markéiert</string>
   <string name="account_folder_list_summary_drafts">Brouillonen</string>
   <string name="account_setup_basics_password_label">Passwuert</string>
   <string name="account_setup_incoming_password_label">Passwuert</string>
