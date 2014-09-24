@@ -43,7 +43,6 @@
 
     <!-- In Account setup options & Account Settings screens, Email sync size option. -->
     <string name="account_settings_sync_size_label">Maximum email size to sync</string>
-    <string name="account_settings_sync_size_category_label">Sync size settings</string>
 
     <string name="account_setup_options_mail_sync_size_all">No limit</string>
     <string name="account_setup_options_mail_sync_size_20k">20KB</string>
