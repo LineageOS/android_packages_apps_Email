@@ -31,4 +31,7 @@
 
     <!-- the email application starts services -->
     <bool name="enable_services">true</bool>
+
+    <!-- Customize Email account's signature -->
+    <string name="customize_set_email_signature"></string>
 </resources>
