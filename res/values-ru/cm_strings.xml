@@ -30,4 +30,17 @@
   <string name="account_auto_fetch_attachments_entries_never">Не загружать</string>
   <string name="account_auto_fetch_attachments_entries_wifi">Только через Wi-Fi</string>
   <string name="account_auto_fetch_attachments_entries_always">Всегда</string>
+  <string name="account_settings_sync_size_label">Максимальный размер письма</string>
+  <string name="account_setup_options_mail_sync_size_all">Без ограничения</string>
+  <string name="account_setup_options_mail_sync_size_20k">20 КБ</string>
+  <string name="account_setup_options_mail_sync_size_100k">100 КБ</string>
+  <string name="account_setup_options_mail_sync_size_200k">200 КБ</string>
+  <string name="account_setup_options_mail_sync_size_500k">500 КБ</string>
+  <string name="account_setup_options_mail_sync_size_1M">1 МБ</string>
+  <string name="category_label_general_settings">Общие настройки</string>
+  <string name="category_label_attachment_settings">Вложения</string>
+  <string name="general_preference_add_attachment_label">Добавить тип файла</string>
+  <string name="general_preference_select_recipients_label">Выбор получателей из контактов</string>
+  <string name="general_preference_confirm_forward_label">Подтверждать пересылку</string>
+  <string name="general_preference_confirm_forward_summary">Предлагать выбор использования вложений на сервере или загрузки их на устройство перед пересылкой</string>
 </resources>

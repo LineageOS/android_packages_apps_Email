@@ -16,7 +16,7 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="account_settings_notify_every_message_label">Meddel for hver besked</string>
+  <string name="account_settings_notify_every_message_label">Notifikation for hver besked</string>
   <string name="account_setup_options_mail_check_frequency_2hour">Hver 2. time</string>
   <string name="account_setup_options_mail_check_frequency_4hour">Hver 4. time</string>
   <string name="account_setup_options_mail_check_frequency_1day">Hver dag</string>
@@ -30,4 +30,17 @@
   <string name="account_auto_fetch_attachments_entries_never">Aldrig</string>
   <string name="account_auto_fetch_attachments_entries_wifi">Kun via Wi-Fi</string>
   <string name="account_auto_fetch_attachments_entries_always">Altid</string>
+  <string name="account_settings_sync_size_label">Maksimum størrelse på e-mails, der skal synkroniseres</string>
+  <string name="account_setup_options_mail_sync_size_all">Ingen begrænsning</string>
+  <string name="account_setup_options_mail_sync_size_20k">20 KB</string>
+  <string name="account_setup_options_mail_sync_size_100k">100 KB</string>
+  <string name="account_setup_options_mail_sync_size_200k">200 KB</string>
+  <string name="account_setup_options_mail_sync_size_500k">500 KB</string>
+  <string name="account_setup_options_mail_sync_size_1M">1 MB</string>
+  <string name="category_label_general_settings">Generelle indstillinger</string>
+  <string name="category_label_attachment_settings">Indstillinger for vedhæftede filer</string>
+  <string name="general_preference_add_attachment_label">Tilføj anden filtype</string>
+  <string name="general_preference_select_recipients_label">Vælg modtagere fra kontakter</string>
+  <string name="general_preference_confirm_forward_label">Bekræft før videresendelse</string>
+  <string name="general_preference_confirm_forward_summary">Vælg om du vil bruge vedhæftede filer fra mail-server, eller downloade til enheden før videresendelse</string>
 </resources>

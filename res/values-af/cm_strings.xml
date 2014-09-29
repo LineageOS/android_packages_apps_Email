@@ -30,4 +30,17 @@
   <string name="account_auto_fetch_attachments_entries_never">Nooit</string>
   <string name="account_auto_fetch_attachments_entries_wifi">Slegs oor Wi-Fi</string>
   <string name="account_auto_fetch_attachments_entries_always">Altyd</string>
+  <string name="account_settings_sync_size_label">Maksimum epos grootte om te sync</string>
+  <string name="account_setup_options_mail_sync_size_all">Geen limiet</string>
+  <string name="account_setup_options_mail_sync_size_20k">20KB</string>
+  <string name="account_setup_options_mail_sync_size_100k">100KB</string>
+  <string name="account_setup_options_mail_sync_size_200k">200KB</string>
+  <string name="account_setup_options_mail_sync_size_500k">500KB</string>
+  <string name="account_setup_options_mail_sync_size_1M">1MB</string>
+  <string name="category_label_general_settings">Algemene instellings</string>
+  <string name="category_label_attachment_settings">Aanhegsel instellings</string>
+  <string name="general_preference_add_attachment_label">Voeg nog \'n lêer tipe by</string>
+  <string name="general_preference_select_recipients_label">Kies ontvangers van kontakte</string>
+  <string name="general_preference_confirm_forward_label">Bevestig voor jy aanstuur</string>
+  <string name="general_preference_confirm_forward_summary">Kies om aanhegsels te gebruik van e-pos bediener, of laai eers na toestel af voor stuur</string>
 </resources>

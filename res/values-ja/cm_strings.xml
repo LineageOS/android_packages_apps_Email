@@ -30,4 +30,17 @@
   <string name="account_auto_fetch_attachments_entries_never">自動フェッチしない</string>
   <string name="account_auto_fetch_attachments_entries_wifi">Wi-Fi経由のみ</string>
   <string name="account_auto_fetch_attachments_entries_always">常に自動フェッチする</string>
+  <string name="account_settings_sync_size_label">同期するメールの最大サイズ</string>
+  <string name="account_setup_options_mail_sync_size_all">制限なし</string>
+  <string name="account_setup_options_mail_sync_size_20k">20KB</string>
+  <string name="account_setup_options_mail_sync_size_100k">100KB</string>
+  <string name="account_setup_options_mail_sync_size_200k">200KB</string>
+  <string name="account_setup_options_mail_sync_size_500k">500KB</string>
+  <string name="account_setup_options_mail_sync_size_1M">1MB</string>
+  <string name="category_label_general_settings">全般設定</string>
+  <string name="category_label_attachment_settings">添付ファイルの設定</string>
+  <string name="general_preference_add_attachment_label">その他のファイル形式を追加</string>
+  <string name="general_preference_select_recipients_label">連絡先から宛先を選択</string>
+  <string name="general_preference_confirm_forward_label">転送前に確認</string>
+  <string name="general_preference_confirm_forward_summary">転送前に添付ファイルを端末にダウンロードするか、メールサーバーからの添付ファイルを使用するかどうか選択する</string>
 </resources>

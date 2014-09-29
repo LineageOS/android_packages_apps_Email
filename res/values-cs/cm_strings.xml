@@ -30,4 +30,17 @@
   <string name="account_auto_fetch_attachments_entries_never">Nikdy</string>
   <string name="account_auto_fetch_attachments_entries_wifi">Pouze přes Wi-Fi</string>
   <string name="account_auto_fetch_attachments_entries_always">Vždy</string>
+  <string name="account_settings_sync_size_label">Maximální velikost e-mailu pro synchronizaci</string>
+  <string name="account_setup_options_mail_sync_size_all">Bez omezení</string>
+  <string name="account_setup_options_mail_sync_size_20k">20 KB</string>
+  <string name="account_setup_options_mail_sync_size_100k">100 KB</string>
+  <string name="account_setup_options_mail_sync_size_200k">200 KB</string>
+  <string name="account_setup_options_mail_sync_size_500k">500 KB</string>
+  <string name="account_setup_options_mail_sync_size_1M">1 MB</string>
+  <string name="category_label_general_settings">Obecné nastavení</string>
+  <string name="category_label_attachment_settings">Nastavení přílohy</string>
+  <string name="general_preference_add_attachment_label">Přidat jiný typ souboru</string>
+  <string name="general_preference_select_recipients_label">Vybrat příjemce z kontaktů</string>
+  <string name="general_preference_confirm_forward_label">Potvrdit před odesláním</string>
+  <string name="general_preference_confirm_forward_summary">Vyberte, zda používat přílohy z poštovního serveru, nebo je před přeposláním stáhnout do zařízení</string>
 </resources>

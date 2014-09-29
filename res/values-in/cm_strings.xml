@@ -30,4 +30,17 @@
   <string name="account_auto_fetch_attachments_entries_never">Jangan pernah</string>
   <string name="account_auto_fetch_attachments_entries_wifi">Hanya melalui Wi-Fi</string>
   <string name="account_auto_fetch_attachments_entries_always">Selalu</string>
+  <string name="account_settings_sync_size_label">Ukuran maksimum email untuk sinkronisasi</string>
+  <string name="account_setup_options_mail_sync_size_all">Tanpa batasan</string>
+  <string name="account_setup_options_mail_sync_size_20k">20KB</string>
+  <string name="account_setup_options_mail_sync_size_100k">100KB</string>
+  <string name="account_setup_options_mail_sync_size_200k">200KB</string>
+  <string name="account_setup_options_mail_sync_size_500k">500KB</string>
+  <string name="account_setup_options_mail_sync_size_1M">1MB</string>
+  <string name="category_label_general_settings">Pengaturan umum</string>
+  <string name="category_label_attachment_settings">Pengaturan lampiran</string>
+  <string name="general_preference_add_attachment_label">Tambahkan jenis berkas lainnya</string>
+  <string name="general_preference_select_recipients_label">Pilih penerima dari kontak</string>
+  <string name="general_preference_confirm_forward_label">Konfirmasi sebelum penerusan</string>
+  <string name="general_preference_confirm_forward_summary">Memilih apakah akan menggunakan lampiran dari server mail, atau download ke perangkat sebelum penerusan</string>
 </resources>

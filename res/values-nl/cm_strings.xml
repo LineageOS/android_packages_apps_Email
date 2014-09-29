@@ -30,4 +30,17 @@
   <string name="account_auto_fetch_attachments_entries_never">Nooit</string>
   <string name="account_auto_fetch_attachments_entries_wifi">Alleen via wifi</string>
   <string name="account_auto_fetch_attachments_entries_always">Altijd</string>
+  <string name="account_settings_sync_size_label">Maximale e-mailgrootte om te synchroniseren</string>
+  <string name="account_setup_options_mail_sync_size_all">Geen limiet</string>
+  <string name="account_setup_options_mail_sync_size_20k">20 kB</string>
+  <string name="account_setup_options_mail_sync_size_100k">100 kB</string>
+  <string name="account_setup_options_mail_sync_size_200k">200 kB</string>
+  <string name="account_setup_options_mail_sync_size_500k">500 kB</string>
+  <string name="account_setup_options_mail_sync_size_1M">1 MB</string>
+  <string name="category_label_general_settings">Algemene instellingen</string>
+  <string name="category_label_attachment_settings">Instellingen voor bijlagen</string>
+  <string name="general_preference_add_attachment_label">Ander bestandstype toevoegen</string>
+  <string name="general_preference_select_recipients_label">Geadresseerden uit contacten selecteren</string>
+  <string name="general_preference_confirm_forward_label">Bevestigen vóór doorsturen</string>
+  <string name="general_preference_confirm_forward_summary">Keuze tussen gebruikmaken van bijlagen op de e-mailserver of bijlage downloaden naar uw apparaat vóór het doorsturen</string>
 </resources>

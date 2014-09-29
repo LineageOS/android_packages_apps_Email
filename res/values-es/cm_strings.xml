@@ -30,4 +30,17 @@
   <string name="account_auto_fetch_attachments_entries_never">Nunca</string>
   <string name="account_auto_fetch_attachments_entries_wifi">Solo por Wi-Fi</string>
   <string name="account_auto_fetch_attachments_entries_always">Siempre</string>
+  <string name="account_settings_sync_size_label">Tamaño máximo a sincronizar</string>
+  <string name="account_setup_options_mail_sync_size_all">Sin límite</string>
+  <string name="account_setup_options_mail_sync_size_20k">20KB</string>
+  <string name="account_setup_options_mail_sync_size_100k">100KB</string>
+  <string name="account_setup_options_mail_sync_size_200k">200KB</string>
+  <string name="account_setup_options_mail_sync_size_500k">500KB</string>
+  <string name="account_setup_options_mail_sync_size_1M">1MB</string>
+  <string name="category_label_general_settings">Ajustes generales</string>
+  <string name="category_label_attachment_settings">Ajustes de archivos adjuntos</string>
+  <string name="general_preference_add_attachment_label">Añadir cualquier tipo de archivo</string>
+  <string name="general_preference_select_recipients_label">Seleccionar destinatarios desde contactos</string>
+  <string name="general_preference_confirm_forward_label">Confirmar antes de reenviar</string>
+  <string name="general_preference_confirm_forward_summary">Elegir entre usar los archivos adjuntos desde el servidor de correo o descargarlos al dispositivo antes de reenviarlos</string>
 </resources>

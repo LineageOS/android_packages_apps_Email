@@ -30,4 +30,17 @@
   <string name="account_auto_fetch_attachments_entries_never">Mai</string>
   <string name="account_auto_fetch_attachments_entries_wifi">Només amb Wi-Fi</string>
   <string name="account_auto_fetch_attachments_entries_always">Sempre</string>
+  <string name="account_settings_sync_size_label">Mida màxima del correu electrònic a sincronitzar</string>
+  <string name="account_setup_options_mail_sync_size_all">Sense límit</string>
+  <string name="account_setup_options_mail_sync_size_20k">20KB</string>
+  <string name="account_setup_options_mail_sync_size_100k">100KB</string>
+  <string name="account_setup_options_mail_sync_size_200k">200KB</string>
+  <string name="account_setup_options_mail_sync_size_500k">500KB</string>
+  <string name="account_setup_options_mail_sync_size_1M">1MB</string>
+  <string name="category_label_general_settings">Configuració general</string>
+  <string name="category_label_attachment_settings">Configuració dels fitxer adjunts</string>
+  <string name="general_preference_add_attachment_label">Afegeix altres tipus de fitxers</string>
+  <string name="general_preference_select_recipients_label">Selecciona els destinataris des dels contactes</string>
+  <string name="general_preference_confirm_forward_label">Confirma abans de reenviar</string>
+  <string name="general_preference_confirm_forward_summary">Escull si vols utilitzar els fitxers adjunts del servidor de correu, o descarregar-los al dispositiu abans de reenviar-los</string>
 </resources>

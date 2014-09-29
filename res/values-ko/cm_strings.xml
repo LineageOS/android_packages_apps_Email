@@ -30,4 +30,17 @@
   <string name="account_auto_fetch_attachments_entries_never">사용 안 함</string>
   <string name="account_auto_fetch_attachments_entries_wifi">Wi-Fi에서만</string>
   <string name="account_auto_fetch_attachments_entries_always">항상</string>
+  <string name="account_settings_sync_size_label">동기화할 최대 이메일 크기</string>
+  <string name="account_setup_options_mail_sync_size_all">제한 없음</string>
+  <string name="account_setup_options_mail_sync_size_20k">20KB</string>
+  <string name="account_setup_options_mail_sync_size_100k">100KB</string>
+  <string name="account_setup_options_mail_sync_size_200k">200KB</string>
+  <string name="account_setup_options_mail_sync_size_500k">500KB</string>
+  <string name="account_setup_options_mail_sync_size_1M">1MB</string>
+  <string name="category_label_general_settings">일반 설정</string>
+  <string name="category_label_attachment_settings">첨부 파일 설정</string>
+  <string name="general_preference_add_attachment_label">다른 형식의 파일 추가</string>
+  <string name="general_preference_select_recipients_label">연락처에서 수신인 선택</string>
+  <string name="general_preference_confirm_forward_label">전달하기 전에 확인</string>
+  <string name="general_preference_confirm_forward_summary">메일을 전달할 때 메일 서버의 첨부 파일을 그대로 쓸 것인지, 파일을 다운로드하여 다시 첨부할 것인지 선택</string>
 </resources>

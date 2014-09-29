@@ -31,4 +31,17 @@ Cette opération ne peut pas être annulée.\n\nContinuer ?</string>
   <string name="account_auto_fetch_attachments_entries_never">Jamais</string>
   <string name="account_auto_fetch_attachments_entries_wifi">Uniquement par Wi-Fi</string>
   <string name="account_auto_fetch_attachments_entries_always">Toujours</string>
+  <string name="account_settings_sync_size_label">Taille maximale à synchroniser par message</string>
+  <string name="account_setup_options_mail_sync_size_all">Aucune limite</string>
+  <string name="account_setup_options_mail_sync_size_20k">20 Ko</string>
+  <string name="account_setup_options_mail_sync_size_100k">100 Ko</string>
+  <string name="account_setup_options_mail_sync_size_200k">200 Ko</string>
+  <string name="account_setup_options_mail_sync_size_500k">500 Ko</string>
+  <string name="account_setup_options_mail_sync_size_1M">1 Mo</string>
+  <string name="category_label_general_settings">Paramètres généraux</string>
+  <string name="category_label_attachment_settings">Paramètres des pièces jointes</string>
+  <string name="general_preference_add_attachment_label">Ajouter un autre type de fichier</string>
+  <string name="general_preference_select_recipients_label">Sélection des destinataires depuis les contacts</string>
+  <string name="general_preference_confirm_forward_label">Confirmer avant envoi</string>
+  <string name="general_preference_confirm_forward_summary">Choisissez d\'utiliser les pièces jointes stockées sur le serveur, ou les télécharger avant l\'envoi</string>
 </resources>

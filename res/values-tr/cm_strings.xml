@@ -30,4 +30,17 @@
   <string name="account_auto_fetch_attachments_entries_never">Asla</string>
   <string name="account_auto_fetch_attachments_entries_wifi">Sadece Wi-Fi üzerinden</string>
   <string name="account_auto_fetch_attachments_entries_always">Her zaman</string>
+  <string name="account_settings_sync_size_label">Eşitleme için en fazla e-posta boyutu</string>
+  <string name="account_setup_options_mail_sync_size_all">Limit yok</string>
+  <string name="account_setup_options_mail_sync_size_20k">20KB</string>
+  <string name="account_setup_options_mail_sync_size_100k">100KB</string>
+  <string name="account_setup_options_mail_sync_size_200k">200KB</string>
+  <string name="account_setup_options_mail_sync_size_500k">500KB</string>
+  <string name="account_setup_options_mail_sync_size_1M">1MB</string>
+  <string name="category_label_general_settings">Genel Ayarları</string>
+  <string name="category_label_attachment_settings">Ek dosya ayarları</string>
+  <string name="general_preference_add_attachment_label">Başka dosya türü ekle</string>
+  <string name="general_preference_select_recipients_label">Kişilerden alıcıları seç</string>
+  <string name="general_preference_confirm_forward_label">Göndermeden önce onayla</string>
+  <string name="general_preference_confirm_forward_summary">Posta sunucusundan ekleri kullanmayı mı, ya da iletmeden önce cihaza indirmeyi mi seçiyorsunuz</string>
 </resources>

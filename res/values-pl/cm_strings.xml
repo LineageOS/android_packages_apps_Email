@@ -30,4 +30,17 @@
   <string name="account_auto_fetch_attachments_entries_never">Nigdy</string>
   <string name="account_auto_fetch_attachments_entries_wifi">Tylko przez Wi-Fi</string>
   <string name="account_auto_fetch_attachments_entries_always">Zawsze</string>
+  <string name="account_settings_sync_size_label">Maksymalny rozmiar synchronizowanej wiadomości</string>
+  <string name="account_setup_options_mail_sync_size_all">Bez limitu</string>
+  <string name="account_setup_options_mail_sync_size_20k">20 KB</string>
+  <string name="account_setup_options_mail_sync_size_100k">100 KB</string>
+  <string name="account_setup_options_mail_sync_size_200k">200 KB</string>
+  <string name="account_setup_options_mail_sync_size_500k">500 KB</string>
+  <string name="account_setup_options_mail_sync_size_1M">1 MB</string>
+  <string name="category_label_general_settings">Ustawienia ogólne</string>
+  <string name="category_label_attachment_settings">Ustawienia załączników</string>
+  <string name="general_preference_add_attachment_label">Dodaj inny typ pliku</string>
+  <string name="general_preference_select_recipients_label">Wybierz adresatów z listy kontaktów</string>
+  <string name="general_preference_confirm_forward_label">Potwierdź przed wysłaniem</string>
+  <string name="general_preference_confirm_forward_summary">Zdecyduj, czy chcesz używać załączników z serwera poczty lub pobrać do urządzenia przed wysłaniem</string>
 </resources>

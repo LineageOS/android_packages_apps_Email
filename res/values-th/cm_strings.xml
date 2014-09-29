@@ -30,4 +30,17 @@
   <string name="account_auto_fetch_attachments_entries_never">ไม่เลย</string>
   <string name="account_auto_fetch_attachments_entries_wifi">เฉพาะเมื่อใช้ Wi-Fi เท่านั้น</string>
   <string name="account_auto_fetch_attachments_entries_always">ทุกครั้ง</string>
+  <string name="account_settings_sync_size_label">ขนาดอีเมลที่ซิงค์ได้สูงสุด</string>
+  <string name="account_setup_options_mail_sync_size_all">ไม่จำกัด</string>
+  <string name="account_setup_options_mail_sync_size_20k">20KB</string>
+  <string name="account_setup_options_mail_sync_size_100k">100KB</string>
+  <string name="account_setup_options_mail_sync_size_200k">200KB</string>
+  <string name="account_setup_options_mail_sync_size_500k">500KB</string>
+  <string name="account_setup_options_mail_sync_size_1M">1MB</string>
+  <string name="category_label_general_settings">ตั้งค่าทั่วไป</string>
+  <string name="category_label_attachment_settings">ตั้งค่าไฟล์แนบ</string>
+  <string name="general_preference_add_attachment_label">เพิ่มประเภทไฟล์อื่น</string>
+  <string name="general_preference_select_recipients_label">เลือกผู้รับจากรายชื่อ</string>
+  <string name="general_preference_confirm_forward_label">ยืนยันก่อนส่งต่อ</string>
+  <string name="general_preference_confirm_forward_summary">เลือกไฟล์แนบจากเซิฟเวอร์หรือดาวน์โหลดไปยังอุปกรณ์ก่อนส่งต่อ</string>
 </resources>

@@ -30,4 +30,17 @@
   <string name="account_auto_fetch_attachments_entries_never">කිසි විටෙකත් එපා</string>
   <string name="account_auto_fetch_attachments_entries_wifi">Wi-Fi හරහා පමණි</string>
   <string name="account_auto_fetch_attachments_entries_always">සැමවිටම</string>
+  <string name="account_settings_sync_size_label">සමමුහුර්තයට ඊ-තැපෑලේ උපරිම ප්‍රමාණය</string>
+  <string name="account_setup_options_mail_sync_size_all">සීමාවක් නැත</string>
+  <string name="account_setup_options_mail_sync_size_20k">20KB</string>
+  <string name="account_setup_options_mail_sync_size_100k">100KB</string>
+  <string name="account_setup_options_mail_sync_size_200k">200KB</string>
+  <string name="account_setup_options_mail_sync_size_500k">500KB</string>
+  <string name="account_setup_options_mail_sync_size_1M">1MB</string>
+  <string name="category_label_general_settings">පොදු සැකසීම්</string>
+  <string name="category_label_attachment_settings">ඇමුණුම් සැකසීම්</string>
+  <string name="general_preference_add_attachment_label">වෙනත් ගොනු වර්ගයක් එක් කරන්න</string>
+  <string name="general_preference_select_recipients_label">සම්බන්ධතා තුළින් ග්‍රාහකයා තෝරන්න</string>
+  <string name="general_preference_confirm_forward_label">ඉදිරියට යැවීමට පෙර තහවුරු කරන්න</string>
+  <string name="general_preference_confirm_forward_summary">ඉදිරියට යැවීමට පෙර තැපැල් සේවාදායකයේ ඇමුණුම් භාවිතාකරන්නද නැතිනම් උපාංගයට භාගත කලයුතුද යන්න තෝරන්න</string>
 </resources>

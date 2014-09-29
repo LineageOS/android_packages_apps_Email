@@ -30,4 +30,17 @@
   <string name="account_auto_fetch_attachments_entries_never">Enxamás</string>
   <string name="account_auto_fetch_attachments_entries_wifi">Namái con Wi-Fi</string>
   <string name="account_auto_fetch_attachments_entries_always">Siempre</string>
+  <string name="account_settings_sync_size_label">Tamañu máximu del corréu-e a sincronizar</string>
+  <string name="account_setup_options_mail_sync_size_all">Ensin llende</string>
+  <string name="account_setup_options_mail_sync_size_20k">20KB</string>
+  <string name="account_setup_options_mail_sync_size_100k">100KB</string>
+  <string name="account_setup_options_mail_sync_size_200k">200KB</string>
+  <string name="account_setup_options_mail_sync_size_500k">500KB</string>
+  <string name="account_setup_options_mail_sync_size_1M">1MB</string>
+  <string name="category_label_general_settings">Axustes xenerales</string>
+  <string name="category_label_attachment_settings">Axustes de ficheros axuntos</string>
+  <string name="general_preference_add_attachment_label">Amestar cualquier triba de ficheru</string>
+  <string name="general_preference_select_recipients_label">Seleicionar destinatarios dende los contautos</string>
+  <string name="general_preference_confirm_forward_label">Confirmar enantes de reunviar</string>
+  <string name="general_preference_confirm_forward_summary">Escoyer ente usar los ficheros axuntos dende\'l sirvidor de corréu o descargalos al preséu enantes de reunvialos</string>
 </resources>

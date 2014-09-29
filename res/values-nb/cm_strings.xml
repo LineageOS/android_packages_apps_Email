@@ -30,4 +30,17 @@
   <string name="account_auto_fetch_attachments_entries_never">Aldri</string>
   <string name="account_auto_fetch_attachments_entries_wifi">Bare via Wi-Fi</string>
   <string name="account_auto_fetch_attachments_entries_always">Alltid</string>
+  <string name="account_settings_sync_size_label">Maksimal e-poststørrelsen å synkronisere</string>
+  <string name="account_setup_options_mail_sync_size_all">Ingen grense</string>
+  <string name="account_setup_options_mail_sync_size_20k">20KB</string>
+  <string name="account_setup_options_mail_sync_size_100k">100KB</string>
+  <string name="account_setup_options_mail_sync_size_200k">200KB</string>
+  <string name="account_setup_options_mail_sync_size_500k">500KB</string>
+  <string name="account_setup_options_mail_sync_size_1M">1MB</string>
+  <string name="category_label_general_settings">Generelle innstillinger</string>
+  <string name="category_label_attachment_settings">Vedleggsinnstillinger</string>
+  <string name="general_preference_add_attachment_label">Legge til andre filtyper</string>
+  <string name="general_preference_select_recipients_label">Velg mottakere fra kontakter</string>
+  <string name="general_preference_confirm_forward_label">Bekreft før videresending</string>
+  <string name="general_preference_confirm_forward_summary">Velg om du vil bruke vedlegg fra e-postserveren, eller laster ned til enheten før videresending</string>
 </resources>

@@ -30,4 +30,17 @@
   <string name="account_auto_fetch_attachments_entries_never">Ποτέ</string>
   <string name="account_auto_fetch_attachments_entries_wifi">Μόνο μέσω Wi-Fi</string>
   <string name="account_auto_fetch_attachments_entries_always">Πάντα</string>
+  <string name="account_settings_sync_size_label">Μέγιστο μέγεθος μηνύματος για συγχρονισμό</string>
+  <string name="account_setup_options_mail_sync_size_all">Απεριόριστο</string>
+  <string name="account_setup_options_mail_sync_size_20k">20KB</string>
+  <string name="account_setup_options_mail_sync_size_100k">100KB</string>
+  <string name="account_setup_options_mail_sync_size_200k">200KB</string>
+  <string name="account_setup_options_mail_sync_size_500k">500KB</string>
+  <string name="account_setup_options_mail_sync_size_1M">1MB</string>
+  <string name="category_label_general_settings">Γενικές ρυθμίσεις</string>
+  <string name="category_label_attachment_settings">Ρυθμίσεις συνημμένων</string>
+  <string name="general_preference_add_attachment_label">Προσθήκη άλλου τύπου αρχείου</string>
+  <string name="general_preference_select_recipients_label">Επιλέξτε παραλήπτες από τις επαφές</string>
+  <string name="general_preference_confirm_forward_label">Επιβεβαίωση πριν την προώθηση</string>
+  <string name="general_preference_confirm_forward_summary">Επιλέξτε αν θέλετε να χρησιμοποιήσετε τα συνημμένα από το διακομιστή αλληλογραφίας, ή να τα κατεβάσετε στη συσκευή πριν την προώθηση</string>
 </resources>

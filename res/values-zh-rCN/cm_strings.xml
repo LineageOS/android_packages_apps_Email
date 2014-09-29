@@ -30,4 +30,17 @@
   <string name="account_auto_fetch_attachments_entries_never">永不</string>
   <string name="account_auto_fetch_attachments_entries_wifi">仅通过 Wi-Fi</string>
   <string name="account_auto_fetch_attachments_entries_always">总是</string>
+  <string name="account_settings_sync_size_label">要同步的最大邮件大小</string>
+  <string name="account_setup_options_mail_sync_size_all">没有限制</string>
+  <string name="account_setup_options_mail_sync_size_20k">20KB</string>
+  <string name="account_setup_options_mail_sync_size_100k">100KB</string>
+  <string name="account_setup_options_mail_sync_size_200k">200KB</string>
+  <string name="account_setup_options_mail_sync_size_500k">500KB</string>
+  <string name="account_setup_options_mail_sync_size_1M">1MB</string>
+  <string name="category_label_general_settings">常规设置</string>
+  <string name="category_label_attachment_settings">附件设置</string>
+  <string name="general_preference_add_attachment_label">添加其他文件类型</string>
+  <string name="general_preference_select_recipients_label">从联系人中选择收件人</string>
+  <string name="general_preference_confirm_forward_label">在转发之前确认</string>
+  <string name="general_preference_confirm_forward_summary">选择使用来自邮件服务器的附件，或在转发前先下载到设备</string>
 </resources>

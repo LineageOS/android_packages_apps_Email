@@ -30,4 +30,17 @@
   <string name="account_auto_fetch_attachments_entries_never">Nikdy</string>
   <string name="account_auto_fetch_attachments_entries_wifi">Iba cez Wi-Fi</string>
   <string name="account_auto_fetch_attachments_entries_always">Vždy</string>
+  <string name="account_settings_sync_size_label">Maximálna veľkosť e-mailu na synchronizáciu</string>
+  <string name="account_setup_options_mail_sync_size_all">Bez limitu</string>
+  <string name="account_setup_options_mail_sync_size_20k">20 KB</string>
+  <string name="account_setup_options_mail_sync_size_100k">100 KB</string>
+  <string name="account_setup_options_mail_sync_size_200k">200 KB</string>
+  <string name="account_setup_options_mail_sync_size_500k">500 KB</string>
+  <string name="account_setup_options_mail_sync_size_1M">1 MB</string>
+  <string name="category_label_general_settings">Všeobecné nastavenia</string>
+  <string name="category_label_attachment_settings">Nastavenia príloh</string>
+  <string name="general_preference_add_attachment_label">Pridať iný typ súboru</string>
+  <string name="general_preference_select_recipients_label">Vybrať príjemcov z Kontaktov</string>
+  <string name="general_preference_confirm_forward_label">Potvrdiť pred odoslaním</string>
+  <string name="general_preference_confirm_forward_summary">Vyberte, či chcete používať prílohy z poštového servera, alebo ich stiahnuť do zariadenia na preposlanie</string>
 </resources>
