@@ -28,7 +28,7 @@
     </string-array>
 
     <!-- Mail sync size -->
-    <string-array name="account_setup_options_mail_sync_size_entries_labels">
+    <string-array name="account_setup_options_mail_sync_size_entries_labels" translatable="false">
         <item>@string/account_setup_options_mail_sync_size_all</item>
         <item>@string/account_setup_options_mail_sync_size_20k</item>
         <item>@string/account_setup_options_mail_sync_size_100k</item>
@@ -37,7 +37,7 @@
         <item>@string/account_setup_options_mail_sync_size_1M</item>
     </string-array>
 
-    <string-array name="account_setup_options_mail_sync_size_entries_values">
+    <string-array name="account_setup_options_mail_sync_size_entries_values" translatable="false">
         <!-- This is the sync size for entire mail, and the value is the integer max value -->
         <item>2147483647</item>
         <item>20480</item>
