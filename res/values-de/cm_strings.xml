@@ -30,4 +30,17 @@
   <string name="account_auto_fetch_attachments_entries_never">Nie</string>
   <string name="account_auto_fetch_attachments_entries_wifi">Nur über WLAN</string>
   <string name="account_auto_fetch_attachments_entries_always">Immer</string>
+  <string name="account_settings_sync_size_label">Maximale E-Mail-Größe für Synchronisation</string>
+  <string name="account_setup_options_mail_sync_size_all">Unbegrenzt</string>
+  <string name="account_setup_options_mail_sync_size_20k">20 kB</string>
+  <string name="account_setup_options_mail_sync_size_100k">100 kB</string>
+  <string name="account_setup_options_mail_sync_size_200k">200 kB</string>
+  <string name="account_setup_options_mail_sync_size_500k">500 kB</string>
+  <string name="account_setup_options_mail_sync_size_1M">1 MB</string>
+  <string name="category_label_general_settings">Allgemeine Einstellungen</string>
+  <string name="category_label_attachment_settings">Anlageneinstellungen</string>
+  <string name="general_preference_add_attachment_label">Anderen Dateityp hinzufügen</string>
+  <string name="general_preference_select_recipients_label">Empfänger aus den Kontakten wählen</string>
+  <string name="general_preference_confirm_forward_label">Vor dem Weiterleiten bestätigen</string>
+  <string name="general_preference_confirm_forward_summary">Auswählen, ob Anhänge beim Weiterleiten vom Mail-Server verwendet, oder zuerst heruntergeladen werden sollen</string>
 </resources>
