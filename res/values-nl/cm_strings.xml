@@ -42,5 +42,5 @@
   <string name="general_preference_add_attachment_label">Ander bestandstype toevoegen</string>
   <string name="general_preference_select_recipients_label">Geadresseerden uit contacten selecteren</string>
   <string name="general_preference_confirm_forward_label">Bevestigen vóór doorsturen</string>
-  <string name="general_preference_confirm_forward_summary">Keuze tussen gebruikmaken van bijlagen op de e-mailserver of bijlage downloaden naar uw apparaat vóór het doorsturen</string>
+  <string name="general_preference_confirm_forward_summary">Keuze tussen gebruikmaken van bijlagen op de e-mailserver of downloaden naar uw apparaat vóór het doorsturen</string>
 </resources>
