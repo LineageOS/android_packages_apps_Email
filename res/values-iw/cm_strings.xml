@@ -31,4 +31,17 @@
   <string name="account_auto_fetch_attachments_entries_never">לעולם לא</string>
   <string name="account_auto_fetch_attachments_entries_wifi">רק ב-Wi-Fi</string>
   <string name="account_auto_fetch_attachments_entries_always">תמיד</string>
+  <string name="account_settings_sync_size_label">גודל מירבי של דוא\"ל לסנכרון</string>
+  <string name="account_setup_options_mail_sync_size_all">ללא הגבלה</string>
+  <string name="account_setup_options_mail_sync_size_20k">20KB</string>
+  <string name="account_setup_options_mail_sync_size_100k">100KB</string>
+  <string name="account_setup_options_mail_sync_size_200k">200KB</string>
+  <string name="account_setup_options_mail_sync_size_500k">500KB</string>
+  <string name="account_setup_options_mail_sync_size_1M">1MB</string>
+  <string name="category_label_general_settings">הגדרות כלליות</string>
+  <string name="category_label_attachment_settings">הגדרות קובץ מצורף</string>
+  <string name="general_preference_add_attachment_label">הוסף קובץ מסוג אחר</string>
+  <string name="general_preference_select_recipients_label">בחר נמענים מאנשי קשר</string>
+  <string name="general_preference_confirm_forward_label">אשר לפני ההעברה</string>
+  <string name="general_preference_confirm_forward_summary">בחר האם להשתמש בקבצים מצורפים משרת הדואר, או להוריד למכשיר לפני ההעברה</string>
 </resources>
