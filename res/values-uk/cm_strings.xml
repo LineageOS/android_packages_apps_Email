@@ -30,4 +30,17 @@
   <string name="account_auto_fetch_attachments_entries_never">Ніколи</string>
   <string name="account_auto_fetch_attachments_entries_wifi">Тільки через Wi-Fi</string>
   <string name="account_auto_fetch_attachments_entries_always">Завжди</string>
+  <string name="account_settings_sync_size_label">Розмір максимальної електронної пошти для синхронізації</string>
+  <string name="account_setup_options_mail_sync_size_all">Без обмежень</string>
+  <string name="account_setup_options_mail_sync_size_20k">20 КБ</string>
+  <string name="account_setup_options_mail_sync_size_100k">100 КБ</string>
+  <string name="account_setup_options_mail_sync_size_200k">200 КБ</string>
+  <string name="account_setup_options_mail_sync_size_500k">500 КБ</string>
+  <string name="account_setup_options_mail_sync_size_1M">1 МБ</string>
+  <string name="category_label_general_settings">Загальні налаштування</string>
+  <string name="category_label_attachment_settings">Параметри вкладень</string>
+  <string name="general_preference_add_attachment_label">Додати інший тип файлу</string>
+  <string name="general_preference_select_recipients_label">Вибрати одержувачів із папки Контакти</string>
+  <string name="general_preference_confirm_forward_label">Підтвердити перед надсиланням</string>
+  <string name="general_preference_confirm_forward_summary">Пропонувати вибір використання вкладень на сервері або завантаження їх на пристрій перед пересиланням</string>
 </resources>
