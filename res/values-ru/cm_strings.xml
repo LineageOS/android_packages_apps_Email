@@ -39,7 +39,7 @@
   <string name="account_setup_options_mail_sync_size_1M">1 МБ</string>
   <string name="category_label_general_settings">Общие настройки</string>
   <string name="category_label_attachment_settings">Вложения</string>
-  <string name="general_preference_add_attachment_label">Добавить тип файла</string>
+  <string name="general_preference_add_attachment_label">Разрешить добавление любых типов файлов</string>
   <string name="general_preference_select_recipients_label">Выбор получателей из контактов</string>
   <string name="general_preference_confirm_forward_label">Подтверждать пересылку</string>
   <string name="general_preference_confirm_forward_summary">Предлагать выбор использования вложений на сервере или загрузки их на устройство перед пересылкой</string>
