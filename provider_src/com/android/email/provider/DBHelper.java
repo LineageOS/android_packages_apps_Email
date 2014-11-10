@@ -186,7 +186,7 @@ public final class DBHelper {
     // Version 127: Force mFlags to contain the correct flags for EAS accounts given a protocol
     //              version above 12.0
     // Version 128: Add setSyncSizeEnabled and syncSize columns for Account table.
-    public static final int DATABASE_VERSION = 128;
+    public static final int DATABASE_VERSION = 129;
 
     // Any changes to the database format *must* include update-in-place code.
     // Original version: 2
@@ -521,6 +521,7 @@ public final class DBHelper {
             + AccountColumns.PING_DURATION + " integer, "
             + AccountColumns.SET_SYNC_SIZE_ENABLED + " integer, "
             + AccountColumns.SYNC_SIZE + " integer"
+            + AccountColumns.AUTO_FETCH_ATTACHMENTS + " integer"
             + ");";
         db.execSQL("create table " + Account.TABLE_NAME + s);
         // Deleting an account deletes associated Mailboxes and HostAuth's
@@ -872,6 +873,9 @@ public final class DBHelper {
         @Override
         @SuppressWarnings("deprecation")
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+            boolean fromCM11 = false;
+
             // For versions prior to 5, delete all data
             // Versions >= 5 require that data be preserved!
             if (oldVersion < 5) {
@@ -1457,7 +1461,11 @@ public final class DBHelper {
                 }
             }
 
-            if (oldVersion <= 124) {
+            if (oldVersion == 126) {
+                fromCM11 = true;
+            }
+
+            if (oldVersion <= 124 || fromCM11) {
                 createCredentialsTable(db);
                 // Add the credentialKey column, and set it to -1 for all pre-existing hostAuths.
                 db.execSQL("alter table " + HostAuth.TABLE_NAME
@@ -1466,11 +1474,11 @@ public final class DBHelper {
                         + HostAuthColumns.CREDENTIAL_KEY + "=-1");
             }
 
-            if (oldVersion <= 125) {
+            if (oldVersion <= 125 || fromCM11) {
                 upgradeFromVersion125ToVersion126(db);
             }
 
-            if (oldVersion <= 126) {
+            if (oldVersion <= 126 || fromCM11) {
                 upgradeFromVersion126ToVersion127(mContext, db);
             }
 
@@ -1485,6 +1493,20 @@ public final class DBHelper {
                 } catch (SQLException e) {
                     // Shouldn't be needed unless we're debugging and interrupt the process
                     LogUtils.w(TAG, "Exception upgrading EmailProvider.db from 127 to 128", e);
+                }
+            }
+
+            if (oldVersion <= 128 && !fromCM11) {
+                try {
+                    db.execSQL("alter table " + Account.TABLE_NAME
+                            + " add column " + AccountColumns.AUTO_FETCH_ATTACHMENTS
+                            + " integer" + ";");
+                    final ContentValues cv = new ContentValues(1);
+                    cv.put(AccountColumns.AUTO_FETCH_ATTACHMENTS, 0);
+                    db.update(Account.TABLE_NAME, cv, null, null);
+                } catch (final SQLException e) {
+                    // Shouldn't be needed unless we're debugging and interrupt the process
+                    LogUtils.w(TAG, "Exception upgrading EmailProvider.db from v128 to v129", e);
                 }
             }
         }
