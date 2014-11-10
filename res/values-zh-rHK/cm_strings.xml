@@ -20,4 +20,7 @@
   <string name="account_setup_options_mail_check_frequency_2hour">每 2 小時</string>
   <string name="account_setup_options_mail_check_frequency_4hour">每 4 小時</string>
   <string name="account_setup_options_mail_check_frequency_1day">每天</string>
+  <string name="account_settings">帳戶設定</string>
+  <string name="delete_account_summary">刪除此帳戶及所有的設定和數據</string>
+  <string name="account_auto_fetch_attachments_entries_wifi">僅透過無綫網絡</string>
 </resources>
