@@ -1721,6 +1721,8 @@ public abstract class EmailContent {
         public static final String MAX_ATTACHMENT_SIZE = "maxAttachmentSize";
         // Current duration of the Exchange ping
         public static final String PING_DURATION = "pingDuration";
+        // Automatically fetch pop3 attachments
+        public static final String AUTO_FETCH_ATTACHMENTS = "autoFetchAttachments";
     }
 
     public interface QuickResponseColumns extends BaseColumns {
