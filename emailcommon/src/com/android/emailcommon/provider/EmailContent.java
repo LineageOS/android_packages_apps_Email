@@ -1789,6 +1789,8 @@ public abstract class EmailContent {
         public static final String SET_SYNC_SIZE_ENABLED = "setSyncSizeEnabled";
         // The sync size for each message of this account.
         public static final String SYNC_SIZE = "syncSize";
+        // Automatically fetch pop3 attachments
+        public static final String AUTO_FETCH_ATTACHMENTS = "autoFetchAttachments";
     }
 
     public interface QuickResponseColumns extends BaseColumns {
