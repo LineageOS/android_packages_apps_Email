@@ -17,12 +17,15 @@
 package com.android.email.activity.setup;
 
 import android.accounts.AccountAuthenticatorResponse;
+import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.android.emailcommon.provider.Account;
 import com.android.emailcommon.provider.Policy;
+import com.android.email.R;
 
 public class SetupData implements Parcelable {
     // The "extra" name for the Bundle saved with SetupData
@@ -228,4 +231,10 @@ public class SetupData implements Parcelable {
         sb.append(mPolicy == null ? "none" : "exists");
         return sb.toString();
     }
+
+    public void setDefaultSignature(Context context) {
+        Resources res = context.getResources();
+        mAccount.setSignature(res.getString(R.string.config_default_signature));
+    }
+
 }

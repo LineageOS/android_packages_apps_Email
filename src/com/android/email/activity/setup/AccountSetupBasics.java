@@ -194,12 +194,14 @@ public class AccountSetupBasics extends AccountSetupActivity
         if (ServiceProxy.getIntentStringForEmailPackage(
                 this, ACTION_CREATE_ACCOUNT).equals(action)) {
             mSetupData = new SetupData(SetupData.FLOW_MODE_FORCE_CREATE);
+            mSetupData.setDefaultSignature(this);
         } else {
             final int intentFlowMode =
                     intent.getIntExtra(EXTRA_FLOW_MODE, SetupData.FLOW_MODE_UNSPECIFIED);
             if (intentFlowMode != SetupData.FLOW_MODE_UNSPECIFIED) {
                 mSetupData = new SetupData(intentFlowMode,
                         intent.getStringExtra(EXTRA_FLOW_ACCOUNT_TYPE));
+                mSetupData.setDefaultSignature(this);
             }
         }
 
