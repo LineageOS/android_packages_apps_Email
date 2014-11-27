@@ -30,4 +30,17 @@
   <string name="account_auto_fetch_attachments_entries_never">Niciodată</string>
   <string name="account_auto_fetch_attachments_entries_wifi">Numai prin Wi-Fi</string>
   <string name="account_auto_fetch_attachments_entries_always">Întotdeauna</string>
+  <string name="account_settings_sync_size_label">Dimensiune maximă e-mail pentru sincronizare</string>
+  <string name="account_setup_options_mail_sync_size_all">Nicio limită</string>
+  <string name="account_setup_options_mail_sync_size_20k">20KO</string>
+  <string name="account_setup_options_mail_sync_size_100k">100KO</string>
+  <string name="account_setup_options_mail_sync_size_200k">200KO</string>
+  <string name="account_setup_options_mail_sync_size_500k">500KO</string>
+  <string name="account_setup_options_mail_sync_size_1M">1MO</string>
+  <string name="category_label_general_settings">Setări generale</string>
+  <string name="category_label_attachment_settings">Setări de atașament</string>
+  <string name="general_preference_add_attachment_label">Adăugați alt tip de fişier</string>
+  <string name="general_preference_select_recipients_label">Selectaţi destinatarii din contacte</string>
+  <string name="general_preference_confirm_forward_label">Confirmare înainte de expediere</string>
+  <string name="general_preference_confirm_forward_summary">Alegeţi dacă să se utilizeze ataşamente de la serverul de e-mail, sau de la dispozitiv înainte de expediere</string>
 </resources>
