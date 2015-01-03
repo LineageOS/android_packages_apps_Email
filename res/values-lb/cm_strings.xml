@@ -22,11 +22,15 @@
   <string name="account_setup_options_mail_check_frequency_1day">All Dag</string>
   <string name="account_settings">Kontenastellungen</string>
   <string name="delete_account_title">Kont läschen</string>
+  <string name="delete_account_summary">Dëse Kont an all seng Astellungen an Date läschen</string>
+  <string name="delete_account_confirmation_msg">Dës Aktioun läscht all d\'Astellungen an E-Maile vum Kont <xliff:g id="account">%s</xliff:g>. Dat kann net réckgängeg gemaach ginn.\n\nWeidermaachen?</string>
   <string name="deleting_account_msg">Kont gëtt geläscht\u2026</string>
   <string name="delete_account_failed">Kont konnt net geläscht ginn</string>
+  <string name="account_auto_fetch_attachments_label">Unhäng automatesch eroflueden</string>
   <string name="account_auto_fetch_attachments_entries_never">Ni</string>
   <string name="account_auto_fetch_attachments_entries_wifi">Just iwwer WLAN</string>
   <string name="account_auto_fetch_attachments_entries_always">Ëmmer</string>
+  <string name="account_settings_sync_size_label">Maximal E-Mail-Gréisst ze synchroniséieren</string>
   <string name="account_setup_options_mail_sync_size_all">Keng Limitt</string>
   <string name="account_setup_options_mail_sync_size_20k">20 kB</string>
   <string name="account_setup_options_mail_sync_size_100k">100 kB</string>
@@ -34,5 +38,9 @@
   <string name="account_setup_options_mail_sync_size_500k">500 kB</string>
   <string name="account_setup_options_mail_sync_size_1M">1 MB</string>
   <string name="category_label_general_settings">Allgemeng Astellungen</string>
+  <string name="category_label_attachment_settings">Astellunge fir d\'Unhäng</string>
+  <string name="general_preference_add_attachment_label">En zousätzleche Fichierstyp dobäisetzen</string>
+  <string name="general_preference_select_recipients_label">Empfänger aus de Kontakter wielen</string>
   <string name="general_preference_confirm_forward_label">Virun der Weiderleedung bestätegen</string>
+  <string name="general_preference_confirm_forward_summary">Wiel aus, ob Unhäng beim Weiderleede vum Mail-Server benotzt, oder fir d\'éischt erofgeluede solle ginn</string>
 </resources>

@@ -20,4 +20,27 @@
   <string name="account_setup_options_mail_check_frequency_2hour">每 2 小時</string>
   <string name="account_setup_options_mail_check_frequency_4hour">每 4 小時</string>
   <string name="account_setup_options_mail_check_frequency_1day">每天</string>
+  <string name="account_settings">帳戶設定</string>
+  <string name="delete_account_title">移除帳戶</string>
+  <string name="delete_account_summary">移除此帳戶和所有設定和資料</string>
+  <string name="delete_account_confirmation_msg">這將移除帳戶 <xliff:g id="account">%s</xliff:g> 的所有設定及電子郵件。一但執行即無法復原。\n\n您要繼續嗎？</string>
+  <string name="deleting_account_msg">正在移除帳戶\u2026</string>
+  <string name="delete_account_failed">無法移除該帳戶</string>
+  <string name="account_auto_fetch_attachments_label">自動提取附件</string>
+  <string name="account_auto_fetch_attachments_entries_never">永不</string>
+  <string name="account_auto_fetch_attachments_entries_wifi">只限 Wi-Fi</string>
+  <string name="account_auto_fetch_attachments_entries_always">永遠</string>
+  <string name="account_settings_sync_size_label">電子郵件同步的最大容量</string>
+  <string name="account_setup_options_mail_sync_size_all">沒有限制</string>
+  <string name="account_setup_options_mail_sync_size_20k">20 KB</string>
+  <string name="account_setup_options_mail_sync_size_100k">100 KB</string>
+  <string name="account_setup_options_mail_sync_size_200k">200 KB</string>
+  <string name="account_setup_options_mail_sync_size_500k">500 KB</string>
+  <string name="account_setup_options_mail_sync_size_1M">1 MB</string>
+  <string name="category_label_general_settings">一般設定</string>
+  <string name="category_label_attachment_settings">附件設定</string>
+  <string name="general_preference_add_attachment_label">新增其他檔案類型</string>
+  <string name="general_preference_select_recipients_label">從聯絡人中選擇收件者</string>
+  <string name="general_preference_confirm_forward_label">轉寄前確認</string>
+  <string name="general_preference_confirm_forward_summary">選擇是否直接使用信箱伺服器的附件，或是轉寄前先下載至裝置。</string>
 </resources>

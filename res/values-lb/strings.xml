@@ -16,9 +16,9 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="permission_read_attachment_label">E-Mail-Unhäng liesen</string>
-  <string name="permission_read_attachment_desc">Erméiglecht der App E-Mail-Unhäng ze liesen.</string>
+  <string name="permission_read_attachment_desc">Erlaabt der App, E-Mail-Unhäng ze liesen.</string>
   <string name="permission_access_provider_label">Op Date vum E-Mail-Provider zougräifen</string>
-  <string name="permission_access_provider_desc">Erlaabt der App op deng E-Mail-Datebank zouzegräifen, inklusiv empfaange Messagen, geschéckt Messagen, Benotzernimm a Passwierder.</string>
+  <string name="permission_access_provider_desc">Erlaabt der App, op deng E-Mail-Datebank zouzegräifen, inklusiv empfaange Messagen, geschéckt Messagen, Benotzernimm a Passwierder.</string>
   <string name="app_name">E-Mail</string>
   <string name="debug_title">Debuggen</string>
   <string name="next_action">Weider</string>
@@ -172,7 +172,7 @@
   <string name="account_setup_failed_auth_required">Keng vun den Authentifizéierungsmethode gëtt vum Server ënnerstëtzt.</string>
   <string name="account_setup_failed_security">Kann d\'Connectioun mam Server wéinst engem Sécherheetsfeeler net opmaachen.</string>
   <string name="account_setup_failed_ioerror">Kann d\'Connectioun mam Server net opmaachen.</string>
-  <string name="account_setup_failed_protocol_unsupported">Du hues eng ongëlteg Serveradress aginn oder de Server verlaangt eng Protokollversioun déi d\'E-Mail-App net ënnerstëtzt.</string>
+  <string name="account_setup_failed_protocol_unsupported">Du hues eng ongëlteg Serveradress aginn, oder de Server verlaangt eng Protokollversioun déi d\'E-Mail-App net ënnerstëtzt.</string>
   <string name="account_setup_failed_access_denied">Du hues keng Berechtegung fir mat dësem Server ze synchroniséieren. Kontaktéier däi Serveradministrator fir méi Informatiounen.</string>
   <string name="account_setup_security_required_title">Sécherheetsverwaltung op Distanz</string>
   <string name="account_setup_security_policies_required_fmt">De Server <xliff:g id="server">%s</xliff:g> verlaangt datt s du him erlaabs op Distanz eng Rei Sécherheetsfunktiounen op dengem Android-Apparat ze kontrolléieren. Wëlls du dëse Kont fäerdeg astellen?</string>
@@ -222,7 +222,7 @@ Wëlls du däi Benotzernumm an/oder däi Passwuert aktualiséieren?</string>
   <string name="account_settings_description_label">Kontennumm</string>
   <string name="account_settings_name_label">Däin Numm</string>
   <string name="account_settings_edit_quick_responses_label">Séier Äntwerten</string>
-  <string name="account_settings_edit_quick_responses_summary">Text änneren deen s de beim Schreiwen dacks an E-Maile schreifs</string>
+  <string name="account_settings_edit_quick_responses_summary">Text änneren deen s de beim Schreiwen dacks an E-Mailen asetz</string>
   <string name="account_settings_notifications">Notifikatiounsastellungen</string>
   <string name="account_settings_data_usage">Dateverbrauch</string>
   <string name="account_settings_policies">Sécherheetsrichtlinnen</string>
