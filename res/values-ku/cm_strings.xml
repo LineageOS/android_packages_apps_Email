@@ -30,4 +30,17 @@
   <string name="account_auto_fetch_attachments_entries_never">هه‌رگیز</string>
   <string name="account_auto_fetch_attachments_entries_wifi">ته‌نیا له‌گه‌ڵ وایه‌رلێس</string>
   <string name="account_auto_fetch_attachments_entries_always">هەمیشە</string>
+  <string name="account_settings_sync_size_label">زۆرترین قەبارەی پۆستی ئەلەکترۆنی بۆ هاوکاتسازی</string>
+  <string name="account_setup_options_mail_sync_size_all">بێ سنوور</string>
+  <string name="account_setup_options_mail_sync_size_20k">٢٠ک‌ب</string>
+  <string name="account_setup_options_mail_sync_size_100k">١٠٠ک‌ب</string>
+  <string name="account_setup_options_mail_sync_size_200k">٢٠٠ک‌ب</string>
+  <string name="account_setup_options_mail_sync_size_500k">٥٠٠ک‌ب</string>
+  <string name="account_setup_options_mail_sync_size_1M">١م‌ب</string>
+  <string name="category_label_general_settings">ڕێکخستنی گشتی</string>
+  <string name="category_label_attachment_settings">ڕێکخستنەکانی پێوەلکێندراو</string>
+  <string name="general_preference_add_attachment_label">جۆرەکانی پەڕگەی دیکە زیاد بکە</string>
+  <string name="general_preference_select_recipients_label">وەرگرەکانت دیاری بکە لە ناو پەیوەندییەکانت</string>
+  <string name="general_preference_confirm_forward_label">دووپاتکردنەوە پێش بەرڕۆیی</string>
+  <string name="general_preference_confirm_forward_summary">هەڵبژێرە، یان بە بەکارهێنانی پێوەلکێندراوەکانی ناو ڕاژەکاری نامەی ئەلیکترۆنی، یان داگرتنی بە ئامێری پێشەکی بۆ ئاراستەکردنەوە</string>
 </resources>

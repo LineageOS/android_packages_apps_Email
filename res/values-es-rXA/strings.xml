@@ -274,7 +274,6 @@
   <string name="general_preference_text_zoom_normal">Normal</string>
   <string name="general_preference_text_zoom_large">Grande</string>
   <string name="general_preference_text_zoom_huge">Mui grande</string>
-  <string name="more_than_999">999+</string>
   <string name="search_hint">Guetar corréu</string>
   <string name="policy_dont_allow_camera">Nun permitir usar cámara del preséu</string>
   <string name="policy_require_password">Solicitar contraseña del preséu</string>

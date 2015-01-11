@@ -36,7 +36,7 @@
     <item quantity="other">Messagë réckelen</item>
   </plurals>
   <string name="cannot_move_protocol_not_supported_toast">Réckelen gëtt op POP3-Konten net ënnerstëtzt.</string>
-  <string name="cannot_move_multiple_accounts_toast">Kann net réckele well d\'Auswiel verschidde Konten enthält.</string>
+  <string name="cannot_move_multiple_accounts_toast">Kann net réckele well d\'Auswiel verschidde Konten huet.</string>
   <string name="cannot_move_special_mailboxes_toast">Messagen an den Dossieren \"Brouillonen\", \"Ausgank\" a \"verschéckt Elementer\" kënnen net geréckelt ginn.</string>
   <string name="mailbox_name_display_inbox">Agank</string>
   <string name="mailbox_name_display_outbox">Ausgank</string>

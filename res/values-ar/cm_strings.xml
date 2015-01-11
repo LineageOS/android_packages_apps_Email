@@ -31,4 +31,17 @@
   <string name="account_auto_fetch_attachments_entries_never">أبدا</string>
   <string name="account_auto_fetch_attachments_entries_wifi">فقط على Wi-Fi</string>
   <string name="account_auto_fetch_attachments_entries_always">دائماً</string>
+  <string name="account_settings_sync_size_label">الحد الأقصى لحجم البريد الالكتروني المزامن</string>
+  <string name="account_setup_options_mail_sync_size_all">بدون حدّ</string>
+  <string name="account_setup_options_mail_sync_size_20k">20 كيلو بايت</string>
+  <string name="account_setup_options_mail_sync_size_100k">100 كيلو بايت</string>
+  <string name="account_setup_options_mail_sync_size_200k">200 كيلو بايت</string>
+  <string name="account_setup_options_mail_sync_size_500k">500 كيلو بايت</string>
+  <string name="account_setup_options_mail_sync_size_1M">1 ميغا بايت</string>
+  <string name="category_label_general_settings">إعدادات عامة</string>
+  <string name="category_label_attachment_settings">إعدادات المرفقات</string>
+  <string name="general_preference_add_attachment_label">إضافة نوع ملف آخر</string>
+  <string name="general_preference_select_recipients_label">تحديد المستلمين من جهات الاتصال</string>
+  <string name="general_preference_confirm_forward_label">تأكيد قبل إعادة التوجيه</string>
+  <string name="general_preference_confirm_forward_summary">اختر ما إذا كنت تريد استخدام المرفقات من ملقم البريد، أو تحميل على الجهاز قبل إعادة توجيه</string>
 </resources>
