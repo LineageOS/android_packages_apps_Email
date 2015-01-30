@@ -42,5 +42,5 @@
   <string name="general_preference_add_attachment_label">Pridėti kitą failo tipą</string>
   <string name="general_preference_select_recipients_label">Pasirinkti gavėjus iš kontaktų</string>
   <string name="general_preference_confirm_forward_label">Patvirtinkite prieš siunčiant</string>
-  <string name="general_preference_confirm_forward_summary">Pasirinkite ar norite naudoti priedus iš pašto serverio, arba atsisiųsti į prietaisą prieš siunčiant</string>
+  <string name="general_preference_confirm_forward_summary">Pasirinkite ar norite naudoti priedus iš pašto serverio, arba atsisiųsti į įrenginį prieš siunčiant</string>
 </resources>
