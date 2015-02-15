@@ -21,4 +21,8 @@
   <string name="account_setup_options_mail_check_frequency_4hour">প্রতি ৪ ঘণ্টায়</string>
   <string name="account_setup_options_mail_check_frequency_1day">প্রতিদিন</string>
   <string name="account_settings">একাউন্ট এর রুপান্তর নির্ধারণ</string>
+  <string name="delete_account_title">একাউন্ট মুছে ফেলুন</string>
+  <string name="account_auto_fetch_attachments_entries_never">কখনও না</string>
+  <string name="account_auto_fetch_attachments_entries_wifi">শুধুমাত্র ওয়াই-ফাই\'র মাধ্যমে</string>
+  <string name="account_auto_fetch_attachments_entries_always">সবসময়</string>
 </resources>

@@ -26,9 +26,11 @@
   <string name="delete_account_confirmation_msg"><xliff:g id="account">%s</xliff:g> hesabının bütün tənzimləmələri və e-poçtları silinəcək. Bu əməliyyatın geri dönüşü yoxdur.\n\nDavam edilsin?</string>
   <string name="deleting_account_msg">Hesab silinir\u2026</string>
   <string name="delete_account_failed">Hesab silinmədi</string>
+  <string name="account_auto_fetch_attachments_label">Qoşmaları avtomatik yüklə</string>
   <string name="account_auto_fetch_attachments_entries_never">Heç vaxt</string>
   <string name="account_auto_fetch_attachments_entries_wifi">Yalnız Wi-Fi üzərindən</string>
   <string name="account_auto_fetch_attachments_entries_always">Həmişə</string>
+  <string name="account_settings_sync_size_label">Eyniləşdirmə üçün maksimum e-poçt ölçüsü</string>
   <string name="account_setup_options_mail_sync_size_all">Limit yoxdur</string>
   <string name="account_setup_options_mail_sync_size_20k">20 KB</string>
   <string name="account_setup_options_mail_sync_size_100k">100 KB</string>
@@ -36,7 +38,9 @@
   <string name="account_setup_options_mail_sync_size_500k">500 KB</string>
   <string name="account_setup_options_mail_sync_size_1M">1 MB</string>
   <string name="category_label_general_settings">Ümumi tənzimləmələr</string>
+  <string name="category_label_attachment_settings">Qoşma tənzimləmələri</string>
   <string name="general_preference_add_attachment_label">Başqa fayl növü əlavə edin</string>
   <string name="general_preference_select_recipients_label">Şəxslərdən alıcıları seç</string>
   <string name="general_preference_confirm_forward_label">Yönləndirmədən öncə təsdiqlə</string>
+  <string name="general_preference_confirm_forward_summary">Poçt serverindən qoşmanı istifadə etməyi yoxsa yönləndirməmişdən əvvəl cihaza endirməyi seçirsiniz</string>
 </resources>
