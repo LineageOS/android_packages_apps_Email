@@ -41,6 +41,7 @@ import android.database.CursorWrapper;
 import android.database.DatabaseUtils;
 import android.database.MatrixCursor;
 import android.database.MergeCursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteStatement;
@@ -98,6 +99,7 @@ import com.android.emailcommon.provider.MessageMove;
 import com.android.emailcommon.provider.MessageStateChange;
 import com.android.emailcommon.provider.Policy;
 import com.android.emailcommon.provider.QuickResponse;
+import com.android.emailcommon.provider.SuggestedContact;
 import com.android.emailcommon.service.EmailServiceProxy;
 import com.android.emailcommon.service.EmailServiceStatus;
 import com.android.emailcommon.service.IEmailService;
@@ -159,6 +161,7 @@ public class EmailProvider extends ContentProvider
     // exposed for testing
     public static final String DATABASE_NAME = "EmailProvider.db";
     public static final String BODY_DATABASE_NAME = "EmailProviderBody.db";
+    public static final String EXTRAS_DATABASE_NAME = "EmailProviderExtras.db";
 
     // We don't back up to the backup database anymore, just keep this constant here so we can
     // delete the old backups and trigger a new backup to the account manager
@@ -281,11 +284,15 @@ public class EmailProvider extends ContentProvider
     private static final int CREDENTIAL = CREDENTIAL_BASE;
     private static final int CREDENTIAL_ID = CREDENTIAL_BASE + 1;
 
+    private static final int SUGGESTED_CONTACT_BASE = 0xC000;
+    private static final int SUGGESTED_CONTACT= SUGGESTED_CONTACT_BASE;
+    private static final int SUGGESTED_CONTACT_ID = SUGGESTED_CONTACT_BASE + 1;
+
     private static final int BASE_SHIFT = 12;  // 12 bits to the base type: 0, 0x1000, 0x2000, etc.
 
     private static final SparseArray<String> TABLE_NAMES;
     static {
-        SparseArray<String> array = new SparseArray<String>(11);
+        SparseArray<String> array = new SparseArray<String>(12);
         array.put(ACCOUNT_BASE >> BASE_SHIFT, Account.TABLE_NAME);
         array.put(MAILBOX_BASE >> BASE_SHIFT, Mailbox.TABLE_NAME);
         array.put(MESSAGE_BASE >> BASE_SHIFT, Message.TABLE_NAME);
@@ -298,6 +305,7 @@ public class EmailProvider extends ContentProvider
         array.put(UI_BASE >> BASE_SHIFT, null);
         array.put(BODY_BASE >> BASE_SHIFT, Body.TABLE_NAME);
         array.put(CREDENTIAL_BASE >> BASE_SHIFT, Credential.TABLE_NAME);
+        array.put(SUGGESTED_CONTACT_BASE >> BASE_SHIFT, SuggestedContact.TABLE_NAME);
         TABLE_NAMES = array;
     }
 
@@ -372,6 +380,7 @@ public class EmailProvider extends ContentProvider
 
     private SQLiteDatabase mDatabase;
     private SQLiteDatabase mBodyDatabase;
+    private SQLiteDatabase mExtrasDatabase;
 
     private Handler mDelayedSyncHandler;
     private final Set<SyncRequestMessage> mDelayedSyncRequests = new HashSet<SyncRequestMessage>();
@@ -482,6 +491,13 @@ public class EmailProvider extends ContentProvider
                 String bodyFileName = mBodyDatabase.getPath();
                 mDatabase.execSQL("attach \"" + bodyFileName + "\" as BodyDatabase");
             }
+            DBHelper.ExtrasDatabaseHelper extrasHelper =
+                    new DBHelper.ExtrasDatabaseHelper(context, EXTRAS_DATABASE_NAME);
+            mExtrasDatabase = extrasHelper.getWritableDatabase();
+            if (mExtrasDatabase != null) {
+                String extrasFileName = mExtrasDatabase.getPath();
+                mDatabase.execSQL("attach \"" + extrasFileName + "\" as ExtrasDatabase");
+            }
 
             // Restore accounts if the database is corrupted...
             restoreIfNeeded(context, mDatabase);
@@ -562,6 +578,10 @@ public class EmailProvider extends ContentProvider
         if (mBodyDatabase != null) {
             mBodyDatabase.close();
             mBodyDatabase = null;
+        }
+        if (mExtrasDatabase != null) {
+            mExtrasDatabase.close();
+            mExtrasDatabase = null;
         }
     }
 
@@ -694,6 +714,7 @@ public class EmailProvider extends ContentProvider
                 case POLICY_ID:
                 case QUICK_RESPONSE_ID:
                 case CREDENTIAL_ID:
+                case SUGGESTED_CONTACT_ID:
                     id = uri.getPathSegments().get(1);
                     if (match == SYNCED_MESSAGE_ID) {
                         // For synced messages, first copy the old message to the deleted table and
@@ -715,6 +736,11 @@ public class EmailProvider extends ContentProvider
                     if (match == ACCOUNT_ID) {
                         notifyUI(UIPROVIDER_ACCOUNT_NOTIFIER, id);
                         notifyUI(UIPROVIDER_ALL_ACCOUNTS_NOTIFIER, null);
+
+                        // Delete account suggested contacts
+                        mExtrasDatabase.delete(SuggestedContact.TABLE_NAME,
+                                SuggestedContact.ACCOUNT_KEY + " = ?", new String[]{id});
+
                     } else if (match == MAILBOX_ID) {
                         notifyUIFolder(id, accountId);
                     } else if (match == ATTACHMENT_ID) {
@@ -738,7 +764,13 @@ public class EmailProvider extends ContentProvider
                 case ACCOUNT:
                 case HOSTAUTH:
                 case POLICY:
+                case SUGGESTED_CONTACT:
                     result = db.delete(tableName, selection, selectionArgs);
+                    if (match == ACCOUNT) {
+                        // TODO extract account deleted
+                        // As a fallback clean all suggested contacts
+                        mExtrasDatabase.delete(SuggestedContact.TABLE_NAME, null, null);
+                    }
                     break;
                 case MESSAGE_MOVE:
                     db.delete(MessageMove.TABLE_NAME, selection, selectionArgs);
@@ -843,6 +875,10 @@ public class EmailProvider extends ContentProvider
                 return "vnd.android.cursor.dir/email-hostauth";
             case HOSTAUTH_ID:
                 return "vnd.android.cursor.item/email-hostauth";
+            case SUGGESTED_CONTACT:
+                return "vnd.android.cursor.item/email-suggested-contact";
+            case SUGGESTED_CONTACT_ID:
+                return "vnd.android.cursor.dir/email-suggested-contact";
             default:
                 return null;
         }
@@ -864,7 +900,7 @@ public class EmailProvider extends ContentProvider
     private static Uri UIPROVIDER_RECENT_FOLDERS_NOTIFIER;
 
     @Override
-    public Uri insert(Uri uri, ContentValues values) {
+    public Uri insert(Uri uri, final ContentValues values) {
         Log.d(TAG, "Insert: " + uri);
         final int match = findMatch(uri, "insert");
         final Context context = getContext();
@@ -910,6 +946,20 @@ public class EmailProvider extends ContentProvider
                 case DELETED_MESSAGE:
                 case MESSAGE:
                     decodeEmailAddresses(values);
+
+                    // Update the suggested contacts of this email in the background
+                    if (!MailPrefs.get(context).getSuggestedContactMode().equals(
+                            MailPrefs.SuggestedContactsMode.NONE)) {
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if(match == MESSAGE) {
+                                    addOrUpdateSuggestedContactsFromHeaders(values);
+                                }
+                            }
+                        }).start();
+                    }
+
                 case ATTACHMENT:
                 case MAILBOX:
                 case ACCOUNT:
@@ -1207,14 +1257,19 @@ public class EmailProvider extends ContentProvider
             sURIMatcher.addURI(EmailContent.AUTHORITY, "pickSentFolder/#",
                     ACCOUNT_PICK_SENT_FOLDER);
             sURIMatcher.addURI(EmailContent.AUTHORITY, "uipurgefolder/#", UI_PURGE_FOLDER);
+
+            // Suggested Contact
+            sURIMatcher.addURI(EmailContent.AUTHORITY, "suggestedcontact", SUGGESTED_CONTACT);
+            sURIMatcher.addURI(EmailContent.AUTHORITY, "suggestedcontact/#", SUGGESTED_CONTACT_ID);
         }
     }
 
     /**
-     * The idea here is that the two databases (EmailProvider.db and EmailProviderBody.db must
-     * always be in sync (i.e. there are two database or NO databases).  This code will delete
-     * any "orphan" database, so that both will be created together.  Note that an "orphan" database
-     * will exist after either of the individual databases is deleted due to data corruption.
+     * The idea here is that the three databases (EmailProvider.db, EmailProviderBody.db
+     * and EmailProviderExtras.db must always be in sync (i.e. there are three database or
+     * NO databases).  This code will delete any "orphan" database, so that both will be
+     * created together.  Note that an "orphan" database will exist after either of the individual
+     * databases is deleted due to data corruption.
      */
     public void checkDatabases() {
         synchronized (sDatabaseLock) {
@@ -1225,17 +1280,32 @@ public class EmailProvider extends ContentProvider
             if (mBodyDatabase != null) {
                 mBodyDatabase = null;
             }
+            if (mExtrasDatabase != null) {
+                mExtrasDatabase = null;
+            }
             // Look for orphans, and delete as necessary; these must always be in sync
             final File databaseFile = getContext().getDatabasePath(DATABASE_NAME);
             final File bodyFile = getContext().getDatabasePath(BODY_DATABASE_NAME);
+            final File extrasFile = getContext().getDatabasePath(BODY_DATABASE_NAME);
 
             // TODO Make sure attachments are deleted
-            if (databaseFile.exists() && !bodyFile.exists()) {
+            boolean mainDbExists = databaseFile.exists();
+            boolean bodyDbExists = bodyFile.exists();
+            boolean extrasDbExists = extrasFile.exists();
+            boolean extrasDbShouldExists = DBHelper.EXTRAS_DATABASE_VERSION <= 1;
+            if (mainDbExists && (!bodyDbExists || (!extrasDbExists && extrasDbShouldExists))) {
                 LogUtils.w(TAG, "Deleting orphaned EmailProvider database...");
                 getContext().deleteDatabase(DATABASE_NAME);
-            } else if (bodyFile.exists() && !databaseFile.exists()) {
+            }
+            if (bodyDbExists && (!mainDbExists || (!extrasDbExists && extrasDbShouldExists))) {
                 LogUtils.w(TAG, "Deleting orphaned EmailProviderBody database...");
                 getContext().deleteDatabase(BODY_DATABASE_NAME);
+            }
+            if (extrasDbExists && (!mainDbExists || !bodyDbExists)) {
+                if (DBHelper.EXTRAS_DATABASE_VERSION > 1) {
+                    LogUtils.w(TAG, "Deleting orphaned EmailProviderExtras database...");
+                    getContext().deleteDatabase(EXTRAS_DATABASE_NAME);
+                }
             }
         }
     }
@@ -1265,6 +1335,7 @@ public class EmailProvider extends ContentProvider
                     case HOSTAUTH_ID:
                     case CREDENTIAL_ID:
                     case POLICY_ID:
+                    case SUGGESTED_CONTACT_ID:
                         return new MatrixCursorWithCachedColumns(projection, 0);
                 }
             }
@@ -1419,6 +1490,15 @@ public class EmailProvider extends ContentProvider
                     // All quick responses for the given account
                     id = uri.getPathSegments().get(2);
                     c = uiQuickResponseAccount(projection, id);
+                    break;
+                case SUGGESTED_CONTACT:
+                    c = db.query(tableName, projection,
+                            selection, selectionArgs, null, null, sortOrder, limit);
+                    break;
+                case SUGGESTED_CONTACT_ID:
+                    id = uri.getPathSegments().get(1);
+                    c = db.query(tableName, projection, whereWithId(id, selection),
+                            selectionArgs, null, null, sortOrder, limit);
                     break;
                 default:
                     throw new IllegalArgumentException("Unknown URI " + uri);
@@ -5948,6 +6028,85 @@ public class EmailProvider extends ContentProvider
             final String replyTo = values.getAsString(Message.MessageColumns.REPLY_TO_LIST);
             values.put(Message.MessageColumns.REPLY_TO_LIST,
                     Address.fromHeaderToString(replyTo));
+        }
+    }
+
+    /**
+     * This method extract the address of a new email to insert in the database
+     * and extract and update he suggested contact table with this addresses.
+     */
+    private void addOrUpdateSuggestedContactsFromHeaders(ContentValues values) {
+        List<Address> suggestedContacts = new ArrayList<>();
+
+        Long accountId = values.getAsLong(MessageColumns.ACCOUNT_KEY);
+        if (accountId == null) {
+            // Ignore the entire content. We don't have enough information to
+            // update the suggested contact
+            return;
+        }
+
+        if (values.containsKey(Message.MessageColumns.TO_LIST)) {
+            final String to = values.getAsString(Message.MessageColumns.TO_LIST);
+            suggestedContacts.addAll(Arrays.asList(Address.fromHeader(to)));
+        }
+
+        if (values.containsKey(Message.MessageColumns.CC_LIST)) {
+            final String cc = values.getAsString(Message.MessageColumns.CC_LIST);
+            suggestedContacts.addAll(Arrays.asList(Address.fromHeader(cc)));
+        }
+
+        if (values.containsKey(Message.MessageColumns.BCC_LIST)) {
+            final String bcc = values.getAsString(Message.MessageColumns.BCC_LIST);
+            suggestedContacts.addAll(Arrays.asList(Address.fromHeader(bcc)));
+        }
+
+        if (values.containsKey(Message.MessageColumns.REPLY_TO_LIST)) {
+            final String replyTo = values.getAsString(Message.MessageColumns.REPLY_TO_LIST);
+            suggestedContacts.addAll(Arrays.asList(Address.fromHeader(replyTo)));
+        }
+
+        // Update or insert every suggested contact
+        mExtrasDatabase.beginTransactionNonExclusive();
+        try {
+            for (Address suggestedContact : suggestedContacts) {
+                addOrUpdateSuggestedContact(accountId, suggestedContact);
+            }
+            mExtrasDatabase.setTransactionSuccessful();
+        } finally {
+            mExtrasDatabase.endTransaction();
+        }
+    }
+
+    private void addOrUpdateSuggestedContact(long accountId, Address address) {
+        try {
+            // Update first the suggested contact, and if not exists add a new row
+            if (address == null) {
+                return;
+            }
+
+            // Update
+            String emailAddress = address.getAddress().toLowerCase();
+            String where = SuggestedContact.ACCOUNT_KEY + " = ? and "
+                    + SuggestedContact.ADDRESS + " = ?";
+            String[] args = {String.valueOf(accountId), emailAddress};
+            ContentValues values = new ContentValues();
+            values.put(SuggestedContact.NAME, TextUtils.isEmpty(address.getPersonal())
+                    ? emailAddress : address.getPersonal());
+            values.put(SuggestedContact.DISPLAY_NAME, address.toString());
+            values.put(SuggestedContact.LAST_SEEN, System.currentTimeMillis());
+            long affectedRecords = mExtrasDatabase.update(
+                    SuggestedContact.TABLE_NAME, values, where, args);
+
+            // Insert
+            if (affectedRecords == 0) {
+                values.put(SuggestedContact.ACCOUNT_KEY, accountId);
+                values.put(SuggestedContact.ADDRESS, emailAddress);
+                mExtrasDatabase.insertOrThrow(SuggestedContact.TABLE_NAME, null, values);
+            }
+
+        } catch (SQLException ex) {
+            Log.w(TAG, "Failed to insert/update suggested contact address: "
+                    + String.valueOf(address), ex);
         }
     }
 
