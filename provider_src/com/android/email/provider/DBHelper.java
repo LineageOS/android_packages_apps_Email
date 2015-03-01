@@ -48,6 +48,7 @@ import com.android.emailcommon.provider.EmailContent.Message;
 import com.android.emailcommon.provider.EmailContent.MessageColumns;
 import com.android.emailcommon.provider.EmailContent.PolicyColumns;
 import com.android.emailcommon.provider.EmailContent.QuickResponseColumns;
+import com.android.emailcommon.provider.EmailContent.SuggestedContactColumns;
 import com.android.emailcommon.provider.EmailContent.SyncColumns;
 import com.android.emailcommon.provider.HostAuth;
 import com.android.emailcommon.provider.Mailbox;
@@ -56,6 +57,7 @@ import com.android.emailcommon.provider.MessageMove;
 import com.android.emailcommon.provider.MessageStateChange;
 import com.android.emailcommon.provider.Policy;
 import com.android.emailcommon.provider.QuickResponse;
+import com.android.emailcommon.provider.SuggestedContact;
 import com.android.emailcommon.service.LegacyPolicySet;
 import com.android.emailcommon.service.SyncWindow;
 import com.android.mail.providers.UIProvider;
@@ -197,6 +199,11 @@ public final class DBHelper {
     // Version 100 is the first Email2 version
     // Version 101: Move body contents to external files
     public static final int BODY_DATABASE_VERSION = 101;
+
+    // Any changes to the database format *must* include update-in-place code.
+    // Original version: 1
+    // Version 1: Suggested contacts
+    public static final int EXTRAS_DATABASE_VERSION = 1;
 
     /*
      * Internal helper method for index creation.
@@ -686,6 +693,24 @@ public final class DBHelper {
         db.execSQL(createIndex(Body.TABLE_NAME, BodyColumns.MESSAGE_KEY));
     }
 
+    private static void createSuggestedContactTable(SQLiteDatabase db) {
+        String s = " (" + SuggestedContactColumns._ID + " integer primary key autoincrement, "
+            + SuggestedContactColumns.ACCOUNT_KEY + " integer, "
+            + SuggestedContactColumns.ADDRESS + " text, "
+            + SuggestedContactColumns.NAME + " text, "
+            + SuggestedContactColumns.DISPLAY_NAME + " text, "
+            + SuggestedContactColumns.LAST_SEEN + " integer"
+            + ");";
+        db.execSQL("create table " + SuggestedContact.TABLE_NAME + s);
+
+        // Create a unique index for account-address
+        String indexDDL = "create unique index " + SuggestedContact.TABLE_NAME.toLowerCase()
+                + "_account_address" + " on " + SuggestedContact.TABLE_NAME
+                + " (" + SuggestedContactColumns.ACCOUNT_KEY + ", "
+                + SuggestedContactColumns.ADDRESS + ");";
+        db.execSQL(indexDDL);
+    }
+
     private static void upgradeBodyToVersion5(final SQLiteDatabase db) {
         try {
             db.execSQL("drop table " + Body.TABLE_NAME);
@@ -817,6 +842,29 @@ public final class DBHelper {
             if (oldVersion < 101) {
                 upgradeBodyFromVersion100ToVersion101(mContext, db);
             }
+        }
+
+        @Override
+        public void onOpen(SQLiteDatabase db) {
+        }
+    }
+
+    protected static class ExtrasDatabaseHelper extends SQLiteOpenHelper {
+        final Context mContext;
+
+        ExtrasDatabaseHelper(Context context, String name) {
+            super(context, name, null, EXTRAS_DATABASE_VERSION);
+            mContext = context;
+        }
+
+        @Override
+        public void onCreate(SQLiteDatabase db) {
+            LogUtils.d(TAG, "Creating EmailProviderExtras database");
+            createSuggestedContactTable(db);
+        }
+
+        @Override
+        public void onUpgrade(final SQLiteDatabase db, final int oldVersion, final int newVersion) {
         }
 
         @Override
