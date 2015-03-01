@@ -193,6 +193,7 @@ public abstract class EmailContent {
             MessageStateChange.init();
             Body.initBody();
             Attachment.initAttachment();
+            SuggestedContact.initSuggestedContact();
         }
     }
 
@@ -1852,5 +1853,13 @@ public abstract class EmailContent {
         // Tokenized strings indicating protocol specific policies enforced/unsupported
         public static final String PROTOCOL_POLICIES_ENFORCED = "protocolPoliciesEnforced";
         public static final String PROTOCOL_POLICIES_UNSUPPORTED = "protocolPoliciesUnsupported";
+    }
+
+    public interface SuggestedContactColumns extends BaseColumns {
+        static final String ACCOUNT_KEY = "accountKey";
+        static final String ADDRESS = "address";
+        static final String NAME = "name";
+        static final String DISPLAY_NAME = "display_name";
+        static final String LAST_SEEN = "last_seen";
     }
 }
