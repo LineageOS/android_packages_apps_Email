@@ -16,13 +16,10 @@ import android.widget.TextView;
 
 import com.android.email.R;
 import com.android.email.activity.UiUtilities;
-import com.android.emailcommon.Device;
 import com.android.emailcommon.VendorPolicyLoader.OAuthProvider;
 import com.android.emailcommon.provider.Credential;
 import com.android.emailcommon.provider.HostAuth;
 import com.google.common.annotations.VisibleForTesting;
-
-import java.io.IOException;
 
 public class AuthenticationView extends LinearLayout implements OnClickListener {
 
@@ -43,8 +40,6 @@ public class AuthenticationView extends LinearLayout implements OnClickListener 
     private View mClearPasswordView;
     private View mClearOAuthView;
     private View mAddAuthenticationView;
-
-    private TextWatcher mValidationTextWatcher;
 
     private boolean mOfferOAuth;
     private boolean mUseOAuth;
@@ -78,7 +73,6 @@ public class AuthenticationView extends LinearLayout implements OnClickListener 
         super.onFinishInflate();
         mPasswordWrapper = UiUtilities.getView(this, R.id.password_wrapper);
         mOAuthWrapper = UiUtilities.getView(this, R.id.oauth_wrapper);
-        mNoAuthWrapper = UiUtilities.getView(this, R.id.no_auth_wrapper);
         mPasswordEdit = UiUtilities.getView(this, R.id.password_edit);
         mOAuthLabel =  UiUtilities.getView(this, R.id.oauth_label);
         mClearPasswordView = UiUtilities.getView(this, R.id.clear_password);
@@ -93,18 +87,21 @@ public class AuthenticationView extends LinearLayout implements OnClickListener 
         mClearOAuthView.setOnClickListener(this);
         mAddAuthenticationView.setOnClickListener(this);
 
-        mValidationTextWatcher = new TextWatcher() {
-            @Override
-            public void afterTextChanged(Editable s) {
-                validateFields();
-            }
+        final TextWatcher validationTextWatcher = new PasswordTextWatcher();
+        mPasswordEdit.addTextChangedListener(validationTextWatcher);
+    }
 
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) { }
-        };
-        mPasswordEdit.addTextChangedListener(mValidationTextWatcher);
+    private class PasswordTextWatcher implements TextWatcher {
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            validateFields();
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) { }
     }
 
     public void setAuthenticationCallback(final AuthenticationCallback host) {
@@ -138,8 +135,6 @@ public class AuthenticationView extends LinearLayout implements OnClickListener 
             mAuthenticationCallback.onValidateStateChanged();
             mAuthenticationValid = valid;
         }
-        // Warn (but don't prevent) if password has leading/trailing spaces
-        AccountSettingsUtils.checkPasswordSpaces(getContext(), mPasswordEdit);
     }
 
     public void setAuthInfo(final boolean offerOAuth, final HostAuth hostAuth) {
@@ -182,7 +177,7 @@ public class AuthenticationView extends LinearLayout implements OnClickListener 
                 // We're authenticated with OAuth.
                 mOAuthWrapper.setVisibility(View.VISIBLE);
                 mPasswordWrapper.setVisibility(View.GONE);
-                mNoAuthWrapper.setVisibility(View.GONE);
+                mAddAuthenticationView.setVisibility(View.GONE);
                 if (mPasswordLabel != null) {
                     mPasswordLabel.setVisibility(View.VISIBLE);
                 }
@@ -190,7 +185,7 @@ public class AuthenticationView extends LinearLayout implements OnClickListener 
                 // We're authenticated with a password.
                 mOAuthWrapper.setVisibility(View.GONE);
                 mPasswordWrapper.setVisibility(View.VISIBLE);
-                mNoAuthWrapper.setVisibility(View.GONE);
+                mAddAuthenticationView.setVisibility(View.GONE);
                 if (TextUtils.isEmpty(mPasswordEdit.getText())) {
                     mPasswordEdit.requestFocus();
                 }
@@ -199,7 +194,7 @@ public class AuthenticationView extends LinearLayout implements OnClickListener 
                 // We have no authentication, we need to allow either password or oauth.
                 mOAuthWrapper.setVisibility(View.GONE);
                 mPasswordWrapper.setVisibility(View.GONE);
-                mNoAuthWrapper.setVisibility(View.VISIBLE);
+                mAddAuthenticationView.setVisibility(View.VISIBLE);
             }
         } else {
             // We're using a POP or Exchange account, which does not offer oAuth.
@@ -209,7 +204,7 @@ public class AuthenticationView extends LinearLayout implements OnClickListener 
             }
             mOAuthWrapper.setVisibility(View.GONE);
             mPasswordWrapper.setVisibility(View.VISIBLE);
-            mNoAuthWrapper.setVisibility(View.GONE);
+            mAddAuthenticationView.setVisibility(View.GONE);
             mClearPasswordView.setVisibility(View.GONE);
             if (TextUtils.isEmpty(mPasswordEdit.getText())) {
                 mPasswordEdit.requestFocus();

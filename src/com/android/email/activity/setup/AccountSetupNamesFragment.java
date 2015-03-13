@@ -23,9 +23,7 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.text.method.TextKeyListener;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,13 +33,13 @@ import android.widget.EditText;
 import com.android.email.R;
 import com.android.email.activity.UiUtilities;
 import com.android.email.service.EmailServiceUtils;
+import com.android.email.setup.AuthenticatorSetupIntentHelper;
 import com.android.emailcommon.provider.Account;
 
 public class AccountSetupNamesFragment extends AccountSetupFragment {
     private EditText mDescription;
     private EditText mName;
     private View mAccountNameLabel;
-    private boolean mRequiresName = true;
 
     public interface Callback extends AccountSetupFragment.Callback {
 
@@ -64,22 +62,6 @@ public class AccountSetupNamesFragment extends AccountSetupFragment {
         mDescription = UiUtilities.getView(view, R.id.account_description);
         mName = UiUtilities.getView(view, R.id.account_name);
         mAccountNameLabel = UiUtilities.getView(view, R.id.account_name_label);
-
-        final TextWatcher validationTextWatcher = new TextWatcher() {
-            @Override
-            public void afterTextChanged(Editable s) {
-                validateFields();
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-        };
-        mName.addTextChangedListener(validationTextWatcher);
         mName.setKeyListener(TextKeyListener.getInstance(false, TextKeyListener.Capitalize.WORDS));
 
         setPreviousButtonVisibility(View.INVISIBLE);
@@ -100,8 +82,8 @@ public class AccountSetupNamesFragment extends AccountSetupFragment {
 
         final Account account = setupData.getAccount();
 
-        if (flowMode != SetupDataFragment.FLOW_MODE_FORCE_CREATE
-                && flowMode != SetupDataFragment.FLOW_MODE_EDIT) {
+        if (flowMode != AuthenticatorSetupIntentHelper.FLOW_MODE_FORCE_CREATE
+                && flowMode != AuthenticatorSetupIntentHelper.FLOW_MODE_EDIT) {
             final String accountEmail = account.mEmailAddress;
             mDescription.setText(accountEmail);
 
@@ -113,14 +95,13 @@ public class AccountSetupNamesFragment extends AccountSetupFragment {
         final EmailServiceUtils.EmailServiceInfo info =
                 setupData.getIncomingServiceInfo(getActivity());
         if (!info.usesSmtp) {
-            mRequiresName = false;
             mName.setVisibility(View.GONE);
             mAccountNameLabel.setVisibility(View.GONE);
         } else {
             if (account.getSenderName() != null) {
                 mName.setText(account.getSenderName());
-            } else if (flowMode != SetupDataFragment.FLOW_MODE_FORCE_CREATE
-                    && flowMode != SetupDataFragment.FLOW_MODE_EDIT) {
+            } else if (flowMode != AuthenticatorSetupIntentHelper.FLOW_MODE_FORCE_CREATE
+                    && flowMode != AuthenticatorSetupIntentHelper.FLOW_MODE_EDIT) {
                 // Attempt to prefill the name field from the profile if we don't have it,
                 final Context loaderContext = getActivity().getApplicationContext();
                 getLoaderManager().initLoader(0, null, new LoaderManager.LoaderCallbacks<Cursor>() {
@@ -151,27 +132,6 @@ public class AccountSetupNamesFragment extends AccountSetupFragment {
                 });
             }
         }
-
-        // Make sure the "done" button is in the proper state
-        validateFields();
-    }
-
-    /**
-     * Check input fields for legal values and enable/disable next button
-     */
-    private void validateFields() {
-        boolean enableNextButton = true;
-        // Validation is based only on the "user name" field, not shown for EAS accounts
-        if (mRequiresName) {
-            final String userName = mName.getText().toString().trim();
-            if (TextUtils.isEmpty(userName)) {
-                enableNextButton = false;
-                mName.setError(getString(R.string.account_setup_names_user_name_empty_error));
-            } else {
-                mName.setError(null);
-            }
-        }
-        setNextButtonEnabled(enableNextButton);
     }
 
     public String getDescription() {

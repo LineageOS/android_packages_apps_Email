@@ -35,10 +35,10 @@ import android.os.Parcelable;
 import android.os.RemoteException;
 import android.provider.BaseColumns;
 
-import com.android.emailcommon.utility.TextUtilities;
-import com.android.emailcommon.utility.Utility;
 import com.android.emailcommon.Logging;
 import com.android.emailcommon.R;
+import com.android.emailcommon.utility.TextUtilities;
+import com.android.emailcommon.utility.Utility;
 import com.android.mail.providers.UIProvider;
 import com.android.mail.utils.LogUtils;
 import com.google.common.annotations.VisibleForTesting;
@@ -96,9 +96,12 @@ public abstract class EmailContent {
     public static final int SYNC_STATUS_USER = UIProvider.SyncStatus.USER_REFRESH;
     public static final int SYNC_STATUS_BACKGROUND = UIProvider.SyncStatus.BACKGROUND_SYNC;
     public static final int SYNC_STATUS_LIVE = UIProvider.SyncStatus.LIVE_QUERY;
+    public static final int SYNC_STATUS_INITIAL_SYNC_NEEDED =
+            UIProvider.SyncStatus.INITIAL_SYNC_NEEDED;
 
     public static final int LAST_SYNC_RESULT_SUCCESS = UIProvider.LastSyncResult.SUCCESS;
     public static final int LAST_SYNC_RESULT_AUTH_ERROR = UIProvider.LastSyncResult.AUTH_ERROR;
+    public static final int LAST_SYNC_RESULT_SERVER_ERROR = UIProvider.LastSyncResult.SERVER_ERROR;
     public static final int LAST_SYNC_RESULT_SECURITY_ERROR =
             UIProvider.LastSyncResult.SECURITY_ERROR;
     public static final int LAST_SYNC_RESULT_CONNECTION_ERROR =
@@ -491,9 +494,6 @@ public abstract class EmailContent {
         public static final int CONTENT_SOURCE_KEY_COLUMN = 4;
         public static final int CONTENT_QUOTED_TEXT_START_POS_COLUMN = 5;
 
-        private static final String[] PROJECTION_SOURCE_KEY =
-            new String[] {BaseColumns._ID, BodyColumns.SOURCE_MESSAGE_KEY};
-
         public long mMessageKey;
         public String mHtmlContent;
         public String mTextContent;
@@ -575,7 +575,7 @@ public abstract class EmailContent {
         @VisibleForTesting
         public static long restoreBodySourceKey(Context context, long messageId) {
             return Utility.getFirstRowLong(context, Body.CONTENT_URI,
-                    Body.PROJECTION_SOURCE_KEY,
+                    new String[] {BodyColumns.SOURCE_MESSAGE_KEY},
                     BodyColumns.MESSAGE_KEY + "=?", new String[] {Long.toString(messageId)}, null,
                     0, 0L);
         }

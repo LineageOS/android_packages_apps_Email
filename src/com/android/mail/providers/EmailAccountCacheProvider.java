@@ -22,16 +22,11 @@ import android.net.Uri;
 
 import com.android.email.R;
 import com.android.email.activity.setup.AccountSetupFinal;
+import com.android.email.setup.AuthenticatorSetupIntentHelper;
 
 public class EmailAccountCacheProvider extends MailAppProvider {
     // Content provider for Email
     private static String sAuthority;
-    /**
-     * Authority for the suggestions provider. This is specified in AndroidManifest.xml and
-     * res/xml/searchable.xml.
-     */
-    private static String sSuggestionsAuthority;
-
     @Override
     protected String getAuthority() {
         if (sAuthority == null) {
@@ -42,14 +37,6 @@ public class EmailAccountCacheProvider extends MailAppProvider {
 
     @Override
     protected Intent getNoAccountsIntent(Context context) {
-        return AccountSetupFinal.actionNewAccountWithResultIntent(context);
-    }
-
-    @Override
-    public String getSuggestionAuthority() {
-        if (sSuggestionsAuthority == null) {
-            sSuggestionsAuthority = getContext().getString(R.string.authority_suggestions_provider);
-        }
-        return sSuggestionsAuthority;
+        return AuthenticatorSetupIntentHelper.actionNewAccountWithResultIntent(context);
     }
 }

@@ -18,6 +18,7 @@ package com.android.email.activity.setup;
 
 import android.accounts.AccountAuthenticatorResponse;
 import android.accounts.AccountManager;
+import android.app.ActionBar;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -35,18 +36,22 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.android.email.R;
+import com.android.email.setup.AuthenticatorSetupIntentHelper;
 import com.android.email.service.EmailServiceUtils;
 import com.android.emailcommon.VendorPolicyLoader;
 import com.android.emailcommon.provider.Account;
-import com.android.emailcommon.provider.EmailContent.AccountColumns;
 import com.android.emailcommon.provider.HostAuth;
 import com.android.emailcommon.service.SyncWindow;
+import com.android.mail.analytics.Analytics;
+import com.android.mail.providers.MailAppProvider;
+import com.android.mail.providers.UIProvider;
 import com.android.mail.utils.LogUtils;
 
 import java.net.URISyntaxException;
@@ -94,8 +99,6 @@ public class AccountSetupFinal extends AccountSetupActivity
      * and the appropriate incoming/outgoing information will be filled in automatically.
      */
     private static String INTENT_FORCE_CREATE_ACCOUNT;
-    private static final String EXTRA_FLOW_MODE = "FLOW_MODE";
-    private static final String EXTRA_FLOW_ACCOUNT_TYPE = "FLOW_ACCOUNT_TYPE";
     private static final String EXTRA_CREATE_ACCOUNT_EMAIL = "EMAIL";
     private static final String EXTRA_CREATE_ACCOUNT_USER = "USER";
     private static final String EXTRA_CREATE_ACCOUNT_PASSWORD = "PASSWORD";
@@ -177,26 +180,6 @@ public class AccountSetupFinal extends AccountSetupActivity
     private static final int EXISTING_ACCOUNTS_LOADER_ID = 1;
     private Map<String, String> mExistingAccountsMap;
 
-    public static Intent actionNewAccountIntent(final Context context) {
-        final Intent i = new Intent(context, AccountSetupFinal.class);
-        i.putExtra(EXTRA_FLOW_MODE, SetupDataFragment.FLOW_MODE_NORMAL);
-        return i;
-    }
-
-    public static Intent actionNewAccountWithResultIntent(final Context context) {
-        final Intent i = new Intent(context, AccountSetupFinal.class);
-        i.putExtra(EXTRA_FLOW_MODE, SetupDataFragment.FLOW_MODE_NO_ACCOUNTS);
-        return i;
-    }
-
-    public static Intent actionGetCreateAccountIntent(final Context context,
-            final String accountManagerType) {
-        final Intent i = new Intent(context, AccountSetupFinal.class);
-        i.putExtra(EXTRA_FLOW_MODE, SetupDataFragment.FLOW_MODE_ACCOUNT_MANAGER);
-        i.putExtra(EXTRA_FLOW_ACCOUNT_TYPE, accountManagerType);
-        return i;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -209,6 +192,13 @@ public class AccountSetupFinal extends AccountSetupActivity
         }
 
         setContentView(R.layout.account_setup_activity);
+
+        final ActionBar actionBar = getActionBar();
+        if (actionBar != null) {
+            // Hide the app icon.
+            actionBar.setIcon(android.R.color.transparent);
+            actionBar.setDisplayUseLogoEnabled(false);
+        }
 
         if (savedInstanceState != null) {
             mIsProcessing = savedInstanceState.getBoolean(SAVESTATE_KEY_IS_PROCESSING, false);
@@ -240,11 +230,13 @@ public class AccountSetupFinal extends AccountSetupActivity
 
             // Initialize the SetupDataFragment
             if (INTENT_FORCE_CREATE_ACCOUNT.equals(action)) {
-                mSetupData.setFlowMode(SetupDataFragment.FLOW_MODE_FORCE_CREATE);
+                mSetupData.setFlowMode(AuthenticatorSetupIntentHelper.FLOW_MODE_FORCE_CREATE);
             } else {
-                final int intentFlowMode = intent.getIntExtra(EXTRA_FLOW_MODE,
-                        SetupDataFragment.FLOW_MODE_UNSPECIFIED);
-                final String flowAccountType = intent.getStringExtra(EXTRA_FLOW_ACCOUNT_TYPE);
+                final int intentFlowMode = intent.getIntExtra(
+                        AuthenticatorSetupIntentHelper.EXTRA_FLOW_MODE,
+                        AuthenticatorSetupIntentHelper.FLOW_MODE_UNSPECIFIED);
+                final String flowAccountType = intent.getStringExtra(
+                        AuthenticatorSetupIntentHelper.EXTRA_FLOW_ACCOUNT_TYPE);
                 mSetupData.setAmProtocol(
                         EmailServiceUtils.getProtocolFromAccountType(this, flowAccountType));
                 mSetupData.setFlowMode(intentFlowMode);
@@ -263,8 +255,8 @@ public class AccountSetupFinal extends AccountSetupActivity
             mPasswordFailed = false;
         }
 
-        if (!mIsProcessing
-                && mSetupData.getFlowMode() == SetupDataFragment.FLOW_MODE_FORCE_CREATE) {
+        if (!mIsProcessing && mSetupData.getFlowMode() ==
+                AuthenticatorSetupIntentHelper.FLOW_MODE_FORCE_CREATE) {
             /**
              * To support continuous testing, we allow the forced creation of accounts.
              * This works in a manner fairly similar to automatic setup, in which the complete
@@ -368,67 +360,77 @@ public class AccountSetupFinal extends AccountSetupActivity
 
         // Launch a loader to look up the owner name.  It should be ready well in advance of
         // the time the user clicks next or manual.
-        getLoaderManager().initLoader(OWNER_NAME_LOADER_ID, null,
-                new LoaderManager.LoaderCallbacks<Cursor>() {
-                    @Override
-                    public Loader<Cursor> onCreateLoader(final int id, final Bundle args) {
-                        return new CursorLoader(AccountSetupFinal.this,
-                                ContactsContract.Profile.CONTENT_URI,
-                                new String[] {ContactsContract.Profile.DISPLAY_NAME_PRIMARY},
-                                null, null, null);
-                    }
-
-                    @Override
-                    public void onLoadFinished(final Loader<Cursor> loader, final Cursor data) {
-                        if (data != null && data.moveToFirst()) {
-                            mOwnerName = data.getString(data.getColumnIndex(
-                                    ContactsContract.Profile.DISPLAY_NAME_PRIMARY));
-                        }
-                    }
-
-                    @Override
-                    public void onLoaderReset(final Loader<Cursor> loader) {}
-                });
+        getLoaderManager().initLoader(OWNER_NAME_LOADER_ID, null, new OwnerNameLoaderCallbacks());
 
         // Launch a loader to cache some info about existing accounts so we can dupe-check against
         // them.
         getLoaderManager().initLoader(EXISTING_ACCOUNTS_LOADER_ID, null,
-                new LoaderManager.LoaderCallbacks<Cursor> () {
-                    @Override
-                    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-                        return new CursorLoader(AccountSetupFinal.this, Account.CONTENT_URI,
-                                new String[] {AccountColumns.EMAIL_ADDRESS,
-                                        AccountColumns.DISPLAY_NAME},
-                                null, null, null);
-                    }
+                new ExistingAccountsLoaderCallbacks());
+    }
 
-                    @Override
-                    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-                        if (data == null) {
-                            mExistingAccountsMap = null;
-                            return;
-                        }
+    private class OwnerNameLoaderCallbacks implements LoaderManager.LoaderCallbacks<Cursor> {
+        @Override
+        public Loader<Cursor> onCreateLoader(final int id, final Bundle args) {
+            return new CursorLoader(AccountSetupFinal.this,
+                    ContactsContract.Profile.CONTENT_URI,
+                    new String[] {ContactsContract.Profile.DISPLAY_NAME_PRIMARY},
+                    null, null, null);
+        }
 
-                        mExistingAccountsMap = new HashMap<String, String>();
+        @Override
+        public void onLoadFinished(final Loader<Cursor> loader, final Cursor data) {
+            if (data != null && data.moveToFirst()) {
+                mOwnerName = data.getString(data.getColumnIndex(
+                        ContactsContract.Profile.DISPLAY_NAME_PRIMARY));
+            }
+        }
 
-                        final int emailColumnIndex = data.getColumnIndex(
-                                AccountColumns.EMAIL_ADDRESS);
-                        final int displayNameColumnIndex =
-                                data.getColumnIndex(AccountColumns.DISPLAY_NAME);
+        @Override
+        public void onLoaderReset(final Loader<Cursor> loader) {}
+    }
 
-                        while (data.moveToNext()) {
-                            final String email = data.getString(emailColumnIndex);
-                            final String displayName = data.getString(displayNameColumnIndex);
-                            mExistingAccountsMap.put(email,
-                                    TextUtils.isEmpty(displayName) ? email : displayName);
-                        }
-                    }
+    private class ExistingAccountsLoaderCallbacks implements LoaderManager.LoaderCallbacks<Cursor> {
+        @Override
+        public Loader<Cursor> onCreateLoader(final int id, final Bundle args) {
+            return new CursorLoader(AccountSetupFinal.this, MailAppProvider.getAccountsUri(),
+                    new String[] {UIProvider.AccountColumns.ACCOUNT_MANAGER_NAME,
+                            UIProvider.AccountColumns.NAME},
+                    null, null, null);
+        }
 
-                    @Override
-                    public void onLoaderReset(Loader<Cursor> loader) {
-                        mExistingAccountsMap = null;
-                    }
-                });
+        @Override
+        public void onLoadFinished(final Loader<Cursor> loader, final Cursor data) {
+            if (data == null || !data.moveToFirst()) {
+                mExistingAccountsMap = null;
+                return;
+            }
+
+            mExistingAccountsMap = new HashMap<>();
+
+            final int emailColumnIndex = data.getColumnIndex(
+                    UIProvider.AccountColumns.ACCOUNT_MANAGER_NAME);
+            final int displayNameColumnIndex =
+                    data.getColumnIndex(UIProvider.AccountColumns.NAME);
+
+            do {
+                final String email = data.getString(emailColumnIndex);
+                final String displayName = data.getString(displayNameColumnIndex);
+                mExistingAccountsMap.put(email,
+                        TextUtils.isEmpty(displayName) ? email : displayName);
+            } while (data.moveToNext());
+        }
+
+        @Override
+        public void onLoaderReset(final Loader<Cursor> loader) {
+            mExistingAccountsMap = null;
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        Analytics.getInstance().activityStart(this);
     }
 
     @Override
@@ -445,7 +447,7 @@ public class AccountSetupFinal extends AccountSetupActivity
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean(SAVESTATE_KEY_IS_PROCESSING, mIsProcessing);
         outState.putInt(SAVESTATE_KEY_STATE, mState);
@@ -455,6 +457,13 @@ public class AccountSetupFinal extends AccountSetupActivity
                 mReportAccountAuthenticatorError);
         outState.putBoolean(SAVESTATE_KEY_IS_PRE_CONFIGURED, mIsPreConfiguredProvider);
         outState.putBoolean(SAVESTATE_KEY_PASSWORD_FAILED, mPasswordFailed);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        Analytics.getInstance().activityStop(this);
     }
 
     /**
@@ -666,7 +675,8 @@ public class AccountSetupFinal extends AccountSetupActivity
             case STATE_CREATING:
                 mState = STATE_NAMES;
                 updateContentFragment(true /* addToBackstack */);
-                if (mSetupData.getFlowMode() == SetupDataFragment.FLOW_MODE_FORCE_CREATE) {
+                if (mSetupData.getFlowMode() ==
+                        AuthenticatorSetupIntentHelper.FLOW_MODE_FORCE_CREATE) {
                     getFragmentManager().executePendingTransactions();
                     initiateAccountFinalize();
                 }
@@ -950,22 +960,22 @@ public class AccountSetupFinal extends AccountSetupActivity
         final String domain = emailParts[1];
 
         final Account account = mSetupData.getAccount();
+        final EmailServiceUtils.EmailServiceInfo info =
+                mSetupData.getIncomingServiceInfo(this);
 
         final HostAuth recvAuth = account.getOrCreateHostAuthRecv(this);
         recvAuth.setUserName(email);
         recvAuth.setConnection(mSetupData.getIncomingProtocol(), domain,
-                HostAuth.PORT_UNKNOWN, HostAuth.FLAG_NONE);
+                HostAuth.PORT_UNKNOWN, info.offerTls ? HostAuth.FLAG_TLS : HostAuth.FLAG_SSL);
         AccountSetupCredentialsFragment.populateHostAuthWithResults(this, recvAuth,
                 mSetupData.getCredentialResults());
         mSetupData.setIncomingCredLoaded(true);
 
-        final EmailServiceUtils.EmailServiceInfo info =
-                mSetupData.getIncomingServiceInfo(this);
         if (info.usesSmtp) {
             final HostAuth sendAuth = account.getOrCreateHostAuthSend(this);
             sendAuth.setUserName(email);
             sendAuth.setConnection(HostAuth.LEGACY_SCHEME_SMTP, domain,
-                    HostAuth.PORT_UNKNOWN, HostAuth.FLAG_NONE);
+                    HostAuth.PORT_UNKNOWN, HostAuth.FLAG_TLS);
             AccountSetupCredentialsFragment.populateHostAuthWithResults(this, sendAuth,
                     mSetupData.getCredentialResults());
             mSetupData.setOutgoingCredLoaded(true);
