@@ -16,32 +16,32 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="account_settings_notify_every_message_label">Notification des messages</string>
+  <string name="account_settings_notify_every_message_label">Notification pour chaque message</string>
   <string name="account_setup_options_mail_check_frequency_2hour">Toutes les 2 heures</string>
   <string name="account_setup_options_mail_check_frequency_4hour">Toutes les 4 heures</string>
   <string name="account_setup_options_mail_check_frequency_1day">Tous les jours</string>
   <string name="account_settings">Paramètres du compte</string>
   <string name="delete_account_title">Supprimer le compte</string>
   <string name="delete_account_summary">Supprimer ce compte et tous ses paramètres et données</string>
-  <string name="delete_account_confirmation_msg">Cela supprimera tous les paramètres et les e-mails du compte <xliff:g id="account">%s</xliff:g>.
-Cette opération ne peut pas être annulée.\n\nContinuer ?</string>
-  <string name="deleting_account_msg">Suppression du compte\u2026</string>
+  <string name="delete_account_confirmation_msg">Cela supprimera tous les paramètres et les courriels du compte <xliff:g id="account">%s</xliff:g>.
+Cette opération ne peut pas être annulée.\n\nVoulez-vous continuer?</string>
+  <string name="deleting_account_msg">Suppression du compte en cours\u2026</string>
   <string name="delete_account_failed">Impossible de supprimer le compte</string>
   <string name="account_auto_fetch_attachments_label">Récupération automatique des pièces jointes</string>
   <string name="account_auto_fetch_attachments_entries_never">Jamais</string>
   <string name="account_auto_fetch_attachments_entries_wifi">Uniquement par Wi-Fi</string>
   <string name="account_auto_fetch_attachments_entries_always">Toujours</string>
-  <string name="account_settings_sync_size_label">Taille maximale à synchroniser par e-mail</string>
+  <string name="account_settings_sync_size_label">Taille maximale des messages à synchroniser</string>
   <string name="account_setup_options_mail_sync_size_all">Aucune limite</string>
-  <string name="account_setup_options_mail_sync_size_20k">20 Ko</string>
-  <string name="account_setup_options_mail_sync_size_100k">100 Ko</string>
-  <string name="account_setup_options_mail_sync_size_200k">200 Ko</string>
-  <string name="account_setup_options_mail_sync_size_500k">500 Ko</string>
-  <string name="account_setup_options_mail_sync_size_1M">1 Mo</string>
+  <string name="account_setup_options_mail_sync_size_20k">20 kb</string>
+  <string name="account_setup_options_mail_sync_size_100k">100 kb</string>
+  <string name="account_setup_options_mail_sync_size_200k">200 kb</string>
+  <string name="account_setup_options_mail_sync_size_500k">500 kb</string>
+  <string name="account_setup_options_mail_sync_size_1M">1 Mb</string>
   <string name="category_label_general_settings">Paramètres généraux</string>
   <string name="category_label_attachment_settings">Paramètres des pièces jointes</string>
   <string name="general_preference_add_attachment_label">Ajouter un autre type de fichier</string>
   <string name="general_preference_select_recipients_label">Sélection des destinataires depuis les contacts</string>
-  <string name="general_preference_confirm_forward_label">Confirmer avant envoi</string>
-  <string name="general_preference_confirm_forward_summary">Choisissez d\'utiliser les pièces jointes stockées sur le serveur, ou les télécharger avant l\'envoi</string>
+  <string name="general_preference_confirm_forward_label">Confirmer avant de transférer</string>
+  <string name="general_preference_confirm_forward_summary">Choisir d\'utiliser les pièces jointes stockées sur le serveur, ou les télécharger avant l\'expédition</string>
 </resources>
