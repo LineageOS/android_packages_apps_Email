@@ -18,6 +18,7 @@ package com.android.emailcommon.service;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -30,6 +31,7 @@ import com.android.emailcommon.provider.Policy;
 import com.android.mail.utils.LogUtils;
 
 import java.io.IOException;
+import java.util.concurrent.Executor;
 
 /**
  * The EmailServiceProxy class provides a simple interface for the UI to call into the various
@@ -258,6 +260,11 @@ public class EmailServiceProxy extends ServiceProxy implements IEmailService {
     @Override
     public void deleteExternalAccountPIMData(final String emailAddress) throws RemoteException {
         setTask(new ProxyTask() {
+            @Override
+            public Executor runInExecutor() {
+                return AsyncTask.THREAD_POOL_EXECUTOR;
+            }
+
             @Override
             public void run() throws RemoteException {
                 mService.deleteExternalAccountPIMData(emailAddress);
