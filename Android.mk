@@ -47,7 +47,6 @@ LOCAL_AAPT_FLAGS += --extra-packages com.android.ex.chips:com.android.mail:com.a
 
 LOCAL_STATIC_JAVA_LIBRARIES := android-common com.android.emailcommon guava libchips libphotoviewer
 LOCAL_STATIC_JAVA_LIBRARIES += android-support-v4
-LOCAL_STATIC_JAVA_LIBRARIES += android-support-v7-appcompat
 LOCAL_STATIC_JAVA_LIBRARIES += android-support-v7-gridlayout
 LOCAL_STATIC_JAVA_LIBRARIES += android-support-v13
 LOCAL_STATIC_JAVA_LIBRARIES += android-opt-bitmap
