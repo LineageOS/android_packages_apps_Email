@@ -15,11 +15,19 @@
 -->
 
 <resources>
+    <style name="CMEmailTheme"
+        parent="@style/UnifiedEmailTheme">
+        <item name="android:colorPrimary">@color/primary</item>
+        <item name="android:colorPrimaryDark">@color/primary_dark</item>
+        <item name="android:colorAccent">@color/accent</item>
+    </style>
+
     <style name="AccountSetupDialogActivityTheme"
-        parent="@android:style/Theme.Holo.Light.Dialog.NoActionBar" />
-    <!-- Account Setup Activity -->
-    <style name="account_setup_content">
-        <item name="android:background">@drawable/account_setup_background</item>
+        parent="@android:style/Theme.Material.Light.Dialog.NoActionBar">
+        <!-- ActionBar color -->
+        <item name="android:colorPrimary">@color/primary</item>
+        <item name="android:colorPrimaryDark">@color/primary_dark</item>
+        <item name="android:colorAccent">@color/accent</item>
     </style>
 
     <!-- The large headline at the top of every account setup screen -->
