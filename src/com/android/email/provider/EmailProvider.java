@@ -738,7 +738,7 @@ public class EmailProvider extends ContentProvider
                         notifyUI(UIPROVIDER_ALL_ACCOUNTS_NOTIFIER, null);
 
                         // Delete account suggested contacts
-                        mExtrasDatabase.delete(SuggestedContact.TABLE_NAME,
+                        db.delete(SuggestedContact.TABLE_NAME,
                                 SuggestedContact.ACCOUNT_KEY + " = ?", new String[]{id});
 
                     } else if (match == MAILBOX_ID) {
@@ -769,7 +769,7 @@ public class EmailProvider extends ContentProvider
                     if (match == ACCOUNT) {
                         // TODO extract account deleted
                         // As a fallback clean all suggested contacts
-                        mExtrasDatabase.delete(SuggestedContact.TABLE_NAME, null, null);
+                        db.delete(SuggestedContact.TABLE_NAME, null, null);
                     }
                     break;
                 case MESSAGE_MOVE:
@@ -6066,14 +6066,8 @@ public class EmailProvider extends ContentProvider
         }
 
         // Update or insert every suggested contact
-        mExtrasDatabase.beginTransactionNonExclusive();
-        try {
-            for (Address suggestedContact : suggestedContacts) {
-                addOrUpdateSuggestedContact(accountId, suggestedContact);
-            }
-            mExtrasDatabase.setTransactionSuccessful();
-        } finally {
-            mExtrasDatabase.endTransaction();
+        for (Address suggestedContact : suggestedContacts) {
+            addOrUpdateSuggestedContact(accountId, suggestedContact);
         }
     }
 
@@ -6094,14 +6088,14 @@ public class EmailProvider extends ContentProvider
                     ? emailAddress : address.getPersonal());
             values.put(SuggestedContact.DISPLAY_NAME, address.toString());
             values.put(SuggestedContact.LAST_SEEN, System.currentTimeMillis());
-            long affectedRecords = mExtrasDatabase.update(
+            long affectedRecords = mDatabase.update(
                     SuggestedContact.TABLE_NAME, values, where, args);
 
             // Insert
             if (affectedRecords == 0) {
                 values.put(SuggestedContact.ACCOUNT_KEY, accountId);
                 values.put(SuggestedContact.ADDRESS, emailAddress);
-                mExtrasDatabase.insertOrThrow(SuggestedContact.TABLE_NAME, null, values);
+                mDatabase.insertOrThrow(SuggestedContact.TABLE_NAME, null, values);
             }
 
         } catch (SQLException ex) {
