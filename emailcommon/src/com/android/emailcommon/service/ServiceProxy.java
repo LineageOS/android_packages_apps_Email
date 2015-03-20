@@ -39,6 +39,9 @@ import android.widget.Toast;
 import com.android.emailcommon.R;
 import com.android.emailcommon.provider.EmailContent;
 import com.android.mail.utils.LogUtils;
+
+import java.util.concurrent.Executor;
+
 /**
  * ServiceProxy is a superclass for proxy objects which make a single call to a service. It handles
  * connecting to the service, running a task supplied by the subclass when the connection is ready,
@@ -181,8 +184,8 @@ public abstract class ServiceProxy {
                                     "RuntimeException when trying to unbind from service");
                         }
                     }
-                    mTaskCompleted = true;
                     synchronized(mConnection) {
+                        mTaskCompleted = true;
                         if (DEBUG_PROXY) {
                             LogUtils.v(mTag, "Task " + mName + " completed; disconnecting");
                         }
@@ -190,7 +193,7 @@ public abstract class ServiceProxy {
                     }
                     return null;
                 }
-            }.execute();
+            }.executeOnExecutor(mTask.runInExecutor());
         }
 
         @Override
@@ -202,8 +205,11 @@ public abstract class ServiceProxy {
         }
     }
 
-    protected interface ProxyTask {
-        public void run() throws RemoteException;
+    protected abstract class ProxyTask {
+        public Executor runInExecutor() {
+            return AsyncTask.SERIAL_EXECUTOR;
+        };
+        public abstract void run() throws RemoteException;
     }
 
     public ServiceProxy setTimeout(int secs) {
@@ -225,6 +231,9 @@ public abstract class ServiceProxy {
         mStartTime = System.currentTimeMillis();
         if (DEBUG_PROXY) {
             LogUtils.v(mTag, "Bind requested for task " + mName);
+        }
+        synchronized (mConnection) {
+            mTaskCompleted = false;
         }
         return mContext.bindService(mIntent, mConnection, Context.BIND_AUTO_CREATE);
     }
@@ -251,7 +260,9 @@ public abstract class ServiceProxy {
                 if (DEBUG_PROXY) {
                     LogUtils.v(mTag, "Waiting for task " + mName + " to complete...");
                 }
-                mConnection.wait(mTimeout * 1000L);
+                if (!mTaskCompleted) {
+                    mConnection.wait(mTimeout * 1000L);
+                }
             } catch (InterruptedException e) {
                 // Can be ignored safely
             }
