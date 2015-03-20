@@ -17,11 +17,15 @@
 <!-- See also values-xlarge for specializations for xlarge screens -->
 <!-- See also values-xlarge for specializations for xlarge screens -->
 <resources>
+    <color name="primary">#ff9800</color>
+    <color name="primary_dark">#f57c00</color>
+    <color name="accent">#03a9f4</color>
+
     <!-- Account setup screens -->
     <color name="account_setup_headline_color">#333333</color>
-    <color name="account_setup_info_text_color">#000000</color>
+    <color name="account_setup_info_text_color">#212121</color>
     <color name="account_setup_label_text_color">#666666</color>
-    <color name="account_setup_label_large_text_color">#000000</color>
+    <color name="account_setup_label_large_text_color">#212121</color>
     <color name="account_setup_divider_color">#CCCCCC</color>
     <color name="account_setup_xlarge_background_color">#e5e5e5</color>
     <color name="account_setup_manual_button_color">#373737</color>
@@ -30,22 +34,22 @@
     <color name="text_secondary_color">#666666</color>
 
     <!-- Account color chips on combined view -->
-    <color name="combined_view_account_color_1">#ff71aea7</color>
-    <color name="combined_view_account_color_2">#ff621919</color>
-    <color name="combined_view_account_color_3">#ff18462f</color>
-    <color name="combined_view_account_color_4">#ffbf8e52</color>
-    <color name="combined_view_account_color_5">#ff001f79</color>
-    <color name="combined_view_account_color_6">#ffa8afc2</color>
-    <color name="combined_view_account_color_7">#ff6b64c4</color>
-    <color name="combined_view_account_color_8">#ff738359</color>
-    <color name="combined_view_account_color_9">#ff9d50a4</color>
+    <color name="combined_view_account_color_1">#e91e63</color>
+    <color name="combined_view_account_color_2">#ff9800</color>
+    <color name="combined_view_account_color_3">#f44336</color>
+    <color name="combined_view_account_color_4">#3f51b5</color>
+    <color name="combined_view_account_color_5">#009688</color>
+    <color name="combined_view_account_color_6">#4caf50</color>
+    <color name="combined_view_account_color_7">#795548</color>
+    <color name="combined_view_account_color_8">#607d8b</color>
+    <color name="combined_view_account_color_9">#ff5722</color>
 
     <color name="button_text_color">#777777</color>
     <color name="button_text_disabled_color">#cccccc</color>
 
-    <color name="password_warning_color">#d30000</color>
-    <color name="email_confirmation_color">#808080</color>
+    <color name="password_warning_color">#f44336</color>
+    <color name="email_confirmation_color">#9e9e9e</color>
 
-    <color name="quick_response_text_color">#000000</color>
+    <color name="quick_response_text_color">#212121</color>
 
 </resources>
