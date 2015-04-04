@@ -186,7 +186,8 @@ public final class DBHelper {
     // Version 126: Decode address lists for To, From, Cc, Bcc and Reply-To columns in Message.
     // Version 127: Force mFlags to contain the correct flags for EAS accounts given a protocol
     //              version above 12.0
-    public static final int DATABASE_VERSION = 128;
+    // Version 129: Update all IMAP INBOX mailboxes to force synchronization
+    public static final int DATABASE_VERSION = 129;
 
     // Any changes to the database format *must* include update-in-place code.
     // Original version: 2
@@ -1537,6 +1538,28 @@ public final class DBHelper {
                     // Shouldn't be needed unless we're debugging and interrupt the process
                     LogUtils.w(TAG, "Exception upgrading EmailProvider.db from v127 to v128", e);
                 }
+            }
+
+            // This statement changes the syncInterval column to 1 for all IMAP INBOX mailboxes.
+            // It does this by matching mailboxes against all account IDs whose receive auth is
+            // either R.string.protocol_legacy_imap, R.string.protocol_imap or "imap"
+            // It needed in order to mark
+            // We do it here to avoid the minor collisions with aosp main db
+            if (oldVersion <= 129) {
+                db.execSQL("update " + Mailbox.TABLE_NAME + " set "
+                        + MailboxColumns.SYNC_INTERVAL + "= 1 where "
+                        + MailboxColumns.TYPE + "= " + Mailbox.TYPE_INBOX + " and "
+                        + MailboxColumns.ACCOUNT_KEY + " in (select "
+                        + Account.TABLE_NAME + "." + AccountColumns._ID + " from "
+                        + Account.TABLE_NAME + " join " + HostAuth.TABLE_NAME + " where "
+                        + HostAuth.TABLE_NAME + "." + HostAuthColumns._ID + "="
+                        + Account.TABLE_NAME + "." + AccountColumns.HOST_AUTH_KEY_RECV
+                        + " and (" + HostAuth.TABLE_NAME + "."
+                        + HostAuthColumns.PROTOCOL + "='"
+                        + mContext.getString(R.string.protocol_legacy_imap) + "' or "
+                        + HostAuth.TABLE_NAME + "." + HostAuthColumns.PROTOCOL + "='"
+                        + mContext.getString(R.string.protocol_imap) + "' or "
+                        + HostAuth.TABLE_NAME + "." + HostAuthColumns.PROTOCOL + "='imap'));");
             }
         }
 
