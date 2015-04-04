@@ -87,6 +87,8 @@
         email:offerOAuth="true"
         email:offerLoadMore="true"
         email:offerMoveTo="true"
+        email:offerLookback="true"
+        email:defaultLookback="auto"
          />
     <emailservice
         email:protocol="@string/protocol_eas"

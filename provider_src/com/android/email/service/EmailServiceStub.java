@@ -308,6 +308,11 @@ public abstract class EmailServiceStub extends IEmailService.Stub implements IEm
                     mailbox.save(mContext);
                     if (type == Mailbox.TYPE_INBOX) {
                         inboxId = mailbox.mId;
+
+                        // In a clean start we must mark the Inbox mailbox as syncable. This
+                        // is required by the new multiple mailboxes sync. Initially Inbox
+                        // should start marked
+                        mailbox.mSyncInterval = 1;
                     }
                 }
             }
