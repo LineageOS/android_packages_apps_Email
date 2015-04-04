@@ -299,6 +299,10 @@ public class Mailbox extends EmailContent implements EmailContent.MailboxColumns
             MailboxColumns.SYNC_INTERVAL + "=1 and " + MailboxColumns.TYPE + "=? and " +
                     MailboxColumns.ACCOUNT_KEY + "=?";
 
+    /** Selection for mailboxes that are configured for sync for an account. */
+    private static final String SYNCING_MAILBOXES_FOR_ACCOUNT_SELECTION =
+            MailboxColumns.SYNC_INTERVAL + "=1 and " + MailboxColumns.ACCOUNT_KEY + "=?";
+
     // Types of mailboxes.  The list is ordered to match a typical UI presentation, e.g.
     // placing the inbox at the top.
     // Arrays of "special_mailbox_display_names" and "special_mailbox_icons" are depends on
@@ -908,6 +912,19 @@ public class Mailbox extends EmailContent implements EmailContent.MailboxColumns
         return cr.query(Mailbox.CONTENT_URI, Mailbox.ID_PROJECTION,
                 SYNCING_AND_TYPE_FOR_ACCOUNT_SELECTION,
                 new String[] { Integer.toString(mailboxType), Long.toString(accountId) }, null);
+    }
+
+    /**
+     * Get the mailbox ids for an account that are configured for sync by the user.
+     * @param cr The {@link ContentResolver}.
+     * @param accountId The id for the account that is syncing.
+     * @return A cursor (with one column, containing ids) with all mailbox ids that match.
+     */
+    public static Cursor getLoopBackMailboxIdsForSync(final ContentResolver cr,
+            final long accountId) {
+        return cr.query(Mailbox.CONTENT_URI, Mailbox.ID_PROJECTION,
+                SYNCING_MAILBOXES_FOR_ACCOUNT_SELECTION,
+                new String[] {Long.toString(accountId) }, null);
     }
 
     /**
