@@ -98,4 +98,7 @@
     <dimen name="dialog_text_size">10sp</dimen>
     <dimen name="dialog_padding_left">10sp</dimen>
     <dimen name="dialog_padding_other">4sp</dimen>
+
+    <!-- Folder settings -->
+    <dimen name="child_folder_indent">8dp</dimen>
 </resources>
