@@ -187,7 +187,8 @@ public final class DBHelper {
     // Version 129: Update all IMAP INBOX mailboxes to force synchronization
     // Version 130: Account capabilities (check EmailServiceProxy#CAPABILITY_*)
     // Version 131: Add setSyncSizeEnabled and syncSize columns for Account table.
-    public static final int DATABASE_VERSION = 131;
+    // Version 132: Update all IMAP INBOX mailboxes to force synchronization
+    public static final int DATABASE_VERSION = 132;
 
     // Any changes to the database format *must* include update-in-place code.
     // Original version: 2
@@ -1582,11 +1583,27 @@ public final class DBHelper {
                 }
             }
 
-            // Due to a bug in commit 44a064e5f16ddaac25f2acfc03c118f65bc48aec,
-            // AUTO_FETCH_ATTACHMENTS column could not be available in the Account table.
-            // Since cm12 and up doesn't use this column, we are leave as is it. In case
-            // the feature were added, then we need to create a new exception to ensure
-            // that the columns is re-added.
+            // This statement changes the syncInterval column to 1 for all IMAP INBOX mailboxes.
+            // It does this by matching mailboxes against all account IDs whose receive auth is
+            // either R.string.protocol_legacy_imap, R.string.protocol_imap or "imap"
+            // It needed in order to mark
+            // We do it here to avoid the minor collisions with aosp main db
+            if (oldVersion <= 132) {
+                db.execSQL("update " + Mailbox.TABLE_NAME + " set "
+                        + MailboxColumns.SYNC_INTERVAL + "= 1 where "
+                        + MailboxColumns.TYPE + "= " + Mailbox.TYPE_INBOX + " and "
+                        + MailboxColumns.ACCOUNT_KEY + " in (select "
+                        + Account.TABLE_NAME + "." + AccountColumns._ID + " from "
+                        + Account.TABLE_NAME + " join " + HostAuth.TABLE_NAME + " where "
+                        + HostAuth.TABLE_NAME + "." + HostAuthColumns._ID + "="
+                        + Account.TABLE_NAME + "." + AccountColumns.HOST_AUTH_KEY_RECV
+                        + " and (" + HostAuth.TABLE_NAME + "."
+                        + HostAuthColumns.PROTOCOL + "='"
+                        + mContext.getString(R.string.protocol_legacy_imap) + "' or "
+                        + HostAuth.TABLE_NAME + "." + HostAuthColumns.PROTOCOL + "='"
+                        + mContext.getString(R.string.protocol_imap) + "' or "
+                        + HostAuth.TABLE_NAME + "." + HostAuthColumns.PROTOCOL + "='imap'));");
+            }
         }
 
         @Override
