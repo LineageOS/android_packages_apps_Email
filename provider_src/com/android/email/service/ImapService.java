@@ -74,7 +74,6 @@ import java.util.List;
 public class ImapService extends Service {
     // TODO get these from configurations or settings.
     private static final long QUICK_SYNC_WINDOW_MILLIS = DateUtils.DAY_IN_MILLIS;
-    private static final long FULL_SYNC_WINDOW_MILLIS = 7 * DateUtils.DAY_IN_MILLIS;
     private static final long FULL_SYNC_INTERVAL_MILLIS = 4 * DateUtils.HOUR_IN_MILLIS;
 
     // The maximum number of messages to fetch in a single command.
@@ -389,38 +388,12 @@ public class ImapService extends Service {
         final boolean fullSync = (uiRefresh || loadMore ||
                 timeSinceLastFullSync >= FULL_SYNC_INTERVAL_MILLIS || timeSinceLastFullSync < 0);
 
-        if (account.mSyncLookback == SyncWindow.SYNC_WINDOW_ALL) {
-            // This is really for testing. There is no UI that allows setting the sync window for
-            // IMAP, but it can be set by sending a special intent to AccountSetupFinal activity.
-            endDate = 0;
-        } else if (fullSync) {
-            // Find the oldest message in the local store. We need our time window to include
-            // all messages that are currently present locally.
-            endDate = System.currentTimeMillis() - FULL_SYNC_WINDOW_MILLIS;
-            Cursor localOldestCursor = null;
-            try {
-                // b/11520812 Ignore message with timestamp = 0 (which includes NULL)
-                localOldestCursor = resolver.query(EmailContent.Message.CONTENT_URI,
-                        OldestTimestampInfo.PROJECTION,
-                        EmailContent.MessageColumns.ACCOUNT_KEY + "=?" + " AND " +
-                                MessageColumns.MAILBOX_KEY + "=? AND " +
-                                MessageColumns.TIMESTAMP + "!=0",
-                        new String[] {String.valueOf(account.mId), String.valueOf(mailbox.mId)},
-                        null);
-                if (localOldestCursor != null && localOldestCursor.moveToFirst()) {
-                    long oldestLocalMessageDate = localOldestCursor.getLong(
-                            OldestTimestampInfo.COLUMN_OLDEST_TIMESTAMP);
-                    if (oldestLocalMessageDate > 0) {
-                        endDate = Math.min(endDate, oldestLocalMessageDate);
-                        LogUtils.d(
-                                Logging.LOG_TAG, "oldest local message " + oldestLocalMessageDate);
-                    }
-                }
-            } finally {
-                if (localOldestCursor != null) {
-                    localOldestCursor.close();
-                }
-            }
+        if (fullSync) {
+            int syncLookBack = mailbox.mSyncLookback == SyncWindow.SYNC_WINDOW_ACCOUNT
+                    ? account.mSyncLookback
+                    : mailbox.mSyncLookback;
+            endDate = System.currentTimeMillis() -
+                    (SyncWindow.toDays(syncLookBack) * DateUtils.DAY_IN_MILLIS);
             LogUtils.d(Logging.LOG_TAG, "full sync: original window: now - " + endDate);
         } else {
             // We are doing a frequent, quick sync. This only syncs a small time window, so that
