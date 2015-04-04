@@ -42,7 +42,7 @@ public class SyncWindow {
                 return 365*10;
             case SYNC_WINDOW_ACCOUNT:
             default:
-                return 14;
+                return 7;
         }
     }
 }
