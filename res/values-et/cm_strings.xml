@@ -20,4 +20,27 @@
   <string name="account_setup_options_mail_check_frequency_2hour">Iga 2 tunni tagant</string>
   <string name="account_setup_options_mail_check_frequency_4hour">Iga 4 tunni tagant</string>
   <string name="account_setup_options_mail_check_frequency_1day">Iga päev</string>
+  <string name="account_settings">Konto seaded</string>
+  <string name="delete_account_title">Kustuta konto</string>
+  <string name="delete_account_summary">Kustuta see konto ja kõik selle seaded ja andmed</string>
+  <string name="delete_account_confirmation_msg">See kustutab konto <xliff:g id="account">%s</xliff:g> kõik e-kirjad  ja sätted. Seda tegevust ei saa tagasi võtta.\n\nJätka?</string>
+  <string name="deleting_account_msg">Konto\u2026 kustutamine</string>
+  <string name="delete_account_failed">Konto kustutamine ebaõnnestus</string>
+  <string name="account_auto_fetch_attachments_label">Lae manused automaatselt</string>
+  <string name="account_auto_fetch_attachments_entries_never">Mitte kunagi</string>
+  <string name="account_auto_fetch_attachments_entries_wifi">Ainult Wi-Fi kaudu</string>
+  <string name="account_auto_fetch_attachments_entries_always">Alati</string>
+  <string name="account_settings_sync_size_label">Maksimaalne sünkroonitava e-kirja suurus</string>
+  <string name="account_setup_options_mail_sync_size_all">Piiramatu</string>
+  <string name="account_setup_options_mail_sync_size_20k">20KB</string>
+  <string name="account_setup_options_mail_sync_size_100k">100KB</string>
+  <string name="account_setup_options_mail_sync_size_200k">200KB</string>
+  <string name="account_setup_options_mail_sync_size_500k">500KB</string>
+  <string name="account_setup_options_mail_sync_size_1M">1MB</string>
+  <string name="category_label_general_settings">Üldised seaded</string>
+  <string name="category_label_attachment_settings">Manuste seaded</string>
+  <string name="general_preference_add_attachment_label">Muu failitüübi lisamine</string>
+  <string name="general_preference_select_recipients_label">Vali adressaadid kontaktidest</string>
+  <string name="general_preference_confirm_forward_label">Kinnita enne edasisaatmist</string>
+  <string name="general_preference_confirm_forward_summary">Vali kas soovid manuseid kasutada postiserveris või edasisaatmiseks seadmesse laadida</string>
 </resources>
