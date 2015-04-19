@@ -242,6 +242,16 @@ public abstract class AccountServerBaseFragment extends AccountSetupFragment
         }
     }
 
+    void performNextSetupAction() {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                Callback callback = (Callback) getActivity();
+                callback.onNextButton();
+            }
+        });
+    }
+
     /**
      * Returns whether or not any settings have changed.
      */
