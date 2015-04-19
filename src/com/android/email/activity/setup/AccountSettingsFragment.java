@@ -1129,12 +1129,8 @@ public class AccountSettingsFragment extends MailAccountPrefsFragment
                     // And now we remove the system account that holds the email service
                     accountManager.removeAccount(account, getActivity(), null, null);
 
-                    // We deleted the account, so we need to clear the activity stack, so just show
-                    // the settings fragment and clear the activity stack
-                    Intent intent = new Intent(getActivity(), PublicPreferenceActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |
-                            Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    getActivity().startActivity(intent);
+                    // Finish after account is deleted
+                    getActivity().finish();
                 } catch (Exception ex) {
                     LogUtils.w(LogUtils.TAG, ex, "Failed to delete account %s", mAccountEmail);
                     return Boolean.FALSE;
