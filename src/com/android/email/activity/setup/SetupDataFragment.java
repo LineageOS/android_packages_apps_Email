@@ -37,6 +37,7 @@ public class SetupDataFragment extends Fragment implements Parcelable {
     private static final String SAVESTATE_CREDENTIAL = "SetupDataFragment.credential";
     private static final String SAVESTATE_INCOMING_LOADED = "SetupDataFragment.incomingLoaded";
     private static final String SAVESTATE_OUTGOING_LOADED = "SetupDataFragment.outgoingLoaded";
+    private static final String SAVESTATE_AUTODISCOVER = "SetupDataFragment.autodiscover";
     private static final String SAVESTATE_POLICY = "SetupDataFragment.policy";
     private static final String SAVESTATE_INCOMING_PROTOCOL = "SetupDataFragment.incomingProtocol";
     private static final String SAVESTATE_AM_PROTOCOL = "SetupDataFragment.amProtocol";
@@ -50,6 +51,8 @@ public class SetupDataFragment extends Fragment implements Parcelable {
     // settings. Set them to 'true' by default, and false when we change the credentials or email
     private boolean mIncomingCredLoaded = true;
     private boolean mOutgoingCredLoaded = true;
+    // Autodiscover was run successfully
+    private boolean mAutodiscover = false;
     // This is accessed off-thread in AccountCheckSettingsFragment
     private volatile Policy mPolicy;
     // Cache incoming protocol and service info here
@@ -78,6 +81,7 @@ public class SetupDataFragment extends Fragment implements Parcelable {
         outState.putParcelable(SAVESTATE_CREDENTIAL, mCredentialResults);
         outState.putBoolean(SAVESTATE_INCOMING_LOADED, mIncomingCredLoaded);
         outState.putBoolean(SAVESTATE_OUTGOING_LOADED, mOutgoingCredLoaded);
+        outState.putBoolean(SAVESTATE_AUTODISCOVER, mAutodiscover);
         outState.putParcelable(SAVESTATE_POLICY, mPolicy);
         outState.putString(SAVESTATE_INCOMING_PROTOCOL, mIncomingProtocol);
         outState.putString(SAVESTATE_AM_PROTOCOL, mAmProtocol);
@@ -93,6 +97,7 @@ public class SetupDataFragment extends Fragment implements Parcelable {
             mCredentialResults = savedInstanceState.getParcelable(SAVESTATE_CREDENTIAL);
             mIncomingCredLoaded = savedInstanceState.getBoolean(SAVESTATE_INCOMING_LOADED);
             mOutgoingCredLoaded = savedInstanceState.getBoolean(SAVESTATE_OUTGOING_LOADED);
+            mAutodiscover = savedInstanceState.getBoolean(SAVESTATE_AUTODISCOVER);
             mPolicy = savedInstanceState.getParcelable(SAVESTATE_POLICY);
             mIncomingProtocol = savedInstanceState.getString(SAVESTATE_INCOMING_PROTOCOL);
             mAmProtocol = savedInstanceState.getString(SAVESTATE_AM_PROTOCOL);
@@ -127,6 +132,7 @@ public class SetupDataFragment extends Fragment implements Parcelable {
         mAccount.mEmailAddress = email;
         mIncomingCredLoaded = false;
         mOutgoingCredLoaded = false;
+        mAutodiscover = false;
     }
 
     public Bundle getCredentialResults() {
@@ -137,6 +143,7 @@ public class SetupDataFragment extends Fragment implements Parcelable {
         mCredentialResults = credentialResults;
         mIncomingCredLoaded = false;
         mOutgoingCredLoaded = false;
+        mAutodiscover = false;
     }
 
     public boolean isIncomingCredLoaded() {
@@ -153,6 +160,14 @@ public class SetupDataFragment extends Fragment implements Parcelable {
 
     public void setOutgoingCredLoaded(boolean outgoingCredLoaded) {
         mOutgoingCredLoaded = outgoingCredLoaded;
+    }
+
+    public boolean isAutodiscover() {
+        return mAutodiscover;
+    }
+
+    public void setAutodiscover(boolean autodiscover) {
+        mAutodiscover = autodiscover;
     }
 
     public synchronized Policy getPolicy() {
@@ -275,6 +290,7 @@ public class SetupDataFragment extends Fragment implements Parcelable {
             sb.append(":cred=");
             sb.append(mCredentialResults.toString());
         }
+        sb.append(":autodiscover=" + mAutodiscover);
         sb.append(":policy=");
         sb.append(mPolicy == null ? "none" : "exists");
         return sb.toString();

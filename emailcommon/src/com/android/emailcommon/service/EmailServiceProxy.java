@@ -52,6 +52,12 @@ public class EmailServiceProxy extends ServiceProxy implements IEmailService {
     private static final String TAG = "EmailServiceProxy";
 
     public static final String AUTO_DISCOVER_BUNDLE_ERROR_CODE = "autodiscover_error_code";
+    // This extra contains the autodiscovery error translated to a messaging exception
+    // error code. Our autodiscover service fills this code plus the above one, just because
+    // Gmail and others different clients still check the above one. This is only for our
+    // Email internal implementation
+    public static final String AUTO_DISCOVER_BUNDLE_MESSAGING_ERROR_CODE =
+            "autodiscover_messaging_error_code";
     public static final String AUTO_DISCOVER_BUNDLE_HOST_AUTH = "autodiscover_host_auth";
 
     public static final String VALIDATE_BUNDLE_RESULT_CODE = "validate_result_code";
