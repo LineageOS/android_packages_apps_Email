@@ -347,6 +347,8 @@ public class AccountCheckSettingsFragment extends Fragment {
                     if (isCancelled()) return null;
                     LogUtils.d(Logging.LOG_TAG, "Begin auto-discover for %s", mCheckEmail);
                     publishProgress(STATE_CHECK_AUTODISCOVER);
+
+                    mSetupData.setAutodiscover(false);
                     final Store store = Store.getInstance(mAccount, mContext);
                     final Bundle result = store.autoDiscover(mContext, mCheckEmail, mCheckPassword);
                     // Result will be one of:
@@ -357,20 +359,21 @@ public class AccountCheckSettingsFragment extends Fragment {
                     if (result == null) {
                         return new AutoDiscoverResults(false, null);
                     }
-                    int errorCode =
-                            result.getInt(EmailServiceProxy.AUTO_DISCOVER_BUNDLE_ERROR_CODE);
+                    int errorCode = result.getInt(
+                            EmailServiceProxy.AUTO_DISCOVER_BUNDLE_MESSAGING_ERROR_CODE);
                     if (errorCode == MessagingException.AUTODISCOVER_AUTHENTICATION_FAILED) {
                         return new AutoDiscoverResults(true, null);
-                    } else if (errorCode != MessagingException.NO_ERROR) {
+                    } else if (errorCode != MessagingException.AUTODISCOVER_AUTHENTICATION_RESULT) {
                         return new AutoDiscoverResults(false, null);
                     } else {
                         final HostAuthCompat hostAuthCompat =
                             result.getParcelable(EmailServiceProxy.AUTO_DISCOVER_BUNDLE_HOST_AUTH);
-                        HostAuth serverInfo = null;
+                        Account account = mSetupData.getAccount();
                         if (hostAuthCompat != null) {
-                            serverInfo = hostAuthCompat.toHostAuth();
+                            account.mHostAuthRecv = hostAuthCompat.toHostAuth();
                         }
-                        return new AutoDiscoverResults(false, serverInfo);
+                        mSetupData.setAutodiscover(true);
+                        return new AutoDiscoverResults(false, account.mHostAuthRecv);
                     }
                 }
 
