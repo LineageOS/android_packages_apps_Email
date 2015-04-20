@@ -52,6 +52,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.email.R;
+import com.android.email.provider.EmailProvider;
 import com.android.emailcommon.Logging;
 import com.android.emailcommon.provider.Account;
 import com.android.emailcommon.provider.EmailContent.AccountColumns;
@@ -61,6 +62,8 @@ import com.android.emailcommon.provider.Policy;
 import com.android.emailcommon.utility.EmailAsyncTask;
 import com.android.emailcommon.utility.Utility;
 import com.android.mail.preferences.FolderPreferences;
+import com.android.mail.preferences.FolderPreferences.NotificationLight;
+import com.android.mail.preferences.notifications.FolderNotificationLightPreference;
 import com.android.mail.providers.Folder;
 import com.android.mail.providers.UIProvider;
 import com.android.mail.ui.MailAsyncTaskLoader;
@@ -400,25 +403,30 @@ public class MailboxSettings extends PreferenceActivity {
         private static final String BUNDLE_NOTIF_ENABLED = "MailboxNotifySettings.enabled";
         private static final String BUNDLE_NOTIF_RINGTONE = "MailboxSettings.ringtone";
         private static final String BUNDLE_NOTIF_VIBRATE = "MailboxSettings.vibrate";
+        private static final String BUNDLE_NOTIF_LIGHTS = "MailboxSettings.lights";
 
         private static final String PREF_NOTIF_ENABLED_KEY = "notifications-enabled";
         private static final String PREF_NOTIF_RINGTONE_KEY = "notification-ringtone";
         private static final String PREF_NOTIF_VIBRATE_KEY = "notification-vibrate";
+        private static final String PREF_NOTIF_LIGHTS_KEY = "notification-lights";
 
         private static final int RINGTONE_REQUEST_CODE =
                 MailboxNotificationsFragment.class.hashCode();
 
         private FolderPreferences mPreferences;
+        private com.android.mail.providers.Account mUiAccount;
         private Account mAccount;
         private Mailbox mMailbox;
 
         private CheckBoxPreference mPrefNotifEnabled;
         private Preference mPrefNotifRingtone;
         private CheckBoxPreference mPrefNotifVibrate;
+        private FolderNotificationLightPreference mPrefNotifLights;
 
         private boolean mOldMailboxEnabled;
         private String mOldMailboxRingtone;
         private boolean mOldMailboxVibrate;
+        private String mOldMailboxLights;
 
         private Uri mRingtoneUri;
         private Ringtone mRingtone;
@@ -463,6 +471,13 @@ public class MailboxSettings extends PreferenceActivity {
                 getPreferenceScreen().removePreference(mPrefNotifVibrate);
                 mPrefNotifVibrate = null;
             }
+            mPrefNotifLights = (FolderNotificationLightPreference) findPreference(
+                    PREF_NOTIF_LIGHTS_KEY);
+            boolean isArgbNotifColorSupported = getResources().getBoolean(
+                    com.android.internal.R.bool.config_multiColorNotificationLed);
+            if (mPrefNotifLights != null && !isArgbNotifColorSupported) {
+                getPreferenceScreen().removePreference(mPrefNotifLights);
+            }
 
             if (savedInstanceState != null) {
                 mAccount = savedInstanceState.getParcelable(BUNDLE_ACCOUNT);
@@ -476,6 +491,10 @@ public class MailboxSettings extends PreferenceActivity {
                     mPrefNotifVibrate.setChecked(
                             savedInstanceState.getBoolean(BUNDLE_NOTIF_VIBRATE));
                 }
+                NotificationLight notifLight = NotificationLight.fromStringPref(
+                        savedInstanceState.getString(BUNDLE_NOTIF_LIGHTS, ""));
+                updateNotificationLight(notifLight);
+
                 onDataLoaded();
             } else {
                 // Make them disabled until we load data
@@ -521,6 +540,9 @@ public class MailboxSettings extends PreferenceActivity {
             if (mPrefNotifVibrate != null) {
                 mPrefNotifVibrate.setEnabled(enabled);
             }
+            if (mPrefNotifLights != null) {
+                mPrefNotifLights.setEnabled(enabled);
+            }
         }
 
         @Override
@@ -536,6 +558,7 @@ public class MailboxSettings extends PreferenceActivity {
             outState.putString(BUNDLE_NOTIF_RINGTONE, ringtoneUri);
             outState.putBoolean(PREF_NOTIF_VIBRATE_KEY, mPrefNotifVibrate != null
                     ? mPrefNotifVibrate.isChecked() : false);
+            outState.putString(BUNDLE_NOTIF_LIGHTS, getNotificationLightPref());
         }
 
         /**
@@ -553,6 +576,7 @@ public class MailboxSettings extends PreferenceActivity {
             mOldMailboxEnabled = mPreferences.areNotificationsEnabled();
             mOldMailboxRingtone = mPreferences.getNotificationRingtoneUri();
             mOldMailboxVibrate = mPreferences.isNotificationVibrateEnabled();
+            mOldMailboxLights = mPreferences.getNotificationLight().toStringPref();
         }
 
         /**
@@ -594,6 +618,34 @@ public class MailboxSettings extends PreferenceActivity {
             }
         }
 
+        private void updateNotificationLight(NotificationLight notificationLight) {
+            if (mPrefNotifLights == null) {
+                return;
+            }
+
+            if (notificationLight.mOn) {
+                mPrefNotifLights.setColor(notificationLight.mColor);
+                mPrefNotifLights.setOnOffValue(notificationLight.mTimeOn,
+                        notificationLight.mTimeOff);
+            } else {
+                int color = mUiAccount != null && mUiAccount.color != 0
+                        ? mUiAccount.color
+                        : FolderNotificationLightPreference.DEFAULT_COLOR;
+                mPrefNotifLights.setColor(color);
+                mPrefNotifLights.setOnOffValue(FolderNotificationLightPreference.DEFAULT_TIME,
+                        FolderNotificationLightPreference.DEFAULT_TIME);
+            }
+            mPrefNotifLights.setOn(notificationLight.mOn);
+        }
+
+        private String getNotificationLightPref() {
+            return mPrefNotifLights == null || !mPrefNotifLights.getOn()
+                    ? "" : TextUtils.join("|", new Integer[]{
+                    mPrefNotifLights.getColor(),
+                    mPrefNotifLights.getOnValue(),
+                    mPrefNotifLights.getOffValue()});
+        }
+
         /**
          * Save changes to the preferences folder backend.
          *
@@ -611,6 +663,7 @@ public class MailboxSettings extends PreferenceActivity {
             }
             boolean mailboxVibrate = mPrefNotifVibrate != null
                     ? mPrefNotifVibrate.isChecked() : false;
+            String mailboxLights = getNotificationLightPref();
             if (mailboxEnabled != mOldMailboxEnabled) {
                 mPreferences.setNotificationsEnabled(mailboxEnabled);
                 mOldMailboxEnabled = mailboxEnabled;
@@ -623,12 +676,17 @@ public class MailboxSettings extends PreferenceActivity {
                 mPreferences.setNotificationVibrateEnabled(mailboxVibrate);
                 mOldMailboxVibrate = mailboxVibrate;
             }
+            if (!mailboxLights.equals(mOldMailboxLights)) {
+                mPreferences.setNotificationLights(NotificationLight.fromStringPref(mailboxLights));
+                mOldMailboxLights = mailboxLights;
+            }
         }
 
         private static class MailboxLoader extends MailAsyncTaskLoader<Map<String, Object>> {
 
             public static final String RESULT_KEY_MAILBOX = "mailbox";
             public static final String RESULT_KEY_ACCOUNT = "account";
+            public static final String RESULT_KEY_UIACCOUNT = "uiAccount";
 
             private final long mMailboxId;
 
@@ -651,6 +709,19 @@ public class MailboxSettings extends PreferenceActivity {
                 }
                 result.put(RESULT_KEY_MAILBOX, mailbox);
                 result.put(RESULT_KEY_ACCOUNT, account);
+
+                // Recover the uiAccount
+                final Cursor uiAccountCursor = getContext().getContentResolver().query(
+                        EmailProvider.uiUri("uiaccount", account.getId()),
+                        UIProvider.ACCOUNTS_PROJECTION,
+                        null, null, null);
+
+                if (uiAccountCursor != null && uiAccountCursor.moveToFirst()) {
+                    final com.android.mail.providers.Account uiAccount =
+                        com.android.mail.providers.Account.builder().buildFrom(uiAccountCursor);
+                    result.put(RESULT_KEY_UIACCOUNT, uiAccount);
+                }
+
                 return result;
             }
 
@@ -685,6 +756,8 @@ public class MailboxSettings extends PreferenceActivity {
                     return;
                 }
 
+                mUiAccount = (com.android.mail.providers.Account)
+                        data.get(MailboxLoader.RESULT_KEY_UIACCOUNT);
                 mAccount = account;
                 mMailbox = mailbox;
                 mPreferences = new FolderPreferences(getActivity(), mAccount.mEmailAddress,
@@ -696,6 +769,8 @@ public class MailboxSettings extends PreferenceActivity {
                 if (mPrefNotifVibrate != null) {
                     mPrefNotifVibrate.setChecked(mPreferences.isNotificationVibrateEnabled());
                 }
+                updateNotificationLight(mPreferences.getNotificationLight());
+
                 onDataLoaded();
                 if (mMailbox.mType != Mailbox.TYPE_DRAFTS) {
                     enablePreferences(true);

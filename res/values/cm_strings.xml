@@ -28,4 +28,7 @@
 
     <!-- Name for preference entry which leads to the per-folder notification settings activity -->
     <string name="folder_notify_settings_pref_title">Folder notification settings</string>
+
+    <!-- On Settings screen, notification lights pop-up menu label -->
+    <string name="label_notification_lights_title">Lights</string>
 </resources>
