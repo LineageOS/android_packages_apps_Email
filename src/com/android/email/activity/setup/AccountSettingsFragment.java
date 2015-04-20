@@ -72,6 +72,8 @@ import com.android.emailcommon.provider.Mailbox;
 import com.android.emailcommon.provider.Policy;
 import com.android.mail.preferences.AccountPreferences;
 import com.android.mail.preferences.FolderPreferences;
+import com.android.mail.preferences.FolderPreferences.NotificationLight;
+import com.android.mail.preferences.notifications.FolderNotificationLightPreference;
 import com.android.mail.providers.Folder;
 import com.android.mail.providers.UIProvider;
 import com.android.mail.ui.MailAsyncTaskLoader;
@@ -150,6 +152,7 @@ public class AccountSettingsFragment extends MailAccountPrefsFragment
     private ListPreference mSyncSize;
     private CheckBoxPreference mInboxVibrate;
     private Preference mInboxRingtone;
+    private FolderNotificationLightPreference mInboxLights;
     private Preference mPerFolderNotification;
 
     private Context mContext;
@@ -438,6 +441,12 @@ public class AccountSettingsFragment extends MailAccountPrefsFragment
             final boolean vibrateSetting = (Boolean) newValue;
             mInboxVibrate.setChecked(vibrateSetting);
             mInboxFolderPreferences.setNotificationVibrateEnabled(vibrateSetting);
+            return true;
+        } else if (FolderPreferences.PreferenceKeys.NOTIFICATION_LIGHTS.equals(key)) {
+            final String LightsSettings = (String) newValue;
+            NotificationLight notificationLight = NotificationLight.fromStringPref(LightsSettings);
+            updateNotificationLight(notificationLight);
+            mInboxFolderPreferences.setNotificationLights(notificationLight);
             return true;
         } else if (FolderPreferences.PreferenceKeys.NOTIFICATION_RINGTONE.equals(key)) {
             return true;
@@ -925,6 +934,11 @@ public class AccountSettingsFragment extends MailAccountPrefsFragment
                 if (mInboxVibrate != null) {
                     notificationsCategory.removePreference(mInboxVibrate);
                 }
+                mInboxLights = (FolderNotificationLightPreference) findPreference(
+                        FolderPreferences.PreferenceKeys.NOTIFICATION_LIGHTS);
+                if (mInboxLights != null) {
+                    notificationsCategory.removePreference(mInboxLights);
+                }
 
                 notificationsCategory.setEnabled(true);
 
@@ -968,6 +982,19 @@ public class AccountSettingsFragment extends MailAccountPrefsFragment
                         // No vibrator present. Remove the preference altogether.
                         notificationsCategory.removePreference(mInboxVibrate);
                         mInboxVibrate = null;
+                    }
+                }
+
+                boolean isArgbNotifColorSupported = getResources().getBoolean(
+                        com.android.internal.R.bool.config_multiColorNotificationLed);
+                mInboxLights = (FolderNotificationLightPreference) findPreference(
+                        FolderPreferences.PreferenceKeys.NOTIFICATION_LIGHTS);
+                if (mInboxLights != null) {
+                    if (isArgbNotifColorSupported) {
+                        updateNotificationLight(mInboxFolderPreferences.getNotificationLight());
+                        mInboxLights.setOnPreferenceChangeListener(this);
+                    } else {
+                        notificationsCategory.removePreference(mInboxLights);
                     }
                 }
             }
@@ -1186,5 +1213,20 @@ public class AccountSettingsFragment extends MailAccountPrefsFragment
             }
         };
         task.execute();
+    }
+
+    private void updateNotificationLight(NotificationLight notificationLight) {
+        if (notificationLight.mOn) {
+            mInboxLights.setColor(notificationLight.mColor);
+            mInboxLights.setOnOffValue(notificationLight.mTimeOn, notificationLight.mTimeOff);
+        } else {
+            int color = mUiAccount != null && mUiAccount.color != 0
+                    ? mUiAccount.color
+                    : FolderNotificationLightPreference.DEFAULT_COLOR;
+            mInboxLights.setColor(color);
+            mInboxLights.setOnOffValue(FolderNotificationLightPreference.DEFAULT_TIME,
+                    FolderNotificationLightPreference.DEFAULT_TIME);
+        }
+        mInboxLights.setOn(notificationLight.mOn);
     }
 }
