@@ -33,4 +33,10 @@
         android:defaultValue="false"
         android:title="@string/label_notification_vibrate_title" />
 
+    <com.android.mail.preferences.notifications.FolderNotificationLightPreference
+        android:key="notification-lights"
+        android:dependency="notifications-enabled"
+        android:defaultValue=""
+        android:title="@string/label_notification_lights_title" />
+
 </PreferenceScreen>
