@@ -34,6 +34,24 @@
       "revId": "3d9c5fcf08a6bad1041b309c8844599c244385c7",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa7ab95a_50b0eef4",
+        "filename": "res/xml/mailbox_notifications_preferences.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 3134
+      },
+      "writtenOn": "2015-04-21T23:00:03Z",
+      "side": 1,
+      "message": "Ok. I checked config_multiColorNotificationLed and yes we should respect this value. Will change it. Thx",
+      "parentUuid": "fa7ab95a_b0c85a76",
+      "revId": "3d9c5fcf08a6bad1041b309c8844599c244385c7",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
