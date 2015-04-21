@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa7ab95a_70ced284",
+        "filename": "res/xml/mailbox_notifications_preferences.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-04-21T21:51:31Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be hidden if com.android.internal.R.bool.config_multiColorNotificationLed is false?\n\nAlso, I think adding a summary showing the current value (at least default vs. custom state, maybe also pulse speed etc.) would be good.",
+      "revId": "3d9c5fcf08a6bad1041b309c8844599c244385c7",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
