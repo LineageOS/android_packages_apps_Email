@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa7ab95a_b32ce7ac",
+        "filename": "src/com/android/email/activity/setup/AccountSettingsFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1132,
+      "author": {
+        "id": 848
+      },
+      "writtenOn": "2015-04-21T10:43:17Z",
+      "side": 1,
+      "message": "Wording here seems unnatural (I realize its a comment).\n\nMaybe: \"Finish after account is deleted\"",
+      "revId": "8b6129a164a33ae62291e676f26342bccc2214ca",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
