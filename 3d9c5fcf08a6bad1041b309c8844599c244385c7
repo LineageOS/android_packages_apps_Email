@@ -16,6 +16,24 @@
       "revId": "3d9c5fcf08a6bad1041b309c8844599c244385c7",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa7ab95a_b0c85a76",
+        "filename": "res/xml/mailbox_notifications_preferences.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 3134
+      },
+      "writtenOn": "2015-04-21T22:30:05Z",
+      "side": 1,
+      "message": "Danny, i will check the config_multiColorNotificationLed (I don\u0027t know what actually that overlay is used for). I want to patch  the framework to allow apps to override the our global led settings, because actually if i defined a led setting for the mail, it overrides this folders lights settings. I think we must respect the flag_show_lights flag.\n\nAbout the summary comment, it is shown (in the same way than in settings), but only if the ligths settings are enabled for the folder (the dialog have a check in this implementation, to allow enable/disable default lights). Let me know if this made sense for you.",
+      "parentUuid": "fa7ab95a_70ced284",
+      "revId": "3d9c5fcf08a6bad1041b309c8844599c244385c7",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
