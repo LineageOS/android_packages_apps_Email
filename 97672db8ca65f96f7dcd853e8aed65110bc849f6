@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa7ab95a_705ed246",
+        "filename": "emailcommon/src/com/android/emailcommon/service/EmailServiceProxy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2015-04-22T06:36:05Z",
+      "side": 1,
+      "message": "Typo, \"Out\" instead of \"Our\"",
+      "revId": "97672db8ca65f96f7dcd853e8aed65110bc849f6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
