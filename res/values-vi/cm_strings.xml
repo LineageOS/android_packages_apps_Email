@@ -41,5 +41,6 @@
   <string name="category_label_attachment_settings">Cài đặt tập tin đính kèm</string>
   <string name="general_preference_add_attachment_label">Thêm loại tệp khác</string>
   <string name="general_preference_select_recipients_label">Chọn người nhận từ liên lạc</string>
+  <string name="general_preference_confirm_forward_label">Xác nhận trước khi chuyển tiếp</string>
   <string name="general_preference_confirm_forward_summary">Chọn để sử dụng tập tin đính kèm từ máy chủ mail, hoặc tải về thiết bị trước khi chuyển tiếp</string>
 </resources>
