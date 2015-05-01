@@ -52,6 +52,8 @@ import com.android.emailcommon.utility.Utility;
 import com.android.mail.utils.LogUtils;
 import com.google.common.annotations.VisibleForTesting;
 
+import static com.android.emailcommon.Logging.LOG_TAG;
+
 import org.apache.commons.io.IOUtils;
 
 import java.io.File;
@@ -60,6 +62,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.SocketTimeoutException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -68,12 +71,42 @@ import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.TimeZone;
 
-class ImapFolder extends Folder {
+public class ImapFolder extends Folder {
     private final static Flag[] PERMANENT_FLAGS =
         { Flag.DELETED, Flag.SEEN, Flag.FLAGGED, Flag.ANSWERED };
     private static final int COPY_BUFFER_SIZE = 16*1024;
+
+    public interface IdleCallback {
+        /**
+         * Invoked when the connection enters idle mode
+         */
+        public void onIdled();
+        /**
+         * Invoked when idle state is left
+         */
+        public void onIdlingDone();
+        /**
+         * Invoked when a new change is communicated by the server.
+         *
+         * @param needSync whether a sync is required
+         * @param fetchMessages list of message UIDs to update
+         */
+        public void onNewServerChange(boolean needSync, List<String> fetchMessages);
+        /**
+         * Connection to socket timed out. The idle connection needs
+         * to be considered broken when this is called.
+         */
+        public void onTimeout();
+        /**
+         * Something went wrong while waiting for push data.
+         *
+         * @param ex the exception detected
+         */
+        public void onException(MessagingException ex);
+    }
 
     private final ImapStore mStore;
     private final String mName;
@@ -85,6 +118,22 @@ class ImapFolder extends Folder {
     Mailbox mMailbox;
     /** A set of hashes that can be used to track dirtiness */
     Object mHash[];
+
+    private final Object mIdleSync = new Object();
+    private boolean mIdling;
+    private boolean mIdlingCancelled;
+    private boolean mDiscardIdlingConnection;
+    private Thread mIdleReader;
+
+    private static final String[] IDLE_STATUSES = {
+        ImapConstants.UIDVALIDITY, ImapConstants.UIDNEXT
+    };
+    private Map<String, String> mIdleStatuses = new HashMap<>();
+
+    private static class ImapIdleChanges {
+        public boolean mRequiredSync = false;
+        public ArrayList<String> mMessageToFetch = new ArrayList<>();
+    }
 
     /*package*/ ImapFolder(ImapStore store, String name) {
         mStore = store;
@@ -132,6 +181,7 @@ class ImapFolder extends Folder {
             // * OK [UIDNEXT 57576] Predicted next UID
             // 2 OK [READ-WRITE] Select completed.
             try {
+                mConnection.setTransportTag(mName + "-" + hashCode());
                 doSelect();
             } catch (IOException ioe) {
                 throw ioExceptionHandler(mConnection, ioe);
@@ -174,6 +224,196 @@ class ImapFolder extends Folder {
     @Override
     public String getName() {
         return mName;
+    }
+
+    public void startIdling(final IdleCallback callback) throws MessagingException {
+        LogUtils.d(LOG_TAG, "startIdling on folder " + mName);
+        checkOpen();
+        synchronized (mIdleSync) {
+            if (mIdling) {
+                throw new MessagingException("Folder " + mName + " is in IDLE state already.");
+            }
+            mIdling = true;
+            mIdlingCancelled = false;
+            mDiscardIdlingConnection = false;
+        }
+
+        final ImapConnection connection;
+        synchronized (this) {
+            connection = mConnection;
+        }
+
+        // Run idle in background
+        mIdleReader = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    // Get some info before start idling
+                    mIdleStatuses = getStatuses(IDLE_STATUSES);
+
+                    // We setup the max time specified in RFC 2177 to re-issue
+                    // an idle request to the server
+                    connection.setReadTimeout(ImapConnection.PING_IDLE_TIMEOUT);
+                    connection.destroyResponses();
+
+                    // Enter now in idle status (we hold a connection with
+                    // the server to listen for new changes)
+                    synchronized (mIdleSync) {
+                        if (mIdlingCancelled) {
+                            mIdling = false;
+                            return;
+                        }
+                    }
+
+                    if (callback != null) {
+                        callback.onIdled();
+                    }
+                    List<ImapResponse> responses = connection.executeIdleCommand();
+
+                    // Check whether IDLE was successful (first response is an idling response)
+                    if (responses.isEmpty() || (mIdling && !responses.get(0).isIdling())) {
+                        if (callback != null) {
+                            callback.onException(new MessagingException(
+                                            MessagingException.SERVER_ERROR, "Cannot idle"));
+                        }
+                        synchronized (mIdleSync) {
+                            mIdling = false;
+                        }
+                        return;
+                    }
+
+                    // Exit idle if we are still in that state
+                    boolean cancelled = false;
+                    boolean discardConnection = false;
+                    synchronized (mIdleSync) {
+                        if (!mIdlingCancelled) {
+                            try {
+                                connection.setReadTimeout(ImapConnection.DONE_TIMEOUT);
+                                connection.executeSimpleCommand(ImapConstants.DONE);
+                            } catch (MessagingException me) {
+                                // Ignore this exception caused by messages in the queue
+                            }
+                        }
+
+                        cancelled = mIdlingCancelled;
+                        discardConnection = mDiscardIdlingConnection;
+                    }
+
+                    if (!cancelled && callback != null) {
+                        // Notify that new changes exists in the server. Remove
+                        // the idling status response since is only relevant for the protocol
+                        // We have to enter in idle
+                        ImapIdleChanges changes = extractImapChanges(
+                                new ArrayList<Object>(responses.subList(1, responses.size())));
+                        callback.onNewServerChange(changes.mRequiredSync, changes.mMessageToFetch);
+                    }
+
+                    if (discardConnection) {
+                        // Return the connection to the pool
+                        cleanupConnection(connection, false);
+                    }
+
+                    synchronized (mIdleSync) {
+                        mIdling = false;
+                    }
+
+                    if (callback != null) {
+                        callback.onIdlingDone();
+                    }
+                } catch (MessagingException me) {
+                    cleanupConnection(connection, false);
+                    synchronized (mIdleSync) {
+                        mIdling = false;
+                    }
+                    if (callback != null) {
+                        callback.onException(me);
+                    }
+
+                } catch (SocketTimeoutException ste) {
+                    cleanupConnection(connection, false);
+                    synchronized (mIdleSync) {
+                        mIdling = false;
+                    }
+                    if (callback != null) {
+                        callback.onTimeout();
+                    }
+
+                } catch (IOException ioe) {
+                    synchronized (mIdleSync) {
+                        mIdling = false;
+                    }
+                    if (callback != null) {
+                        callback.onException(ioExceptionHandler(connection, ioe));
+                    } else {
+                        cleanupConnection(connection, false);
+                    }
+
+                }
+            }
+        };
+        mIdleReader.setName("IdleReader " + mStore.getAccount().mId + ":" + mName);
+        mIdleReader.start();
+    }
+
+    public void stopIdling(boolean discardConnection) throws MessagingException {
+        LogUtils.d(LOG_TAG, "stopIdling on folder " + mName);
+        if (!isOpen()) {
+            throw new MessagingException("Folder " + mName + " is not open.");
+        }
+
+        final ImapConnection connection;
+        synchronized (this) {
+            connection = mConnection;
+        }
+
+        synchronized (mIdleSync) {
+            if (!mIdling) {
+                throw new MessagingException("Folder " + mName + " isn't in IDLE state.");
+            }
+            try {
+                mIdlingCancelled = true;
+                mDiscardIdlingConnection = discardConnection;
+                // Send the DONE command to make the idle reader thread exit. Shorten
+                // the read timeout for doing that in order to not wait indefinitely,
+                // the server should respond to the DONE command quickly anyway
+                connection.sendCommand(ImapConstants.DONE, false);
+
+            } catch (MessagingException me) {
+                // Treat IOERROR messaging exception as IOException
+                if (me.getExceptionType() == MessagingException.IOERROR) {
+                    cleanupConnection(connection, false);
+                    throw me;
+                }
+
+            } catch (IOException ioe) {
+                throw ioExceptionHandler(mConnection, ioe);
+
+            }
+        }
+
+        // Try to join the thread, but make sure to not wait indefinitely. This should
+        // be the normal case (server sends the response to DONE quickly)
+        try {
+            mIdleReader.join(1000, 0);
+        } catch (InterruptedException e) {
+            // ignore
+        }
+        // In case the server didn't respond quickly, the connection is likely broken;
+        // close it (which definitely will cause the thread to return) and finally join the thread
+        if (mIdleReader.isAlive()) {
+            cleanupConnection(connection, true);
+            try {
+                mIdleReader.join();
+            } catch (InterruptedException e) {
+                // ignore
+            }
+        }
+    }
+
+    public boolean isIdling() {
+        synchronized (mIdleSync) {
+            return mIdling;
+        }
     }
 
     @Override
@@ -346,7 +586,9 @@ class ImapFolder extends Folder {
 
     @Override
     public int getMessageCount() {
-        return mMessageCount;
+        synchronized (this) {
+            return mMessageCount;
+        }
     }
 
     @Override
@@ -371,6 +613,73 @@ class ImapFolder extends Folder {
         } finally {
             destroyResponses();
         }
+    }
+
+    public Map<String, String> getStatuses(String[] statuses) throws MessagingException {
+        checkOpen();
+        Map<String, String> allReturnStatuses = new HashMap<>();
+        try {
+            String flags = TextUtils.join(" ", statuses);
+            final List<ImapResponse> responses = mConnection.executeSimpleCommand(
+                    String.format(Locale.US,
+                            ImapConstants.STATUS + " \"%s\" (%s)",
+                            ImapStore.encodeFolderName(mName, mStore.mPathPrefix), flags));
+            // S: * STATUS mboxname (MESSAGES 231 UIDNEXT 44292)
+            for (ImapResponse response : responses) {
+                if (response.isDataResponse(0, ImapConstants.STATUS)) {
+                    ImapList list = response.getListOrEmpty(2);
+                    int count = list.size();
+                    for (int i = 0; i < count; i += 2) {
+                        String key = list.getStringOrEmpty(i).getString();
+                        String value = list.getStringOrEmpty(i + 1).getString();
+                        allReturnStatuses.put(key, value);
+                    }
+                }
+            }
+        } catch (IOException ioe) {
+            throw ioExceptionHandler(mConnection, ioe);
+        } finally {
+            destroyResponses();
+        }
+        return allReturnStatuses;
+    }
+
+    private void cleanupConnection(ImapConnection connection, boolean close) {
+        if (close) {
+            connection.close();
+        }
+        synchronized (this) {
+            if (connection == mConnection) {
+                if (close) {
+                    // To prevent close() from returning the connection to the pool
+                    mConnection = null;
+                }
+                close(false);
+            }
+        }
+    }
+
+    private List<String> getNewMessagesFromUid(String uid) throws MessagingException {
+        checkOpen();
+        List<String> nextMSNs = new ArrayList<>();
+        try {
+            final List<ImapResponse> responses = mConnection.executeSimpleCommand(
+                    ImapConstants.SEARCH + " " + ImapConstants.UID + " " + uid + ":*");
+            // S: * SEARCH 1 2 3
+            for (ImapResponse response : responses) {
+                if (response.isDataResponse(0, ImapConstants.SEARCH)) {
+                    int count = response.size();
+                    for (int i = 1; i < count; i++) {
+                        nextMSNs.add(response.getStringOrEmpty(i).getString());
+                    }
+                }
+            }
+        } catch (IOException ioe) {
+            throw ioExceptionHandler(mConnection, ioe);
+        } finally {
+            destroyResponses();
+        }
+        return nextMSNs;
     }
 
     @Override
@@ -847,7 +1156,9 @@ class ImapFolder extends Folder {
      */
     private void handleUntaggedResponse(ImapResponse response) {
         if (response.isDataResponse(1, ImapConstants.EXISTS)) {
-            mMessageCount = response.getStringOrEmpty(0).getNumberOrZero();
+            synchronized (this) {
+                mMessageCount = response.getStringOrEmpty(0).getNumberOrZero();
+            }
         }
     }
 
@@ -1266,14 +1577,153 @@ class ImapFolder extends Folder {
 
     private MessagingException ioExceptionHandler(ImapConnection connection, IOException ioe) {
         if (DebugUtils.DEBUG) {
-            LogUtils.d(Logging.LOG_TAG, "IO Exception detected: ", ioe);
+            LogUtils.d(Logging.LOG_TAG, ioe, "IO Exception detected: ");
         }
-        connection.close();
-        if (connection == mConnection) {
-            mConnection = null; // To prevent close() from returning the connection to the pool.
-            close(false);
+        if (connection != null) {
+            cleanupConnection(connection, true);
         }
         return new MessagingException(MessagingException.IOERROR, "IO Error", ioe);
+    }
+
+    private ImapIdleChanges extractImapChanges(List<Object> changes) throws MessagingException {
+        // Process the changes and fill the idle changes structure.
+        // Basically we should look for the next commands in this method:
+        //
+        //    OK DONE
+        //        No more changes
+        //    n EXISTS
+        //        Indicates the number of messages in the mailbox => handle like
+        //        RECENT if the number increased
+        //    n EXPUNGE
+        //        Indicates a message was completely deleted => a full sync is required
+        //    n RECENT
+        //        New messages waiting in the server => use UIDNEXT to search for the new messages.
+        //        If isn't possible to retrieve the new UID messages, then a full sync is required
+        //    n FETCH (UID X FLAGS (...))
+        //        a message has changed and requires to fetch only X message
+        //        (something change on that item). If UID is not present, a conversion
+        //        from MSN to UID is required
+
+        final ImapIdleChanges imapIdleChanges = new ImapIdleChanges();
+
+        int count = changes.size();
+        if (Logging.LOGD) {
+            for (int i = 0; i < count; i++) {
+                ImapResponse change = (ImapResponse) changes.get(i);
+                if (Logging.LOGD) {
+                    LogUtils.d(Logging.LOG_TAG, "Received: " + change.toString());
+                }
+            }
+        }
+
+        // We can't ask to the server, because the responses will be destroyed. We need
+        // to compute and fetch any related after we have all the responses processed
+        boolean hasNewMessages = false;
+        List<String> msns = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            ImapResponse change = (ImapResponse) changes.get(i);
+            if (change.isOk() || change.isNo() || change.isBad()) {
+                // No more processing. DONE included
+                break;
+            }
+            try {
+                ImapElement element = change.getElementOrNone(1);
+                if (element.equals(ImapElement.NONE)) {
+                    continue;
+                }
+                if (!element.isString()) {
+                    continue;
+                }
+
+                ImapString op = (ImapString) element;
+                if (op.is(ImapConstants.DONE)) {
+                    break;
+                } else if (op.is(ImapConstants.EXISTS)) {
+                    int newMessageCount = change.getStringOrEmpty(0).getNumberOrZero();
+                    int oldMessageCount;
+                    synchronized (this) {
+                        oldMessageCount = mMessageCount;
+                        mMessageCount = newMessageCount;
+                    }
+                    if (Logging.LOGD) {
+                        LogUtils.d(LOG_TAG, "Got EXISTS idle response, message count now "
+                                + newMessageCount + ", was " + oldMessageCount);
+                    }
+                    if (newMessageCount > oldMessageCount) {
+                        hasNewMessages = true;
+                    }
+                } else if (op.is(ImapConstants.EXPUNGE)) {
+                    imapIdleChanges.mRequiredSync = true;
+                    synchronized (this) {
+                        mMessageCount--;
+                    }
+                } else if (op.is(ImapConstants.RECENT)) {
+                    hasNewMessages = true;
+                } else if (op.is(ImapConstants.FETCH)
+                        && change.getElementOrNone(2).isList()) {
+                    ImapList messageFlags = (ImapList) change.getElementOrNone(2);
+                    String uid = ((ImapString) messageFlags.getKeyedStringOrEmpty(
+                            ImapConstants.UID, true)).getString();
+                    if (!TextUtils.isEmpty(uid) &&
+                            !imapIdleChanges.mMessageToFetch.contains(uid)) {
+                        imapIdleChanges.mMessageToFetch.add(uid);
+                    } else {
+                        msns.add(change.getStringOrEmpty(0).getString());
+                    }
+                } else {
+                    if (Logging.LOGD) {
+                        LogUtils.w(LOG_TAG, "Unrecognized imap change (" + change
+                                + ") for mailbox " + mName);
+                    }
+                }
+
+            } catch (Exception ex) {
+                if (Logging.LOGD) {
+                    LogUtils.e(LOG_TAG, ex, "Failure processing imap change (" + change
+                            + ") for mailbox " + mName);
+                }
+            }
+        }
+
+        // Check whether UIDVALIDITY changed - if yes, a full sync request is required
+        // NOTE: This needs to happen after parsing all responses; otherwise
+        //       getStatuses will destroy the response
+        Map<String, String> statuses = getStatuses(new String[] { ImapConstants.UIDVALIDITY });
+        String oldUidValidity = mIdleStatuses.get(ImapConstants.UIDVALIDITY);
+        String newUidValidity = statuses.get(ImapConstants.UIDVALIDITY);
+        if (!TextUtils.equals(oldUidValidity, newUidValidity)) {
+            imapIdleChanges.mMessageToFetch.clear();
+            imapIdleChanges.mRequiredSync = true;
+            return imapIdleChanges;
+        }
+
+        // Recover the UIDs of new messages in case we don't do a full sync anyway
+        if (!imapIdleChanges.mRequiredSync) {
+            try {
+                // Retrieve new message UIDs
+                String uidNext = mIdleStatuses.get(ImapConstants.UIDNEXT);
+                if (hasNewMessages && !TextUtils.isEmpty(uidNext)) {
+                    msns.addAll(getNewMessagesFromUid(uidNext));
+                }
+
+                // Transform MSNs to UIDs
+                for (String msn : msns) {
+                    String[] uids = searchForUids(String.format(Locale.US, "%s:%s", msn, msn));
+                    if (uids.length > 0) {
+                        imapIdleChanges.mMessageToFetch.add(uids[0]);
+                    } else {
+                        throw new MessagingException("Server could not resolve MSN " + msn);
+                    }
+                }
+            } catch (MessagingException ex) {
+                // Server doesn't support UID. We have to do a full sync (since
+                // we don't know what message changed)
+                imapIdleChanges.mMessageToFetch.clear();
+                imapIdleChanges.mRequiredSync = true;
+            }
+        }
+
+        return imapIdleChanges;
     }
 
     @Override
