@@ -165,6 +165,13 @@ public class EmailConnectivityManager extends BroadcastReceiver {
         return info.getType();
     }
 
+    static public boolean isConnected(Context context) {
+        ConnectivityManager cm =
+                (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = cm.getActiveNetworkInfo();
+        return info != null && info.isConnected();
+    }
+
     public void waitForConnectivity() {
         // If we're unregistered, throw an exception
         if (!mRegistered) {
