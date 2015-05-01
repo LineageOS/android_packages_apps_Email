@@ -69,6 +69,7 @@ import com.android.emailcommon.provider.EmailContent;
 import com.android.emailcommon.provider.EmailContent.AccountColumns;
 import com.android.emailcommon.provider.Mailbox;
 import com.android.emailcommon.provider.Policy;
+import com.android.emailcommon.service.EmailServiceProxy;
 import com.android.mail.preferences.AccountPreferences;
 import com.android.mail.preferences.FolderPreferences;
 import com.android.mail.preferences.FolderPreferences.NotificationLight;
@@ -84,7 +85,9 @@ import com.android.mail.utils.LogUtils;
 import com.android.mail.utils.NotificationUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -243,10 +246,7 @@ public class AccountSettingsFragment extends MailAccountPrefsFragment
             final CharSequence [] syncIntervals =
                     savedInstanceState.getCharSequenceArray(SAVESTATE_SYNC_INTERVALS);
             mCheckFrequency = (ListPreference) findPreference(PREFERENCE_FREQUENCY);
-            if (mCheckFrequency != null) {
-                mCheckFrequency.setEntries(syncIntervalStrings);
-                mCheckFrequency.setEntryValues(syncIntervals);
-            }
+            fillCheckFrecuency(syncIntervalStrings, syncIntervals);
         }
     }
 
@@ -382,16 +382,15 @@ public class AccountSettingsFragment extends MailAccountPrefsFragment
                 final android.accounts.Account androidAcct = new android.accounts.Account(
                         mAccount.mEmailAddress, mServiceInfo.accountType);
                 if (Integer.parseInt(summary) == Account.CHECK_INTERVAL_NEVER) {
-                    // Disable syncing from the account manager. Leave the current sync frequency
-                    // in the database.
+                    // Disable syncing from the account manager.
                     ContentResolver.setSyncAutomatically(androidAcct, EmailContent.AUTHORITY,
                             false);
                 } else {
                     // Enable syncing from the account manager.
                     ContentResolver.setSyncAutomatically(androidAcct, EmailContent.AUTHORITY,
                             true);
-                    cv.put(AccountColumns.SYNC_INTERVAL, Integer.parseInt(summary));
                 }
+                cv.put(AccountColumns.SYNC_INTERVAL, Integer.parseInt(summary));
             }
         } else if (key.equals(PREFERENCE_SYNC_WINDOW)) {
             final String summary = newValue.toString();
@@ -749,8 +748,7 @@ public class AccountSettingsFragment extends MailAccountPrefsFragment
                 R.string.preferences_signature_summary_not_set);
 
         mCheckFrequency = (ListPreference) findPreference(PREFERENCE_FREQUENCY);
-        mCheckFrequency.setEntries(mServiceInfo.syncIntervalStrings);
-        mCheckFrequency.setEntryValues(mServiceInfo.syncIntervals);
+        fillCheckFrecuency(mServiceInfo.syncIntervalStrings, mServiceInfo.syncIntervals);
         if (mServiceInfo.syncContacts || mServiceInfo.syncCalendar) {
             // This account allows syncing of contacts and/or calendar, so we will always have
             // separate preferences to enable or disable syncing of email, contacts, and calendar.
@@ -1181,5 +1179,29 @@ public class AccountSettingsFragment extends MailAccountPrefsFragment
                     FolderNotificationLightPreference.DEFAULT_TIME);
         }
         mInboxLights.setOn(notificationLight.mOn);
+    }
+
+    private void fillCheckFrecuency(CharSequence[] labels, CharSequence[] values) {
+        if (mCheckFrequency == null) {
+            return;
+        }
+
+        // Check push capability prior to include as an option
+        if (mAccount != null) {
+            boolean hasPushCapability = mAccount.hasCapability(EmailServiceProxy.CAPABILITY_PUSH);
+            List<CharSequence> valuesList = new ArrayList<>(Arrays.asList(values));
+            int checkIntervalPushPos = valuesList.indexOf(
+                    String.valueOf(Account.CHECK_INTERVAL_PUSH));
+            if (!hasPushCapability && checkIntervalPushPos != -1) {
+                List<CharSequence> labelsList = new ArrayList<>(Arrays.asList(labels));
+                labelsList.remove(checkIntervalPushPos);
+                valuesList.remove(checkIntervalPushPos);
+                labels = labelsList.toArray(new CharSequence[labelsList.size()]);
+                values = valuesList.toArray(new CharSequence[valuesList.size()]);
+            }
+        }
+        mCheckFrequency.setEntries(labels);
+        mCheckFrequency.setEntryValues(values);
+        mCheckFrequency.setDefaultValue(values);
     }
 }

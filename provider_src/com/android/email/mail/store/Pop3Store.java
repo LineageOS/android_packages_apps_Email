@@ -186,6 +186,10 @@ public class Pop3Store extends Store {
                         ioe.getMessage());
             }
             bundle.putInt(EmailServiceProxy.VALIDATE_BUNDLE_RESULT_CODE, result);
+
+            // No special capabilities
+            bundle.putInt(EmailServiceProxy.SETTINGS_BUNDLE_CAPABILITIES, 0);
+
             return bundle;
         }
 

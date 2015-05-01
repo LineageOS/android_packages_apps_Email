@@ -417,6 +417,10 @@ public class AccountCheckSettingsFragment extends Fragment {
                                 EmailServiceProxy.VALIDATE_BUNDLE_ERROR_MESSAGE);
                         return new MessagingException(resultCode, errorMessage);
                     }
+
+                    // Save account capabilities
+                    mAccount.mCapabilities = bundle.getInt(
+                            EmailServiceProxy.SETTINGS_BUNDLE_CAPABILITIES, 0);
                 }
 
                 final EmailServiceInfo info;
