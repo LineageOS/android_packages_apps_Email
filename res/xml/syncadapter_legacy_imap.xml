@@ -23,5 +23,6 @@
 <sync-adapter xmlns:android="http://schemas.android.com/apk/res/android"
     android:contentAuthority="@string/authority_email_provider"
     android:accountType="@string/account_manager_type_legacy_imap"
+    android:allowParallelSyncs="true"
     android:supportsUploading="true"
 />

@@ -66,6 +66,8 @@ public class ImapResponseParser {
      */
     private final ArrayList<ImapResponse> mResponsesToDestroy = new ArrayList<ImapResponse>();
 
+    private boolean mIdling;
+
     /**
      * Exception thrown when we receive BYE.  It derives from IOException, so it'll be treated
      * in the same way EOF does.
@@ -171,7 +173,12 @@ public class ImapResponseParser {
             throw e;
         } catch (IOException e) {
             // Network error, or received an unexpected char.
-            onParseError(e);
+            // If we are idling don't parse the error, this will be a common cause, just let
+            // handle the exception in an upper class
+            if (mIdling) {
+                onParseError(e);
+                mIdling = false;
+            }
             throw e;
         }
 
@@ -268,9 +275,14 @@ public class ImapResponseParser {
                 // Response has successfully been built.  Let's return it.
                 responseToReturn = responseToDestroy;
                 responseToDestroy = null;
+
+                mIdling = false;
+                if (responseToReturn.isIdling()) {
+                    mIdling = true;
+                }
             } else {
                 // Status response or response data
-                final String tag;
+                String tag;
                 if (ch == '*') {
                     tag = null;
                     readByte(); // skip *
@@ -279,6 +291,7 @@ public class ImapResponseParser {
                     tag = readUntil(' ');
                 }
                 responseToDestroy = new ImapResponse(tag, false);
+                mIdling = false;
 
                 final ImapString firstString = parseBareString();
                 responseToDestroy.add(firstString);
