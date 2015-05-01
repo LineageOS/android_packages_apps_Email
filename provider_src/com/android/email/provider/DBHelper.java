@@ -56,6 +56,7 @@ import com.android.emailcommon.provider.MessageMove;
 import com.android.emailcommon.provider.MessageStateChange;
 import com.android.emailcommon.provider.Policy;
 import com.android.emailcommon.provider.QuickResponse;
+import com.android.emailcommon.service.EmailServiceProxy;
 import com.android.emailcommon.service.LegacyPolicySet;
 import com.android.emailcommon.service.SyncWindow;
 import com.android.mail.providers.UIProvider;
@@ -1521,7 +1522,6 @@ public final class DBHelper {
                             + " add column " + AccountColumns.CAPABILITIES
                             + " integer" + " default 0;");
 
-/* From old email app. We don't have EmailServiceProxy, so leave the default.
                     // Update all accounts with the appropriate capabilities
                     Cursor c = db.rawQuery("select " + Account.TABLE_NAME + "."
                             + AccountColumns._ID + ", " + HostAuth.TABLE_NAME + "."
@@ -1554,7 +1554,6 @@ public final class DBHelper {
                             c.close();
                         }
                     }
-*/
                 } catch (final SQLException e) {
                     // Shouldn't be needed unless we're debugging and interrupt the process
                     LogUtils.w(TAG, "Exception upgrading EmailProvider.db from v129 to v130", e);
@@ -1563,20 +1562,12 @@ public final class DBHelper {
 
             if (oldVersion <= 131) {
                 try {
-/* From old email app. We don't have SyncSize so hard-code the defaults
                     db.execSQL("alter table " + Account.TABLE_NAME
                             + " add column " + AccountColumns.SET_SYNC_SIZE_ENABLED + " integer"
                             + " default " + SyncSize.ENABLED_DEFAULT_VALUE + ";");
                     db.execSQL("alter table " + Account.TABLE_NAME
                             + " add column " + AccountColumns.SYNC_SIZE + " integer"
                             + " default " + SyncSize.SYNC_SIZE_DEFAULT_VALUE + ";");
-*/
-                    db.execSQL("alter table " + Account.TABLE_NAME
-                            + " add column " + AccountColumns.SET_SYNC_SIZE_ENABLED + " integer"
-                            + " default " + 1 + ";");
-                    db.execSQL("alter table " + Account.TABLE_NAME
-                            + " add column " + AccountColumns.SYNC_SIZE + " integer"
-                            + " default " + 204800 + ";");
                 } catch (SQLException e) {
                     // Shouldn't be needed unless we're debugging and interrupt the process
                     LogUtils.w(TAG, "Exception upgrading EmailProvider.db from 130 to 131", e);
