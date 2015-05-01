@@ -191,6 +191,14 @@ public class MailTransport {
         }
     }
 
+    public int getReadTimeout() throws IOException {
+        return mSocket.getSoTimeout();
+    }
+
+    public void setReadTimeout(int timeout) throws IOException {
+        mSocket.setSoTimeout(timeout);
+    }
+
     /**
      * Lightweight version of SSLCertificateSocketFactory.verifyHostname, which provides this
      * service but is not in the public API.

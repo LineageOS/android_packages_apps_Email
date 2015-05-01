@@ -31,6 +31,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.RemoteException;
 
+import com.android.emailcommon.service.EmailServiceProxy;
 import com.android.emailcommon.service.SyncSize;
 import com.android.emailcommon.utility.Utility;
 import com.android.mail.utils.LogUtils;
@@ -112,22 +113,26 @@ public final class Account extends EmailContent implements Parcelable {
     // Sentinel values for the mSyncInterval field of both Account records
     public static final int CHECK_INTERVAL_NEVER = -1;
     public static final int CHECK_INTERVAL_PUSH = -2;
+    public static final int CHECK_INTERVAL_DEFAULT_PULL = 15;
 
     public static Uri CONTENT_URI;
     public static Uri RESET_NEW_MESSAGE_COUNT_URI;
     public static Uri NOTIFIER_URI;
+    public static Uri SYNC_SETTING_CHANGED_URI;
 
     public static void initAccount() {
         CONTENT_URI = Uri.parse(EmailContent.CONTENT_URI + "/account");
         RESET_NEW_MESSAGE_COUNT_URI = Uri.parse(EmailContent.CONTENT_URI + "/resetNewMessageCount");
         NOTIFIER_URI = Uri.parse(EmailContent.CONTENT_NOTIFIER_URI + "/account");
+        SYNC_SETTING_CHANGED_URI = Uri.parse(
+                EmailContent.CONTENT_SYNC_SETTING_CHANGED_URI + "/account");
     }
 
     public String mDisplayName;
     public String mEmailAddress;
     public String mSyncKey;
     public int mSyncLookback;
-    public int mSyncInterval;
+    private int mSyncInterval;
     public long mHostAuthKeyRecv;
     public long mHostAuthKeySend;
     public int mFlags;
@@ -140,6 +145,7 @@ public final class Account extends EmailContent implements Parcelable {
     public String mSignature;
     public long mPolicyKey;
     public long mPingDuration;
+    public int mCapabilities;
 
     @VisibleForTesting
     static final String JSON_TAG_HOST_AUTH_RECV = "hostAuthRecv";
@@ -178,6 +184,7 @@ public final class Account extends EmailContent implements Parcelable {
     public static final int CONTENT_MAX_ATTACHMENT_SIZE_COLUMN = 16;
     public static final int CONTENT_SET_SYNC_SIZE_ENABLED_COLUMN = 17;
     public static final int CONTENT_SYNC_SIZE_COLUMN = 18;
+    public static final int CONTENT_CAPABILITIES_COLUMN = 19;
 
     public static final String[] CONTENT_PROJECTION = {
         AttachmentColumns._ID, AccountColumns.DISPLAY_NAME,
@@ -189,7 +196,7 @@ public final class Account extends EmailContent implements Parcelable {
         AccountColumns.SECURITY_SYNC_KEY,
         AccountColumns.SIGNATURE, AccountColumns.POLICY_KEY, AccountColumns.PING_DURATION,
         AccountColumns.MAX_ATTACHMENT_SIZE, AccountColumns.SET_SYNC_SIZE_ENABLED,
-        AccountColumns.SYNC_SIZE
+        AccountColumns.SYNC_SIZE, AccountColumns.CAPABILITIES
     };
 
     public static final int ACCOUNT_FLAGS_COLUMN_ID = 0;
@@ -291,6 +298,7 @@ public final class Account extends EmailContent implements Parcelable {
         mPingDuration = cursor.getLong(CONTENT_PING_DURATION_COLUMN);
         mSetSyncSizeEnabled = cursor.getInt(CONTENT_SET_SYNC_SIZE_ENABLED_COLUMN);
         mSyncSize = cursor.getInt(CONTENT_SYNC_SIZE_COLUMN);
+        mCapabilities = cursor.getInt(CONTENT_CAPABILITIES_COLUMN);
     }
 
     public boolean isTemporary() {
@@ -370,6 +378,11 @@ public final class Account extends EmailContent implements Parcelable {
      * TODO define sentinel values for "never", "push", etc.  See Account.java
      */
     public int getSyncInterval() {
+        // Fixed unsynced value and account capability. Change to default pull value
+        if (!hasCapability(EmailServiceProxy.CAPABILITY_PUSH)
+                && mSyncInterval == CHECK_INTERVAL_PUSH) {
+            return CHECK_INTERVAL_DEFAULT_PULL;
+        }
         return mSyncInterval;
     }
 
@@ -379,7 +392,13 @@ public final class Account extends EmailContent implements Parcelable {
      * @param minutes the number of minutes between polling checks
      */
     public void setSyncInterval(int minutes) {
-        mSyncInterval = minutes;
+        // Fixed unsynced value and account capability. Change to default pull value
+        if (!hasCapability(EmailServiceProxy.CAPABILITY_PUSH)
+                && mSyncInterval == CHECK_INTERVAL_PUSH) {
+            mSyncInterval = CHECK_INTERVAL_DEFAULT_PULL;
+        } else {
+            mSyncInterval = minutes;
+        }
     }
 
     /**
@@ -445,6 +464,20 @@ public final class Account extends EmailContent implements Parcelable {
      */
     public void setSyncSize(int size) {
         mSyncSize = size;
+    }
+
+    /**
+     * @return the current account capabilities.
+     */
+    public int getCapabilities() {
+        return mCapabilities;
+    }
+
+    /**
+     * Set the account capabilities.  Be sure to call save() to commit to database.
+     */
+    public void setCapabilities(int value) {
+        mCapabilities = value;
     }
 
     /**
@@ -796,6 +829,7 @@ public final class Account extends EmailContent implements Parcelable {
         values.put(AccountColumns.PING_DURATION, mPingDuration);
         values.put(AccountColumns.SET_SYNC_SIZE_ENABLED, mSetSyncSizeEnabled);
         values.put(AccountColumns.SYNC_SIZE, mSyncSize);
+        values.put(AccountColumns.CAPABILITIES, mCapabilities);
         return values;
     }
 
@@ -826,6 +860,7 @@ public final class Account extends EmailContent implements Parcelable {
             json.putOpt(AccountColumns.PROTOCOL_VERSION, mProtocolVersion);
             json.putOpt(AccountColumns.SIGNATURE, mSignature);
             json.put(AccountColumns.PING_DURATION, mPingDuration);
+            json.put(AccountColumns.CAPABILITIES, mCapabilities);
             return json;
         } catch (final JSONException e) {
             LogUtils.d(LogUtils.TAG, e, "Exception while serializing Account");
@@ -864,6 +899,7 @@ public final class Account extends EmailContent implements Parcelable {
             a.mSignature = json.optString(AccountColumns.SIGNATURE);
             // POLICY_KEY is not stored
             a.mPingDuration = json.optInt(AccountColumns.PING_DURATION, 0);
+            a.mCapabilities = json.optInt(AccountColumns.CAPABILITIES, 0);
             return a;
         } catch (final JSONException e) {
             LogUtils.d(LogUtils.TAG, e, "Exception while deserializing Account");
@@ -887,6 +923,14 @@ public final class Account extends EmailContent implements Parcelable {
                 mHostAuthSend.ensureLoaded(context);
             }
         }
+    }
+
+    /**
+     * Returns whether or not the capability is supported by the account.
+     * @see EmailServiceProxy#CAPABILITY_*
+     */
+    public boolean hasCapability(int capability) {
+        return (mCapabilities & capability) != 0;
     }
 
     /**
@@ -952,6 +996,7 @@ public final class Account extends EmailContent implements Parcelable {
         } else {
             dest.writeByte((byte)0);
         }
+        dest.writeInt(mCapabilities);
     }
 
     /**
@@ -988,6 +1033,7 @@ public final class Account extends EmailContent implements Parcelable {
         if (in.readByte() == 1) {
             mHostAuthSend = new HostAuth(in);
         }
+        mCapabilities = in.readInt();
     }
 
     /**
