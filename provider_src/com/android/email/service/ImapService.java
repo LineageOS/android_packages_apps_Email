@@ -16,28 +16,46 @@
 
 package com.android.email.service;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.ContentObserver;
 import android.database.Cursor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.TrafficStats;
 import android.net.Uri;
+import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.PowerManager;
+import android.os.RemoteException;
 import android.os.SystemClock;
+import android.provider.BaseColumns;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
+import android.util.SparseArray;
+import android.util.SparseLongArray;
 
 import com.android.email.DebugUtils;
+import com.android.email.EmailConnectivityManager;
 import com.android.email.LegacyConversions;
 import com.android.email.NotificationController;
 import com.android.email.NotificationControllerCreatorHolder;
 import com.android.email.R;
 import com.android.email.mail.Store;
+import com.android.email.mail.store.ImapFolder;
+import com.android.email.provider.EmailProvider;
 import com.android.email.provider.Utilities;
 import com.android.emailcommon.Logging;
+
+import static com.android.emailcommon.Logging.LOG_TAG;
+
 import com.android.emailcommon.TrafficFlags;
 import com.android.emailcommon.internet.MimeUtility;
 import com.android.emailcommon.mail.AuthenticationFailedException;
@@ -58,6 +76,7 @@ import com.android.emailcommon.provider.EmailContent.MessageColumns;
 import com.android.emailcommon.provider.EmailContent.SyncColumns;
 import com.android.emailcommon.provider.Mailbox;
 import com.android.emailcommon.service.EmailServiceStatus;
+import com.android.emailcommon.service.IEmailService;
 import com.android.emailcommon.service.SearchParams;
 import com.android.emailcommon.service.SyncWindow;
 import com.android.emailcommon.utility.AttachmentUtilities;
@@ -70,6 +89,8 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class ImapService extends Service {
     // TODO get these from configurations or settings.
@@ -87,6 +108,14 @@ public class ImapService extends Service {
     private static final Flag[] FLAG_LIST_FLAGGED = new Flag[] { Flag.FLAGGED };
     private static final Flag[] FLAG_LIST_ANSWERED = new Flag[] { Flag.ANSWERED };
 
+    // Kick idle connection every ~25 minutes (in a window between 25 and 28 minutes)
+    private static final int KICK_IDLE_CONNECTION_TIMEOUT = 25 * 60 * 1000;
+    private static final int KICK_IDLE_CONNECTION_MAX_DELAY = 3 * 60 * 1000;
+
+    // Restart idle connection between 30 seconds and 1 minute after re-gaining connectivity
+    private static final int RESTART_IDLE_DELAY_MIN = 30 * 1000;
+    private static final int RESTART_IDLE_DELAY_MAX = 60 * 1000;
+
     /**
      * Simple cache for last search result mailbox by account and serverId, since the most common
      * case will be repeated use of the same mailbox
@@ -103,32 +132,786 @@ public class ImapService extends Service {
     private static final HashMap<Long, SortableMessage[]> sSearchResults =
             new HashMap<Long, SortableMessage[]>();
 
+    private static final ExecutorService sExecutor = Executors.newCachedThreadPool();
+
     /**
      * We write this into the serverId field of messages that will never be upsynced.
      */
     private static final String LOCAL_SERVERID_PREFIX = "Local-";
+    private static final String ACTION_RESTART_IDLE_CONNECTION =
+            "com.android.email.intent.action.RESTART_IDLE_CONNECTION";
+    private static final String ACTION_RESTART_ALL_IDLE_CONNECTIONS =
+            "com.android.email.intent.action.RESTART_ALL_IDLE_CONNECTIONS";
+    private static final String ACTION_KICK_IDLE_CONNECTION =
+            "com.android.email.intent.action.KICK_IDLE_CONNECTION";
+    private static final String EXTRA_MAILBOX = "com.android.email.intent.extra.MAILBOX";
+
+    private static final long RESCHEDULE_PING_DELAY = 500L;
+    private static final long MAX_PING_DELAY = 30 * 60 * 1000L;
+
+    private static String sLegacyImapProtocol;
 
     private static String sMessageDecodeErrorString;
+
+    private static boolean mSyncLock;
 
     /**
      * Used in ImapFolder for base64 errors. Cached here because ImapFolder does not have access
      * to a Context object.
+     *
      * @return Error string or empty string
      */
     public static String getMessageDecodeErrorString() {
         return sMessageDecodeErrorString == null ? "" : sMessageDecodeErrorString;
     }
 
+    private static class ImapIdleListener implements ImapFolder.IdleCallback {
+        private static final SparseLongArray sPingDelay = new SparseLongArray();
+        private final Context mContext;
+
+        private final Account mAccount;
+        private final Mailbox mMailbox;
+
+        public ImapIdleListener(Context context, Account account, Mailbox mailbox) {
+            super();
+            mContext = context;
+            mAccount = account;
+            mMailbox = mailbox;
+        }
+
+        @Override
+        public void onIdled() {
+            scheduleKickIdleConnection();
+        }
+
+        @Override
+        public void onIdlingDone() {
+            cancelKickIdleConnection();
+            cancelPing();
+            resetPingDelay();
+        }
+
+        @Override
+        public void onNewServerChange(final boolean needSync, final List<String> fetchMessages) {
+            // Instead of checking every received change, request a sync of the mailbox
+            if (Logging.LOGD) {
+                LogUtils.d(LOG_TAG, "Server notified new changes for mailbox " + mMailbox.mId);
+            }
+            cancelKickIdleConnection();
+            cancelPing();
+            resetPingDelay();
+
+            // Request a sync but wait a bit for new incoming messages from server
+            sExecutor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    // Selectively process all the retrieved changes
+                    processImapIdleChangesLocked(mContext, mAccount, mMailbox,
+                            needSync, fetchMessages);
+                }
+            });
+        }
+
+        @Override
+        public void onTimeout() {
+            // Timeout reschedule a new ping
+            LogUtils.i(LOG_TAG, "Ping timeout for mailbox " + mMailbox.mId + ". Reschedule.");
+            cancelKickIdleConnection();
+            internalUnregisterFolderIdle();
+            reschedulePing(RESCHEDULE_PING_DELAY);
+            resetPingDelay();
+        }
+
+        @Override
+        public void onException(MessagingException ex) {
+            // Reschedule a new ping
+            LogUtils.e(LOG_TAG, ex, "Ping exception for mailbox " + mMailbox.mId);
+            cancelKickIdleConnection();
+            internalUnregisterFolderIdle();
+            reschedulePing(increasePingDelay());
+        }
+
+        private void internalUnregisterFolderIdle() {
+            ImapIdleFolderHolder holder = ImapIdleFolderHolder.getInstance();
+            synchronized (holder.mIdledFolders) {
+                holder.mIdledFolders.remove((int) mMailbox.mId);
+            }
+        }
+
+        private void reschedulePing(long delay) {
+            // Check for connectivity before reschedule
+            ConnectivityManager cm =
+                    (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+            if (activeNetwork == null || !activeNetwork.isConnected()) {
+                cancelPing();
+            } else {
+                PendingIntent pi = getIdleRefreshIntent();
+                AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+                am.set(AlarmManager.RTC_WAKEUP, delay, pi);
+            }
+        }
+
+        private void cancelPing() {
+            AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+            am.cancel(getIdleRefreshIntent());
+        }
+
+        private void resetPingDelay() {
+            synchronized (sPingDelay) {
+                int index = sPingDelay.indexOfKey((int) mMailbox.mId);
+                if (index >= 0) {
+                    sPingDelay.removeAt(index);
+                }
+            }
+        }
+
+        private long increasePingDelay() {
+            synchronized (sPingDelay) {
+                long delay = Math.max(RESCHEDULE_PING_DELAY, sPingDelay.get((int) mMailbox.mId));
+                delay = Math.min(MAX_PING_DELAY, delay * 2);
+                sPingDelay.put((int) mMailbox.mId, delay);
+                return delay;
+            }
+        }
+
+        private PendingIntent getIdleRefreshIntent() {
+            Intent i = new Intent(mContext, ImapService.class);
+            i.setAction(ACTION_RESTART_IDLE_CONNECTION);
+            i.putExtra(EXTRA_MAILBOX, mMailbox.mId);
+            return PendingIntent.getService(mContext, (int) mMailbox.mId, i,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
+        }
+
+        private void scheduleKickIdleConnection() {
+            PendingIntent pi = getKickIdleConnectionPendingIntent();
+            long due = SystemClock.elapsedRealtime() + KICK_IDLE_CONNECTION_TIMEOUT;
+            long windowLength = KICK_IDLE_CONNECTION_MAX_DELAY;
+            AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+            am.setWindow(AlarmManager.ELAPSED_REALTIME_WAKEUP, due, windowLength, pi);
+        }
+
+        private void cancelKickIdleConnection() {
+            AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+            am.cancel(getKickIdleConnectionPendingIntent());
+        }
+
+        private PendingIntent getKickIdleConnectionPendingIntent() {
+            Intent i = new Intent(mContext, ImapService.class);
+            i.setAction(ACTION_KICK_IDLE_CONNECTION);
+            i.putExtra(EXTRA_MAILBOX, mMailbox.mId);
+            return PendingIntent.getService(mContext, (int) mMailbox.mId,
+                    i, PendingIntent.FLAG_UPDATE_CURRENT);
+        }
+    }
+
+    private static class ImapIdleFolderHolder {
+        private static ImapIdleFolderHolder sInstance;
+        private SparseArray<ImapFolder> mIdledFolders = new SparseArray<>();
+
+        private static ImapIdleFolderHolder getInstance() {
+            if (sInstance == null) {
+                sInstance = new ImapIdleFolderHolder();
+            }
+            return sInstance;
+        }
+
+        private ImapFolder getIdledMailbox(long mailboxId) {
+            synchronized (mIdledFolders) {
+                ImapFolder folder = mIdledFolders.get((int) mailboxId);
+                return folder != null && folder.isIdling() ? folder : null;
+            }
+        }
+
+        private boolean isMailboxIdled(long mailboxId) {
+            return getIdledMailbox(mailboxId) != null;
+        }
+
+        private boolean registerMailboxForIdle(Context context, Account account, Mailbox mailbox)
+                throws MessagingException {
+            synchronized (mIdledFolders) {
+                if (mailbox.mType == Mailbox.TYPE_DRAFTS || mailbox.mType == Mailbox.TYPE_OUTBOX) {
+                    LogUtils.i(LOG_TAG, "Mailbox is not a valid idle folder: " + mailbox.mId);
+                    return false;
+                }
+
+                // Check that the account is ready for push
+                if (account.getSyncInterval() != Account.CHECK_INTERVAL_PUSH) {
+                    LogUtils.d(LOG_TAG, "Account is not configured as push: " + account.mId);
+                    return false;
+                }
+
+                // Check that the folder isn't already registered
+                if (isMailboxIdled(mailbox.mId)) {
+                    LogUtils.i(LOG_TAG, "Mailbox is idled already: " + mailbox.mId);
+                    return true;
+                }
+
+                if (!EmailConnectivityManager.isConnected(context)) {
+                    LogUtils.i(LOG_TAG, "No available connection to register "
+                            + "mailbox for idle: " + mailbox.mId);
+                    return false;
+                }
+
+                // And now just idle the folder
+                try {
+                    Store remoteStore = Store.getInstance(account, context);
+                    ImapFolder folder = mIdledFolders.get((int) mailbox.mId);
+                    if (folder == null) {
+                        folder = (ImapFolder) remoteStore.getFolder(mailbox.mServerId);
+                        mIdledFolders.put((int) mailbox.mId, folder);
+                    }
+                    folder.open(OpenMode.READ_WRITE);
+                    folder.startIdling(new ImapIdleListener(context,
+                            remoteStore.getAccount(), mailbox));
+
+                    LogUtils.i(LOG_TAG, "Registered idle for mailbox " + mailbox.mId);
+                    return true;
+                } catch (Exception ex) {
+                    LogUtils.i(LOG_TAG, ex, "Failed to register idle for mailbox " + mailbox.mId);
+                }
+                return false;
+            }
+        }
+
+        private void unregisterIdledMailbox(long mailboxId, boolean remove)
+                throws MessagingException {
+            final ImapFolder folder;
+            synchronized (mIdledFolders) {
+                folder = unregisterIdledMailboxLocked(mailboxId, remove);
+            }
+            if (folder != null) {
+                folder.stopIdling(remove);
+            }
+        }
+
+        private ImapFolder unregisterIdledMailboxLocked(long mailboxId, boolean remove)
+                throws MessagingException {
+            // Check that the folder is already registered
+            ImapFolder folder = mIdledFolders.get((int) mailboxId);
+            if (folder == null || !folder.isIdling()) {
+                LogUtils.i(LOG_TAG, "Mailbox isn't idled yet: " + mailboxId);
+                return null;
+            }
+
+            if (remove) {
+                mIdledFolders.remove((int) mailboxId);
+            }
+
+            LogUtils.i(LOG_TAG, "Unregistered idle for mailbox " + mailboxId);
+            return folder;
+        }
+
+        private void registerAccountForIdle(Context context, Account account)
+                throws MessagingException {
+            // Check that the account is ready for push
+            if (account.getSyncInterval() != Account.CHECK_INTERVAL_PUSH) {
+                LogUtils.d(LOG_TAG, "Account is not configured as push: " + account.mId);
+                return;
+            }
+
+            LogUtils.i(LOG_TAG, "Register idle for account " + account.mId);
+            Cursor c = Mailbox.getLoopBackMailboxIdsForSync(
+                    context.getContentResolver(), account.mId);
+            if (c != null) {
+                try {
+                    boolean hasSyncMailboxes = false;
+                    while (c.moveToNext()) {
+                        long mailboxId = c.getLong(c.getColumnIndex(BaseColumns._ID));
+                        final Mailbox mailbox = Mailbox.restoreMailboxWithId(context, mailboxId);
+                        boolean registered = isMailboxIdled(mailboxId);
+                        if (!registered) {
+                            registered = registerMailboxForIdle(context, account, mailbox);
+                        }
+                        hasSyncMailboxes |= registered;
+                    }
+
+                    // Sync the inbox
+                    if (!hasSyncMailboxes) {
+                        final long inboxId = Mailbox.findMailboxOfType(
+                                context, account.mId, Mailbox.TYPE_INBOX);
+                        if (inboxId != Mailbox.NO_MAILBOX) {
+                            final Mailbox inbox = Mailbox.restoreMailboxWithId(context, inboxId);
+                            if (!isMailboxIdled(inbox.mId)) {;
+                                registerMailboxForIdle(context, account, inbox);
+                            }
+                        }
+                    }
+                } finally {
+                    c.close();
+                }
+            }
+        }
+
+        private void kickAccountIdledMailboxes(Context context, Account account)
+                throws MessagingException {
+            synchronized (mIdledFolders) {
+                unregisterAccountIdledMailboxes(context, account.mId, true);
+                registerAccountForIdle(context, account);
+            }
+        }
+
+        private void kickIdledMailbox(Context context, Mailbox mailbox, Account account)
+                throws MessagingException {
+            final ImapFolder folder = getIdledMailbox((int) mailbox.mId);
+            if (folder != null) {
+                folder.stopIdling(false);
+                folder.startIdling(new ImapIdleListener(context, account, mailbox));
+            }
+        }
+
+        private void unregisterAccountIdledMailboxes(Context context, long accountId,
+                boolean remove) {
+            LogUtils.i(LOG_TAG, "Unregister idle for account " + accountId);
+            final ArrayList<ImapFolder> foldersToStop = new ArrayList<>();
+
+            synchronized (mIdledFolders) {
+                int count = mIdledFolders.size() - 1;
+                for (int index = count; index >= 0; index--) {
+                    long mailboxId = mIdledFolders.keyAt(index);
+                    try {
+                        Mailbox mailbox = Mailbox.restoreMailboxWithId(context, mailboxId);
+                        if (mailbox == null || mailbox.mAccountKey == accountId) {
+                            ImapFolder folder = unregisterIdledMailboxLocked(mailboxId, remove);
+                            if (folder != null) {
+                                foldersToStop.add(folder);
+                                LogUtils.i(LOG_TAG, "Unregister idle for mailbox " + mailboxId);
+                            }
+                        }
+                    } catch (MessagingException ex) {
+                        LogUtils.w(LOG_TAG, "Failed to unregister mailbox "
+                                + mailboxId + " for account " + accountId);
+                    }
+                }
+            }
+            stopIdlingForFoldersInBackground(foldersToStop);
+        }
+
+        private void unregisterAllIdledMailboxes(final boolean disconnect) {
+            final ArrayList<ImapFolder> foldersToStop = new ArrayList<>();
+            synchronized (mIdledFolders) {
+                LogUtils.i(LOG_TAG, "Unregister all idle mailboxes");
+
+                if (disconnect) {
+                    int count = mIdledFolders.size();
+                    for (int i = 0; i < count; i++) {
+                        ImapFolder folder = mIdledFolders.get(mIdledFolders.keyAt(i));
+                        if (folder != null && folder.isIdling()) {
+                            foldersToStop.add(folder);
+                        }
+                    }
+                }
+                mIdledFolders.clear();
+            }
+            stopIdlingForFoldersInBackground(foldersToStop);
+        }
+
+        private void stopIdlingForFoldersInBackground(final List<ImapFolder> folders) {
+            if (folders.isEmpty()) {
+                return;
+            }
+            sExecutor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    for (ImapFolder folder : folders) {
+                        try {
+                            folder.stopIdling(true);
+                        } catch (MessagingException me) {
+                            // ignored
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    private static class ImapEmailConnectivityManager extends EmailConnectivityManager {
+        private final Context mContext;
+
+        public ImapEmailConnectivityManager(Context context) {
+            super(context, LOG_TAG);
+            mContext = context;
+        }
+
+        public void destroy() {
+            cancelIdleConnectionRestart();
+        }
+
+        @Override
+        public void onConnectivityRestored(int networkType) {
+            if (Logging.LOGD) {
+                LogUtils.d(Logging.LOG_TAG, "onConnectivityRestored ("
+                        + "networkType=" + networkType + ")");
+            }
+
+            scheduleIdleConnectionRestart();
+        }
+
+        @Override
+        public void onConnectivityLost(int networkType) {
+            if (Logging.LOGD) {
+                LogUtils.d(Logging.LOG_TAG, "onConnectivityLost ("
+                        + "networkType=" + networkType + ")");
+            }
+            // Only remove references. We have no network to kill idled connections
+            ImapIdleFolderHolder.getInstance().unregisterAllIdledMailboxes(false);
+            cancelIdleConnectionRestart();
+        }
+
+        private void scheduleIdleConnectionRestart() {
+            PendingIntent pi = getIdleConnectionRestartIntent();
+            long due = SystemClock.elapsedRealtime() + RESTART_IDLE_DELAY_MIN;
+            long windowLength = RESTART_IDLE_DELAY_MAX - RESTART_IDLE_DELAY_MIN;
+            AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+            am.setWindow(AlarmManager.ELAPSED_REALTIME_WAKEUP, due, windowLength, pi);
+        }
+
+        private void cancelIdleConnectionRestart() {
+            AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+            am.cancel(getIdleConnectionRestartIntent());
+        }
+
+        private PendingIntent getIdleConnectionRestartIntent() {
+            Intent i = new Intent(mContext, ImapService.class);
+            i.setAction(ACTION_RESTART_ALL_IDLE_CONNECTIONS);
+            return PendingIntent.getService(mContext, 0, i, 0);
+        }
+    }
+
+    private static class LocalChangesContentObserver extends ContentObserver {
+        private Context mContext;
+
+        public LocalChangesContentObserver(Context context, Handler handler) {
+            super(handler);
+            mContext = context;
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            // what changed?
+            try {
+                List<String> segments = uri.getPathSegments();
+                final String type = segments.get(0);
+                final String op = segments.get(1);
+                final long id = Long.parseLong(uri.getLastPathSegment());
+
+                // Run the changes processor outside the ui thread
+                sExecutor.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Apply the change
+                        if (type.equals("account")) {
+                            processAccountChanged(op, id);
+                        } else if (type.equals("mailbox")) {
+                            processMailboxChanged(op, id);
+                        } else if (type.equals("message")) {
+                            processMessageChanged(op, id);
+                        }
+                    }
+                });
+            } catch (Exception ex) {
+                return;
+            }
+        }
+
+        private void processAccountChanged(String op, long id) {
+            // For delete operations we can't fetch the account, so process it first
+            if (op.equals(EmailProvider.NOTIFICATION_OP_DELETE)) {
+                ImapIdleFolderHolder.getInstance()
+                        .unregisterAccountIdledMailboxes(mContext, id, true);
+                stopImapPushServiceIfNecessary(mContext);
+                return;
+            }
+
+            Account account = Account.restoreAccountWithId(mContext, id);
+            if (account == null) {
+                return;
+            }
+            if (!isLegacyImapProtocol(mContext, account)) {
+                // The account isn't an imap account
+                return;
+            }
+
+            try {
+                final ImapIdleFolderHolder holder = ImapIdleFolderHolder.getInstance();
+                if (op.equals(EmailProvider.NOTIFICATION_OP_UPDATE)) {
+                    holder.kickAccountIdledMailboxes(mContext, account);
+                } else if (op.equals(EmailProvider.NOTIFICATION_OP_INSERT)) {
+                    if (account.getSyncInterval() == Account.CHECK_INTERVAL_PUSH) {
+                        holder.registerAccountForIdle(mContext, account);
+                    }
+                }
+            } catch (MessagingException me) {
+                LogUtils.e(LOG_TAG, me, "Failed to process imap account " + id + " changes.");
+            }
+
+            // Check if service should be started/stopped
+            stopImapPushServiceIfNecessary(mContext);
+        }
+
+        private void processMailboxChanged(String op, long id) {
+            // For delete operations we can't fetch the mailbox, so process it first
+            if (op.equals(EmailProvider.NOTIFICATION_OP_DELETE)) {
+                try {
+                    ImapIdleFolderHolder.getInstance().unregisterIdledMailbox(id, true);
+                } catch (MessagingException me) {
+                    LogUtils.e(LOG_TAG, me, "Failed to process imap mailbox " + id + " changes.");
+                }
+                return;
+            }
+
+            Mailbox mailbox = Mailbox.restoreMailboxWithId(mContext, id);
+            if (mailbox == null) {
+                return;
+            }
+            Account account = Account.restoreAccountWithId(mContext, mailbox.mAccountKey);
+            if (account == null) {
+                return;
+            }
+            if (!isLegacyImapProtocol(mContext, account)) {
+                // The account isn't an imap account
+                return;
+            }
+
+            try {
+                final ImapIdleFolderHolder holder = ImapIdleFolderHolder.getInstance();
+                if (op.equals(EmailProvider.NOTIFICATION_OP_UPDATE)) {
+                    // Only apply if syncInterval has changed
+                    boolean registered = holder.isMailboxIdled(id);
+                    boolean toRegister = mailbox.mSyncInterval == 1
+                            && account.getSyncInterval() == Account.CHECK_INTERVAL_PUSH;
+                    if (registered != toRegister) {
+                        if (registered) {
+                            holder.unregisterIdledMailbox(id, true);
+                        }
+                        if (toRegister) {
+                            holder.registerMailboxForIdle(mContext, account, mailbox);
+                        }
+                    }
+                } else if (op.equals(EmailProvider.NOTIFICATION_OP_INSERT)) {
+                    if (account.getSyncInterval() == Account.CHECK_INTERVAL_PUSH) {
+                        holder.registerMailboxForIdle(mContext, account, mailbox);
+                    }
+                }
+            } catch (MessagingException me) {
+                LogUtils.e(LOG_TAG, me, "Failed to process imap mailbox " + id + " changes.");
+            }
+        }
+
+        private void processMessageChanged(String op, long id) {
+            if (mSyncLock) {
+                return;
+            }
+            EmailContent.Message msg = EmailContent.Message.restoreMessageWithId(mContext, id);
+            if (msg == null) {
+                return;
+            }
+            Account account = Account.restoreAccountWithId(mContext, msg.mAccountKey);
+            if (account == null) {
+                return;
+            }
+            if (!isLegacyImapProtocol(mContext, account)) {
+                // The account isn't an imap account
+                return;
+            }
+            if (account.getSyncInterval() != Account.CHECK_INTERVAL_PUSH) {
+                return;
+            }
+
+            try {
+                Store remoteStore = Store.getInstance(account, mContext);
+                processPendingActionsSynchronous(mContext, account, remoteStore, false);
+            } catch (MessagingException me) {
+                LogUtils.e(LOG_TAG, me, "Failed to process imap message " + id + " changes.");
+            }
+        }
+    }
+
+    private ImapEmailConnectivityManager mConnectivityManager;
+    private LocalChangesContentObserver mLocalChangesObserver;
+    private Handler mServiceHandler;
+    private PowerManager.WakeLock mIdleRefreshWakeLock;
+
     @Override
     public void onCreate() {
         super.onCreate();
 
         sMessageDecodeErrorString = getString(R.string.message_decode_error);
+        mServiceHandler = new Handler();
+
+        // Initialize the email provider and the listeners/observers
+        EmailContent.init(this);
+        mConnectivityManager = new ImapEmailConnectivityManager(this);
+        mLocalChangesObserver = new LocalChangesContentObserver(this, mServiceHandler);
+
+        // Initialize wake locks
+        PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        mIdleRefreshWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "Imap IDLE Refresh");
+        mIdleRefreshWakeLock.setReferenceCounted(true);
+
+        // Register observers
+        getContentResolver().registerContentObserver(
+                Account.SYNC_SETTING_CHANGED_URI, true, mLocalChangesObserver);
+        getContentResolver().registerContentObserver(
+                Mailbox.SYNC_SETTING_CHANGED_URI, true, mLocalChangesObserver);
+        getContentResolver().registerContentObserver(
+                EmailContent.Message.NOTIFIER_URI, true, mLocalChangesObserver);
+    }
+
+    @Override
+    public void onDestroy() {
+        // Unregister services
+        ImapIdleFolderHolder.getInstance().unregisterAllIdledMailboxes(true);
+        mConnectivityManager.unregister();
+        getContentResolver().unregisterContentObserver(mLocalChangesObserver);
+        mConnectivityManager.destroy();
+
+        super.onDestroy();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        if (intent == null) {
+            return Service.START_STICKY;
+        }
+
+        final String action = intent.getAction();
+        if (Logging.LOGD) {
+            LogUtils.d(Logging.LOG_TAG, "Action: ", action);
+        }
+        final Context context = getApplicationContext();
+
+        if (ACTION_RESTART_ALL_IDLE_CONNECTIONS.equals(action)) {
+            // Initiate a sync for all IDLEd accounts, since there might have
+            // been changes while we lost connectivity. At the end of the sync
+            // the IDLE connection will be re-established.
+
+            mIdleRefreshWakeLock.acquire();
+
+            sExecutor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    ContentResolver cr = context.getContentResolver();
+                    Cursor c = null;
+                    try {
+                        c = cr.query(Account.CONTENT_URI, Account.CONTENT_PROJECTION,
+                                null, null, null);
+                        if (c == null) {
+                            return;
+                        }
+                        while (c.moveToNext()) {
+                            final Account account = new Account();
+                            account.restore(c);
+
+                            // Only imap push accounts
+                            if (account.getSyncInterval() == Account.CHECK_INTERVAL_PUSH
+                                    && isLegacyImapProtocol(context, account)) {
+                                requestSyncForAccountMailboxesIfNotIdled(account);
+                            }
+                        }
+                    } finally {
+                        if (c != null) {
+                            c.close();
+                        }
+                        mIdleRefreshWakeLock.release();
+                    }
+                }
+            });
+        } else if (ACTION_RESTART_IDLE_CONNECTION.equals(action)) {
+            final long mailboxId = intent.getLongExtra(EXTRA_MAILBOX, -1);
+            if (mailboxId < 0) {
+                 return START_NOT_STICKY;
+            }
+
+            mIdleRefreshWakeLock.acquire();
+
+            sExecutor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        // Check that the account is ready for push
+                        Mailbox mailbox = Mailbox.restoreMailboxWithId(context, mailboxId);
+                        if (mailbox == null) {
+                            return;
+                        }
+                        Account account = Account.restoreAccountWithId(context,
+                                mailbox.mAccountKey);
+                        if (account == null) {
+                            return;
+                        }
+
+                        if (account.getSyncInterval() != Account.CHECK_INTERVAL_PUSH) {
+                            LogUtils.i(LOG_TAG, "Account isn't declared for push: " + account.mId);
+                            return;
+                        }
+
+                        // Request a quick sync to make sure we didn't lose any new mails
+                        // during the failure time; IDLE will restart afterwards
+                        ImapService.requestSync(context, account, mailboxId, false);
+                        LogUtils.d(LOG_TAG, "requestSync after reschedulePing for account %s (%s)",
+                                account.toString(), mailbox.mDisplayName);
+                    } finally {
+                        mIdleRefreshWakeLock.release();
+                    }
+                }
+            });
+        } else if (ACTION_KICK_IDLE_CONNECTION.equals(action)) {
+            final long mailboxId = intent.getLongExtra(EXTRA_MAILBOX, -1);
+            if (mailboxId <= -1) {
+                 return START_NOT_STICKY;
+            }
+
+            mIdleRefreshWakeLock.acquire();
+
+            sExecutor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Mailbox mailbox = Mailbox.restoreMailboxWithId(context, mailboxId);
+                        if (mailbox == null) {
+                            return;
+                        }
+                        Account account = Account.restoreAccountWithId(context,
+                                mailbox.mAccountKey);
+                        if (account == null) {
+                            return;
+                        }
+
+                        ImapIdleFolderHolder holder = ImapIdleFolderHolder.getInstance();
+                        holder.kickIdledMailbox(context, mailbox, account);
+                    } catch (Exception e) {
+                       LogUtils.e(Logging.LOG_TAG, e, "Failed to kick idled connection "
+                               + "for mailbox " + mailboxId);
+                    } finally {
+                        mIdleRefreshWakeLock.release();
+                    }
+                }
+            });
+        }
+
         return Service.START_STICKY;
+    }
+
+    private void requestSyncForAccountMailboxesIfNotIdled(Account account) {
+        Cursor c = Mailbox.getLoopBackMailboxIdsForSync(getContentResolver(), account.mId);
+        if (c == null) {
+            return;
+        }
+
+        ImapIdleFolderHolder holder = ImapIdleFolderHolder.getInstance();
+        try {
+            while (c.moveToNext()) {
+                long mailboxId = c.getLong(c.getColumnIndex(BaseColumns._ID));
+                if (!holder.isMailboxIdled(mailboxId)) {
+                    final Mailbox mailbox = Mailbox.restoreMailboxWithId(this, mailboxId);
+                    requestSync(this, account, mailboxId, false);
+                    LogUtils.d(LOG_TAG, "requestSync after restarting IDLE for account %s (%s)",
+                            account.toString(), mailbox.mDisplayName);
+                }
+            }
+        } finally {
+            c.close();
+        }
     }
 
     /**
@@ -145,12 +928,82 @@ public class ImapService extends Service {
             }
             return 0;
         }
+
+        @Override
+        public void pushModify(long accountId) throws RemoteException {
+            final Context context = ImapService.this;
+            final Account account = Account.restoreAccountWithId(context, accountId);
+            if (account.getSyncInterval() != Account.CHECK_INTERVAL_PUSH) {
+                LogUtils.i(LOG_TAG,"Idle (pushModify) isn't avaliable for account " + accountId);
+                ImapIdleFolderHolder holder = ImapIdleFolderHolder.getInstance();
+                holder.unregisterAccountIdledMailboxes(context, account.mId, true);
+                return;
+            }
+
+            LogUtils.i(LOG_TAG,"Register idle (pushModify) account " + accountId);
+            try {
+                ImapIdleFolderHolder holder = ImapIdleFolderHolder.getInstance();
+                holder.registerAccountForIdle(context, account);
+            } catch (MessagingException ex) {
+                LogUtils.d(LOG_TAG, "Failed to modify push for account " + accountId);
+            }
+        }
     };
 
     @Override
     public IBinder onBind(Intent intent) {
         mBinder.init(this);
         return mBinder;
+    }
+
+    private static void requestSync(Context context, Account account, long mailbox, boolean full) {
+        final EmailServiceUtils.EmailServiceInfo info = EmailServiceUtils.getServiceInfoForAccount(
+                context, account.mId);
+        final android.accounts.Account acct = new android.accounts.Account(
+                account.mEmailAddress, info.accountType);
+        Bundle extras = null;
+        if (mailbox != Mailbox.NO_MAILBOX) {
+            extras = Mailbox.createSyncBundle(mailbox);
+        } else {
+            extras = new Bundle();
+        }
+        extras.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, false);
+        extras.putBoolean(ContentResolver.SYNC_EXTRAS_DO_NOT_RETRY, true);
+        extras.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, full);
+        ContentResolver.requestSync(acct, EmailContent.AUTHORITY, extras);
+    }
+
+    protected static final void stopImapPushServiceIfNecessary(Context context) {
+        ContentResolver cr = context.getContentResolver();
+        Cursor c = cr.query(Account.CONTENT_URI, Account.CONTENT_PROJECTION,null, null, null);
+        if (c != null) {
+            try {
+                while (c.moveToNext()) {
+                    final Account account = new Account();
+                    account.restore(c);
+
+                    // Only imap push accounts
+                    if (account.getSyncInterval() != Account.CHECK_INTERVAL_PUSH ||
+                            !ImapService.isLegacyImapProtocol(context, account)) {
+                        continue;
+                    }
+
+                    return;
+                }
+            } finally {
+                c.close();
+            }
+        }
+
+        // Stop the service
+        context.stopService(new Intent(context, LegacyImapSyncAdapterService.class));
+    }
+
+    public static boolean isLegacyImapProtocol(Context ctx, Account acct) {
+        if (sLegacyImapProtocol == null) {
+            sLegacyImapProtocol = ctx.getString(R.string.protocol_legacy_imap);
+        }
+        return acct.getProtocol(ctx).equals(sLegacyImapProtocol);
     }
 
     /**
@@ -164,13 +1017,23 @@ public class ImapService extends Service {
             final Account account, final Mailbox folder, final boolean loadMore,
             final boolean uiRefresh) throws MessagingException {
         TrafficStats.setThreadStatsTag(TrafficFlags.getSyncFlags(context, account));
-        final NotificationController nc =
-                NotificationControllerCreatorHolder.getInstance(context);
+        final NotificationController nc = NotificationControllerCreatorHolder.getInstance(context);
         Store remoteStore = null;
+        ImapIdleFolderHolder imapHolder = ImapIdleFolderHolder.getInstance();
         try {
+            mSyncLock = true;
+
+            // Unregister the imap idle
+            if (account.getSyncInterval() == Account.CHECK_INTERVAL_PUSH) {
+                imapHolder.unregisterIdledMailbox(folder.mId, false);
+            } else {
+                imapHolder.unregisterAccountIdledMailboxes(context, account.mId, false);
+            }
+
             remoteStore = Store.getInstance(account, context);
             processPendingActionsSynchronous(context, account, remoteStore, uiRefresh);
             synchronizeMailboxGeneric(context, account, remoteStore, folder, loadMore, uiRefresh);
+
             // Clear authentication notification for this account
             nc.cancelLoginFailedNotification(account.mId);
         } catch (MessagingException e) {
@@ -183,8 +1046,15 @@ public class ImapService extends Service {
             }
             throw e;
         } finally {
+            mSyncLock = false;
+
             if (remoteStore != null) {
                 remoteStore.closeConnections();
+            }
+
+            // Register the imap idle again
+            if (account.getSyncInterval() == Account.CHECK_INTERVAL_PUSH) {
+                imapHolder.registerMailboxForIdle(context, account, folder);
             }
         }
         // TODO: Rather than use exceptions as logic above, return the status and handle it
@@ -709,6 +1579,264 @@ public class ImapService extends Service {
 
         // 14. Clean up and report results
         remoteFolder.close(false);
+    }
+
+    private synchronized static void processImapFetchChanges(Context ctx, Account acct,
+            Mailbox mailbox, List<String> uids) throws MessagingException {
+
+        PowerManager pm = (PowerManager) ctx.getSystemService(Context.POWER_SERVICE);
+        PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
+                "Imap IDLE Sync WakeLock");
+
+        NotificationController nc = null;
+        Store remoteStore = null;
+        final ImapIdleFolderHolder imapHolder = ImapIdleFolderHolder.getInstance();
+
+        try {
+            mSyncLock = true;
+            wl.acquire();
+
+            TrafficStats.setThreadStatsTag(TrafficFlags.getSyncFlags(ctx, acct));
+            nc = NotificationControllerCreatorHolder.getInstance(ctx);
+
+            remoteStore = Store.getInstance(acct, ctx);
+
+            final ContentResolver resolver = ctx.getContentResolver();
+
+            // Don't sync if account is not set to idled
+            if (acct.getSyncInterval() != Account.CHECK_INTERVAL_PUSH) {
+                return;
+            }
+
+            // 1. Open the remote store & folder
+            ImapFolder remoteFolder;
+            synchronized (imapHolder.mIdledFolders) {
+                remoteFolder = imapHolder.mIdledFolders.get((int) mailbox.mId);
+            }
+            if (remoteFolder == null || remoteFolder.isIdling()) {
+                remoteFolder = (ImapFolder) remoteStore.getFolder(mailbox.mServerId);
+            }
+            if (!remoteFolder.exists()) {
+                return;
+            }
+            remoteFolder.open(OpenMode.READ_WRITE);
+            if (remoteFolder.getMode() != OpenMode.READ_WRITE) {
+                return;
+            }
+
+            // 1.- Retrieve the messages
+            Message[] remoteMessages = remoteFolder.getMessages(
+                    uids.toArray(new String[uids.size()]), null);
+
+            // 2.- Refresh flags
+            FetchProfile fp = new FetchProfile();
+            fp.add(FetchProfile.Item.FLAGS);
+            remoteFolder.fetch(remoteMessages, fp, null);
+
+            boolean remoteSupportsSeen = false;
+            boolean remoteSupportsFlagged = false;
+            boolean remoteSupportsAnswered = false;
+            for (Flag flag : remoteFolder.getPermanentFlags()) {
+                if (flag == Flag.SEEN) {
+                    remoteSupportsSeen = true;
+                }
+                if (flag == Flag.FLAGGED) {
+                    remoteSupportsFlagged = true;
+                }
+                if (flag == Flag.ANSWERED) {
+                    remoteSupportsAnswered = true;
+                }
+            }
+
+            // 3.- Retrieve a reference of the local messages
+            HashMap<String, LocalMessageInfo> localMessageMap = new HashMap<>();
+            for (Message remoteMessage : remoteMessages) {
+                Cursor localUidCursor = null;
+                try {
+                    localUidCursor = resolver.query(
+                            EmailContent.Message.CONTENT_URI,
+                            LocalMessageInfo.PROJECTION,
+                            EmailContent.MessageColumns.ACCOUNT_KEY + "=?"
+                                    + " AND " + MessageColumns.MAILBOX_KEY + "=?"
+                                    + " AND " + MessageColumns.SERVER_ID + "=?",
+                            new String[] {
+                                    String.valueOf(acct.mId),
+                                    String.valueOf(mailbox.mId),
+                                    String.valueOf(remoteMessage.getUid()) },
+                            null);
+                    if (localUidCursor != null && localUidCursor.moveToNext()) {
+                        LocalMessageInfo info = new LocalMessageInfo(localUidCursor);
+                        localMessageMap.put(info.mServerId, info);
+                    }
+                } finally {
+                    if (localUidCursor != null) {
+                        localUidCursor.close();
+                    }
+                }
+            }
+
+            // 5.- Add to the list of new messages
+            final ArrayList<Long> unseenMessages = new ArrayList<Long>();
+            final ArrayList<Message> unsyncedMessages = new ArrayList<Message>();
+            for (Message remoteMessage : remoteMessages) {
+                LocalMessageInfo localMessage = localMessageMap.get(remoteMessage.getUid());
+
+                // localMessage == null -> message has never been created (not even headers)
+                // mFlagLoaded = UNLOADED -> message created, but none of body loaded
+                // mFlagLoaded = PARTIAL -> message created, a "sane" amt of body has been loaded
+                // mFlagLoaded = COMPLETE -> message body has been completely loaded
+                // mFlagLoaded = DELETED -> message has been deleted
+                // Only the first two of these are "unsynced", so let's retrieve them
+                if (localMessage == null ||
+                        (localMessage.mFlagLoaded == EmailContent.Message.FLAG_LOADED_UNLOADED) ||
+                        (localMessage.mFlagLoaded == EmailContent.Message.FLAG_LOADED_PARTIAL)) {
+                    unsyncedMessages.add(remoteMessage);
+                }
+            }
+
+            // 6. Download basic info about the new/unloaded messages (if any)
+            /*
+             * Fetch the flags and envelope only of the new messages. This is intended to get us
+             * critical data as fast as possible, and then we'll fill in the details.
+             */
+            if (unsyncedMessages.size() > 0) {
+                downloadFlagAndEnvelope(ctx, acct, mailbox, remoteFolder, unsyncedMessages,
+                        localMessageMap, unseenMessages);
+            }
+
+            // 7. Update SEEN/FLAGGED/ANSWERED (star) flags
+            if (remoteSupportsSeen || remoteSupportsFlagged || remoteSupportsAnswered) {
+                for (Message remoteMessage : remoteMessages) {
+                    LocalMessageInfo localMessageInfo = localMessageMap.get(remoteMessage.getUid());
+                    if (localMessageInfo == null) {
+                        continue;
+                    }
+                    boolean localSeen = localMessageInfo.mFlagRead;
+                    boolean remoteSeen = remoteMessage.isSet(Flag.SEEN);
+                    boolean newSeen = (remoteSupportsSeen && (remoteSeen != localSeen));
+                    boolean localFlagged = localMessageInfo.mFlagFavorite;
+                    boolean remoteFlagged = remoteMessage.isSet(Flag.FLAGGED);
+                    boolean newFlagged = (remoteSupportsFlagged && (localFlagged != remoteFlagged));
+                    int localFlags = localMessageInfo.mFlags;
+                    boolean localAnswered = (localFlags &
+                            EmailContent.Message.FLAG_REPLIED_TO) != 0;
+                    boolean remoteAnswered = remoteMessage.isSet(Flag.ANSWERED);
+                    boolean newAnswered = (remoteSupportsAnswered &&
+                            (localAnswered != remoteAnswered));
+                    if (newSeen || newFlagged || newAnswered) {
+                        Uri uri = ContentUris.withAppendedId(
+                                EmailContent.Message.CONTENT_URI, localMessageInfo.mId);
+                        ContentValues updateValues = new ContentValues();
+                        updateValues.put(MessageColumns.FLAG_READ, remoteSeen);
+                        updateValues.put(MessageColumns.FLAG_FAVORITE, remoteFlagged);
+                        if (remoteAnswered) {
+                            localFlags |= EmailContent.Message.FLAG_REPLIED_TO;
+                        } else {
+                            localFlags &= ~EmailContent.Message.FLAG_REPLIED_TO;
+                        }
+                        updateValues.put(MessageColumns.FLAGS, localFlags);
+                        resolver.update(uri, updateValues, null, null);
+                    }
+                }
+            }
+
+            // 8.- Remove remote deleted messages
+            for (final Message remoteMessage : remoteMessages) {
+                if (!remoteMessage.isSet(Flag.DELETED)) {
+                    continue;
+                }
+
+                // Make sure we don't sync messages (again) that we deleted locally
+                // before and now get a flag update (DELETED being set) for now.
+                unsyncedMessages.remove(remoteMessage);
+
+                LocalMessageInfo info = localMessageMap.get(remoteMessage.getUid());
+                if (info == null) {
+                    continue;
+                }
+
+                // Delete associated data (attachment files)
+                // Attachment & Body records are auto-deleted when we delete the Message record
+                AttachmentUtilities.deleteAllAttachmentFiles(ctx, acct.mId, info.mId);
+
+                // Delete the message itself
+                final Uri uriToDelete = ContentUris.withAppendedId(
+                        EmailContent.Message.CONTENT_URI, info.mId);
+                resolver.delete(uriToDelete, null, null);
+
+                // Delete extra rows (e.g. updated or deleted)
+                final Uri updateRowToDelete = ContentUris.withAppendedId(
+                        EmailContent.Message.UPDATED_CONTENT_URI, info.mId);
+                resolver.delete(updateRowToDelete, null, null);
+                final Uri deleteRowToDelete = ContentUris.withAppendedId(
+                        EmailContent.Message.DELETED_CONTENT_URI, info.mId);
+                resolver.delete(deleteRowToDelete, null, null);
+            }
+
+            // 9.- Load unsynced messages
+            loadUnsyncedMessages(ctx, acct, remoteFolder, unsyncedMessages, mailbox);
+
+            // 10. Remove messages that are in the local store but no in the current sync window
+            int syncLookBack = mailbox.mSyncLookback == SyncWindow.SYNC_WINDOW_ACCOUNT
+                    ? acct.mSyncLookback
+                    : mailbox.mSyncLookback;
+            long endDate = System.currentTimeMillis() -
+                    (SyncWindow.toDays(syncLookBack) * DateUtils.DAY_IN_MILLIS);
+            LogUtils.d(Logging.LOG_TAG, "full sync: original window: now - " + endDate);
+            for (final LocalMessageInfo info : localMessageMap.values()) {
+                // If this message is inside our sync window, and we cannot find it in our list
+                // of remote messages, then we know it's been deleted from the server.
+                if (info.mTimestamp < endDate) {
+                    // Delete associated data (attachment files)
+                    // Attachment & Body records are auto-deleted when we delete the Message record
+                    AttachmentUtilities.deleteAllAttachmentFiles(ctx, acct.mId, info.mId);
+
+                    // Delete the message itself
+                    final Uri uriToDelete = ContentUris.withAppendedId(
+                            EmailContent.Message.CONTENT_URI, info.mId);
+                    resolver.delete(uriToDelete, null, null);
+
+                    // Delete extra rows (e.g. updated or deleted)
+                    final Uri updateRowToDelete = ContentUris.withAppendedId(
+                            EmailContent.Message.UPDATED_CONTENT_URI, info.mId);
+                    resolver.delete(updateRowToDelete, null, null);
+                    final Uri deleteRowToDelete = ContentUris.withAppendedId(
+                            EmailContent.Message.DELETED_CONTENT_URI, info.mId);
+                    resolver.delete(deleteRowToDelete, null, null);
+                }
+            }
+
+            // Clear authentication notification for this account
+            nc.cancelLoginFailedNotification(acct.mId);
+
+        } catch (MessagingException ex) {
+            if (Logging.LOGD) {
+                LogUtils.d(Logging.LOG_TAG, ex, "processImapFetchChanges");
+            }
+            if (ex instanceof AuthenticationFailedException) {
+                // Generate authentication notification
+                if (nc != null) {
+                    nc.showLoginFailedNotificationSynchronous(acct.mId, true /* incoming */);
+                }
+            }
+            throw ex;
+        } finally {
+            mSyncLock = false;
+            wl.release();
+
+            if (remoteStore != null) {
+                remoteStore.closeConnections();
+
+                final boolean registered;
+                synchronized (imapHolder.mIdledFolders) {
+                    registered = imapHolder.mIdledFolders.indexOfKey((int) mailbox.mId) >= 0;
+                }
+                // Register the imap idle again
+                if (registered && acct.getSyncInterval() == Account.CHECK_INTERVAL_PUSH) {
+                    imapHolder.registerMailboxForIdle(ctx, acct, mailbox);
+                }
+            }
+        }
     }
 
     /**
@@ -1586,5 +2714,73 @@ public class ImapService extends Service {
         }
 
         return numSearchResults;
+    }
+
+    private static synchronized void processImapIdleChangesLocked(Context context, Account account,
+            Mailbox mailbox, boolean needSync, List<String> fetchMessages) {
+
+        // Process local to server changes first
+        Store remoteStore = null;
+        try {
+            remoteStore = Store.getInstance(account, context);
+            processPendingActionsSynchronous(context, account, remoteStore, false);
+        } catch (MessagingException me) {
+            // Ignore
+        } finally {
+            if (remoteStore != null) {
+                remoteStore.closeConnections();
+            }
+        }
+
+        // If the request rebased the maximum time without a full sync, then instead of fetch
+        // the changes just perform a full sync
+        final long timeSinceLastFullSync = SystemClock.elapsedRealtime() -
+                mailbox.mLastFullSyncTime;
+        final boolean forceSync = timeSinceLastFullSync >= FULL_SYNC_INTERVAL_MILLIS
+                || timeSinceLastFullSync < 0;
+        if (forceSync) {
+            needSync = true;
+            fetchMessages.clear();
+
+            if (Logging.LOGD) {
+                LogUtils.d(LOG_TAG, "Full sync required for mailbox " + mailbox.mId
+                        + " because is exceded the maximum time without a full sync.");
+            }
+        }
+
+        final int msgToFetchSize = fetchMessages.size();
+        if (Logging.LOGD) {
+            LogUtils.d(LOG_TAG, "Processing IDLE changes for mailbox " + mailbox.mId
+                    + ": need sync " + needSync + ", " + msgToFetchSize + " fetch messages");
+        }
+
+        if (msgToFetchSize > 0) {
+            if (!needSync && msgToFetchSize <= MAX_MESSAGES_TO_FETCH) {
+                try {
+                    processImapFetchChanges(context, account, mailbox, fetchMessages);
+                } catch (MessagingException ex) {
+                    LogUtils.w(LOG_TAG,
+                            "Failed to process imap idle changes for mailbox " + mailbox.mId);
+                    needSync = true;
+                }
+            } else {
+                needSync = true;
+            }
+        }
+
+        if (needSync) {
+            requestSync(context, account, mailbox.mId, true);
+        } else {
+            // In case no sync happens, re-add idle status
+            try {
+                if (account.getSyncInterval() == Account.CHECK_INTERVAL_PUSH) {
+                    final ImapIdleFolderHolder holder = ImapIdleFolderHolder.getInstance();
+                    holder.registerMailboxForIdle(context, account, mailbox);
+                }
+            } catch (MessagingException ex) {
+                LogUtils.w(LOG_TAG, "Failed to readd imap idle after no sync " +
+                        "for mailbox " + mailbox.mId);
+            }
+        }
     }
 }
