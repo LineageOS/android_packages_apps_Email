@@ -293,6 +293,10 @@ public class EmailBroadcastProcessorService extends IntentService {
     private void onBootCompleted() {
         performOneTimeInitialization();
         reconcileAndStartServices();
+
+        // This is an special case to start IMAP PUSH via its adapter
+        Intent imap = new Intent(this, LegacyImapSyncAdapterService.class);
+        startService(imap);
     }
 
     private void reconcileAndStartServices() {
