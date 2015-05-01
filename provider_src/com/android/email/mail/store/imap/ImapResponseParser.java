@@ -66,6 +66,9 @@ public class ImapResponseParser {
      */
     private final ArrayList<ImapResponse> mResponsesToDestroy = new ArrayList<ImapResponse>();
 
+    private boolean mIdling;
+    private boolean mExpectIdlingResponse;
+
     /**
      * Exception thrown when we receive BYE.  It derives from IOException, so it'll be treated
      * in the same way EOF does.
@@ -168,10 +171,17 @@ public class ImapResponseParser {
         } catch (RuntimeException e) {
             // Parser crash -- log network activities.
             onParseError(e);
+            mIdling = false;
             throw e;
         } catch (IOException e) {
             // Network error, or received an unexpected char.
-            onParseError(e);
+            // If we are idling don't parse the error, just let the upper layers
+            // handle the exception
+            if (!mIdling) {
+                onParseError(e);
+            } else {
+                mIdling = false;
+            }
             throw e;
         }
 
@@ -242,6 +252,14 @@ public class ImapResponseParser {
         return ret;
     }
 
+    public void resetIdlingStatus() {
+        mIdling = false;
+    }
+
+    public void expectIdlingResponse() {
+        mExpectIdlingResponse = true;
+    }
+
     /**
      * Parse and return the response line.
      */
@@ -263,11 +281,26 @@ public class ImapResponseParser {
                 responseToDestroy = new ImapResponse(null, true);
 
                 // If it's continuation request, we don't really care what's in it.
-                responseToDestroy.add(new ImapSimpleString(readUntilEol()));
+                // NOTE: specs say the server is supposed to respond to the IDLE command
+                // with a continuation request response. To simplify internal handling,
+                // we'll always construct same response (ignoring the server text response).
+                // Our implementation always returns "+ idling".
+                if (mExpectIdlingResponse) {
+                    // Discard the server message and put what we expected
+                    readUntilEol();
+                    responseToDestroy.add(new ImapSimpleString(ImapConstants.IDLING));
+                } else {
+                    responseToDestroy.add(new ImapSimpleString(readUntilEol()));
+                }
 
                 // Response has successfully been built.  Let's return it.
                 responseToReturn = responseToDestroy;
                 responseToDestroy = null;
+
+                mIdling = responseToReturn.isIdling();
+                if (mIdling) {
+                    mExpectIdlingResponse = true;
+                }
             } else {
                 // Status response or response data
                 final String tag;
