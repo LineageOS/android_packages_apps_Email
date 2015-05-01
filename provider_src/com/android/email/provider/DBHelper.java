@@ -58,6 +58,7 @@ import com.android.emailcommon.provider.MessageStateChange;
 import com.android.emailcommon.provider.Policy;
 import com.android.emailcommon.provider.QuickResponse;
 import com.android.emailcommon.provider.SuggestedContact;
+import com.android.emailcommon.service.EmailServiceProxy;
 import com.android.emailcommon.service.LegacyPolicySet;
 import com.android.emailcommon.service.SyncSize;
 import com.android.emailcommon.service.SyncWindow;
@@ -189,6 +190,7 @@ public final class DBHelper {
     //              version above 12.0
     // Version 128: Add setSyncSizeEnabled and syncSize columns for Account table.
     // Version 129: Update all IMAP INBOX mailboxes to force synchronization
+    // Version 130: Account capabilities (check EmailServiceProxy#CAPABILITY_*)
     public static final int DATABASE_VERSION = 130;
 
     // Any changes to the database format *must* include update-in-place code.
@@ -529,7 +531,8 @@ public final class DBHelper {
             + AccountColumns.PING_DURATION + " integer, "
             + AccountColumns.SET_SYNC_SIZE_ENABLED + " integer, "
             + AccountColumns.SYNC_SIZE + " integer, "
-            + AccountColumns.AUTO_FETCH_ATTACHMENTS + " integer"
+            + AccountColumns.AUTO_FETCH_ATTACHMENTS + " integer, "
+            + AccountColumns.CAPABILITIES + " integer default 0"
             + ");";
         db.execSQL("create table " + Account.TABLE_NAME + s);
         // Deleting an account deletes associated Mailboxes and HostAuth's
@@ -1579,6 +1582,52 @@ public final class DBHelper {
                         + HostAuth.TABLE_NAME + "." + HostAuthColumns.PROTOCOL + "='"
                         + mContext.getString(R.string.protocol_imap) + "' or "
                         + HostAuth.TABLE_NAME + "." + HostAuthColumns.PROTOCOL + "='imap'));");
+            }
+
+            if (oldVersion <= 130) {
+                //Account capabilities (check EmailServiceProxy#CAPABILITY_*)
+                try {
+                    // Create capabilities field
+                    db.execSQL("alter table " + Account.TABLE_NAME
+                            + " add column " + AccountColumns.CAPABILITIES
+                            + " integer" + " default 0;");
+
+                    // Update all accounts with the appropriate capabilities
+                    Cursor c = db.rawQuery("select " + Account.TABLE_NAME + "."
+                            + AccountColumns._ID + ", " + HostAuth.TABLE_NAME + "."
+                            + HostAuthColumns.PROTOCOL + " from " + Account.TABLE_NAME + ", "
+                            + HostAuth.TABLE_NAME + " where " + Account.TABLE_NAME + "."
+                            + AccountColumns.HOST_AUTH_KEY_RECV + " = " + HostAuth.TABLE_NAME
+                            + "." + HostAuthColumns._ID + ";", null);
+                    if (c != null) {
+                        try {
+                            while(c.moveToNext()) {
+                                long id = c.getLong(c.getColumnIndexOrThrow(AccountColumns._ID));
+                                String protocol = c.getString(c.getColumnIndexOrThrow(
+                                        HostAuthColumns.PROTOCOL));
+
+                                int capabilities = 0;
+                                if (protocol.equals(LEGACY_SCHEME_IMAP)
+                                        || protocol.equals(LEGACY_SCHEME_EAS)) {
+                                    // Don't know yet if the imap server supports the IDLE
+                                    // capability, but since this is upgrading the account,
+                                    // just assume that all imap servers supports the push
+                                    // capability and let disable it by the IMAP service
+                                    capabilities |= EmailServiceProxy.CAPABILITY_PUSH;
+                                }
+                                final ContentValues cv = new ContentValues(1);
+                                cv.put(AccountColumns.CAPABILITIES, capabilities);
+                                db.update(Account.TABLE_NAME, cv, AccountColumns._ID + " = ?",
+                                        new String[]{String.valueOf(id)});
+                            }
+                        } finally {
+                            c.close();
+                        }
+                    }
+                } catch (final SQLException e) {
+                    // Shouldn't be needed unless we're debugging and interrupt the process
+                    LogUtils.w(TAG, "Exception upgrading EmailProvider.db from v129 to v130", e);
+                }
             }
 
             // Due to a bug in commit 44a064e5f16ddaac25f2acfc03c118f65bc48aec,
