@@ -78,10 +78,12 @@ public class Mailbox extends EmailContent implements EmailContent.MailboxColumns
 
     public static Uri CONTENT_URI;
     public static Uri MESSAGE_COUNT_URI;
+    public static Uri NOTIFIER_URI;
 
     public static void initMailbox() {
         CONTENT_URI = Uri.parse(EmailContent.CONTENT_URI + "/mailbox");
         MESSAGE_COUNT_URI = Uri.parse(EmailContent.CONTENT_URI + "/mailboxCount");
+        NOTIFIER_URI = Uri.parse(EmailContent.CONTENT_NOTIFIER_URI + "/mailbox");
     }
 
     private static String formatMailboxIdExtra(final int index) {

@@ -46,6 +46,7 @@ public final class ImapConstants {
     public static final String COPYUID = "COPYUID";
     public static final String CREATE = "CREATE";
     public static final String DELETE = "DELETE";
+    public static final String DONE = "DONE";
     public static final String EXAMINE = "EXAMINE";
     public static final String EXISTS = "EXISTS";
     public static final String EXPUNGE = "EXPUNGE";
@@ -58,6 +59,8 @@ public final class ImapConstants {
     public static final String FLAGS = "FLAGS";
     public static final String FLAGS_SILENT = "FLAGS.SILENT";
     public static final String ID = "ID";
+    public static final String IDLE = "IDLE";
+    public static final String IDLING = "idling";
     public static final String INBOX = "INBOX";
     public static final String INTERNALDATE = "INTERNALDATE";
     public static final String LIST = "LIST";

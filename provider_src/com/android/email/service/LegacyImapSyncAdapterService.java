@@ -16,5 +16,117 @@
 
 package com.android.email.service;
 
+import android.content.AbstractThreadedSyncAdapter;
+import android.content.ComponentName;
+import android.content.ContentProviderClient;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.content.SyncResult;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.os.IBinder;
+import android.text.format.DateUtils;
+
+import com.android.emailcommon.Logging;
+import com.android.emailcommon.service.IEmailService;
+import com.android.mail.utils.LogUtils;
+
 public class LegacyImapSyncAdapterService extends PopImapSyncAdapterService {
+    private static final String TAG = "LegacyImapSyncAdapterService";
+
+    // The call to ServiceConnection.onServiceConnected is asynchronous to bindService. It's
+    // possible for that to be delayed if, in which case, a call to onPerformSync
+    // could occur before we have a connection to the service.
+    // In onPerformSync, if we don't yet have our ImapService, we will wait for up to 10
+    // seconds for it to appear. If it takes longer than that, we will fail the sync.
+    private static final long MAX_WAIT_FOR_SERVICE_MS = 10 * DateUtils.SECOND_IN_MILLIS;
+
+    private IEmailService mImapService;
+
+    private final ServiceConnection mConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name,  IBinder binder) {
+            if (Logging.LOGD) {
+                LogUtils.v(TAG, "onServiceConnected");
+            }
+            synchronized (mConnection) {
+                synchronized (mConnection) {
+                    mImapService = IEmailService.Stub.asInterface(binder);
+                    mConnection.notify();
+
+                    // We need to run this task in the background (not in UI-Thread)
+                    AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
+                        @Override
+                        protected Void doInBackground(Void... params) {
+                            final Context context = LegacyImapSyncAdapterService.this;
+                            ImapService.registerAllImapIdleMailboxes(context, mImapService);
+                            return null;
+                        }
+                    };
+                    task.execute();
+                }
+            }
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            mImapService = null;
+        }
+    };
+
+    protected class ImapSyncAdapterImpl extends SyncAdapterImpl {
+        public ImapSyncAdapterImpl(Context context) {
+            super(context);
+        }
+
+        @Override
+        public void onPerformSync(android.accounts.Account account, Bundle extras,
+                String authority, ContentProviderClient provider, SyncResult syncResult) {
+            if (!waitForService()) {
+                // The service didn't connect, nothing we can do.
+                return;
+            }
+            super.onPerformSync(account, extras, authority, provider, syncResult);
+        }
+    }
+
+    public AbstractThreadedSyncAdapter getSyncAdapter() {
+        return new SyncAdapterImpl(getApplicationContext());
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        bindService(new Intent(this, ImapService.class), mConnection, Context.BIND_AUTO_CREATE);
+
+        // TODO Don't start the LegacyImapSyncAdapterService service if there
+        // isn't account with IDLE support and stop it if the condition changed
+        startService(new Intent(this, LegacyImapSyncAdapterService.class));
+    }
+
+    @Override
+    public void onDestroy() {
+        unbindService(mConnection);
+        super.onDestroy();
+    }
+
+    private final boolean waitForService() {
+        synchronized(mConnection) {
+            if (mImapService == null) {
+                LogUtils.d(TAG, "service not yet connected");
+                try {
+                    mConnection.wait(MAX_WAIT_FOR_SERVICE_MS);
+                } catch (InterruptedException e) {
+                    LogUtils.wtf(TAG, "InterrupedException waiting for EasService to connect");
+                    return false;
+                }
+                if (mImapService == null) {
+                    LogUtils.wtf(TAG, "timed out waiting for EasService to connect");
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }

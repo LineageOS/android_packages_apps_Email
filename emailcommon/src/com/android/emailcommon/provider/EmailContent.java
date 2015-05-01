@@ -1724,6 +1724,8 @@ public abstract class EmailContent {
         public static final String PING_DURATION = "pingDuration";
         // Automatically fetch pop3 attachments
         public static final String AUTO_FETCH_ATTACHMENTS = "autoFetchAttachments";
+        // Account capabilities (check EmailServiceProxy#CAPABILITY_*)
+        public static final String CAPABILITIES = "capabilities";
     }
 
     public interface QuickResponseColumns extends BaseColumns {

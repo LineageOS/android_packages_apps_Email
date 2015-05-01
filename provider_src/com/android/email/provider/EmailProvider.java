@@ -189,11 +189,11 @@ public class EmailProvider extends ContentProvider
         "vnd.android.cursor.item/email-attachment";
 
     /** Appended to the notification URI for delete operations */
-    private static final String NOTIFICATION_OP_DELETE = "delete";
+    public static final String NOTIFICATION_OP_DELETE = "delete";
     /** Appended to the notification URI for insert operations */
-    private static final String NOTIFICATION_OP_INSERT = "insert";
+    public static final String NOTIFICATION_OP_INSERT = "insert";
     /** Appended to the notification URI for update operations */
-    private static final String NOTIFICATION_OP_UPDATE = "update";
+    public static final String NOTIFICATION_OP_UPDATE = "update";
 
     /** The query string to trigger a folder refresh. */
     protected static String QUERY_UIREFRESH = "uirefresh";
@@ -2539,6 +2539,9 @@ public class EmailProvider extends ContentProvider
             case ACCOUNT:
             case ACCOUNT_ID:
                 baseUri = Account.NOTIFIER_URI;
+            case MAILBOX:
+            case MAILBOX_ID:
+                baseUri = Mailbox.NOTIFIER_URI;
                 break;
         }
         return baseUri;
