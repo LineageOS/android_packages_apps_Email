@@ -74,8 +74,8 @@
         email:serviceClass="com.android.email.service.ImapService"
         email:port="143"
         email:portSsl="993"
-        email:syncIntervalStrings="@array/account_settings_check_frequency_entries"
-        email:syncIntervals="@array/account_settings_check_frequency_values"
+        email:syncIntervalStrings="@array/account_settings_check_frequency_entries_push"
+        email:syncIntervals="@array/account_settings_check_frequency_values_push"
         email:defaultSyncInterval="mins15"
 
         email:offerTls="true"
