@@ -77,6 +77,13 @@ public class ImapResponse extends ImapList {
     }
 
     /**
+     * @return whether it's an IDLE response.
+     */
+    public boolean isIdling() {
+        return is(0, ImapConstants.IDLING);
+    }
+
+    /**
      * @return whether it's an {@code responseType} data response.  (i.e. not tagged).
      * @param index where {@code responseType} should appear.  e.g. 1 for "FETCH"
      * @param responseType e.g. "FETCH"

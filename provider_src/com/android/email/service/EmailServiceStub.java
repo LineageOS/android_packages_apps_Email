@@ -287,6 +287,12 @@ public abstract class EmailServiceStub extends IEmailService.Stub implements IEm
                 mailbox = Mailbox.restoreMailboxWithId(mContext, message.mMainMailboxKey);
             }
 
+            if (message.mServerId == null) {
+                cb.loadAttachmentStatus(messageId, attachmentId,
+                        EmailServiceStatus.MESSAGE_NOT_FOUND, 0);
+                return;
+            }
+
             if (account == null || mailbox == null) {
                 // If the account/mailbox are gone, just report success; the UI handles this
                 cb.loadAttachmentStatus(messageId, attachmentId,
@@ -415,7 +421,6 @@ public abstract class EmailServiceStub extends IEmailService.Stub implements IEm
                         // actually occurs.
                         mailbox.mUiSyncStatus = Mailbox.SYNC_STATUS_INITIAL_SYNC_NEEDED;
                     }
-                    mailbox.save(mContext);
                     if (type == Mailbox.TYPE_INBOX) {
                         inboxId = mailbox.mId;
 
@@ -424,6 +429,7 @@ public abstract class EmailServiceStub extends IEmailService.Stub implements IEm
                         // should start marked
                         mailbox.mSyncInterval = 1;
                     }
+                    mailbox.save(mContext);
                 }
             }
 

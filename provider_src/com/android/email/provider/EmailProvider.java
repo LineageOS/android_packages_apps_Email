@@ -189,11 +189,11 @@ public class EmailProvider extends ContentProvider
         "vnd.android.cursor.item/email-attachment";
 
     /** Appended to the notification URI for delete operations */
-    private static final String NOTIFICATION_OP_DELETE = "delete";
+    public static final String NOTIFICATION_OP_DELETE = "delete";
     /** Appended to the notification URI for insert operations */
-    private static final String NOTIFICATION_OP_INSERT = "insert";
+    public static final String NOTIFICATION_OP_INSERT = "insert";
     /** Appended to the notification URI for update operations */
-    private static final String NOTIFICATION_OP_UPDATE = "update";
+    public static final String NOTIFICATION_OP_UPDATE = "update";
 
     /** The query string to trigger a folder refresh. */
     protected static String QUERY_UIREFRESH = "uirefresh";
@@ -833,6 +833,7 @@ public class EmailProvider extends ContentProvider
 
         // Notify all notifier cursors
         sendNotifierChange(getBaseNotificationUri(match), NOTIFICATION_OP_DELETE, id);
+        sendSyncSettingChanged(getBaseSyncSettingChangedUri(match), NOTIFICATION_OP_DELETE, id);
 
         // Notify all email content cursors
         notifyUI(EmailContent.CONTENT_URI, null);
@@ -1075,6 +1076,7 @@ public class EmailProvider extends ContentProvider
 
         // Notify all notifier cursors
         sendNotifierChange(getBaseNotificationUri(match), NOTIFICATION_OP_INSERT, id);
+        sendSyncSettingChanged(getBaseSyncSettingChangedUri(match), NOTIFICATION_OP_INSERT, id);
 
         // Notify all existing cursors.
         notifyUI(EmailContent.CONTENT_URI, null);
@@ -1924,7 +1926,7 @@ public class EmailProvider extends ContentProvider
     private static final int INDEX_SYNC_KEY = 2;
 
     /**
-     * Restart push if we need it (currently only for Exchange accounts).
+     * Restart push if we need it.
      * @param context A {@link Context}.
      * @param db The {@link SQLiteDatabase}.
      * @param id The id of the thing we're looking for.
@@ -1937,9 +1939,13 @@ public class EmailProvider extends ContentProvider
             try {
                 if (c.moveToFirst()) {
                     final String protocol = c.getString(INDEX_PROTOCOL);
-                    // Only restart push for EAS accounts that have completed initial sync.
-                    if (context.getString(R.string.protocol_eas).equals(protocol) &&
-                            !EmailContent.isInitialSyncKey(c.getString(INDEX_SYNC_KEY))) {
+                    final String syncKey = c.getString(INDEX_SYNC_KEY);
+                    final boolean supportsPush =
+                            context.getString(R.string.protocol_eas).equals(protocol) ||
+                            context.getString(R.string.protocol_legacy_imap).equals(protocol);
+
+                    // Only restart push for EAS or IMAP accounts that have completed initial sync.
+                    if (supportsPush && !EmailContent.isInitialSyncKey(syncKey)) {
                         final String emailAddress = c.getString(INDEX_EMAIL_ADDRESS);
                         final android.accounts.Account account =
                                 getAccountManagerAccount(context, emailAddress, protocol);
@@ -2010,6 +2016,7 @@ public class EmailProvider extends ContentProvider
         final SQLiteDatabase db = getDatabase(context);
         final int table = match >> BASE_SHIFT;
         int result;
+        boolean syncSettingChanged = false;
 
         // We do NOT allow setting of unreadCount/messageCount via the provider
         // These columns are maintained via triggers
@@ -2159,6 +2166,14 @@ public class EmailProvider extends ContentProvider
                         }
                     } else if (match == MESSAGE_ID) {
                         db.execSQL(UPDATED_MESSAGE_DELETE + id);
+                    } else if (match == MAILBOX_ID) {
+                        if (values.containsKey(MailboxColumns.SYNC_INTERVAL)) {
+                            syncSettingChanged = true;
+                        }
+                    } else if (match == ACCOUNT_ID) {
+                        if (values.containsKey(AccountColumns.SYNC_INTERVAL)) {
+                            syncSettingChanged = true;
+                        }
                     }
                     result = db.update(tableName, values, whereWithId(id, selection),
                             selectionArgs);
@@ -2293,6 +2308,10 @@ public class EmailProvider extends ContentProvider
                                 TextUtils.isEmpty(values.getAsString(AttachmentColumns.LOCATION))) {
                             LogUtils.w(TAG, new Throwable(), "attachment with blank location");
                         }
+                    } else if (match == MAILBOX) {
+                        if (values.containsKey(MailboxColumns.SYNC_INTERVAL)) {
+                            syncSettingChanged = true;
+                        }
                     }
                     result = db.update(tableName, values, selection, selectionArgs);
                     break;
@@ -2314,6 +2333,10 @@ public class EmailProvider extends ContentProvider
         // Notify all notifier cursors if some records where changed in the database
         if (result > 0) {
             sendNotifierChange(getBaseNotificationUri(match), NOTIFICATION_OP_UPDATE, id);
+            if (syncSettingChanged) {
+                sendSyncSettingChanged(getBaseSyncSettingChangedUri(match),
+                        NOTIFICATION_OP_UPDATE, id);
+            }
             notifyUI(notificationUri, null);
         }
         return result;
@@ -2544,6 +2567,21 @@ public class EmailProvider extends ContentProvider
         return baseUri;
     }
 
+    private static Uri getBaseSyncSettingChangedUri(int match) {
+        Uri baseUri = null;
+        switch (match) {
+            case ACCOUNT:
+            case ACCOUNT_ID:
+                baseUri = Account.SYNC_SETTING_CHANGED_URI;
+                break;
+            case MAILBOX:
+            case MAILBOX_ID:
+                baseUri = Mailbox.SYNC_SETTING_CHANGED_URI;
+                break;
+        }
+        return baseUri;
+    }
+
     /**
      * Sends a change notification to any cursors observers of the given base URI. The final
      * notification URI is dynamically built to contain the specified information. It will be
@@ -2579,6 +2617,25 @@ public class EmailProvider extends ContentProvider
         // We want to send the message list changed notification if baseUri is Message.NOTIFIER_URI.
         if (baseUri.equals(Message.NOTIFIER_URI)) {
             sendMessageListDataChangedNotification();
+        }
+    }
+
+    private void sendSyncSettingChanged(Uri baseUri, String op, String id) {
+        if (baseUri == null) return;
+
+        // Append the operation, if specified
+        if (op != null) {
+            baseUri = baseUri.buildUpon().appendEncodedPath(op).build();
+        }
+
+        long longId = 0L;
+        try {
+            longId = Long.valueOf(id);
+        } catch (NumberFormatException ignore) {}
+        if (longId > 0) {
+            notifyUI(baseUri, id);
+        } else {
+            notifyUI(baseUri, null);
         }
     }
 
