@@ -29,6 +29,7 @@ import com.android.email.mail.store.imap.ImapList;
 import com.android.email.mail.store.imap.ImapResponse;
 import com.android.email.mail.store.imap.ImapString;
 import com.android.email.mail.store.imap.ImapUtility;
+import com.android.email.mail.transport.MailTransport;
 import com.android.email.service.ImapService;
 import com.android.emailcommon.Logging;
 import com.android.emailcommon.internet.BinaryTempFileBody;
@@ -60,6 +61,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.SocketTimeoutException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -85,6 +87,11 @@ class ImapFolder extends Folder {
     Mailbox mMailbox;
     /** A set of hashes that can be used to track dirtiness */
     Object mHash[];
+
+    private final Object mIdleSync = new Object();
+    private boolean mIdling;
+    private boolean mIdlingCancelled;
+    private Thread mIdleReader;
 
     /*package*/ ImapFolder(ImapStore store, String name) {
         mStore = store;
@@ -174,6 +181,150 @@ class ImapFolder extends Folder {
     @Override
     public String getName() {
         return mName;
+    }
+
+    @Override
+    public void startPush(final PushCallback callback) throws MessagingException {
+        if (!isOpen()) {
+            throw new MessagingException("Folder " + mName + " is not open.");
+        }
+        synchronized (mIdleSync) {
+            if (mIdling) {
+                throw new MessagingException("Folder " + mName + " is in IDLE state already.");
+            }
+            mIdlingCancelled = false;
+        }
+
+        // Run idle in background
+        mIdleReader = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // We setup the max time specified at rfc-2177 to re-issue an idle
+                    // request to the server
+                    mConnection.setReadTimeout(ImapConnection.PING_IDLE_TIMEOUT);
+                    mConnection.destroyResponses();
+
+                    // Enter now in idle status (we hold a connection with the server to
+                    // listen for new changes)
+                    synchronized (mIdleSync) {
+                        mIdling = true;
+                        if (mIdlingCancelled) {
+                            return;
+                        }
+                    }
+
+                    if (callback != null) {
+                        callback.onIdled();
+                    }
+                    List<ImapResponse> responses =
+                            mConnection.executeSimpleCommand(ImapConstants.IDLE);
+
+                    // Idle was successful? Then the first response must be and idling response
+                    if (responses.size() == 0 || (mIdling && !responses.get(0).isIdling())) {
+                        if (callback != null) {
+                            callback.onPingException(
+                                    new MessagingException(
+                                            MessagingException.SERVER_ERROR, "Cannot idle"));
+                        }
+                        synchronized (mIdleSync) {
+                            mIdling = false;
+                        }
+                        return;
+                    }
+
+                    // Exit idle if we are still in that state
+                    synchronized (mIdleSync) {
+                        if (mIdling) {
+                            try {
+                                mConnection.setReadTimeout(MailTransport.SOCKET_READ_TIMEOUT);
+                                mConnection.executeSimpleCommand(ImapConstants.DONE);
+                            } catch (MessagingException me) {
+                                // Ignore this exception caused by messages in the queue
+                            }
+                        }
+
+                        if (!mIdlingCancelled && callback != null) {
+                            // Notify that new changes exists in the server. Remove
+                            // the idling status response since is only relevant for the protocol
+                            // We have to enter in idle
+                            callback.onNewServerChange(
+                                    new ArrayList<Object>(responses.subList(1, responses.size())));
+                        }
+
+                        mIdling = false;
+                    }
+
+                } catch (MessagingException me) {
+                    synchronized (mIdleSync) {
+                        mIdling = false;
+                    }
+                    if (callback != null) {
+                        callback.onPingException(me);
+                    }
+
+                } catch (SocketTimeoutException ioe) {
+                    synchronized (mIdleSync) {
+                        mIdling = false;
+                    }
+                    if (callback != null) {
+                        callback.onPingTimeout();
+                    }
+
+                } catch (IOException ioe) {
+                    synchronized (mIdleSync) {
+                        mIdling = false;
+                    }
+                    if (callback != null) {
+                        callback.onPingException(ioExceptionHandler(mConnection, ioe));
+                    }
+
+                } finally {
+                    if (mConnection != null) {
+                        mStore.poolConnection(mConnection);
+                    }
+                }
+            }
+        });
+        mIdleReader.setName("IdleReader " + mStore.getAccount().mId + ":" + mName);
+        mIdleReader.start();
+    }
+
+    @Override
+    public void endPush() throws MessagingException {
+        if (!isOpen()) {
+            throw new MessagingException("Folder " + mName + " is not open.");
+        }
+        synchronized (mIdleSync) {
+            if (!mIdling) {
+                throw new MessagingException("Folder " + mName + " isn't in IDLE state.");
+            }
+            try {
+                mIdlingCancelled = true;
+                // We can read responses here because we can block the buffer. Read commands
+                // are always done by startListener method (blocking idle)
+                mConnection.sendCommand(ImapConstants.DONE, false);
+
+            } catch (MessagingException me) {
+                // Treat IOERROR messaging exception as IOException
+                if (me.getExceptionType() == MessagingException.IOERROR) {
+                    if (mConnection != null) {
+                        mConnection.close();
+                    }
+                    mConnection = null;
+                    throw me;
+                }
+
+            } catch (IOException ioe) {
+                throw ioExceptionHandler(mConnection, ioe);
+
+            }
+        }
+    }
+
+    @Override
+    public boolean isPushStarted() {
+        return mIdling;
     }
 
     @Override
@@ -1270,7 +1421,9 @@ class ImapFolder extends Folder {
         if (DebugUtils.DEBUG) {
             LogUtils.d(Logging.LOG_TAG, "IO Exception detected: ", ioe);
         }
-        connection.close();
+        if (connection != null) {
+            connection.close();
+        }
         if (connection == mConnection) {
             mConnection = null; // To prevent close() from returning the connection to the pool.
             close(false);
