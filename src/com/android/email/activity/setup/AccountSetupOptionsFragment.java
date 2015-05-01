@@ -29,7 +29,12 @@ import com.android.email.activity.UiUtilities;
 import com.android.email.service.EmailServiceUtils;
 import com.android.emailcommon.provider.Account;
 import com.android.emailcommon.provider.Policy;
+import com.android.emailcommon.service.EmailServiceProxy;
 import com.android.emailcommon.service.SyncWindow;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class AccountSetupOptionsFragment extends AccountSetupFragment {
     private Spinner mCheckFrequencyView;
@@ -90,11 +95,24 @@ public class AccountSetupOptionsFragment extends AccountSetupFragment {
         final CharSequence[] frequencyEntries = serviceInfo.syncIntervalStrings;
 
         // Now create the array used by the sync interval Spinner
-        final SpinnerOption[] checkFrequencies = new SpinnerOption[frequencyEntries.length];
+        int checkIntervalPushPos = -1;
+        SpinnerOption[] checkFrequencies = new SpinnerOption[frequencyEntries.length];
         for (int i = 0; i < frequencyEntries.length; i++) {
-            checkFrequencies[i] = new SpinnerOption(
-                    Integer.valueOf(frequencyValues[i].toString()), frequencyEntries[i].toString());
+            Integer value = Integer.valueOf(frequencyValues[i].toString());
+            if (value.intValue() == Account.CHECK_INTERVAL_PUSH) {
+                checkIntervalPushPos = i;
+            }
+            checkFrequencies[i] = new SpinnerOption(value, frequencyEntries[i].toString());
         }
+
+        // Ensure that push capability is supported by the server
+        boolean hasPushCapability = account.hasCapability(EmailServiceProxy.CAPABILITY_PUSH);
+        if (!hasPushCapability && checkIntervalPushPos != -1) {
+            List<SpinnerOption> options = new ArrayList<>(Arrays.asList(checkFrequencies));
+            options.remove(checkIntervalPushPos);
+            checkFrequencies = options.toArray(new SpinnerOption[options.size()]);
+        }
+
         final ArrayAdapter<SpinnerOption> checkFrequenciesAdapter =
                 new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item,
                         checkFrequencies);

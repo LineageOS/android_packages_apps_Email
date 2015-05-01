@@ -532,7 +532,6 @@ public abstract class EmailServiceStub extends IEmailService.Stub implements IEm
     @Override
     public int sync(final long accountId, final Bundle syncExtras) {
         return EmailServiceStatus.SUCCESS;
-
     }
 
     @Override
