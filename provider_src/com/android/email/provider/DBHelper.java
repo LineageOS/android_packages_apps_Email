@@ -524,7 +524,7 @@ public final class DBHelper {
             + AccountColumns.SIGNATURE + " text, "
             + AccountColumns.POLICY_KEY + " integer, "
             + AccountColumns.MAX_ATTACHMENT_SIZE + " integer, "
-            + AccountColumns.PING_DURATION + " integer"
+            + AccountColumns.PING_DURATION + " integer, "
             + AccountColumns.AUTO_FETCH_ATTACHMENTS + " integer"
             + ");";
         db.execSQL("create table " + Account.TABLE_NAME + s);
@@ -1561,6 +1561,12 @@ public final class DBHelper {
                         + mContext.getString(R.string.protocol_imap) + "' or "
                         + HostAuth.TABLE_NAME + "." + HostAuthColumns.PROTOCOL + "='imap'));");
             }
+
+            // Due to a bug in commit 44a064e5f16ddaac25f2acfc03c118f65bc48aec,
+            // AUTO_FETCH_ATTACHMENTS column could not be available in the Account table.
+            // Since cm12 and up doesn't use this column, we are leave as is it. In case
+            // the feature were added, then we need to create a new exception to ensure
+            // that the columns is re-added.
         }
 
         @Override
