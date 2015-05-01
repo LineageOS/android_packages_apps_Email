@@ -917,7 +917,7 @@ public class AccountSetupFinal extends AccountSetupActivity
     public void setDefaultsForProtocol(Account account) {
         final EmailServiceUtils.EmailServiceInfo info = mSetupData.getIncomingServiceInfo(this);
         if (info == null) return;
-        account.mSyncInterval = info.defaultSyncInterval;
+        account.setSyncInterval(info.defaultSyncInterval);
         account.mSyncLookback = info.defaultLookback;
         if (info.offerLocalDeletes) {
             account.setDeletePolicy(info.defaultLocalDeletes);

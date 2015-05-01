@@ -180,6 +180,21 @@ public class LegacyConversions {
             if (!TextUtils.isEmpty(disposition)) {
                 // Treat inline parts as attachments
                 addOneAttachment(context, localMessage, inlinePart);
+            } else {
+                // Close the buffer
+                try {
+                    if (inlinePart.getBody() == null) {
+                        continue;
+                    }
+                    InputStream is = inlinePart.getBody().getInputStream();
+                    if (is == null) {
+                        continue;
+                    }
+                    is.close();
+                    is = null;
+                } catch (IOException io) {
+                    // Ignore
+                }
             }
         }
     }

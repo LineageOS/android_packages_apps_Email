@@ -180,7 +180,7 @@ public class ImapList extends ImapElement {
 
     @Override
     public String toString() {
-        return mList.toString();
+        return mList != null ? mList.toString() : "[null]";
     }
 
     /**

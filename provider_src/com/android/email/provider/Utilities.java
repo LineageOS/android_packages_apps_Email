@@ -118,8 +118,9 @@ public class Utilities {
                 ArrayList<Part> attachments = new ArrayList<Part>();
                 MimeUtility.collectParts(message, viewables, attachments);
 
+                // Don't close the viewables attachment InputStream yet
                 final ConversionUtilities.BodyFieldData data =
-                        ConversionUtilities.parseBodyFields(viewables);
+                        ConversionUtilities.parseBodyFields(viewables, false);
 
                 // set body and local message values
                 localMessage.setFlags(data.isQuotedReply, data.isQuotedForward);
