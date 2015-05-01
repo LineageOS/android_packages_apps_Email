@@ -36,6 +36,7 @@ import com.android.emailcommon.mail.MessagingException;
 import com.android.mail.utils.LogUtils;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -50,6 +51,15 @@ class ImapConnection {
     // Always check in FALSE
     private static final boolean DEBUG_FORCE_SEND_ID = false;
 
+    // RFC 2177 defines that IDLE connections must be refreshed at least every 29 minutes
+    public static final int PING_IDLE_TIMEOUT = 29 * 60 * 1000;
+
+    // Special timeout for DONE operations
+    public static final int DONE_TIMEOUT = 5 * 1000;
+
+    // Time to wait between the first idle message and triggering the changes
+    private static final int IDLE_OP_READ_TIMEOUT = 500;
+
     /** ID capability per RFC 2971*/
     public static final int CAPABILITY_ID        = 1 << 0;
     /** NAMESPACE capability per RFC 2342 */
@@ -58,6 +68,8 @@ class ImapConnection {
     public static final int CAPABILITY_STARTTLS  = 1 << 2;
     /** UIDPLUS capability per RFC 4315 */
     public static final int CAPABILITY_UIDPLUS   = 1 << 3;
+    /** IDLE capability per RFC 2177 */
+    public static final int CAPABILITY_IDLE      = 1 << 4;
 
     /** The capabilities supported; a set of CAPABILITY_* values. */
     private int mCapabilities;
@@ -68,6 +80,8 @@ class ImapConnection {
     private String mLoginPhrase;
     private String mAccessToken;
     private String mIdPhrase = null;
+
+    private boolean mIdling = false;
 
     /** # of command/response lines to log upon crash. */
     private static final int DISCOURSE_LOGGER_SIZE = 64;
@@ -80,6 +94,8 @@ class ImapConnection {
      */
     private final AtomicInteger mNextCommandTag = new AtomicInteger(0);
 
+    private String mTransportTag;
+
     // Keep others from instantiating directly
     ImapConnection(ImapStore store) {
         setStore(store);
@@ -91,6 +107,16 @@ class ImapConnection {
         // changed, the connection will not be reestablished.
         mImapStore = store;
         mLoginPhrase = null;
+    }
+
+    void setTransportTag(String tag) {
+        mTransportTag = tag;
+        if (mTransport != null) {
+            mTransport.setTag(tag);
+        }
+        if (mParser != null) {
+            mParser.setTag(tag);
+        }
     }
 
     /**
@@ -138,6 +164,7 @@ class ImapConnection {
             // copy configuration into a clean transport, if necessary
             if (mTransport == null) {
                 mTransport = mImapStore.cloneTransport();
+                mTransport.setTag(mTransportTag);
             }
 
             mTransport.open();
@@ -208,12 +235,26 @@ class ImapConnection {
         destroyResponses();
         mParser = null;
         mImapStore = null;
+        mIdling = false;
+    }
+
+    int getReadTimeout() throws IOException {
+        if (mTransport == null) {
+            return MailTransport.SOCKET_READ_TIMEOUT;
+        }
+        return mTransport.getReadTimeout();
+    }
+
+    void setReadTimeout(int timeout) throws IOException {
+        if (mTransport != null) {
+            mTransport.setReadTimeout(timeout);
+        }
     }
 
     /**
      * Returns whether or not the specified capability is supported by the server.
      */
-    private boolean isCapable(int capability) {
+    public boolean isCapable(int capability) {
         return (mCapabilities & capability) != 0;
     }
 
@@ -235,6 +276,9 @@ class ImapConnection {
         if (capabilities.contains(ImapConstants.STARTTLS)) {
             mCapabilities |= CAPABILITY_STARTTLS;
         }
+        if (capabilities.contains(ImapConstants.IDLE)) {
+            mCapabilities |= CAPABILITY_IDLE;
+        }
     }
 
     /**
@@ -247,6 +291,7 @@ class ImapConnection {
     private void createParser() {
         destroyResponses();
         mParser = new ImapResponseParser(mTransport.getInputStream(), mDiscourse);
+        mParser.setTag(mTransportTag);
     }
 
     void destroyResponses() {
@@ -273,6 +318,12 @@ class ImapConnection {
      */
     String sendCommand(String command, boolean sensitive)
             throws MessagingException, IOException {
+        // Don't allow any command other than DONE when idling
+        if (mIdling && !command.equals(ImapConstants.DONE)) {
+            return null;
+        }
+        mIdling = command.equals(ImapConstants.IDLE);
+
         LogUtils.d(Logging.LOG_TAG, "sendCommand %s", (sensitive ? IMAP_REDACTED_LOG : command));
         open();
         return sendCommandInternal(command, sensitive);
@@ -284,7 +335,13 @@ class ImapConnection {
             throw new IOException("Null transport");
         }
         String tag = Integer.toString(mNextCommandTag.incrementAndGet());
-        String commandToSend = tag + " " + command;
+        final String commandToSend;
+        if (command.equals(ImapConstants.DONE)) {
+            // Do not send a tag for DONE command
+            commandToSend = command;
+        } else {
+            commandToSend = tag + " " + command;
+        }
         mTransport.writeLine(commandToSend, sensitive ? IMAP_REDACTED_LOG : null);
         mDiscourse.addSentCommand(sensitive ? IMAP_REDACTED_LOG : commandToSend);
         return tag;
@@ -327,6 +384,11 @@ class ImapConnection {
         return executeSimpleCommand(command, false);
     }
 
+    List<ImapResponse> executeIdleCommand() throws IOException, MessagingException {
+        mParser.expectIdlingResponse();
+        return executeSimpleCommand(ImapConstants.IDLE, false);
+    }
+
     /**
      * Read and return all of the responses from the most recent command sent to the server
      *
@@ -336,13 +398,36 @@ class ImapConnection {
      */
     List<ImapResponse> getCommandResponses() throws IOException, MessagingException {
         final List<ImapResponse> responses = new ArrayList<ImapResponse>();
-        ImapResponse response;
-        do {
-            response = mParser.readResponse();
-            responses.add(response);
-        } while (!response.isTagged());
+        final ImapResponseParser parser = mParser; // might get reset during idling
+        ImapResponse response = null;
+        boolean idling = false;
+        boolean throwSocketTimeoutEx = true;
+        final int lastSocketTimeout = getReadTimeout();
+        try {
+            do {
+                response = parser.readResponse();
+                if (idling) {
+                    setReadTimeout(IDLE_OP_READ_TIMEOUT);
+                    throwSocketTimeoutEx = false;
+                }
+                responses.add(response);
+                if (response.isIdling()) {
+                    idling = true;
+                }
+            } while (idling || !response.isTagged());
+        } catch (SocketTimeoutException ex) {
+            if (throwSocketTimeoutEx) {
+                throw ex;
+            }
+        } finally {
+            parser.resetIdlingStatus();
+            if (lastSocketTimeout != getReadTimeout()) {
+                setReadTimeout(lastSocketTimeout);
+            }
+        }
 
-        if (!response.isOk()) {
+        // When idling, any response is valid; otherwise it must be OK
+        if (!response.isOk() && !idling) {
             final String toString = response.toString();
             final String status = response.getStatusOrEmpty().getString();
             final String alert = response.getAlertTextOrEmpty().getString();
