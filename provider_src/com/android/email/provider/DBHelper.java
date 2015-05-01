@@ -56,6 +56,7 @@ import com.android.emailcommon.provider.MessageMove;
 import com.android.emailcommon.provider.MessageStateChange;
 import com.android.emailcommon.provider.Policy;
 import com.android.emailcommon.provider.QuickResponse;
+import com.android.emailcommon.service.EmailServiceProxy;
 import com.android.emailcommon.service.LegacyPolicySet;
 import com.android.emailcommon.service.SyncWindow;
 import com.android.mail.providers.UIProvider;
@@ -1521,7 +1522,6 @@ public final class DBHelper {
                             + " add column " + AccountColumns.CAPABILITIES
                             + " integer" + " default 0;");
 
-/* From old email app. We don't have EmailServiceProxy, so leave the default.
                     // Update all accounts with the appropriate capabilities
                     Cursor c = db.rawQuery("select " + Account.TABLE_NAME + "."
                             + AccountColumns._ID + ", " + HostAuth.TABLE_NAME + "."
@@ -1554,7 +1554,6 @@ public final class DBHelper {
                             c.close();
                         }
                     }
-*/
                 } catch (final SQLException e) {
                     // Shouldn't be needed unless we're debugging and interrupt the process
                     LogUtils.w(TAG, "Exception upgrading EmailProvider.db from v129 to v130", e);

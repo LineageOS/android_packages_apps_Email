@@ -68,6 +68,12 @@ public class EmailServiceProxy extends ServiceProxy implements IEmailService {
     public static final String VALIDATE_BUNDLE_PROTOCOL_VERSION = "validate_protocol_version";
     public static final String VALIDATE_BUNDLE_REDIRECT_ADDRESS = "validate_redirect_address";
 
+    // Service capabilities
+    public static final String SETTINGS_BUNDLE_CAPABILITIES = "settings_capabilities";
+
+    // List of common interesting services capabilities
+    public static final int CAPABILITY_PUSH = 1 << 0;
+
     private Object mReturn = null;
     private IEmailService mService;
     private final boolean isRemote;
