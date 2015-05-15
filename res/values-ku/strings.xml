@@ -22,20 +22,9 @@
   <string name="permission_access_provider_desc">ڕێگه‌دان به‌ به‌رنامه‌ بۆ چونه‌ناو به‌کارخه‌ری داتای پۆستی ئه‌لیکترۆنی
          داتابه‌یس، که‌ نامه‌ی هاتوو وه‌ ڕۆشتوو وه‌ ناو و تێپه‌ڕه‌وشه‌ی تێدایه‌.</string>
   <string name="app_name">پۆستی ئەلەکترۆنی</string>
-  <string name="debug_title">هەڵەدۆز</string>
   <string name="create_action">دروستکردنی دانه‌یه‌کی نوێ</string>
   <string name="quick_responses_empty_view">هیچ وه‌ڵامێکی خێرا نییه‌.</string>
   <string name="account_settings_action">ڕێکخستنەکانی هەژمار</string>
-  <string name="status_network_error">کێشه‌ی په‌یوه‌ندی.</string>
-  <plurals name="move_messages">
-    <item quantity="one">جوڵانی نامه‌</item>
-    <item quantity="other">جوڵانی نامه‌کان</item>
-  </plurals>
-  <string name="cannot_move_protocol_not_supported_toast">جوڵاندن نه‌گونجاوه‌ بۆ هه‌ژماری POP3</string>
-  <string name="cannot_move_multiple_accounts_toast">ناتوانرێ بجوڵێ له‌به‌ر خۆکاری دیاریکردنی له‌ دوو زیاتر
-        هه‌ژمار.</string>
-  <string name="cannot_move_special_mailboxes_toast">نامه‌کان له‌ ڕه‌شنووس، ده‌رسندوق، وه‌ نێدراوه‌کان ناتوانرێت
-         جوڵان.</string>
   <string name="mailbox_name_display_inbox">نامە هاتووەکان</string>
   <string name="mailbox_name_display_outbox">ده‌رسندوق</string>
   <string name="mailbox_name_display_drafts">ڕه‌شنووسه‌کان</string>
@@ -44,39 +33,19 @@
   <string name="mailbox_name_display_junk">زبڵ</string>
   <string name="mailbox_name_display_starred">ئه‌ستێره‌دار</string>
   <string name="mailbox_name_display_unread">نه‌خوێنراوه‌</string>
-  <string name="account_folder_list_summary_inbox">نامەدان</string>
-  <string name="account_folder_list_summary_starred">ئه‌ستێره‌دار</string>
-  <string name="account_folder_list_summary_drafts">ڕەشنووسەکان</string>
-  <string name="account_folder_list_summary_outbox">سنووقی دەرچوو</string>
+  <string name="debug_title">هەڵەدۆز</string>
   <string name="mailbox_list_account_selector_combined_view">بینینی تێکه‌ڵکراو</string>
   <string name="message_compose_fwd_header_fmt">\n\n-----نامه‌ی بنێڕه‌ت ------\nسه‌ردێڕ:<xliff:g id="subject">%1$s</xliff:g>\nله‌لایه‌ن:<xliff:g id="sender">%2$s</xliff:g>\nبۆ:<xliff:g id="to">%3$s</xliff:g>\nوه‌:<xliff:g id="cc">%4$s</xliff:g>\n</string>
   <string name="message_compose_insert_quick_response_list_title">هاورده‌کردنی وه‌ڵامی خێرا</string>
   <string name="message_compose_insert_quick_response_menu_title">تێخستنی وەڵامی خێرا</string>
   <string name="message_view_attachment_background_load">دانه‌یه‌ک یان زیاتر له‌
          نامه‌ی به‌دواداکه‌وتوو داده‌گیرێت بۆ ناردن.</string>
-  <string name="attachment_not_found">نه‌توانرا هاوپێچی نامه‌که‌ دابگیرێت.</string>
   <string name="message_decode_error">هه‌ڵه‌یه‌ک هه‌یه‌ له‌کاتی هه‌ڵوه‌شاندنی نامه‌که‌.</string>
   <string name="forward_download_failed_ticker">نه‌توانرا به‌دوادوابکه‌وێت دانه‌یه‌ک یان زیاتر.</string>
   <string name="forward_download_failed_title">هاوپێچ به‌دوادانه‌که‌وت</string>
   <string name="login_failed_ticker">
         <xliff:g id="account_name">%s</xliff:g> چوونه‌ژووره‌وه‌ سه‌رکه‌وتوونه‌بوو.</string>
   <string name="login_failed_title">نەتوانرا بچێتەژورەوە</string>
-  <plurals name="message_view_attachment_bytes">
-    <item quantity="one"><xliff:g id="size_in_bytes" example="1">%d</xliff:g>B</item>
-    <item quantity="other"><xliff:g id="size_in_bytes" example="279">%d</xliff:g>B</item>
-  </plurals>
-  <plurals name="message_view_attachment_kilobytes">
-    <item quantity="one"><xliff:g id="size_in_kilobytes" example="1">%d</xliff:g>KB</item>
-    <item quantity="other"><xliff:g id="size_in_kilobytes" example="279">%d</xliff:g>KB</item>
-  </plurals>
-  <plurals name="message_view_attachment_megabytes">
-    <item quantity="one"><xliff:g id="size_in_megabytes" example="1">%d</xliff:g>MB</item>
-    <item quantity="other"><xliff:g id="size_in_megabytes" example="279">%d</xliff:g>MB</item>
-  </plurals>
-  <plurals name="message_view_attachment_gigabytes">
-    <item quantity="one"><xliff:g id="size_in_gigabytes" example="1">%d</xliff:g>GB</item>
-    <item quantity="other"><xliff:g id="size_in_gigabytes" example="279">%d</xliff:g>GB</item>
-  </plurals>
   <string name="account_setup_basics_title">دامه‌زراندنی هه‌ژمار</string>
   <string name="account_setup_basics_headline">هه‌ژماری پۆستی ئه‌لیکترۆنی</string>
   <string name="accounts_welcome">ئه‌توانی هه‌ژماره‌که‌ت دابمه‌زرێنی به‌ چه‌ند هه‌نگاوێک.
@@ -89,8 +58,6 @@
   <string name="account_duplicate_dlg_message_fmt">
         تۆ پێشتر ئه‌م ناوه‌ت به‌کارهێناوه‌ بۆ ئه‌م هه‌ژماره‌<xliff:g id="duplicate">%s</xliff:g>
     </string>
-  <string name="account_password_spaces_error">ئه‌م وشه‌نهێنییه‌ به‌ ده‌ستپێکردن یان کۆتایی هێنان به‌ یه‌کێک یان زیاتر
-        هێمای بۆشایی ده‌بێت. زۆربه‌ی ڕاژه‌کان کارناکه‌ن له‌گه‌ڵ وشه‌ی نهێنی بۆشایی.</string>
   <string name="account_setup_check_settings_retr_info_msg">
     وه‌رگرتنی زانیاری هه‌ژمار\u2026</string>
   <string name="account_setup_check_settings_check_incoming_msg">
@@ -99,18 +66,14 @@
     ڕاستکردنه‌وه‌ی ڕێکخستنی smtp \u2026</string>
   <string name="account_setup_creating_account_msg">
     دروستکردنی هه‌ژمار\u2026</string>
-  <string name="account_setup_names_title">دامه‌زراندنی هه‌ژمار</string>
   <string name="account_setup_names_headline">
         هه‌ژماره‌که‌ت دامه‌زرا و پۆستی ئه‌لیکترۆنی له‌ ڕێگایه‌!</string>
   <string name="account_setup_names_account_name_label">
         ناوێک بۆ هه‌ژماره‌که‌ دابنێ (ئاره‌زوومه‌ندانه‌یه‌)</string>
   <string name="account_setup_names_user_name_label">
         ناوت(له‌ کاتی نامه‌ ڕۆشتن به‌دیده‌کرێت)</string>
-  <string name="account_setup_names_user_name_empty_error">ئه‌م بۆشاییه‌ ناکرێ به‌تاڵ بێت.</string>
-  <string name="account_setup_account_type_title">دامه‌زراندنی هه‌ژمار</string>
   <string name="account_setup_account_type_headline">جۆری هه‌ژمار</string>
   <string name="account_setup_account_type_instructions">چی جۆرێک له‌ هه‌ژمار له‌مه‌دایه‌؟</string>
-  <string name="account_setup_incoming_title">دامه‌زراندنی هه‌ژمار</string>
   <string name="account_setup_incoming_headline">ڕێکخستنی ڕاژه‌ی هاتن</string>
   <string name="account_setup_incoming_security_none_label">هیچیان</string>
   <string name="account_setup_incoming_security_ssl_trust_certificates_label">
@@ -125,14 +88,12 @@
         کاتێک ده‌یسڕمه‌وه‌ له‌ سندوقی نامه‌ هاتووه‌کان</string>
   <string name="account_setup_incoming_imap_path_prefix_label">پێشگری ڕێڕه‌وی IMAP</string>
   <string name="account_setup_incoming_imap_path_prefix_hint">ئاره‌زوومه‌ندانه‌</string>
-  <string name="account_setup_outgoing_title">دامه‌زراندنی هه‌ژمار</string>
   <string name="account_setup_outgoing_headline">ڕێکخستنی ڕاژه‌ی ڕۆشتن</string>
   <string name="account_setup_outgoing_require_login_label">پێویستی به‌ چوونه‌ژووره‌وه‌یه‌</string>
   <string name="account_setup_exchange_select_certificate">دەست نیشان کردن</string>
   <string name="account_setup_exchange_use_certificate">به‌کارهێنانی ناسنامه‌ی ڕاژه‌خواز</string>
   <string name="account_setup_exchange_remove_certificate">لابردن</string>
   <string name="account_setup_exchange_no_certificate">هیچیان</string>
-  <string name="account_setup_options_title">ڕێکخستنەکانی هەژمار</string>
   <string name="account_setup_options_headline">ڕێکخستنی هەژمار</string>
   <string name="account_setup_options_mail_check_frequency_never">هیچکات</string>
   <string name="account_setup_options_mail_check_frequency_push">خۆکارانه‌ (پاڵنان)</string>
@@ -157,7 +118,6 @@
   <string name="account_setup_options_mail_window_all">هه‌موو</string>
   <string name="account_setup_options_mail_window_default">به‌کارهێنانی هه‌ژماری بنێڕه‌تی</string>
   <string name="account_setup_failed_dlg_auth_message">ناو و وشه‌ی نهێنی هه‌ڵه‌یه‌.</string>
-  <string name="account_setup_failed_dlg_auth_message_fmt">چونه‌ژوره‌وه‌ هه‌ڵه‌یه‌.\n<xliff:g id="error">%s</xliff:g></string>
   <string name="account_setup_autodiscover_dlg_authfail_title">هه‌ڵه‌ هه‌یه‌ له‌کاتی دامه‌زراندنی هه‌ژمار</string>
   <string name="account_setup_autodiscover_dlg_authfail_message">چه‌سپاندنی ناو، وشه‌ی نهێنی، وه‌ ڕێکخستنی هه‌ژمار ڕاسته‌.</string>
   <string name="account_setup_failed_dlg_certificate_message">نه‌توانرا به‌ سه‌لامه‌تی په‌یوه‌ندی بکرێت به‌ ڕاژه‌وه‌.</string>
@@ -186,8 +146,6 @@
   <string name="account_setup_failed_security_policies_unsupported">
          ئه‌م ڕاژه‌یه‌ پێویستی به‌ خزمه‌تگوزاری پاراستنه‌ که‌ ئه‌ندرۆیده‌که‌ت ناگونجێت،
           که‌ تێیدایه‌:<xliff:g id="error">%s</xliff:g></string>
-  <string name="account_setup_username_uneditable_error">ناتوانی ناوی به‌کارهێنه‌ری هه‌ژماره‌که‌ بگۆڕی.
-         بۆ زیادکردنی هه‌ژمار به‌ ناوێکی تر،تاپ بکه‌ بۆ زیادکردنی هه‌ژمار.</string>
   <string name="disable_admin_warning">ئاگاداربه‌:ناچالاککردنی به‌رنامه‌ی پۆستی ئه‌لیکترۆنی
          بۆ ده‌سته‌ڵاتی ئامێره‌که‌ت هه‌موو پۆسته‌ ئه‌لیکترۆنییه‌کان ده‌سڕێته‌وه‌ که‌ پێویستێتی، وه‌ له‌گه‌ڵ
          پۆسته‌ ئه‌لیکترۆنییه‌کان،په‌یوه‌ندییه‌کان.ڕوداوه‌کانی ڕۆژژمێر، وه‌داتاکانی تر.</string>
@@ -230,13 +188,6 @@
          زانیاری بۆ <xliff:g id="account">%s</xliff:g> ده‌سڕدرێته‌وه‌ له‌ ئامێره‌که‌ت.
          ئه‌توانی بیهێنیه‌ته‌وه‌ به‌ گۆڕینی قوفڵی ڕوونما.ئه‌ته‌وێ بیگۆڕی؟</string>
   <string name="account_settings_exit_server_settings">پاشه‌که‌وتنه‌کردنی گۆڕانه‌کان؟</string>
-  <string name="account_settings_login_dialog_title">نەتوانرا بچێتە ژوورەوە</string>
-  <string name="account_settings_login_dialog_content_fmt">
-         ناوی به‌کارهێنه‌ر و وشه‌ی نهێنی بۆ <xliff:g id="account">%s</xliff:g> هه‌ڵه‌یه‌.
-         ئه‌ته‌وێ نوێیان بکه‌یته‌وه‌؟</string>
-  <string name="account_settings_login_dialog_reason_fmt">
-         چوونه‌ژووره‌وه‌ت بۆ <xliff:g id="account">%s</xliff:g> نه‌کرا؛ ڕاژه‌که‌ ده‌ڵێ: <xliff:g id="reason">%s</xliff:g>
-         ئه‌ته‌وێ ناو و وشه‌ی نهێنی نوێبکه‌یته‌وه‌؟</string>
   <string name="account_settings_background_attachments_label">
         هاوپێچی داگرتن</string>
   <string name="account_settings_background_attachments_summary">
@@ -279,7 +230,6 @@
   <string name="account_settings_sync_calendar_summary">گواستنه‌وه‌ی ڕۆژژمێر و ڕوداوه‌کانی بۆ ئه‌م هه‌ژماره‌</string>
   <string name="account_settings_sync_email_enable">گواستنەوەی پۆستی ئه‌لیکترۆنی</string>
   <string name="account_settings_sync_email_summary">گواستنەوەی پۆستی ئه‌لیکترۆنی لەم هەژمارەوە</string>
-  <string name="account_settings_vibrate_when_label">له‌رینه‌وه‌</string>
   <string name="account_settings_ringtone">هەڵبژاردنی زەنگ</string>
   <string name="account_settings_servers">رێکخستنەکانی سێرڤەر</string>
   <string name="mailbox_settings_activity_title">بەربژاردەکانی هاوکاتسازی</string>
@@ -287,23 +237,11 @@
   <string name="mailbox_settings_sync_enabled_label">گواستنەوەی ئەم بوخچە</string>
   <string name="mailbox_settings_sync_enabled_summary">نامەکان کاتێ پەیوەندی بەسترا دا دەبەزێنرێن</string>
   <string name="mailbox_settings_mailbox_sync_window_label">رۆژەکانی هاوتاکردنی ئیمێڵ</string>
-  <string name="prefDialogTitle_conversationListIcon">وێنەی نێرەر</string>
-  <string name="provider_note_live">تەنها هەندێ لە ئەژمارە (plus)ەکان تایبەتمەندی POP یان هەیە
-        ڕێگە بەم بەرنامەیە دەدا .ئەگەر ناتوانی پێی داخڵ بیت
-        بە ناونیشانی تەواو و وشەی نهێنیەکەتەوە، لەوانەیە ئەژمارێکی 
-        بە پارەت نەبێت، وێبگەڕەکە بکەرەوە بۆ گەیشتن بەم ئەژماری ئیمەیڵانە.</string>
   <string name="provider_note_t_online">پێش دروستکردنی ئەم ئەژمارە ،سەردانی مالپەری T-Online بکەو وشەی نهێنی بۆ POP دروست بکە بۆ گەیشتن بە ئیمەیڵ</string>
-  <string name="exchange_name">هاوبەشی</string>
   <string name="exchange_name_alternate">گواستنه‌وه‌ی گۆڕینه‌وه‌ی مایکرۆسۆفت</string>
   <string name="system_account_create_failed">نەتوانرا ئەژمارەکە دروست بکرێت .دوبارەی بکەوە</string>
   <string name="device_admin_label">پۆستی ئه‌لەکترۆنی</string>
   <string name="device_admin_description">چالاککردنی ڕاژه‌ی دیاریکراو بۆ پارێزگاری پارێزه‌ران</string>
-  <string name="settings_activity_title">ڕێکخستنه‌کان</string>
-  <string name="header_label_general_preferences">ڕێکخستنە گشتییەکان</string>
-  <string name="general_preference_confirm_delete_label">چه‌سپاندن پێش سڕینه‌وه‌</string>
-  <string name="general_preference_confirm_send_label">پشتڕاستکردنەوە لە پێش ناردن</string>
-  <string name="more_than_999">+٩٩٩</string>
-  <string name="search_hint">گەڕانی پۆستی ئه‌لیکترۆنی</string>
   <string name="policy_dont_allow_camera">ڕێگه‌پێنه‌دانی به‌کارهێنانی کامێرای ئامێره‌که‌ت</string>
   <string name="policy_require_password">پێویستی به‌ وشه‌ی نهێنی ئامێره‌</string>
   <string name="policy_password_history">دیاریکردنی وشه‌ی نهێنی دووباره‌ی نوێ</string>
@@ -315,13 +253,7 @@
   <string name="quick_2">ده‌نگ باشه‌ بۆ من!</string>
   <string name="quick_3">من ئه‌مه‌ دواتر ده‌خوێنمه‌وه‌ و ده‌گه‌ڕێمه‌وه‌ بۆ لای تۆ.</string>
   <string name="quick_4">با به‌یه‌کناساندن دابمه‌زرێنین و گفت و گۆی له‌سه‌ربکه‌ین.</string>
-  <string name="require_manual_sync_message">گواستنه‌وه‌ی پشت بۆ ئه‌م هه‌ژماره‌ که‌ له‌کارخراوه‌ له‌کاتی/
-     سوڕاوه‌نه‌یی.</string>
   <string name="confirm_response">ناردنی وه‌ڵام&#8230;</string>
-  <string name="no_conversations">هیچ پەیامێک نیە.</string>
-  <string name="imap_name">IMAP</string>
-  <string name="pop3_name">POP3</string>
-  <string name="folder_picker_title">بوخچه‌گر</string>
   <string name="trash_folder_selection_title">دیاریکردنی زبڵی ڕاژه‌ بۆ بوخچه‌ی <xliff:g id="account">%s</xliff:g></string>
   <string name="sent_folder_selection_title">دیاریکردنی ڕاژه‌ی ناردن بۆ بوخچه‌ی <xliff:g id="account">%s</xliff:g></string>
   <string name="account_waiting_for_folders_msg">نیشاندانی لیستی بوخچه‌کان&#8230;</string>

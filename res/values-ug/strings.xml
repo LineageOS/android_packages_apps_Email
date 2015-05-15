@@ -20,17 +20,9 @@
   <string name="permission_access_provider_label">تورخەت تەمىنلىگۈچى سانلىق مەلۇماتىنى زىيارەت</string>
   <string name="permission_access_provider_desc">بۇ ئەپنىڭ تورخەت ساندانىنى زىيارەت قىلىشقا يول قويىدۇ، قوبۇللىغان، يوللىغان تورخەتلەر، ئىشلەتكۈچى ئاتى ۋە ئىمنى ئۆز ئىچىگە ئالىدۇ.</string>
   <string name="app_name">تورخەت</string>
-  <string name="debug_title">سازلا</string>
   <string name="create_action">يېڭىدىن قۇر</string>
   <string name="quick_responses_empty_view">تېز جاۋاب يوق.</string>
   <string name="account_settings_action">ھېسابات تەڭشەكلەر</string>
-  <string name="status_network_error">باغلىنىش مەسىلىسى.</string>
-  <plurals name="move_messages">
-    <item quantity="other">ئۇچۇر يۆتكە</item>
-  </plurals>
-  <string name="cannot_move_protocol_not_supported_toast">POP3 ھېساباتى يۆتكەشنى قوللىمايدۇ.</string>
-  <string name="cannot_move_multiple_accounts_toast">يۆتكىيەلمەيدۇ چۈنكى تاللانغان مەزمۇن كۆپ ھېساباتنىڭ تورخەتلىرىنى ئۆز ئىچىگە ئالىدۇ.</string>
-  <string name="cannot_move_special_mailboxes_toast">دەسلەپكى نۇسخا، يوللاش ساندۇقى ۋە ئەۋەتكەن خەتلەردىكى تورخەتلەرنى يۆتكىيەلمەيدۇ.</string>
   <string name="mailbox_name_display_inbox">قوبۇللاش ساندۇقى</string>
   <string name="mailbox_name_display_outbox">يوللاش ساندۇقى</string>
   <string name="mailbox_name_display_drafts">دەسلەپكى نۇسخا</string>
@@ -39,33 +31,17 @@
   <string name="mailbox_name_display_junk">ئەخلەت</string>
   <string name="mailbox_name_display_starred">يۇلتۇزلۇق</string>
   <string name="mailbox_name_display_unread">ئوقۇلمىغان</string>
-  <string name="account_folder_list_summary_inbox">قوبۇللاش ساندۇقى</string>
-  <string name="account_folder_list_summary_starred">يۇلتۇزلۇق</string>
-  <string name="account_folder_list_summary_drafts">دەسلەپكى نۇسخا</string>
-  <string name="account_folder_list_summary_outbox">يوللاش ساندۇقى</string>
+  <string name="debug_title">سازلا</string>
   <string name="mailbox_list_account_selector_combined_view">بىرلەشمە كۆرۈنۈش</string>
   <string name="message_compose_fwd_header_fmt">\n\n-------- ئەسلى ئۇچۇر --------\nتېما: <xliff:g id="SUBJECT">%1$s</xliff:g>\nيوللىغۇچى: <xliff:g id="SENDER">%2$s</xliff:g>\nقوبۇللىغۇچى: <xliff:g id="TO">%3$s</xliff:g>\nكۆچۈرۈپ يوللانغۇچى: <xliff:g id="CC_0">%4$s</xliff:g>\n\n</string>
   <string name="message_compose_insert_quick_response_list_title">تېز جاۋاب قىستۇر</string>
   <string name="message_compose_insert_quick_response_menu_title">تېز جاۋاب قىستۇر</string>
   <string name="message_view_attachment_background_load">ئۇلاپ يوللايدىغان تورخېتىڭىزدە بىر ياكى بىر قانچە قوشۇمچە توردىن چۈشۈرۈلۈپ ئاندىن يوللىنىدۇ.</string>
-  <string name="attachment_not_found">قوشۇمچىنى چۈشۈرەلمەيدۇ.</string>
   <string name="message_decode_error">خەت كودىنى يېشىۋاتقاندا خاتالىق كۆرۈلدى.</string>
   <string name="forward_download_failed_ticker">بىر ياكى بىر قانچە قوشۇمچىنى ئۇلاپ يوللىيالمايدۇ.</string>
   <string name="forward_download_failed_title">قوشۇمچە ئۇلاپ يوللانمىدى</string>
   <string name="login_failed_ticker"><xliff:g id="ACCOUNT_NAME">%s</xliff:g> تىزىمغا كىرەلمىدى.</string>
   <string name="login_failed_title">تىزىمغا كىرەلمىدى</string>
-  <plurals name="message_view_attachment_bytes">
-    <item quantity="other"><xliff:g id="SIZE_IN_BYTES">%d</xliff:g>B</item>
-  </plurals>
-  <plurals name="message_view_attachment_kilobytes">
-    <item quantity="other"><xliff:g id="SIZE_IN_KILOBYTES">%d</xliff:g>KB</item>
-  </plurals>
-  <plurals name="message_view_attachment_megabytes">
-    <item quantity="other"><xliff:g id="SIZE_IN_MEGABYTES">%d</xliff:g>MB</item>
-  </plurals>
-  <plurals name="message_view_attachment_gigabytes">
-    <item quantity="other"><xliff:g id="SIZE_IN_GIGABYTES">%d</xliff:g>GB</item>
-  </plurals>
   <string name="account_setup_basics_title">ھېسابات تەڭشەك</string>
   <string name="account_setup_basics_headline">تورخەت ھېسابات</string>
   <string name="accounts_welcome">سىز بىر قانچە قەدەم ئىجرا قىلىپلا ھېساباتىڭىزنى تەڭشىيەلەيسىز.</string>
@@ -74,20 +50,15 @@
   <string name="account_setup_username_password_toast">ئىناۋەتلىك تورخەت ئادرېسى ۋە ئىم كىرگۈزۈڭ.</string>
   <string name="account_duplicate_dlg_title">تەكرار ھېسابات</string>
   <string name="account_duplicate_dlg_message_fmt">\"<xliff:g id="DUPLICATE">%s</xliff:g>\" ھېسابات ئۈچۈن بۇ ئىشلەتكۈچى ئاتىنى ئىشلەتتىڭىز.</string>
-  <string name="account_password_spaces_error">بۇ ئىمنىڭ باش ياكى ئاخىرىدا بىر ياكى بىر قانچە بوشلۇق بار. كۆپ قىسىم مۇلازىمېتىرلار بوشلۇق بار ئىمنى قوللىمايدۇ.</string>
   <string name="account_setup_check_settings_retr_info_msg">ھېسابات ئۇچۇرىنى ئىزدەۋاتىدۇ…</string>
   <string name="account_setup_check_settings_check_incoming_msg">مۇلازىمېتىر تەڭشەكلىرىنى دەلىللەۋاتىدۇ…</string>
   <string name="account_setup_check_settings_check_outgoing_msg">\"smtp تەڭشەكلىرىنى دەلىللەۋاتىدۇ…\"</string>
   <string name="account_setup_creating_account_msg">ھېسابات قۇرۇۋاتىدۇ…</string>
-  <string name="account_setup_names_title">ھېسابات تەڭشەك</string>
   <string name="account_setup_names_headline">ھېساباتىڭىز تەڭشەلدى، تورخەتنى ئىشلەتسىڭىز بولىدۇ!</string>
   <string name="account_setup_names_account_name_label">بۇ ھېساباتقا ئات قويۇش (تاللاشچان)</string>
   <string name="account_setup_names_user_name_label">ئاتىڭىز(يوللىغان تورخەتتە كۆرۈنىدۇ)</string>
-  <string name="account_setup_names_user_name_empty_error">بۇ سۆز بۆلىكى بوش قالمايدۇ.</string>
-  <string name="account_setup_account_type_title">ھېسابات تەڭشەك</string>
   <string name="account_setup_account_type_headline">ھېسابات تىپى</string>
   <string name="account_setup_account_type_instructions">بۇ قانداق تۈردىكى ھېسابات؟</string>
-  <string name="account_setup_incoming_title">ھېسابات تەڭشەك</string>
   <string name="account_setup_incoming_headline">قوبۇللاش مۇلازىمېتىر تەڭشىكى</string>
   <string name="account_setup_incoming_security_none_label">يوق</string>
   <string name="account_setup_incoming_security_ssl_trust_certificates_label">SSL/TLS (ھەممە گۇۋاھنامىگە يول قوي)</string>
@@ -99,14 +70,12 @@
   <string name="account_setup_incoming_delete_policy_delete_label">قوبۇللاش ساندۇقىدىن ئۆچۈرگەندە</string>
   <string name="account_setup_incoming_imap_path_prefix_label">IMAP يولى ئالدى قوشۇلغۇچى</string>
   <string name="account_setup_incoming_imap_path_prefix_hint">تاللاشچان</string>
-  <string name="account_setup_outgoing_title">ھېسابات تەڭشەك</string>
   <string name="account_setup_outgoing_headline">يوللاش مۇلازىمېتىر تەڭشىكى</string>
   <string name="account_setup_outgoing_require_login_label">تىزىمغا كىرىش زۆرۈر</string>
   <string name="account_setup_exchange_select_certificate">تاللاڭ</string>
   <string name="account_setup_exchange_use_certificate">خېرىدار گۇۋاھنامىسى ئىشلەت</string>
   <string name="account_setup_exchange_remove_certificate">چىقىرىۋەت</string>
   <string name="account_setup_exchange_no_certificate">يوق</string>
-  <string name="account_setup_options_title">ھېسابات تەڭشەكلەر</string>
   <string name="account_setup_options_headline">ھېسابات تاللانما</string>
   <string name="account_setup_options_mail_check_frequency_never">ھەرگىز</string>
   <string name="account_setup_options_mail_check_frequency_push">ئاپتوماتىك (ئىتتىرىش)</string>
@@ -130,7 +99,6 @@
   <string name="account_setup_options_mail_window_all">ھەممىسى</string>
   <string name="account_setup_options_mail_window_default">ھېساباتنىڭ كۆڭۈلدىكى تەڭشىكىنى ئىشلەت</string>
   <string name="account_setup_failed_dlg_auth_message">ئىشلەتكۈچى ئاتىڭىز ياكى ئىمىڭىز ناتوغرا.</string>
-  <string name="account_setup_failed_dlg_auth_message_fmt">تىزىمغا كىرەلمىدى:\n(<xliff:g id="ERROR">%s</xliff:g>)</string>
   <string name="account_setup_autodiscover_dlg_authfail_title">ھېسابات سەپلەش مەسىلىسى</string>
   <string name="account_setup_autodiscover_dlg_authfail_message">ئىشلەتكۈچى ئىسمى، ئىم ۋە ھېسابات تەڭشەكلىرىنىڭ توغرىلىقىنى جەزملەڭ.</string>
   <string name="account_setup_failed_dlg_certificate_message">مۇلازىمېتىرغا بىخەتەر باغلىنالمايدۇ.</string>
@@ -149,7 +117,6 @@
   <string name="account_setup_security_required_title">يىراقتىكى بىخەتەرلىك باشقۇرۇش</string>
   <string name="account_setup_security_policies_required_fmt">بۇ <xliff:g id="SERVER">%s</xliff:g> مۇلازىمېتىر ئاندىرويىد ئۈسكۈنىدىكى بەزى بىخەتەرلىك ئىقتىدارلىرىنى يىراقتىن باشقۇرۇشقا يول قويۇشنى تەلەپ قىلىدۇ. بۇ ھېساباتنىڭ تەڭشىكىنى تاماملامسىز؟</string>
   <string name="account_setup_failed_security_policies_unsupported">سىزنىڭ ئاندىرويىد ئۈسكۈنىڭىز بۇ مۇلازىمېتىر تەلەپ قىلغان بىخەتەرلىك ئىقتىدارىنى قوللىمايدۇ، ئۇنىڭ ئىچىدە: <xliff:g id="ERROR">%s</xliff:g></string>
-  <string name="account_setup_username_uneditable_error">ھېساباتنىڭ ئىشلەتكۈچى ئاتىنى ئۆزگەرتەلمەيسىز. باشقا ئاتتىكى ئىشلەتكۈچى ھېساباتى قوشۇشتا، ھېسابات قوشنى چېكىڭ.</string>
   <string name="disable_admin_warning">ئاگاھلاندۇرۇش: تورخەت ئەپ دەلىللەشنىڭ ئۈسكۈنىڭىزنى باشقۇرۇش ھوقۇقىنى بىكار قىلسىڭىز، بۇ ھوقۇققا ئېھتىياجلىق بارلىق تورخەت ھېساباتى ۋە شۇ ھېساباتتىكى تورخەت، ئالاقەداشلار، يىلنامە پائالىيىتى ۋە باشقا ئۇچۇرلارنىڭ ھەممىسى ئۆچۈرۈلىدۇ.</string>
   <string name="account_security_dialog_title">بىخەتەرلىك يېڭىلانمىسى</string>
   <string name="account_security_dialog_content_fmt"><xliff:g id="ACCOUNT">%s</xliff:g> بىخەتەرلىك تەڭشىكىڭىزنى يېڭىلىشىڭىزنى تەلەپ قىلىدۇ.</string>
@@ -171,9 +138,6 @@
   <string name="password_expired_dialog_title">ئېكران قۇلۇپلاش ئىمنىڭ ۋاقتى ئۆتتى.</string>
   <string name="password_expired_dialog_content_fmt"><xliff:g id="ACCOUNT">%s</xliff:g> نىڭ سانلىق مەلۇماتى ئۈسكۈنىڭىزدىن ئۆچۈرۈلدى. سىز ئېكران قۇلۇپلاش PIN ياكى ئىمنى ئۆزگەرتىپ بۇ سانلىق مەلۇماتلارنى ئەسلىگە كەلتۈرەلەيسىز. ھازىرلا ئۆزگەرتەمسىز؟</string>
   <string name="account_settings_exit_server_settings">ساقلىمىغان ئۆزگەرتىشلەرنى تاشلىۋېتەمدۇ؟</string>
-  <string name="account_settings_login_dialog_title">تىزىمغا كىرەلمىدى</string>
-  <string name="account_settings_login_dialog_content_fmt"><xliff:g id="ACCOUNT">%s</xliff:g> نىڭ ئىشلەتكۈچى ئاتى ياكى ئىم خاتا. دەرھال يېڭىلامسىز؟</string>
-  <string name="account_settings_login_dialog_reason_fmt">سىز <xliff:g id="ACCOUNT">%s</xliff:g> تىزىمغا كىرەلمىدىڭىز؛ مۇلازىمېتىر ئەسكەرتىشى: <xliff:g id="REASON">%s</xliff:g> ئىشلەتكۈچى ئاتى ۋە ياكى ئىمنى يېڭىلامسىز؟</string>
   <string name="account_settings_background_attachments_label">قوشۇمچىلارنى چۈشۈر</string>
   <string name="account_settings_background_attachments_summary">يېقىنقى خەت ۋە قوشۇمچىلارنى Wi-Fi ئارقىلىق ئۆزلۈكىدىن چۈشۈرىدۇ</string>
   <string name="account_settings_notify_label">تورخەت ئۇقتۇرۇشى</string>
@@ -212,7 +176,6 @@
   <string name="account_settings_sync_calendar_summary">بۇ ھېساباتنىڭ يىلنامە پائالىيەتلىرىنى قەدەمداشلايدۇ</string>
   <string name="account_settings_sync_email_enable">تورخەت قەدەمداشلا</string>
   <string name="account_settings_sync_email_summary">بۇ ھېساباتنىڭ تورخەتلىرىنى قەدەمداشلا</string>
-  <string name="account_settings_vibrate_when_label">تىترەت</string>
   <string name="account_settings_ringtone">قوڭغۇراقنى تاللاڭ</string>
   <string name="account_settings_servers">مۇلازىمېتىر تەڭشىكى</string>
   <string name="mailbox_settings_activity_title">قەدەمداش تاللانما</string>
@@ -220,19 +183,11 @@
   <string name="mailbox_settings_sync_enabled_label">بۇ قىسقۇچنى قەدەمداشلا</string>
   <string name="mailbox_settings_sync_enabled_summary">تورغا باغلانغاندا تورخەت ئۇچۇرلارنى چۈشۈرىدۇ</string>
   <string name="mailbox_settings_mailbox_sync_window_label">قەدەمداشلايدىغان تور خەتلەرنىڭ كۈن سانى</string>
-  <string name="prefDialogTitle_conversationListIcon">يوللىغۇچى سۈرىتى</string>
-  <string name="provider_note_live">پەقەت بەزى \"Plus\" ھېساباتلا POP زىيارەتنى قوللاپ بۇ پىروگراممىنىڭ باغلىنىشىغا يول قويىدۇ. ئەگەر توغرا تورخەت ئادرېسى ۋە ئىم بىلەن تىزىمغا كىرەلمىسىڭىز ئۇنداقتا ھەقلىق \"Plus\" ھېساباتىنى ئاچقۇزماپسىز. توركۆرگۈنى قوزغىتىپ بۇ تورخەت ھېساباتلىرىنىڭ زىيارەت ھوقۇقىغا ئېرىشىڭ.</string>
   <string name="provider_note_t_online">بۇ تورخەت ھېساباتىنى تەڭشەشتىن ئىلگىرى، T-Online تورتۇرانى زىيارەت قىلىپ، بۇ ھېساباتنىڭ POP3 تورخەت زىيارىتى ئۈچۈن ئىم قۇرۇڭ.</string>
-  <string name="exchange_name">شىركەت</string>
   <string name="exchange_name_alternate">Microsoft Exchange ActiveSync</string>
   <string name="system_account_create_failed">ھېسابات قۇرالمىدى. قايتا سىناڭ.</string>
   <string name="device_admin_label">تورخەت</string>
   <string name="device_admin_description">بەلگىلەنگەن مۇلازىمېتىرنىڭ بىخەتەرلىك تاكتىكىسى قوزغىتىلدى</string>
-  <string name="settings_activity_title">تەڭشەكلەر</string>
-  <string name="header_label_general_preferences">ئادەتتىكى تەڭشەكلەر</string>
-  <string name="general_preference_confirm_delete_label">ئۆچۈرۈشتىن ئىلگىرى جەزملەش</string>
-  <string name="general_preference_confirm_send_label">يوللاشتىن ئىلگىرى جەزملەش</string>
-  <string name="search_hint">تورخەت ئىزدە</string>
   <string name="policy_dont_allow_camera">ئۈسكۈنە كامېراسىنى ئىشلىتىشكە يول قويمايدۇ</string>
   <string name="policy_require_password">ئۈسكۈنە ئىم زۆرۈر</string>
   <string name="policy_password_history">يېقىندا ئىشلەتكەن ئىمنى قايتا ئىشلىتىشنى چەكلەيدۇ</string>
@@ -244,12 +199,7 @@
   <string name="quick_2">مېنىڭچە ياخشى!</string>
   <string name="quick_3">بۇ خەتنى سەل تۇرۇپ ئوقۇپ، سىزگە جاۋاب يازىمەن.</string>
   <string name="quick_4">بىز يىغىندىن بىرنى ئورۇنلاشتۇرۇپ، بۇ مەسىلىنى مۇزاكىرە قىلايلى.</string>
-  <string name="require_manual_sync_message">كەزمە ھالەتتە بۇ ھېساباتنىڭ ئارقا سۇپا قەدەمداش چەكلەنگەن</string>
   <string name="confirm_response">جاۋاب يوللاۋاتىدۇ&#8230;</string>
-  <string name="no_conversations">ئۇچۇر يوق</string>
-  <string name="imap_name">IMAP</string>
-  <string name="pop3_name">POP3</string>
-  <string name="folder_picker_title">قىسقۇچ تاللىغۇچ</string>
   <string name="trash_folder_selection_title"><xliff:g id="ACCOUNT">%s</xliff:g> ئۈچۈن ئەخلەتخانا قىسقۇچىنى تاللاڭ</string>
   <string name="sent_folder_selection_title"><xliff:g id="ACCOUNT">%s</xliff:g> ئۈچۈن يوللانغان تۈرلەر قىسقۇچىنى تاللاڭ</string>
   <string name="account_waiting_for_folders_msg">قىسقۇچ تىزىمىنى يۈكلەۋاتىدۇ&#8230;</string>
