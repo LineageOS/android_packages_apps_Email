@@ -20,4 +20,8 @@
   <string name="delete_account_confirmation_msg">Això esborrarà totes les configuracions i els correus electrònics del compte <xliff:g id="account">%s</xliff:g>. Aquesta operació no es pot desfer.\n\nVols continuar?</string>
   <string name="deleting_account_msg">S\'està esborrant el compte\u2026</string>
   <string name="delete_account_failed">No s\'ha pogut esborrar el compte</string>
+  <string name="mailbox_notify_settings_activity_title">Opcions de notificació</string>
+  <string name="mailbox_notify_settings_activity_title_with_mailbox">Opcions de notificació (<xliff:g id="mailbox_name" example="Family">%s</xliff:g>)</string>
+  <string name="folder_notify_settings_pref_title">Ajustaments de les notificacions de carpeta</string>
+  <string name="label_notification_lights_title">Llums</string>
 </resources>

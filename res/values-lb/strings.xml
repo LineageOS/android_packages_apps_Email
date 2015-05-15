@@ -20,18 +20,9 @@
   <string name="permission_access_provider_label">Op Date vum E-Mail-Provider zougräifen</string>
   <string name="permission_access_provider_desc">Erlaabt der App, op deng E-Mail-Datebank zouzegräifen, inklusiv empfaange Messagen, geschéckt Messagen, Benotzernimm a Passwierder.</string>
   <string name="app_name">E-Mail</string>
-  <string name="debug_title">Debuggen</string>
   <string name="create_action">Nei erstellen</string>
   <string name="quick_responses_empty_view">Keng séier Äntwerten.</string>
   <string name="account_settings_action">Kontenastellungen</string>
-  <string name="status_network_error">Connectiounsproblem.</string>
-  <plurals name="move_messages">
-    <item quantity="one">Message réckelen</item>
-    <item quantity="other">Messagë réckelen</item>
-  </plurals>
-  <string name="cannot_move_protocol_not_supported_toast">Réckelen gëtt op POP3-Konten net ënnerstëtzt.</string>
-  <string name="cannot_move_multiple_accounts_toast">Kann net réckele well d\'Auswiel verschidde Konten huet.</string>
-  <string name="cannot_move_special_mailboxes_toast">Messagen an den Dossieren \"Brouillonen\", \"Ausgank\" a \"verschéckt Elementer\" kënnen net geréckelt ginn.</string>
   <string name="mailbox_name_display_inbox">Agank</string>
   <string name="mailbox_name_display_outbox">Ausgank</string>
   <string name="mailbox_name_display_drafts">Brouillonen</string>
@@ -40,37 +31,17 @@
   <string name="mailbox_name_display_junk">Knascht</string>
   <string name="mailbox_name_display_starred">Markéiert</string>
   <string name="mailbox_name_display_unread">Ongelies</string>
-  <string name="account_folder_list_summary_inbox">Agank</string>
-  <string name="account_folder_list_summary_starred">Markéiert</string>
-  <string name="account_folder_list_summary_drafts">Brouillonen</string>
-  <string name="account_folder_list_summary_outbox">Ausgank</string>
+  <string name="debug_title">Debuggen</string>
   <string name="mailbox_list_account_selector_combined_view">Kombinéiert Usiicht</string>
   <string name="message_compose_fwd_header_fmt">\n\n-------- Original-Message --------\nSujet: <xliff:g id="subject">%1$s</xliff:g>\nVun: <xliff:g id="sender">%2$s</xliff:g>\nUn: <xliff:g id="to">%3$s</xliff:g>\nCC: <xliff:g id="cc">%4$s</xliff:g>\n\n</string>
   <string name="message_compose_insert_quick_response_list_title">Séier Äntwert asetzen</string>
   <string name="message_compose_insert_quick_response_menu_title">Séier Äntwert asetzen</string>
   <string name="message_view_attachment_background_load">Een oder méi Unhäng an dengem weidergeleete Message gi virum Verschécken erofgelueden.</string>
-  <string name="attachment_not_found">Konnt den Unhang net eroflueden.</string>
   <string name="message_decode_error">Et gouf e Feeler beim decodéiere vum Message.</string>
   <string name="forward_download_failed_ticker">Kann een oder méi Unhäng net weiderleeden.</string>
   <string name="forward_download_failed_title">Unhang net weidergeleet</string>
   <string name="login_failed_ticker">Alogge mat <xliff:g id="account_name">%s</xliff:g> feelgeschloen.</string>
   <string name="login_failed_title">Alogge war net méiglech</string>
-  <plurals name="message_view_attachment_bytes">
-    <item quantity="one"><xliff:g id="size_in_bytes" example="1">%d</xliff:g>B</item>
-    <item quantity="other"><xliff:g id="size_in_bytes" example="279">%d</xliff:g>B</item>
-  </plurals>
-  <plurals name="message_view_attachment_kilobytes">
-    <item quantity="one"><xliff:g id="size_in_kilobytes" example="1">%d</xliff:g> kB</item>
-    <item quantity="other"><xliff:g id="size_in_kilobytes" example="279">%d</xliff:g> kB</item>
-  </plurals>
-  <plurals name="message_view_attachment_megabytes">
-    <item quantity="one"><xliff:g id="size_in_megabytes" example="1">%d</xliff:g> MB</item>
-    <item quantity="other"><xliff:g id="size_in_megabytes" example="279">%d</xliff:g> MB</item>
-  </plurals>
-  <plurals name="message_view_attachment_gigabytes">
-    <item quantity="one"><xliff:g id="size_in_gigabytes" example="1">%d</xliff:g> GB</item>
-    <item quantity="other"><xliff:g id="size_in_gigabytes" example="279">%d</xliff:g> GB</item>
-  </plurals>
   <string name="account_setup_basics_title">Kontenariichtung</string>
   <string name="oauth_authentication_title">Autoriséierung gëtt ugefrot</string>
   <string name="sign_in_title">Aloggen</string>
@@ -92,22 +63,17 @@
   <string name="account_setup_username_password_toast">Gëff eng gëlteg E-Mail-Adress an e gëltegt Passwuert an.</string>
   <string name="account_duplicate_dlg_title">Kont duplizéieren</string>
   <string name="account_duplicate_dlg_message_fmt">Du benotz dëse Benotzernumm scho fir de Kont \"<xliff:g id="duplicate">%s</xliff:g>\".</string>
-  <string name="account_password_spaces_error">D\'Passwuert fänkt un oder hält op mat engem oder méi Espacen. Vill Serveren ënnerstëtze Passwierder mat Espacen net.</string>
   <string name="account_setup_check_settings_retr_info_msg">Kontendate ginn ausgelies\u2026</string>
   <string name="account_setup_check_settings_check_incoming_msg">D\'Serverastellunge gi validéiert\u2026</string>
   <string name="account_setup_check_settings_check_outgoing_msg">D\'SMTP-Astellunge gi validéiert\u2026</string>
   <string name="account_setup_creating_account_msg">Kont gëtt erstallt\u2026</string>
   <string name="account_setup_ab_headline">Kontentyp bestätegen</string>
   <string name="account_setup_ab_instructions_format">Du hues uginn datt <xliff:g id="email">%1$s</xliff:g> <xliff:g id="userProtocol">%2$s</xliff:g> benotzt, mä de Kont kéint <xliff:g id="providerProtocol">%3$s</xliff:g> benotzen</string>
-  <string name="account_setup_names_title">Kontenariichtung</string>
   <string name="account_setup_names_headline">Däi Kont ass konfiguréiert an d\'Emaile sinn ënnerwee!</string>
   <string name="account_setup_names_account_name_label">Gëff dësem Kont en Numm (optional)</string>
   <string name="account_setup_names_user_name_label">Däin Numm (gëtt op erausgoend Messagen ugewisen)</string>
-  <string name="account_setup_names_user_name_empty_error">Dëst Feld kann net eidel sinn.</string>
-  <string name="account_setup_account_type_title">Kontenariichtung</string>
   <string name="account_setup_account_type_headline">Kontentyp</string>
   <string name="account_setup_account_type_instructions">Ëm wéi en Typ Kont handelt et sech?</string>
-  <string name="account_setup_incoming_title">Kontenariichtung</string>
   <string name="account_setup_incoming_headline">Astellunge fir den erakommende Server</string>
   <string name="account_setup_incoming_username_label">BENOTZERNUMM</string>
   <string name="account_setup_incoming_password_label">PASSWUERT</string>
@@ -127,21 +93,18 @@
   <string name="account_setup_incoming_delete_policy_delete_label">Wann ech aus dem Agank läschen</string>
   <string name="account_setup_incoming_imap_path_prefix_label">Prefix vum IMAP-Path</string>
   <string name="account_setup_incoming_imap_path_prefix_hint">Optional</string>
-  <string name="account_setup_outgoing_title">Kontenariichtung</string>
   <string name="account_setup_outgoing_headline">Astellunge fir den erausgoende Server</string>
   <string name="account_setup_outgoing_smtp_server_label">SMTP-SERVER</string>
   <string name="account_setup_outgoing_port_label">PORT</string>
   <string name="account_setup_outgoing_security_label">SÉCHERHEETSTYP</string>
   <string name="account_setup_outgoing_require_login_label">Alogge verlaangen</string>
   <string name="account_setup_outgoing_username_label">BENOTZERNUMM</string>
-  <string name="account_setup_outgoing_password_label">PASSWUERT</string>
   <string name="account_setup_exchange_certificate_title">CLIENT-ZERTIFIKAT</string>
   <string name="account_setup_exchange_select_certificate">Auswielen</string>
   <string name="account_setup_exchange_use_certificate">Clientszertifikat benotzen</string>
   <string name="account_setup_exchange_remove_certificate">Ewechhuelen</string>
   <string name="account_setup_exchange_no_certificate">Keen</string>
   <string name="account_setup_exchange_device_id_label">ID VUM MOBILEN APPARAT</string>
-  <string name="account_setup_options_title">Kontenastellungen</string>
   <string name="account_setup_options_headline">Kontenoptiounen</string>
   <string name="account_setup_options_mail_check_frequency_label">Sync-Frequenz:</string>
   <string name="account_setup_options_mail_check_frequency_never">Ni</string>
@@ -167,7 +130,6 @@
   <string name="account_setup_options_mail_window_all">All</string>
   <string name="account_setup_options_mail_window_default">Standardwäerter fir dëse Kont benotzen</string>
   <string name="account_setup_failed_dlg_auth_message">De Benotzernumm oder d\'Passwuert sinn net korrekt.</string>
-  <string name="account_setup_failed_dlg_auth_message_fmt">Alogge feelgeschloen.\n(<xliff:g id="error">%s</xliff:g>)</string>
   <string name="account_setup_autodiscover_dlg_authfail_title">Problem mat der Konfiguratioun vum Kont</string>
   <string name="account_setup_autodiscover_dlg_authfail_message">Bestäteg datt de Benotzernumm, d\'Passwuert an d\'Kontenastellunge korrekt sinn.</string>
   <string name="account_setup_failed_dlg_certificate_message">Ka keng sécher Connectioun mam Server hierstellen.</string>
@@ -186,7 +148,6 @@
   <string name="account_setup_security_required_title">Sécherheetsverwaltung op Distanz</string>
   <string name="account_setup_security_policies_required_fmt">De Server <xliff:g id="server">%s</xliff:g> verlaangt datt s du him erlaabs op Distanz eng Rei Sécherheetsfunktiounen op dengem Android-Apparat ze kontrolléieren. Wëlls du dëse Kont fäerdeg astellen?</string>
   <string name="account_setup_failed_security_policies_unsupported">De Server verlaangt Sécherheetsfunktiounen déi däin Android-Apparat net ënnerstëtzt, dorënner: <xliff:g id="error">%s</xliff:g></string>
-  <string name="account_setup_username_uneditable_error">Du kanns de Benotzernumm vun engem Kont net änneren. Dréck \"Kont dobäisetzen\" fir en neie Kont mat engem anere Benotzernumm dobäizesetzen.</string>
   <string name="disable_admin_warning">WARNUNG: Wann s du d\'Berechtegung vun der E-Mail-App fir d\'Verwaltung vum Apparat desaktivéiers, ginn all d\'E-Mail-Konten déi dës Berechtegung brauche geläscht - mat allen E-Mailen, Kontakter, Rendezvousen an aneren Daten.</string>
   <string name="account_security_dialog_title">Sécherheetsaktualiséierung</string>
   <string name="account_security_dialog_content_fmt">De Kont <xliff:g id="account">%s</xliff:g> verlaangt datt s de deng Sécherheetsastellungen aktualiséiers.</string>
@@ -208,10 +169,6 @@
   <string name="password_expired_dialog_title">Passwuert vum Spärschierm ofgelaf</string>
   <string name="password_expired_dialog_content_fmt">D\'Date fir <xliff:g id="account">%s</xliff:g> gi vum Apparat geläscht. Du kanns s\'erëmhierstellen andeem s du däi Spärschierm-PIN oder -Passwuert änners. Wëlls du en/et elo änneren?</string>
   <string name="account_settings_exit_server_settings">Ongespäichert Ännerunge verwerfen?</string>
-  <string name="account_settings_login_dialog_title">Alogge war net méiglech</string>
-  <string name="account_settings_login_dialog_content_fmt">De Benotzernumm oder d\'Passwuert fir <xliff:g id="account">%s</xliff:g> sinn inkorrekt. Wëlls du s\'elo aktualiséieren?</string>
-  <string name="account_settings_login_dialog_reason_fmt">Deng Umellung bei <xliff:g id="account">%s</xliff:g> ass feelgeschloen; de Server seet: <xliff:g id="reason">%s</xliff:g>
-Wëlls du däi Benotzernumm an/oder däi Passwuert aktualiséieren?</string>
   <string name="account_settings_background_attachments_label">Unhäng eroflueden</string>
   <string name="account_settings_background_attachments_summary">Unhäng fir rezent Messagë bei aktiver WLAN-Connectioun automatesch eroflueden</string>
   <string name="account_settings_notify_label">E-Mail-Notifikatiounen</string>
@@ -250,7 +207,6 @@ Wëlls du däi Benotzernumm an/oder däi Passwuert aktualiséieren?</string>
   <string name="account_settings_sync_calendar_summary">Kalenner-Rendezvouse fir dëse Kont synchroniséieren</string>
   <string name="account_settings_sync_email_enable">E-Mail synchroniséieren</string>
   <string name="account_settings_sync_email_summary">E-Maile vum Kont synchroniséieren</string>
-  <string name="account_settings_vibrate_when_label">Vibréieren</string>
   <string name="account_settings_ringtone">Schelltoun auswielen</string>
   <string name="account_settings_servers">Serverastellungen</string>
   <string name="mailbox_settings_activity_title">Sync-Optiounen</string>
@@ -258,20 +214,11 @@ Wëlls du däi Benotzernumm an/oder däi Passwuert aktualiséieren?</string>
   <string name="mailbox_settings_sync_enabled_label">Dësen Dossier synchroniséieren</string>
   <string name="mailbox_settings_sync_enabled_summary">Bei enger aktiver Connectioun ginn d\'Messagen erofgelueden</string>
   <string name="mailbox_settings_mailbox_sync_window_label">Deeg fir déi synchroniséiert soll ginn</string>
-  <string name="prefDialogTitle_conversationListIcon">Ofsenderbild</string>
-  <string name="provider_note_live">Just e puer \"Plus\"-Konten erlabe POP-Zougrëff wouduerch dëse Programm drop zougräife kann. Wann s du dech net mat denger korrekter E-Mail-Adress an dengem Passwuert kanns umellen, dann hues du méiglecherweis kee bezuelte \"Plus\"-Kont. Féier däi Web-Browser aus fir Zougrëff op deng E-Mail-Konten ze kréien.</string>
   <string name="provider_note_t_online">Stell op der T-Online-Internetsäit e Passwuert fir POP3-Zougank an, ier s de den E-Mail-Kont erstells.</string>
-  <string name="exchange_name">Firma</string>
   <string name="exchange_name_alternate">Microsoft Exchange ActiveSync</string>
   <string name="system_account_create_failed">Konnt de Kont net erstellen. Probéier nees.</string>
   <string name="device_admin_label">E-Mail</string>
   <string name="device_admin_description">Aktivéiert serverspezifesch Sécherheetsrichtlinnen</string>
-  <string name="settings_activity_title">Astellungen</string>
-  <string name="header_label_general_preferences">Allgemeng Astellungen</string>
-  <string name="general_preference_confirm_delete_label">Virum Läsche bestätegen</string>
-  <string name="general_preference_confirm_send_label">Virum Schécke bestätegen</string>
-  <string name="more_than_999">999+</string>
-  <string name="search_hint">E-Mail sichen</string>
   <string name="policy_dont_allow_camera">D\'Benotzung vun der Kamera net erlaben</string>
   <string name="policy_require_password">Passwuert vum Apparat erfuerderlech</string>
   <string name="policy_password_history">Asaz vun de leschte Passwierder aschränken</string>
@@ -283,12 +230,7 @@ Wëlls du däi Benotzernumm an/oder däi Passwuert aktualiséieren?</string>
   <string name="quick_2">Kléngt gutt fir mech!</string>
   <string name="quick_3">Ech liesen dat méi spéit a kommen op dech zréck.</string>
   <string name="quick_4">Looss eis e Rendezvous festleeë fir dat ze diskutéieren.</string>
-  <string name="require_manual_sync_message">Hannergrondsynchroniséierung ass fir dëse Kont während dem Roaming desaktivéiert.</string>
   <string name="confirm_response">Äntwert gëtt geschéckt&#8230;</string>
-  <string name="no_conversations">Keng Messagen.</string>
-  <string name="imap_name">IMAP</string>
-  <string name="pop3_name">POP3</string>
-  <string name="folder_picker_title">Dossiersauswiel</string>
   <string name="trash_folder_selection_title">Wiel de Poubellesdossier fir <xliff:g id="account">%s</xliff:g> aus</string>
   <string name="sent_folder_selection_title">Dossier \"Verschéckt Elementer\" vum Server fir <xliff:g id="ACCOUNT">%s</xliff:g> auswielen</string>
   <string name="account_waiting_for_folders_msg">D\'Lëscht vun den Dossiere gëtt gelueden&#8230;</string>
