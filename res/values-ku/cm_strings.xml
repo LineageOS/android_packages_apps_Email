@@ -16,11 +16,8 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="delete_account">Konto löschen</string>
-  <string name="delete_account_confirmation_msg">DIese Aktion löscht alle Einstellungen und E-Mails des Kontos <xliff:g id="account">%s</xliff:g>. Dies kann nicht rückgängig gemacht werden.\n\nFortfahren?</string>
-  <string name="deleting_account_msg">Konto wird gelöscht\u2026</string>
-  <string name="delete_account_failed">Konto konnte nicht gelöscht werden</string>
-  <string name="mailbox_notify_settings_activity_title">Benachrichtigungsoptionen</string>
-  <string name="mailbox_notify_settings_activity_title_with_mailbox">Benachrichtigungsoptionen (<xliff:g id="mailbox_name" example="Familie">%s</xliff:g>)</string>
-  <string name="label_notification_lights_title">LED</string>
+  <string name="delete_account">سڕینەوەی هەژمار</string>
+  <string name="delete_account_confirmation_msg">ئەمە هەموو ڕێکخستنەکان و پەیامە ئەلکترۆنیەکانی هەژماری <xliff:g id="account">%s</xliff:g>. ئەسڕیتەوە، ئەم فرمانە ناتوانرێت بگەڕێنرێتەوە.\n\nبەردەوامبوون؟?</string>
+  <string name="deleting_account_msg">سڕینەوەی هەژماری\u2026</string>
+  <string name="delete_account_failed">هەژمار ناتوانرێت بسڕدرێتەوە</string>
 </resources>
