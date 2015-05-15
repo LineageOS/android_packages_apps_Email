@@ -20,4 +20,5 @@
   <string name="delete_account_confirmation_msg">这将删除 <xliff:g id="account">%s</xliff:g> 帐户所有的设置和邮件。此操作不能撤销。\n\n要继续吗？</string>
   <string name="deleting_account_msg">正在删除帐户\u2026</string>
   <string name="delete_account_failed">无法删除该帐户</string>
+  <string name="mailbox_notify_settings_activity_title">通知选项</string>
 </resources>

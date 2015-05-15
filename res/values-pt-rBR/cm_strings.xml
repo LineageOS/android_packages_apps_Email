@@ -20,4 +20,8 @@
   <string name="delete_account_confirmation_msg">Isto apagará todas as configurações e e-mails da conta <xliff:g id="account">%s</xliff:g>. Esta operação não pode ser desfeita.\n\nDeseja continuar?</string>
   <string name="deleting_account_msg">Apagando a conta\u2026</string>
   <string name="delete_account_failed">Não foi possível apagar a conta</string>
+  <string name="mailbox_notify_settings_activity_title">Opções de notificação</string>
+  <string name="mailbox_notify_settings_activity_title_with_mailbox">Opções de notificação (<xliff:g id="mailbox_name" example="Familia">%s</xliff:g>)</string>
+  <string name="folder_notify_settings_pref_title">Configurações de notificação de pasta</string>
+  <string name="label_notification_lights_title">Luzes</string>
 </resources>

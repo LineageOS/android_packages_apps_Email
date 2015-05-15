@@ -17,5 +17,8 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="delete_account">Supprimer le compte</string>
+  <string name="delete_account_confirmation_msg">Cela supprimera tous les paramètres et les e-mails du compte <xliff:g id="account">%s</xliff:g>.
+Cette opération ne peut pas être annulée.\n\nContinuer ?</string>
   <string name="deleting_account_msg">Suppression du compte\u2026</string>
+  <string name="delete_account_failed">Impossible de supprimer le compte</string>
 </resources>
