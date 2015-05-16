@@ -1,0 +1,395 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a89bdaa_2be8577c",
+        "filename": "emailcommon/src/com/android/emailcommon/provider/Account.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-05-16T23:11:41Z",
+      "side": 1,
+      "message": "Unused import?",
+      "revId": "13ee0b21a442656e2fa44e0873b1f193c1e1d6bf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a89bdaa_4bed9b8a",
+        "filename": "provider_src/com/android/email/mail/store/ImapConnection.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-05-16T23:11:41Z",
+      "side": 1,
+      "message": "Alignment of \u0027\u003d\u0027 is off here.",
+      "revId": "13ee0b21a442656e2fa44e0873b1f193c1e1d6bf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a89bdaa_6b025f40",
+        "filename": "provider_src/com/android/email/mail/store/ImapConnection.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-05-16T23:11:41Z",
+      "side": 1,
+      "message": "Don\u0027t allow any command other than DONE when idling",
+      "revId": "13ee0b21a442656e2fa44e0873b1f193c1e1d6bf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a89bdaa_abfc673f",
+        "filename": "provider_src/com/android/email/mail/store/ImapConnection.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-05-16T23:11:41Z",
+      "side": 1,
+      "message": "This could also be written as \u0027if (lastSocketTimeout \u003d\u003d getReadTimeout()\u0027, can\u0027t it?",
+      "revId": "13ee0b21a442656e2fa44e0873b1f193c1e1d6bf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a89bdaa_cbf9ab4f",
+        "filename": "provider_src/com/android/email/mail/store/ImapFolder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-05-16T23:11:41Z",
+      "side": 1,
+      "message": "Thread already implements Runnable, so the \u0027new Runnable()\u0027 can be omitted.",
+      "revId": "13ee0b21a442656e2fa44e0873b1f193c1e1d6bf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a89bdaa_eb94afe9",
+        "filename": "provider_src/com/android/email/mail/store/ImapFolder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-05-16T23:11:41Z",
+      "side": 1,
+      "message": "Does the socket timeout need to be reset here?",
+      "revId": "13ee0b21a442656e2fa44e0873b1f193c1e1d6bf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a89bdaa_0b9ab314",
+        "filename": "provider_src/com/android/email/mail/store/ImapFolder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-05-16T23:11:41Z",
+      "side": 1,
+      "message": "Does the callback expect being called in a BG thread, or should this be piped through a handler?",
+      "revId": "13ee0b21a442656e2fa44e0873b1f193c1e1d6bf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a89bdaa_2b9f7704",
+        "filename": "provider_src/com/android/email/mail/store/ImapFolder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-05-16T23:11:41Z",
+      "side": 1,
+      "message": "// Check whether IDLE was successful (first response is an idling response)",
+      "revId": "13ee0b21a442656e2fa44e0873b1f193c1e1d6bf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a89bdaa_6b897fca",
+        "filename": "provider_src/com/android/email/mail/store/ImapFolder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-05-16T23:11:41Z",
+      "side": 1,
+      "message": "responses.isEmpty()",
+      "revId": "13ee0b21a442656e2fa44e0873b1f193c1e1d6bf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a89bdaa_8b86c3b7",
+        "filename": "provider_src/com/android/email/mail/store/ImapFolder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-05-16T23:11:41Z",
+      "side": 1,
+      "message": "Isn\u0027t 1 line wrap sufficient? ;)",
+      "revId": "13ee0b21a442656e2fa44e0873b1f193c1e1d6bf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a89bdaa_ab9387f9",
+        "filename": "provider_src/com/android/email/mail/store/ImapFolder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-05-16T23:11:41Z",
+      "side": 1,
+      "message": "Socket timeout reset needed here?",
+      "revId": "13ee0b21a442656e2fa44e0873b1f193c1e1d6bf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a89bdaa_cb90cbef",
+        "filename": "provider_src/com/android/email/mail/store/ImapFolder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-05-16T23:11:41Z",
+      "side": 1,
+      "message": "Should the callback really be done inside the synchronized block?",
+      "revId": "13ee0b21a442656e2fa44e0873b1f193c1e1d6bf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a89bdaa_ebbbcf73",
+        "filename": "provider_src/com/android/email/mail/store/ImapStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-05-16T23:11:41Z",
+      "side": 1,
+      "message": "*available",
+      "revId": "13ee0b21a442656e2fa44e0873b1f193c1e1d6bf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a89bdaa_0bc1d3e4",
+        "filename": "provider_src/com/android/email/mail/store/imap/ImapResponseParser.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-05-16T23:11:41Z",
+      "side": 1,
+      "message": "*just let the upper layers handle the exception",
+      "revId": "13ee0b21a442656e2fa44e0873b1f193c1e1d6bf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a89bdaa_2bb6978a",
+        "filename": "provider_src/com/android/email/mail/store/imap/ImapResponseParser.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-05-16T23:11:41Z",
+      "side": 1,
+      "message": "This doesn\u0027t really match the comment, which says \u0027don\u0027t parse if we\u0027re idling\u0027",
+      "revId": "13ee0b21a442656e2fa44e0873b1f193c1e1d6bf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a89bdaa_4bbbdb72",
+        "filename": "provider_src/com/android/email/mail/store/imap/ImapResponseParser.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-05-16T23:11:41Z",
+      "side": 1,
+      "message": "mIdling \u003d responseToReturn.isIdling();",
+      "revId": "13ee0b21a442656e2fa44e0873b1f193c1e1d6bf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a89bdaa_abaaa717",
+        "filename": "provider_src/com/android/email/provider/DBHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1574,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-05-16T23:11:41Z",
+      "side": 1,
+      "message": "Suggestion: add \u0027default 0\u0027",
+      "revId": "13ee0b21a442656e2fa44e0873b1f193c1e1d6bf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a89bdaa_8bade333",
+        "filename": "provider_src/com/android/email/provider/DBHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1607,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-05-16T23:11:41Z",
+      "side": 1,
+      "message": "Can\u0027t this be handled by one update with a clever where clause, similar to the one upgrading to 129?",
+      "revId": "13ee0b21a442656e2fa44e0873b1f193c1e1d6bf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a89bdaa_cba7eb4d",
+        "filename": "provider_src/com/android/email/service/ImapService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-05-16T23:11:41Z",
+      "side": 1,
+      "message": "new Runnable() is unneeded",
+      "revId": "13ee0b21a442656e2fa44e0873b1f193c1e1d6bf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a89bdaa_eb62ef15",
+        "filename": "provider_src/com/android/email/service/ImapService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-05-16T23:11:41Z",
+      "side": 1,
+      "message": "// Instead of checking every received change, request a sync of the mailbox",
+      "revId": "13ee0b21a442656e2fa44e0873b1f193c1e1d6bf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a89bdaa_0b68f3f4",
+        "filename": "provider_src/com/android/email/service/ImapService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-05-16T23:11:41Z",
+      "side": 1,
+      "message": "new Runnable() is unneeded [same thing below]",
+      "revId": "13ee0b21a442656e2fa44e0873b1f193c1e1d6bf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a89bdaa_2b6db704",
+        "filename": "provider_src/com/android/email/service/ImapService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-05-16T23:11:41Z",
+      "side": 1,
+      "message": "I wonder whether a HandlerThread wouldn\u0027t make more sense than the thread-inside-of-runnable pattern.",
+      "revId": "13ee0b21a442656e2fa44e0873b1f193c1e1d6bf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a89bdaa_4b72fbe6",
+        "filename": "provider_src/com/android/email/service/LegacyImapSyncAdapterService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-05-16T23:11:41Z",
+      "side": 1,
+      "message": "This can become a thread.",
+      "revId": "13ee0b21a442656e2fa44e0873b1f193c1e1d6bf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
