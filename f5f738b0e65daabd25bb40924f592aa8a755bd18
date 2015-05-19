@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9a89bdaa_dd9fac5d",
+        "filename": "provider_src/com/android/email/service/ImapService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 960,
+      "author": {
+        "id": 3134
+      },
+      "writtenOn": "2015-05-19T09:21:47Z",
+      "side": 1,
+      "message": "Yes, I think you are right. But we still need to start the sync adapter because the connectivity listener only is register when ImapService is created, which only happens when the sync adapter is created.",
+      "parentUuid": "9a89bdaa_3a17bea4",
+      "revId": "f5f738b0e65daabd25bb40924f592aa8a755bd18",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a89bdaa_1a12fab4",
         "filename": "provider_src/com/android/email/service/ImapService.java",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2015-05-18T19:43:22Z",
       "side": 1,
       "message": "This should be removed, shouldn\u0027t it? We aren\u0027t requesting a sync if there are only FETCH changes, so should restart the IDLE connection right away.",
+      "revId": "f5f738b0e65daabd25bb40924f592aa8a755bd18",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a89bdaa_1da114aa",
+        "filename": "provider_src/com/android/email/service/ImapService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 2716,
+      "author": {
+        "id": 3134
+      },
+      "writtenOn": "2015-05-19T09:21:47Z",
+      "side": 1,
+      "message": "No, processImapFetchChanges unregister and register the idle connection, so we don\u0027t have to do it here. After all, processImapFetchChanges is an internal sync operation.",
+      "parentUuid": "9a89bdaa_1a12fab4",
       "revId": "f5f738b0e65daabd25bb40924f592aa8a755bd18",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
