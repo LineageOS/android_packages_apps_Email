@@ -16,6 +16,24 @@
       "revId": "c8d46c6fd2ef939aa53ab4adebf60aec3c192caf",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a89bdaa_102bbbec",
+        "filename": "provider_src/com/android/email/mail/store/ImapStore.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 3134
+      },
+      "writtenOn": "2015-05-19T19:39:02Z",
+      "side": 1,
+      "message": "It\u0027s supossed to set the inbox as part of the mailboxes to sync the first time the account was created, but isn\u0027t really worl and i forget to remove it.\ncurrently the first time one create an imap account there isn\u0027t  any folder checked to sync which is a bit weird from ux point of view. I need to recheck the point when imap is created the first time.",
+      "parentUuid": "9a89bdaa_70ec07c8",
+      "revId": "c8d46c6fd2ef939aa53ab4adebf60aec3c192caf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
