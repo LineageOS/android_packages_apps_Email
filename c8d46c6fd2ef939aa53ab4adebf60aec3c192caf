@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a89bdaa_70ec07c8",
+        "filename": "provider_src/com/android/email/mail/store/ImapStore.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-05-19T18:48:31Z",
+      "side": 1,
+      "message": "What\u0027s this?",
+      "revId": "c8d46c6fd2ef939aa53ab4adebf60aec3c192caf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
