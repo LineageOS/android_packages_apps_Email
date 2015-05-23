@@ -17,4 +17,7 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="delete_account">Ta bort konto</string>
+  <string name="deleting_account_msg">Tar bort konto\u2026</string>
+  <string name="delete_account_failed">Kunde inte ta bort kontot</string>
+  <string name="label_notification_lights_title">Ljus</string>
 </resources>

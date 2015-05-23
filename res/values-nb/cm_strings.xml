@@ -20,4 +20,8 @@
   <string name="delete_account_confirmation_msg">Dette vil slette alle innstillingene og e-post for kontoen <xliff:g id="account">%s</xliff:g>. Denne operasjonen kan ikke være omgjøres.\n\nVil du fortsette?</string>
   <string name="deleting_account_msg">Sletter konto\u2026</string>
   <string name="delete_account_failed">Kan ikke slette kontoen</string>
+  <string name="mailbox_notify_settings_activity_title">Varslingsalternativer</string>
+  <string name="mailbox_notify_settings_activity_title_with_mailbox">Varslingsalternativer (<xliff:g id="mailbox_name" example="Family">%s </xliff:g>)</string>
+  <string name="folder_notify_settings_pref_title">Mappe varslingsinnstillinger</string>
+  <string name="label_notification_lights_title">Lys</string>
 </resources>

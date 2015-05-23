@@ -20,4 +20,8 @@
   <string name="delete_account_confirmation_msg">Dette vil slette alle indstillinger og e-mails fra kontoen <xliff:g id="account">%s</xliff:g>. Denne handling kan ikke fortrydes.\n\nFortsæt?</string>
   <string name="deleting_account_msg">Sletter konto\u2026</string>
   <string name="delete_account_failed">Kunne ikke slette kontoen</string>
+  <string name="mailbox_notify_settings_activity_title">Notifikationsindstillinger</string>
+  <string name="mailbox_notify_settings_activity_title_with_mailbox">Notifikationsindstillinger (<xliff:g id="mailbox_name" example="Family">%s</xliff:g>)</string>
+  <string name="folder_notify_settings_pref_title">Notifikationsindstillinger for mappe</string>
+  <string name="label_notification_lights_title">Lys</string>
 </resources>
