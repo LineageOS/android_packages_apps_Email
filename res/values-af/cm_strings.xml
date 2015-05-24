@@ -20,4 +20,8 @@
   <string name="delete_account_confirmation_msg">Hierdie sal alle instellings en e-posse verwyder van die volgende rekening <xliff:g id="account">%s</xliff:g>. Hierdie aksie kan nie ontdoen word nie.\n\nGaan voort?</string>
   <string name="deleting_account_msg">Verwydering van rekening\u2026</string>
   <string name="delete_account_failed">Kon nie rekening verwyder nie</string>
+  <string name="mailbox_notify_settings_activity_title">Kennisgewing instellings</string>
+  <string name="mailbox_notify_settings_activity_title_with_mailbox">Kennisgewing instellings (<xliff:g id="mailbox_name" example="Family">%s</xliff:g>)</string>
+  <string name="folder_notify_settings_pref_title">Vouer kennisgewing instellings</string>
+  <string name="label_notification_lights_title">Liggies</string>
 </resources>

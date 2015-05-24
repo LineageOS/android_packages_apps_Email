@@ -22,5 +22,6 @@
   <string name="delete_account_failed">Konto konnte nicht gelöscht werden</string>
   <string name="mailbox_notify_settings_activity_title">Benachrichtigungsoptionen</string>
   <string name="mailbox_notify_settings_activity_title_with_mailbox">Benachrichtigungsoptionen (<xliff:g id="mailbox_name" example="Familie">%s</xliff:g>)</string>
+  <string name="folder_notify_settings_pref_title">Benachrichtigungseinstellungen für Ordner</string>
   <string name="label_notification_lights_title">LED</string>
 </resources>
