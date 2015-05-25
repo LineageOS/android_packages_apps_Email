@@ -387,6 +387,10 @@ public class AccountCheckSettingsFragment extends Fragment {
                     if (bundle == null) {
                         return new MessagingException(MessagingException.UNSPECIFIED_EXCEPTION);
                     }
+
+                    // Save account protocol and capabilities
+                    mAccount.mCapabilities = bundle.getInt(
+                            EmailServiceProxy.SETTINGS_BUNDLE_CAPABILITIES, 0);
                     mAccount.mProtocolVersion = bundle.getString(
                             EmailServiceProxy.VALIDATE_BUNDLE_PROTOCOL_VERSION);
                     int resultCode = bundle.getInt(EmailServiceProxy.VALIDATE_BUNDLE_RESULT_CODE);
@@ -417,10 +421,6 @@ public class AccountCheckSettingsFragment extends Fragment {
                                 EmailServiceProxy.VALIDATE_BUNDLE_ERROR_MESSAGE);
                         return new MessagingException(resultCode, errorMessage);
                     }
-
-                    // Save account capabilities
-                    mAccount.mCapabilities = bundle.getInt(
-                            EmailServiceProxy.SETTINGS_BUNDLE_CAPABILITIES, 0);
                 }
 
                 final EmailServiceInfo info;
