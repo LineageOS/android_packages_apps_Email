@@ -54,7 +54,7 @@ public class ProviderTestUtils extends Assert {
         account.mEmailAddress = name + "@android.com";
         account.mSyncKey = "sync-key-" + name;
         account.mSyncLookback = 1;
-        account.mSyncInterval = Account.CHECK_INTERVAL_NEVER;
+        account.setSyncInterval(Account.CHECK_INTERVAL_NEVER);
         account.mHostAuthKeyRecv = 0;
         account.mHostAuthKeySend = 0;
         account.mFlags = 4;
@@ -293,7 +293,7 @@ public class ProviderTestUtils extends Assert {
         assertEquals(caller + " mSyncKey", expect.mSyncKey, actual.mSyncKey);
 
         assertEquals(caller + " mSyncLookback", expect.mSyncLookback, actual.mSyncLookback);
-        assertEquals(caller + " mSyncInterval", expect.mSyncInterval, actual.mSyncInterval);
+        assertEquals(caller + " mSyncInterval", expect.getSyncInterval(), actual.getSyncInterval());
         assertEquals(caller + " mHostAuthKeyRecv", expect.mHostAuthKeyRecv,
                 actual.mHostAuthKeyRecv);
         assertEquals(caller + " mHostAuthKeySend", expect.mHostAuthKeySend,
