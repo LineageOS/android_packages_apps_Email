@@ -62,7 +62,7 @@ public class AccountBackupRestoreTests extends ProviderTestCase2<EmailProvider> 
         assertEquals(" mEmailAddress", expect.mEmailAddress, actual.mEmailAddress);
 
         assertEquals(" mSyncLookback", expect.mSyncLookback, actual.mSyncLookback);
-        assertEquals(" mSyncInterval", expect.mSyncInterval, actual.mSyncInterval);
+        assertEquals(" mSyncInterval", expect.getSyncInterval(), actual.getSyncInterval());
         assertEquals(" mFlags", expect.mFlags, actual.mFlags);
         assertEquals(" mSenderName", expect.mSenderName, actual.mSenderName);
         assertEquals(" mProtocolVersion", expect.mProtocolVersion,
