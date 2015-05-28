@@ -388,7 +388,7 @@ public class LegacyConversionsTests extends ProviderTestCase2<EmailProvider> {
         String get1Text = null;
         String get1Html = null;
         for (Part viewable : viewables) {
-            String text = MimeUtility.getTextFromPart(viewable);
+            String text = MimeUtility.getTextFromPart(viewable, true);
             if (viewable.getMimeType().equalsIgnoreCase("text/html")) {
                 get1Html = text;
             } else {
