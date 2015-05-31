@@ -17,7 +17,7 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="delete_account">Konto löschen</string>
-  <string name="delete_account_confirmation_msg">DIese Aktion löscht alle Einstellungen und E-Mails des Kontos <xliff:g id="account">%s</xliff:g>. Dies kann nicht rückgängig gemacht werden.\n\nFortfahren?</string>
+  <string name="delete_account_confirmation_msg">Diese Aktion löscht alle Einstellungen und E-Mails des Kontos <xliff:g id="account">%s</xliff:g>. Dies kann nicht rückgängig gemacht werden.\n\nFortfahren?</string>
   <string name="deleting_account_msg">Konto wird gelöscht\u2026</string>
   <string name="delete_account_failed">Konto konnte nicht gelöscht werden</string>
   <string name="mailbox_notify_settings_activity_title">Benachrichtigungsoptionen</string>
