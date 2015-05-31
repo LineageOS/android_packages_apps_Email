@@ -26,9 +26,21 @@
   <string name="delete_account_confirmation_msg">Honek <xliff:g id="account">%s</xliff:g> kontuaren ezarpen eta mezu guztiak ezabatuko ditu. Ekintza hau ezin da desegin.\n\nJarraitu?</string>
   <string name="deleting_account_msg">Kontua ezabatzen\u2026</string>
   <string name="delete_account_failed">Ezin izan da kontua ezabatu</string>
-  <string name="account_auto_fetch_attachments_label">Atxikiturikoak deskargatu</string>
-  <string name="account_auto_fetch_attachments_entries_never">Automatikoki inoiz</string>
+  <string name="account_auto_fetch_attachments_label">Eranskinak automatikoki deskargatu</string>
+  <string name="account_auto_fetch_attachments_entries_never">Inoiz ez</string>
   <string name="account_auto_fetch_attachments_entries_wifi">Wi-Fi bidez besterik ez</string>
-  <string name="account_auto_fetch_attachments_entries_always">Beti automatikoki</string>
-  <string name="general_preference_confirm_forward_summary">Aukeratu posta zerbitzariko eranskinak erabili nahi dituzun, ala birbidali aurretik gailura deskargatu nahi dituzun</string>
+  <string name="account_auto_fetch_attachments_entries_always">Beti</string>
+  <string name="account_settings_sync_size_label">Sinkronizatuko den mezuaren gehienezko tamaina</string>
+  <string name="account_setup_options_mail_sync_size_all">Mugagabea</string>
+  <string name="account_setup_options_mail_sync_size_20k">20KB</string>
+  <string name="account_setup_options_mail_sync_size_100k">100KB</string>
+  <string name="account_setup_options_mail_sync_size_200k">200KB</string>
+  <string name="account_setup_options_mail_sync_size_500k">500KB</string>
+  <string name="account_setup_options_mail_sync_size_1M">1MB</string>
+  <string name="category_label_general_settings">Ezarpen orokorrak</string>
+  <string name="category_label_attachment_settings">Eranskinen ezarpenak</string>
+  <string name="general_preference_add_attachment_label">Gehitu beste fitxategi mota bat</string>
+  <string name="general_preference_select_recipients_label">Hautatu hartzaileak kontaktuetatik</string>
+  <string name="general_preference_confirm_forward_label">Berretsi birbidali aurretik</string>
+  <string name="general_preference_confirm_forward_summary">Hautatu posta zerbitzariko eranskinak erabili nahi dituzun, ala birbidali aurretik gailura deskargatu nahi dituzun</string>
 </resources>

@@ -23,7 +23,7 @@
   <string name="account_settings">Kontoeinstellungen</string>
   <string name="delete_account_title">Konto löschen</string>
   <string name="delete_account_summary">Dieses Konto mit den dazugehörigen Daten und Einstellungen löschen</string>
-  <string name="delete_account_confirmation_msg">DIese Aktion löscht alle Einstellungen und Emails des Kontos <xliff:g id="account">%s</xliff:g>. Dies kann nicht rückgängig gemacht werden.\n\nFortfahren?</string>
+  <string name="delete_account_confirmation_msg">Diese Aktion löscht alle Einstellungen und E-Mails des Kontos <xliff:g id="account">%s</xliff:g>. Dies kann nicht rückgängig gemacht werden.\n\nFortfahren?</string>
   <string name="deleting_account_msg">Konto wird gelöscht\u2026</string>
   <string name="delete_account_failed">Konto konnte nicht gelöscht werden</string>
   <string name="account_auto_fetch_attachments_label">Anhänge automatisch herunterladen</string>
