@@ -16,8 +16,8 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="delete_account">Konto löschen</string>
-  <string name="delete_account_confirmation_msg">Diese Aktion löscht alle Einstellungen und E-Mails des Kontos <xliff:g id="account">%s</xliff:g>. Dies kann nicht rückgängig gemacht werden.\n\nFortfahren?</string>
-  <string name="deleting_account_msg">Konto wird gelöscht\u2026</string>
-  <string name="delete_account_failed">Konto konnte nicht gelöscht werden</string>
+  <string name="delete_account">ลบบัญชีผู้ใช้</string>
+  <string name="delete_account_confirmation_msg">นี่จะลบการตั้งค่าและอีเมลทั้งหมดของบัญชี <xliff:g id="account">%s</xliff:g> การกระทำนี้ไม่สาราถรยกเลิกได้ \n\nดำเนินการต่อ?</string>
+  <string name="deleting_account_msg">กำลังลบบัญชีผู้ใช้\u2026</string>
+  <string name="delete_account_failed">ไม่สามารถลบบัญชีผู้ใช้ได้</string>
 </resources>
