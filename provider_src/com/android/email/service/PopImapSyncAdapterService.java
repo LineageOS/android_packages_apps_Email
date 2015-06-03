@@ -254,7 +254,7 @@ public class PopImapSyncAdapterService extends Service {
                         if (info.offerLookback) {
                             mailboxIds = getLoopBackMailboxIdsForSync(context, acct);
                         }
-                        if (mailboxIds.length == 0) {
+                        if (mailboxIds == null || mailboxIds.length == 0) {
                             final long inboxId = Mailbox.findMailboxOfType(context, acct.mId,
                                     Mailbox.TYPE_INBOX);
                             if (inboxId != Mailbox.NO_MAILBOX) {
