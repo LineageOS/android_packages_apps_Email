@@ -1638,7 +1638,11 @@ public class ImapFolder extends Folder {
                 // Transform MSNs to UIDs
                 for (String msn : msns) {
                     String[] uids = searchForUids(String.format(Locale.US, "%s:%s", msn, msn));
-                    imapIdleChanges.mMessageToFetch.add(uids[0]);
+                    if (uids.length > 0) {
+                        imapIdleChanges.mMessageToFetch.add(uids[0]);
+                    } else {
+                        throw new MessagingException("Server could not resolve MSN " + msn);
+                    }
                 }
             } catch (MessagingException ex) {
                 // Server doesn't support UID. We have to do a full sync (since
