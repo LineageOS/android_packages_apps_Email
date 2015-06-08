@@ -178,7 +178,7 @@ public class Utilities {
                         if (is != null) {
                             is.close();
                         }
-                    } catch (IOException io) {
+                    } catch (MessagingException io) {
                         // Ignore
                     }
                 }
