@@ -22,5 +22,6 @@
   <string name="delete_account_failed">לא ניתן למחוק את החשבון</string>
   <string name="mailbox_notify_settings_activity_title">אפשרויות התראה</string>
   <string name="mailbox_notify_settings_activity_title_with_mailbox">אפשרויות התראה (<xliff:g id="mailbox_name" example="Family">%s</xliff:g>)</string>
+  <string name="folder_notify_settings_pref_title">הגדרות התראה של התיקייה</string>
   <string name="label_notification_lights_title">אורות</string>
 </resources>
