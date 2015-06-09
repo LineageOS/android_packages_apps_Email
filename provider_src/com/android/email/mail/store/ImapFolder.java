@@ -223,6 +223,7 @@ public class ImapFolder extends Folder {
     }
 
     public void startIdling(final IdleCallback callback) throws MessagingException {
+        LogUtils.d(LOG_TAG, "startIdling on folder " + mName);
         checkOpen();
         synchronized (mIdleSync) {
             if (mIdling) {
@@ -341,6 +342,7 @@ public class ImapFolder extends Folder {
     }
 
     public void stopIdling(boolean discardConnection) throws MessagingException {
+        LogUtils.d(LOG_TAG, "stopIdling on folder " + mName);
         if (!isOpen()) {
             throw new MessagingException("Folder " + mName + " is not open.");
         }
