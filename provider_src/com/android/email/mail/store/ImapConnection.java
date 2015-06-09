@@ -94,6 +94,8 @@ class ImapConnection {
      */
     private final AtomicInteger mNextCommandTag = new AtomicInteger(0);
 
+    private String mTransportTag;
+
     // Keep others from instantiating directly
     ImapConnection(ImapStore store) {
         setStore(store);
@@ -105,6 +107,16 @@ class ImapConnection {
         // changed, the connection will not be reestablished.
         mImapStore = store;
         mLoginPhrase = null;
+    }
+
+    void setTransportTag(String tag) {
+        mTransportTag = tag;
+        if (mTransport != null) {
+            mTransport.setTag(tag);
+        }
+        if (mParser != null) {
+            mParser.setTag(tag);
+        }
     }
 
     /**
@@ -152,6 +164,7 @@ class ImapConnection {
             // copy configuration into a clean transport, if necessary
             if (mTransport == null) {
                 mTransport = mImapStore.cloneTransport();
+                mTransport.setTag(mTransportTag);
             }
 
             mTransport.open();
@@ -277,6 +290,7 @@ class ImapConnection {
     private void createParser() {
         destroyResponses();
         mParser = new ImapResponseParser(mTransport.getInputStream(), mDiscourse);
+        mParser.setTag(mTransportTag);
     }
 
     void destroyResponses() {
