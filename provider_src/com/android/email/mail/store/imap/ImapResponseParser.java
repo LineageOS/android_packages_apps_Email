@@ -68,6 +68,7 @@ public class ImapResponseParser {
 
     private boolean mIdling;
     private boolean mExpectIdlingResponse;
+    private String mTag;
 
     /**
      * Exception thrown when we receive BYE.  It derives from IOException, so it'll be treated
@@ -98,6 +99,10 @@ public class ImapResponseParser {
         mIn = new PeekableInputStream(in);
         mDiscourseLogger = discourseLogger;
         mLiteralKeepInMemoryThreshold = literalKeepInMemoryThreshold;
+    }
+
+    public void setTag(String tag) {
+        mTag = tag;
     }
 
     private static IOException newEOSException() {
@@ -149,6 +154,13 @@ public class ImapResponseParser {
         mResponsesToDestroy.clear();
     }
 
+    private String getFormattedTag() {
+        if (mTag != null) {
+            return "(" + mTag + ") ";
+        }
+        return "";
+    }
+
     /**
      * Reads the next response available on the stream and returns an
      * {@link ImapResponse} object that represents it.
@@ -165,7 +177,7 @@ public class ImapResponseParser {
         try {
             response = parseResponse();
             if (DebugUtils.DEBUG) {
-                LogUtils.d(Logging.LOG_TAG, "<<< " + response.toString());
+                LogUtils.d(Logging.LOG_TAG, getFormattedTag() + "<<< " + response.toString());
             }
 
         } catch (RuntimeException e) {
