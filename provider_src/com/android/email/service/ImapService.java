@@ -422,9 +422,7 @@ public class ImapService extends Service {
                         if (!registered) {
                             registered = registerMailboxForIdle(context, account, mailbox);
                         }
-                        if (!hasSyncMailboxes && registered) {
-                            hasSyncMailboxes = registered;
-                        }
+                        hasSyncMailboxes |= registered;
                     }
 
                     // Sync the inbox
