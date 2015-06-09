@@ -1608,8 +1608,8 @@ public class ImapFolder extends Folder {
 
             } catch (Exception ex) {
                 if (Logging.LOGD) {
-                    LogUtils.e(LOG_TAG, "Failure processing imap change (" + change
-                            + ") for mailbox " + mName, ex);
+                    LogUtils.e(LOG_TAG, ex, "Failure processing imap change (" + change
+                            + ") for mailbox " + mName);
                 }
             }
         }
