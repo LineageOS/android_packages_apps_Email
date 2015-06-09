@@ -222,7 +222,7 @@ public class ImapService extends Service {
         @Override
         public void onException(MessagingException ex) {
             // Reschedule a new ping
-            LogUtils.e(LOG_TAG, "Ping exception for mailbox " + mMailbox.mId, ex);
+            LogUtils.e(LOG_TAG, ex, "Ping exception for mailbox " + mMailbox.mId);
             cancelKickIdleConnection();
             internalUnregisterFolderIdle();
             reschedulePing(increasePingDelay());
@@ -266,7 +266,7 @@ public class ImapService extends Service {
                         ImapIdleFolderHolder holder = ImapIdleFolderHolder.getInstance();
                         holder.registerMailboxForIdle(mContext, account, mMailbox);
                     } catch (MessagingException ex) {
-                        LogUtils.w(LOG_TAG, "Failed to register mailbox for idle. Reschedule.", ex);
+                        LogUtils.w(LOG_TAG, ex, "Failed to register mailbox for idle. Reschedule.");
                         reschedulePing(increasePingDelay());
                     }
                 }
@@ -367,7 +367,7 @@ public class ImapService extends Service {
                     LogUtils.i(LOG_TAG, "Registered idle for mailbox " + mailbox.mId);
                     return true;
                 } catch (Exception ex) {
-                    LogUtils.i(LOG_TAG, "Failed to register idle for mailbox " + mailbox.mId, ex);
+                    LogUtils.i(LOG_TAG, ex, "Failed to register idle for mailbox " + mailbox.mId);
                 }
                 return false;
             }
@@ -1855,7 +1855,7 @@ public class ImapService extends Service {
 
         } catch (MessagingException ex) {
             if (Logging.LOGD) {
-                LogUtils.d(Logging.LOG_TAG, "processImapFetchChanges", ex);
+                LogUtils.d(Logging.LOG_TAG, ex, "processImapFetchChanges");
             }
             if (ex instanceof AuthenticationFailedException) {
                 // Generate authentication notification
