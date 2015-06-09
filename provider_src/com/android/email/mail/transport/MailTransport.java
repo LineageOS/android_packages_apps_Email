@@ -55,6 +55,7 @@ public class MailTransport {
             HttpsURLConnection.getDefaultHostnameVerifier();
 
     private final String mDebugLabel;
+    private String mDebugTag;
     private final Context mContext;
     protected final HostAuth mHostAuth;
 
@@ -67,6 +68,10 @@ public class MailTransport {
         mContext = context;
         mDebugLabel = debugLabel;
         mHostAuth = hostAuth;
+    }
+
+    public void setTag(String tag) {
+        mDebugTag = tag;
     }
 
    /**
@@ -292,16 +297,21 @@ public class MailTransport {
         return mOut;
     }
 
+    private String getFormattedDebugTag() {
+        if (mDebugTag != null) {
+            return "(" + mDebugTag + ") ";
+        }
+        return "";
+    }
+
     /**
      * Writes a single line to the server using \r\n termination.
      */
     public void writeLine(String s, String sensitiveReplacement) throws IOException {
         if (DebugUtils.DEBUG) {
-            if (sensitiveReplacement != null && !Logging.DEBUG_SENSITIVE) {
-                LogUtils.d(Logging.LOG_TAG, ">>> " + sensitiveReplacement);
-            } else {
-                LogUtils.d(Logging.LOG_TAG, ">>> " + s);
-            }
+            String output = sensitiveReplacement != null && !Logging.DEBUG_SENSITIVE
+                    ? sensitiveReplacement : s;
+            LogUtils.d(Logging.LOG_TAG, getFormattedDebugTag() + ">>> " + output);
         }
 
         OutputStream out = getOutputStream();
@@ -333,7 +343,7 @@ public class MailTransport {
         }
         String ret = sb.toString();
         if (loggable && DebugUtils.DEBUG) {
-            LogUtils.d(Logging.LOG_TAG, "<<< " + ret);
+            LogUtils.d(Logging.LOG_TAG, getFormattedDebugTag() + "<<< " + ret);
         }
         return ret;
     }
