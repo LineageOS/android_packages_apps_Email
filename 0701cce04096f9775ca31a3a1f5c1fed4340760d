@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da4df55a_b1f2206e",
+        "filename": "provider_src/com/android/email/provider/Utilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-06-09T19:49:18Z",
+      "side": 1,
+      "message": "I know it\u0027s unlikely, but close() might throw an IOException, potentially leading to other parts not being closed. Shouldn\u0027t we either wrap this call into another try-catch, or catch both MessagingException and IOException below?",
+      "revId": "0701cce04096f9775ca31a3a1f5c1fed4340760d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
