@@ -177,6 +177,7 @@ public class ImapFolder extends Folder {
             // * OK [UIDNEXT 57576] Predicted next UID
             // 2 OK [READ-WRITE] Select completed.
             try {
+                mConnection.setTransportTag(mName + "-" + hashCode());
                 doSelect();
             } catch (IOException ioe) {
                 throw ioExceptionHandler(mConnection, ioe);
