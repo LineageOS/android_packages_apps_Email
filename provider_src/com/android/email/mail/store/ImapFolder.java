@@ -548,7 +548,9 @@ public class ImapFolder extends Folder {
 
     @Override
     public int getMessageCount() {
-        return mMessageCount;
+        synchronized (this) {
+            return mMessageCount;
+        }
     }
 
     @Override
@@ -1103,7 +1105,9 @@ public class ImapFolder extends Folder {
      */
     private void handleUntaggedResponse(ImapResponse response) {
         if (response.isDataResponse(1, ImapConstants.EXISTS)) {
-            mMessageCount = response.getStringOrEmpty(0).getNumberOrZero();
+            synchronized (this) {
+                mMessageCount = response.getStringOrEmpty(0).getNumberOrZero();
+            }
         }
     }
 
@@ -1541,9 +1545,10 @@ public class ImapFolder extends Folder {
         //    OK DONE
         //        No more changes
         //    n EXISTS
-        //        Indicates that the mailbox changed => ignore
+        //        Indicates the number of messages in the mailbox => handle like
+        //        RECENT if the number increased
         //    n EXPUNGE
-        //        Indicates a message were completely deleted => a full sync is required
+        //        Indicates a message was completely deleted => a full sync is required
         //    n RECENT
         //        New messages waiting in the server => use UIDNEXT to search for the new messages.
         //        If isn't possible to retrieve the new UID messages, then a full sync is required
@@ -1587,9 +1592,24 @@ public class ImapFolder extends Folder {
                 if (op.is(ImapConstants.DONE)) {
                     break;
                 } else if (op.is(ImapConstants.EXISTS)) {
-                    continue;
+                    int newMessageCount = change.getStringOrEmpty(0).getNumberOrZero();
+                    int oldMessageCount;
+                    synchronized (this) {
+                        oldMessageCount = mMessageCount;
+                        mMessageCount = newMessageCount;
+                    }
+                    if (Logging.LOGD) {
+                        LogUtils.d(LOG_TAG, "Got EXISTS idle response, message count now "
+                                + newMessageCount + ", was " + oldMessageCount);
+                    }
+                    if (newMessageCount > oldMessageCount) {
+                        hasNewMessages = true;
+                    }
                 } else if (op.is(ImapConstants.EXPUNGE)) {
                     imapIdleChanges.mRequiredSync = true;
+                    synchronized (this) {
+                        mMessageCount--;
+                    }
                 } else if (op.is(ImapConstants.RECENT)) {
                     hasNewMessages = true;
                 } else if (op.is(ImapConstants.FETCH)
