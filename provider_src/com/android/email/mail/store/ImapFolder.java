@@ -249,6 +249,7 @@ public class ImapFolder extends Folder {
                     // the server to listen for new changes)
                     synchronized (mIdleSync) {
                         if (mIdlingCancelled) {
+                            mIdling = false;
                             return;
                         }
                     }
