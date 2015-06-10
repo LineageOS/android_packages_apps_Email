@@ -235,6 +235,7 @@ class ImapConnection {
         destroyResponses();
         mParser = null;
         mImapStore = null;
+        mIdling = false;
     }
 
     int getReadTimeout() throws IOException {
@@ -397,13 +398,14 @@ class ImapConnection {
      */
     List<ImapResponse> getCommandResponses() throws IOException, MessagingException {
         final List<ImapResponse> responses = new ArrayList<ImapResponse>();
+        final ImapResponseParser parser = mParser; // might get reset during idling
         ImapResponse response = null;
         boolean idling = false;
         boolean throwSocketTimeoutEx = true;
-        int lastSocketTimeout = getReadTimeout();
+        final int lastSocketTimeout = getReadTimeout();
         try {
             do {
-                response = mParser.readResponse();
+                response = parser.readResponse();
                 if (idling) {
                     setReadTimeout(IDLE_OP_READ_TIMEOUT);
                     throwSocketTimeoutEx = false;
@@ -418,7 +420,7 @@ class ImapConnection {
                 throw ex;
             }
         } finally {
-            mParser.resetIdlingStatus();
+            parser.resetIdlingStatus();
             if (lastSocketTimeout != getReadTimeout()) {
                 setReadTimeout(lastSocketTimeout);
             }
