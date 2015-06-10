@@ -108,8 +108,9 @@ public class ImapService extends Service {
     private static final Flag[] FLAG_LIST_FLAGGED = new Flag[] { Flag.FLAGGED };
     private static final Flag[] FLAG_LIST_ANSWERED = new Flag[] { Flag.ANSWERED };
 
-    // Kick idle connection every 25 minutes
-    private static final int KICK_IDLE_CONNECTION_TIMEOUT = 25 * 60 * 1000;
+    // Kick idle connection every ~25 minutes (in a window between 25 and 28 minutes)
+    private static final int KICK_IDLE_CONNECTION_TIMEOUT_MIN = 25 * 60 * 1000;
+    private static final int KICK_IDLE_CONNECTION_TIMEOUT_MAX = 28 * 60 * 1000;
     private static final int ALARM_REQUEST_KICK_IDLE_CODE = 1000;
 
     /**
@@ -293,9 +294,11 @@ public class ImapService extends Service {
 
         private void scheduleKickIdleConnection() {
             PendingIntent pi = getKickIdleConnectionPendingIntent();
-            long due = System.currentTimeMillis() + KICK_IDLE_CONNECTION_TIMEOUT;
+            long due = System.currentTimeMillis() + KICK_IDLE_CONNECTION_TIMEOUT_MIN;
+            long windowLength =
+                    KICK_IDLE_CONNECTION_TIMEOUT_MAX - KICK_IDLE_CONNECTION_TIMEOUT_MIN;
             AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
-            am.set(AlarmManager.RTC, due, pi);
+            am.setWindow(AlarmManager.RTC_WAKEUP, due, windowLength, pi);
         }
 
         private void cancelKickIdleConnection() {
