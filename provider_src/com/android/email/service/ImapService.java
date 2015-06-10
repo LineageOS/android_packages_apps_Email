@@ -2768,9 +2768,9 @@ public class ImapService extends Service {
         // the changes just perform a full sync
         final long timeSinceLastFullSync = SystemClock.elapsedRealtime() -
                 mailbox.mLastFullSyncTime;
-        final boolean fullSync = timeSinceLastFullSync >= FULL_SYNC_INTERVAL_MILLIS
+        final boolean forceSync = timeSinceLastFullSync >= FULL_SYNC_INTERVAL_MILLIS
                 || timeSinceLastFullSync < 0;
-        if (fullSync) {
+        if (forceSync) {
             needSync = true;
             fetchMessages.clear();
 
@@ -2786,31 +2786,33 @@ public class ImapService extends Service {
                     + ": need sync " + needSync + ", " + msgToFetchSize + " fetch messages");
         }
 
-        boolean syncRequested = false;
-        try {
-            // Sync fetch messages only if we are not going to perform a full sync
-            if (msgToFetchSize > 0 && msgToFetchSize < MAX_MESSAGES_TO_FETCH && !needSync) {
-                processImapFetchChanges(context, account, mailbox, fetchMessages);
+        if (msgToFetchSize > 0) {
+            if (!needSync && msgToFetchSize <= MAX_MESSAGES_TO_FETCH) {
+                try {
+                    processImapFetchChanges(context, account, mailbox, fetchMessages);
+                } catch (MessagingException ex) {
+                    LogUtils.w(LOG_TAG,
+                            "Failed to process imap idle changes for mailbox " + mailbox.mId);
+                    needSync = true;
+                }
+            } else {
+                needSync = true;
             }
-            if (needSync || msgToFetchSize > MAX_MESSAGES_TO_FETCH) {
-                // With idle we fetched as much as possible. If as resync is required, then
-                // if should be a full sync
-                requestSync(context, account, mailbox.mId, true);
-                syncRequested = true;
-            }
-        } catch (MessagingException ex) {
-            LogUtils.w(LOG_TAG, "Failed to process imap idle changes for mailbox " + mailbox.mId);
         }
 
-        // In case no sync happens, re-add idle status
-        try {
-            if (!syncRequested && account.getSyncInterval() == Account.CHECK_INTERVAL_PUSH) {
-                final ImapIdleFolderHolder holder = ImapIdleFolderHolder.getInstance();
-                holder.registerMailboxForIdle(context, account, mailbox);
+        if (needSync) {
+            requestSync(context, account, mailbox.mId, true);
+        } else {
+            // In case no sync happens, re-add idle status
+            try {
+                if (account.getSyncInterval() == Account.CHECK_INTERVAL_PUSH) {
+                    final ImapIdleFolderHolder holder = ImapIdleFolderHolder.getInstance();
+                    holder.registerMailboxForIdle(context, account, mailbox);
+                }
+            } catch (MessagingException ex) {
+                LogUtils.w(LOG_TAG, "Failed to readd imap idle after no sync " +
+                        "for mailbox " + mailbox.mId);
             }
-        } catch (MessagingException ex) {
-            LogUtils.w(LOG_TAG, "Failed to readd imap idle after no sync " +
-                    "for mailbox " + mailbox.mId);
         }
     }
 }
