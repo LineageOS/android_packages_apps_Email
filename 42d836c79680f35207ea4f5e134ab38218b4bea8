@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ba5201f7_90819450",
+        "filename": "provider_src/com/android/email/mail/store/ImapFolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1512,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-06-10T02:30:22Z",
+      "side": 1,
+      "message": "My thought was that we can\u0027t idle on a folder that\u0027s not yet initialized anyway.",
+      "parentUuid": "ba5201f7_50b9ec2d",
+      "revId": "42d836c79680f35207ea4f5e134ab38218b4bea8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba5201f7_10af64e4",
         "filename": "provider_src/com/android/email/mail/store/ImapFolder.java",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ba5201f7_b0869863",
+        "filename": "provider_src/com/android/email/mail/store/ImapFolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1601,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-06-10T02:30:22Z",
+      "side": 1,
+      "message": "How can there be new messages if the message count decremented? :)",
+      "parentUuid": "ba5201f7_10af64e4",
+      "revId": "42d836c79680f35207ea4f5e134ab38218b4bea8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba5201f7_30ac68ed",
         "filename": "provider_src/com/android/email/mail/store/ImapFolder.java",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2015-06-10T02:25:21Z",
       "side": 1,
       "message": "decrement here only should happends if there isn\u0027t a previous EXISTS op. So EXISTS have the EXPUNGE in its count if they come in the same batch of ops. Otherwise, we get EXISTS count and decrement the EXPUNGE ones, which i think is wrong",
+      "revId": "42d836c79680f35207ea4f5e134ab38218b4bea8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba5201f7_d07b1c7a",
+        "filename": "provider_src/com/android/email/mail/store/ImapFolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1607,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-06-10T02:30:22Z",
+      "side": 1,
+      "message": "I\u0027m not sure I can agree here. I\u0027d expect something like this:\n\n* 10 EXISTS\n....\n* 10 EXISTS\n* 5 EXPUNGE\n\n\nor\n\n\n* 10 EXISTS\n....\n* 5 EXPUNGE\n* 9 EXISTS\n\n\nIOW, I\u0027d expect EXISTS to reflect the state up to and including all received messages, but not the following ones. Do the RFCs mention anything in that regard?",
+      "parentUuid": "ba5201f7_30ac68ed",
       "revId": "42d836c79680f35207ea4f5e134ab38218b4bea8",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
