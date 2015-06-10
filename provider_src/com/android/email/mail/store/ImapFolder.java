@@ -354,8 +354,10 @@ public class ImapFolder extends Folder {
             try {
                 mIdlingCancelled = true;
                 mDiscardIdlingConnection = discardConnection;
-                // We can read responses here because we can block the buffer. Read commands
-                // are always done by startListener method (blocking idle)
+                // Send the DONE command to make the idle reader thread exit. Shorten
+                // the read timeout for doing that in order to not wait indefinitely,
+                // the server should respond to the DONE command quickly anyway
+                mConnection.setReadTimeout(1000);
                 mConnection.sendCommand(ImapConstants.DONE, false);
 
             } catch (MessagingException me) {
@@ -369,6 +371,14 @@ public class ImapFolder extends Folder {
                 throw ioExceptionHandler(mConnection, ioe);
 
             }
+        }
+
+        // Join the thread, but make sure to not wait indefinitely. The read timeout we
+        // set is 1s and the parser waits for another 500ms, so 2s should be sufficient.
+        try {
+            mIdleReader.join(2000, 0);
+        } catch (InterruptedException e) {
+            // ignore
         }
     }
 
