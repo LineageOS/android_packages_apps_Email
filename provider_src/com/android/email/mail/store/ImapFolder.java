@@ -234,6 +234,11 @@ public class ImapFolder extends Folder {
             mDiscardIdlingConnection = false;
         }
 
+        final ImapConnection connection;
+        synchronized (this) {
+            connection = mConnection;
+        }
+
         // Run idle in background
         mIdleReader = new Thread() {
             @Override
@@ -244,8 +249,8 @@ public class ImapFolder extends Folder {
 
                     // We setup the max time specified in RFC 2177 to re-issue
                     // an idle request to the server
-                    mConnection.setReadTimeout(ImapConnection.PING_IDLE_TIMEOUT);
-                    mConnection.destroyResponses();
+                    connection.setReadTimeout(ImapConnection.PING_IDLE_TIMEOUT);
+                    connection.destroyResponses();
 
                     // Enter now in idle status (we hold a connection with
                     // the server to listen for new changes)
@@ -259,7 +264,7 @@ public class ImapFolder extends Folder {
                     if (callback != null) {
                         callback.onIdled();
                     }
-                    List<ImapResponse> responses = mConnection.executeIdleCommand();
+                    List<ImapResponse> responses = connection.executeIdleCommand();
 
                     // Check whether IDLE was successful (first response is an idling response)
                     if (responses.isEmpty() || (mIdling && !responses.get(0).isIdling())) {
@@ -279,8 +284,8 @@ public class ImapFolder extends Folder {
                     synchronized (mIdleSync) {
                         if (!mIdlingCancelled) {
                             try {
-                                mConnection.setReadTimeout(ImapConnection.DONE_TIMEOUT);
-                                mConnection.executeSimpleCommand(ImapConstants.DONE);
+                                connection.setReadTimeout(ImapConnection.DONE_TIMEOUT);
+                                connection.executeSimpleCommand(ImapConstants.DONE);
                             } catch (MessagingException me) {
                                 // Ignore this exception caused by messages in the queue
                             }
@@ -332,7 +337,7 @@ public class ImapFolder extends Folder {
                         mIdling = false;
                     }
                     if (callback != null) {
-                        callback.onException(ioExceptionHandler(mConnection, ioe));
+                        callback.onException(ioExceptionHandler(connection, ioe));
                     }
 
                 }
@@ -347,6 +352,12 @@ public class ImapFolder extends Folder {
         if (!isOpen()) {
             throw new MessagingException("Folder " + mName + " is not open.");
         }
+
+        final ImapConnection connection;
+        synchronized (this) {
+            connection = mConnection;
+        }
+
         synchronized (mIdleSync) {
             if (!mIdling) {
                 throw new MessagingException("Folder " + mName + " isn't in IDLE state.");
@@ -354,9 +365,10 @@ public class ImapFolder extends Folder {
             try {
                 mIdlingCancelled = true;
                 mDiscardIdlingConnection = discardConnection;
-                // We can read responses here because we can block the buffer. Read commands
-                // are always done by startListener method (blocking idle)
-                mConnection.sendCommand(ImapConstants.DONE, false);
+                // Send the DONE command to make the idle reader thread exit. Shorten
+                // the read timeout for doing that in order to not wait indefinitely,
+                // the server should respond to the DONE command quickly anyway
+                connection.sendCommand(ImapConstants.DONE, false);
 
             } catch (MessagingException me) {
                 // Treat IOERROR messaging exception as IOException
@@ -368,6 +380,25 @@ public class ImapFolder extends Folder {
             } catch (IOException ioe) {
                 throw ioExceptionHandler(mConnection, ioe);
 
+            }
+        }
+
+        // Try to join the thread, but make sure to not wait indefinitely. This should
+        // be the normal case (server sends the response to DONE quickly)
+        try {
+            mIdleReader.join(1000, 0);
+        } catch (InterruptedException e) {
+            // ignore
+        }
+        // In case the server didn't respond quickly, the connection is likely broken;
+        // close it (which definitely will cause the thread to return) and finally join the thread
+        if (mIdleReader.isAlive()) {
+            connection.close();
+            close(false);
+            try {
+                mIdleReader.join();
+            } catch (InterruptedException e) {
+                // ignore
             }
         }
     }
@@ -1526,7 +1557,7 @@ public class ImapFolder extends Folder {
 
     private MessagingException ioExceptionHandler(ImapConnection connection, IOException ioe) {
         if (DebugUtils.DEBUG) {
-            LogUtils.d(Logging.LOG_TAG, "IO Exception detected: ", ioe);
+            LogUtils.d(Logging.LOG_TAG, ioe, "IO Exception detected: ");
         }
         if (connection != null) {
             connection.close();
