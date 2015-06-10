@@ -253,6 +253,10 @@ public class ImapService extends Service {
 
                         ImapIdleFolderHolder holder = ImapIdleFolderHolder.getInstance();
                         holder.registerMailboxForIdle(mContext, account, mMailbox);
+
+                        // Request a quick sync to make sure we didn't lose any new mails
+                        // during the failure time
+                        ImapService.requestSync(mContext, account, mMailbox.mId, false);
                     } catch (MessagingException ex) {
                         LogUtils.w(LOG_TAG, ex, "Failed to register mailbox for idle. Reschedule.");
                         reschedulePing(increasePingDelay());
