@@ -175,13 +175,13 @@ public class ImapService extends Service {
     private static class ImapIdleListener implements ImapFolder.IdleCallback {
         private final Context mContext;
 
-        private final Store mStore;
+        private final Account mAccount;
         private final Mailbox mMailbox;
 
-        public ImapIdleListener(Context context, Store store, Mailbox mailbox) {
+        public ImapIdleListener(Context context, Account account, Mailbox mailbox) {
             super();
             mContext = context;
-            mStore = store;
+            mAccount = account;
             mMailbox = mailbox;
         }
 
@@ -204,7 +204,7 @@ public class ImapService extends Service {
                 @Override
                 public void run() {
                     // Selectively process all the retrieved changes
-                    processImapIdleChangesLocked(mContext, mStore.getAccount(), mMailbox,
+                    processImapIdleChangesLocked(mContext, mAccount, mMailbox,
                             needSync, fetchMessages);
                 }
             });
@@ -369,7 +369,8 @@ public class ImapService extends Service {
                         mIdledFolders.put((int) mailbox.mId, folder);
                     }
                     folder.open(OpenMode.READ_WRITE);
-                    folder.startIdling(new ImapIdleListener(context, remoteStore, mailbox));
+                    folder.startIdling(new ImapIdleListener(context,
+                            remoteStore.getAccount(), mailbox));
 
                     LogUtils.i(LOG_TAG, "Registered idle for mailbox " + mailbox.mId);
                     return true;
@@ -459,8 +460,11 @@ public class ImapService extends Service {
         private void kickIdledMailbox(Context context, Mailbox mailbox, Account account)
                 throws MessagingException {
             synchronized (mIdledFolders) {
-                unregisterIdledMailboxLocked(mailbox.mId, true);
-                registerMailboxForIdle(context, account, mailbox);
+                ImapFolder folder = mIdledFolders.get((int) mailbox.mId);
+                if (isMailboxIdled(mailbox.mId)) {
+                    folder.stopIdling(false);
+                    folder.startIdling(new ImapIdleListener(context, account, mailbox));
+                }
             }
         }
 
