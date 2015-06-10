@@ -108,8 +108,9 @@ public class ImapService extends Service {
     private static final Flag[] FLAG_LIST_FLAGGED = new Flag[] { Flag.FLAGGED };
     private static final Flag[] FLAG_LIST_ANSWERED = new Flag[] { Flag.ANSWERED };
 
-    // Kick idle connection every 25 minutes
+    // Kick idle connection every ~25 minutes (in a window between 25 and 28 minutes)
     private static final int KICK_IDLE_CONNECTION_TIMEOUT = 25 * 60 * 1000;
+    private static final int KICK_IDLE_CONNECTION_MAX_DELAY = 3 * 60 * 1000;
     private static final int ALARM_REQUEST_KICK_IDLE_CODE = 1000;
 
     /**
@@ -293,9 +294,10 @@ public class ImapService extends Service {
 
         private void scheduleKickIdleConnection() {
             PendingIntent pi = getKickIdleConnectionPendingIntent();
-            long due = System.currentTimeMillis() + KICK_IDLE_CONNECTION_TIMEOUT;
+            long due = SystemClock.elapsedRealtime() + KICK_IDLE_CONNECTION_TIMEOUT;
+            long windowLength = KICK_IDLE_CONNECTION_MAX_DELAY;
             AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
-            am.set(AlarmManager.RTC, due, pi);
+            am.setWindow(AlarmManager.ELAPSED_REALTIME_WAKEUP, due, windowLength, pi);
         }
 
         private void cancelKickIdleConnection() {
@@ -742,6 +744,7 @@ public class ImapService extends Service {
     private ImapEmailConnectivityManager mConnectivityManager;
     private LocalChangesContentObserver mLocalChangesObserver;
     private Handler mServiceHandler;
+    private PowerManager.WakeLock mIdleRefreshWakeLock;
 
     @Override
     public void onCreate() {
@@ -754,6 +757,11 @@ public class ImapService extends Service {
         EmailContent.init(this);
         mConnectivityManager = new ImapEmailConnectivityManager(this, mBinder);
         mLocalChangesObserver = new LocalChangesContentObserver(this, mServiceHandler);
+
+        // Initialize wake locks
+        PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        mIdleRefreshWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "Imap IDLE Refresh");
+        mIdleRefreshWakeLock.setReferenceCounted(true);
 
         // Register observers
         getContentResolver().registerContentObserver(
@@ -892,28 +900,33 @@ public class ImapService extends Service {
                 LogUtils.d(Logging.LOG_TAG, "action: Send Pending Mail "+accountId);
             }
             final long mailboxId = intent.getLongExtra(EXTRA_MAILBOX, -1);
-            if (mailboxId <= -1 ) {
+            if (mailboxId <= -1) {
                  return START_NOT_STICKY;
             }
+
+            mIdleRefreshWakeLock.acquire();
 
             sExecutor.execute(new Runnable() {
                 @Override
                 public void run() {
-                    Mailbox mailbox = Mailbox.restoreMailboxWithId(context, mailboxId);
-                    if (mailbox == null) {
-                        return;
-                    }
-                    Account account = Account.restoreAccountWithId(context, mailbox.mAccountKey);
-                    if (account == null) {
-                        return;
-                    }
-
                     try {
+                        Mailbox mailbox = Mailbox.restoreMailboxWithId(context, mailboxId);
+                        if (mailbox == null) {
+                            return;
+                        }
+                        Account account = Account.restoreAccountWithId(context,
+                                mailbox.mAccountKey);
+                        if (account == null) {
+                            return;
+                        }
+
                         ImapIdleFolderHolder holder = ImapIdleFolderHolder.getInstance();
                         holder.kickIdledMailbox(context, mailbox, account);
                     } catch (Exception e) {
                        LogUtils.e(Logging.LOG_TAG, e, "Failed to kick idled connection "
                                + "for mailbox " + mailboxId);
+                    } finally {
+                        mIdleRefreshWakeLock.release();
                     }
                 }
             });
