@@ -257,6 +257,10 @@ class ImapConnection {
         return (mCapabilities & capability) != 0;
     }
 
+    public boolean isOpen() {
+        return mImapStore != null;
+    }
+
     /**
      * Sets the capability flags according to the response provided by the server.
      * Note: We only set the capability flags that we are interested in. There are many IMAP
@@ -397,13 +401,14 @@ class ImapConnection {
      */
     List<ImapResponse> getCommandResponses() throws IOException, MessagingException {
         final List<ImapResponse> responses = new ArrayList<ImapResponse>();
+        final ImapResponseParser parser = mParser; // might get reset during idling
         ImapResponse response = null;
         boolean idling = false;
         boolean throwSocketTimeoutEx = true;
-        int lastSocketTimeout = getReadTimeout();
+        final int lastSocketTimeout = getReadTimeout();
         try {
             do {
-                response = mParser.readResponse();
+                response = parser.readResponse();
                 if (idling) {
                     setReadTimeout(IDLE_OP_READ_TIMEOUT);
                     throwSocketTimeoutEx = false;
@@ -418,7 +423,7 @@ class ImapConnection {
                 throw ex;
             }
         } finally {
-            mParser.resetIdlingStatus();
+            parser.resetIdlingStatus();
             if (lastSocketTimeout != getReadTimeout()) {
                 setReadTimeout(lastSocketTimeout);
             }

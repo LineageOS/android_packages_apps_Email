@@ -175,13 +175,13 @@ public class ImapService extends Service {
     private static class ImapIdleListener implements ImapFolder.IdleCallback {
         private final Context mContext;
 
-        private final Store mStore;
+        private final Account mAccount;
         private final Mailbox mMailbox;
 
-        public ImapIdleListener(Context context, Store store, Mailbox mailbox) {
+        public ImapIdleListener(Context context, Account account, Mailbox mailbox) {
             super();
             mContext = context;
-            mStore = store;
+            mAccount = account;
             mMailbox = mailbox;
         }
 
@@ -204,7 +204,7 @@ public class ImapService extends Service {
                 @Override
                 public void run() {
                     // Selectively process all the retrieved changes
-                    processImapIdleChangesLocked(mContext, mStore.getAccount(), mMailbox,
+                    processImapIdleChangesLocked(mContext, mAccount, mMailbox,
                             needSync, fetchMessages);
                 }
             });
@@ -329,11 +329,15 @@ public class ImapService extends Service {
             return sInstance;
         }
 
-        private boolean isMailboxIdled(long mailboxId) {
+        private ImapFolder getIdledMailbox(long mailboxId) {
             synchronized (mIdledFolders) {
                 ImapFolder folder = mIdledFolders.get((int) mailboxId);
-                return folder != null && folder.isIdling();
+                return folder != null && folder.isIdling() ? folder : null;
             }
+        }
+
+        private boolean isMailboxIdled(long mailboxId) {
+            return getIdledMailbox(mailboxId) != null;
         }
 
         private boolean registerMailboxForIdle(Context context, Account account, Mailbox mailbox)
@@ -371,7 +375,8 @@ public class ImapService extends Service {
                         mIdledFolders.put((int) mailbox.mId, folder);
                     }
                     folder.open(OpenMode.READ_WRITE);
-                    folder.startIdling(new ImapIdleListener(context, remoteStore, mailbox));
+                    folder.startIdling(new ImapIdleListener(context,
+                            remoteStore.getAccount(), mailbox));
 
                     LogUtils.i(LOG_TAG, "Registered idle for mailbox " + mailbox.mId);
                     return true;
@@ -382,31 +387,32 @@ public class ImapService extends Service {
             }
         }
 
-        private void unregisterIdledMailboxLocked(long mailboxId, boolean remove)
+        private void unregisterIdledMailbox(long mailboxId, boolean remove)
                 throws MessagingException {
+            final ImapFolder folder;
             synchronized (mIdledFolders) {
-                unregisterIdledMailbox(mailboxId, remove, true);
+                folder = unregisterIdledMailboxLocked(mailboxId, remove);
+            }
+            if (folder != null) {
+                folder.stopIdling(remove);
             }
         }
 
-        private void unregisterIdledMailbox(long mailboxId, boolean remove, boolean disconnect)
+        private ImapFolder unregisterIdledMailboxLocked(long mailboxId, boolean remove)
                 throws MessagingException {
             // Check that the folder is already registered
-            if (!isMailboxIdled(mailboxId)) {
+            ImapFolder folder = mIdledFolders.get((int) mailboxId);
+            if (folder == null || !folder.isIdling()) {
                 LogUtils.i(LOG_TAG, "Mailbox isn't idled yet: " + mailboxId);
-                return;
+                return null;
             }
 
-            // Stop idling
-            ImapFolder folder = mIdledFolders.get((int) mailboxId);
-            if (disconnect) {
-                folder.stopIdling(remove);
-            }
             if (remove) {
                 mIdledFolders.remove((int) mailboxId);
             }
 
-            LogUtils.i(LOG_TAG, "Unregister idle for mailbox " + mailboxId);
+            LogUtils.i(LOG_TAG, "Unregistered idle for mailbox " + mailboxId);
+            return folder;
         }
 
         private void registerAccountForIdle(Context context, Account account)
@@ -460,15 +466,17 @@ public class ImapService extends Service {
 
         private void kickIdledMailbox(Context context, Mailbox mailbox, Account account)
                 throws MessagingException {
-            synchronized (mIdledFolders) {
-                unregisterIdledMailboxLocked(mailbox.mId, true);
-                registerMailboxForIdle(context, account, mailbox);
+            final ImapFolder folder = getIdledMailbox((int) mailbox.mId);
+            if (folder != null) {
+                folder.stopIdling(false);
+                folder.startIdling(new ImapIdleListener(context, account, mailbox));
             }
         }
 
         private void unregisterAccountIdledMailboxes(Context context, long accountId,
                 boolean remove) {
             LogUtils.i(LOG_TAG, "Unregister idle for account " + accountId);
+            final ArrayList<ImapFolder> foldersToStop = new ArrayList<>();
 
             synchronized (mIdledFolders) {
                 int count = mIdledFolders.size() - 1;
@@ -477,9 +485,11 @@ public class ImapService extends Service {
                     try {
                         Mailbox mailbox = Mailbox.restoreMailboxWithId(context, mailboxId);
                         if (mailbox == null || mailbox.mAccountKey == accountId) {
-                            unregisterIdledMailbox(mailboxId, remove, true);
-
-                            LogUtils.i(LOG_TAG, "Unregister idle for mailbox " + mailboxId);
+                            ImapFolder folder = unregisterIdledMailboxLocked(mailboxId, remove);
+                            if (folder != null) {
+                                foldersToStop.add(folder);
+                                LogUtils.i(LOG_TAG, "Unregister idle for mailbox " + mailboxId);
+                            }
                         }
                     } catch (MessagingException ex) {
                         LogUtils.w(LOG_TAG, "Failed to unregister mailbox "
@@ -487,6 +497,7 @@ public class ImapService extends Service {
                     }
                 }
             }
+            stopIdlingForFolders(foldersToStop);
         }
 
         private void unregisterAllIdledMailboxes(final boolean disconnect) {
@@ -494,21 +505,34 @@ public class ImapService extends Service {
             sExecutor.execute(new Runnable() {
                 @Override
                 public void run() {
+                    final ArrayList<ImapFolder> foldersToStop = new ArrayList<>();
                     synchronized (mIdledFolders) {
                         LogUtils.i(LOG_TAG, "Unregister all idle mailboxes");
 
-                        int count = mIdledFolders.size() - 1;
-                        for (int index = count; index >= 0; index--) {
-                            long mailboxId = mIdledFolders.keyAt(index);
-                            try {
-                                unregisterIdledMailbox(mailboxId, true, disconnect);
-                            } catch (MessagingException ex) {
-                                LogUtils.w(LOG_TAG, "Failed to unregister mailbox " + mailboxId);
+                        if (disconnect) {
+                            int count = mIdledFolders.size();
+                            for (int i = 0; i < count; i++) {
+                                ImapFolder folder = mIdledFolders.get(mIdledFolders.keyAt(i));
+                                if (folder != null && folder.isIdling()) {
+                                    foldersToStop.add(folder);
+                                }
                             }
                         }
+                        mIdledFolders.clear();
                     }
+                    stopIdlingForFolders(foldersToStop);
                 }
             });
+        }
+
+        private void stopIdlingForFolders(final List<ImapFolder> folders) {
+            for (ImapFolder folder : folders) {
+                try {
+                    folder.stopIdling(true);
+                } catch (MessagingException me) {
+                    // ignored
+                }
+            }
         }
     }
 
@@ -672,7 +696,7 @@ public class ImapService extends Service {
             // For delete operations we can't fetch the mailbox, so process it first
             if (op.equals(EmailProvider.NOTIFICATION_OP_DELETE)) {
                 try {
-                    ImapIdleFolderHolder.getInstance().unregisterIdledMailboxLocked(id, true);
+                    ImapIdleFolderHolder.getInstance().unregisterIdledMailbox(id, true);
                 } catch (MessagingException me) {
                     LogUtils.e(LOG_TAG, me, "Failed to process imap mailbox " + id + " changes.");
                 }
@@ -701,7 +725,7 @@ public class ImapService extends Service {
                             && account.getSyncInterval() == Account.CHECK_INTERVAL_PUSH;
                     if (registered != toRegister) {
                         if (registered) {
-                            holder.unregisterIdledMailboxLocked(id, true);
+                            holder.unregisterIdledMailbox(id, true);
                         }
                         if (toRegister) {
                             holder.registerMailboxForIdle(mContext, account, mailbox);
@@ -1082,7 +1106,7 @@ public class ImapService extends Service {
 
             // Unregister the imap idle
             if (account.getSyncInterval() == Account.CHECK_INTERVAL_PUSH) {
-                imapHolder.unregisterIdledMailboxLocked(folder.mId, false);
+                imapHolder.unregisterIdledMailbox(folder.mId, false);
             } else {
                 imapHolder.unregisterAccountIdledMailboxes(context, account.mId, false);
             }
