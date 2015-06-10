@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "ba5201f7_b0edb827",
+        "filename": "provider_src/com/android/email/mail/store/ImapFolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1601,
+      "author": {
+        "id": 3134
+      },
+      "writtenOn": "2015-06-10T02:45:58Z",
+      "side": 1,
+      "message": "expunge command only (no new messages or deleted message \u003e new messages)?",
+      "parentUuid": "ba5201f7_b0869863",
+      "revId": "42d836c79680f35207ea4f5e134ab38218b4bea8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba5201f7_30ac68ed",
         "filename": "provider_src/com/android/email/mail/store/ImapFolder.java",
         "patchSetId": 1
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "I\u0027m not sure I can agree here. I\u0027d expect something like this:\n\n* 10 EXISTS\n....\n* 10 EXISTS\n* 5 EXPUNGE\n\n\nor\n\n\n* 10 EXISTS\n....\n* 5 EXPUNGE\n* 9 EXISTS\n\n\nIOW, I\u0027d expect EXISTS to reflect the state up to and including all received messages, but not the following ones. Do the RFCs mention anything in that regard?",
       "parentUuid": "ba5201f7_30ac68ed",
+      "revId": "42d836c79680f35207ea4f5e134ab38218b4bea8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba5201f7_d0f23c06",
+        "filename": "provider_src/com/android/email/mail/store/ImapFolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1607,
+      "author": {
+        "id": 3134
+      },
+      "writtenOn": "2015-06-10T02:45:58Z",
+      "side": 1,
+      "message": "https://tools.ietf.org/html/rfc2177 page 2. For that example, I understand that expunge only have the deleted messages, while EXISTS contains the total count. If some server invert the order, we are in my related case. The rfc doesn\u0027t specify the order.",
+      "parentUuid": "ba5201f7_d07b1c7a",
       "revId": "42d836c79680f35207ea4f5e134ab38218b4bea8",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
