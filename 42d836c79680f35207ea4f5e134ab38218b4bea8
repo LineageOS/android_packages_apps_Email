@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "ba5201f7_b0d4d847",
+        "filename": "provider_src/com/android/email/mail/store/ImapFolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1601,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-06-10T19:37:59Z",
+      "side": 1,
+      "message": "But in that case we do a normal sync anyway, don\u0027t we?",
+      "parentUuid": "ba5201f7_b0edb827",
+      "revId": "42d836c79680f35207ea4f5e134ab38218b4bea8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba5201f7_30ac68ed",
         "filename": "provider_src/com/android/email/mail/store/ImapFolder.java",
         "patchSetId": 1
@@ -154,6 +172,42 @@
       "writtenOn": "2015-06-10T02:47:12Z",
       "side": 1,
       "message": "And we probably should add a \u003c0 check to avoid decrement below 0 if we are out of sync.",
+      "parentUuid": "ba5201f7_d0f23c06",
+      "revId": "42d836c79680f35207ea4f5e134ab38218b4bea8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba5201f7_36238007",
+        "filename": "provider_src/com/android/email/mail/store/ImapFolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1607,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-06-10T19:37:59Z",
+      "side": 1,
+      "message": "Yep, will do that.",
+      "parentUuid": "ba5201f7_10dda470",
+      "revId": "42d836c79680f35207ea4f5e134ab38218b4bea8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba5201f7_16267c16",
+        "filename": "provider_src/com/android/email/mail/store/ImapFolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1607,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-06-10T19:37:59Z",
+      "side": 1,
+      "message": "It indeed doesn\u0027t specify the order explicitly, but from the specification of EXPUNGE and EXISTS I would expect the order to be correct anyway: EXISTS gives the number of messages in the mailbox at the time of reading the EXISTS response, so following EXPUNGE responses aren\u0027t reflected in that number. When not following that, the protocol would be prone to timing issues (what if the EXPUNGE response is significantly delayed in the network), so I doubt it\u0027s implemented like that in mail servers.\n\n(Additional data point: K-9 seems to get away with this logic just fine)",
       "parentUuid": "ba5201f7_d0f23c06",
       "revId": "42d836c79680f35207ea4f5e134ab38218b4bea8",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
