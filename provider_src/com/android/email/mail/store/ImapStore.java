@@ -467,6 +467,7 @@ public class ImapStore extends Store {
             return mailboxes.values().toArray(new Folder[mailboxes.size()]);
         } catch (IOException ioe) {
             connection.close();
+            connection = null;
             throw new MessagingException("Unable to get folder list", ioe);
         } catch (AuthenticationFailedException afe) {
             // We do NOT want this connection pooled, or we will continue to send NOOP and SELECT
