@@ -265,6 +265,10 @@ public class ImapService extends Service {
 
                         ImapIdleFolderHolder holder = ImapIdleFolderHolder.getInstance();
                         holder.registerMailboxForIdle(mContext, account, mMailbox);
+
+                        // Request a quick sync to make sure we didn't lose any new mails
+                        // during the failure time
+                        ImapService.requestSync(mContext, account, mMailbox.mId, false);
                     } catch (MessagingException ex) {
                         LogUtils.w(LOG_TAG, ex, "Failed to register mailbox for idle. Reschedule.");
                         reschedulePing(increasePingDelay());
@@ -904,24 +908,12 @@ public class ImapService extends Service {
                         return;
                     }
 
-                    Store remoteStore = null;
                     try {
-                        // Since we were idling, just perform a full sync of the mailbox to ensure
-                        // we have all the items before kick the connection
-                        remoteStore = Store.getInstance(account, context);
-                        synchronizeMailboxGeneric(context, account, remoteStore,
-                                mailbox, false, true);
-
-                        // Kick mailbox
                         ImapIdleFolderHolder holder = ImapIdleFolderHolder.getInstance();
                         holder.kickIdledMailbox(context, mailbox, account);
                     } catch (Exception e) {
                        LogUtils.e(Logging.LOG_TAG,"Failed to kick idled connection "
                                + "for mailbox " + mailboxId, e);
-                    } finally {
-                        if (remoteStore != null) {
-                            remoteStore.closeConnections();
-                        }
                     }
                 }
             });
