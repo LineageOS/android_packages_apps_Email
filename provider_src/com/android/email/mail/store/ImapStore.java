@@ -700,5 +700,6 @@ public class ImapStore extends Store {
         while ((connection = mConnectionPool.poll()) != null) {
             connection.close();
         }
+        mConnectionPool.clear();
     }
 }
