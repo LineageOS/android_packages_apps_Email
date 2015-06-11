@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9a57fde8_92c6fa14",
+        "filename": "provider_src/com/android/email/service/ImapService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-06-11T18:22:47Z",
+      "side": 1,
+      "message": "We probably could, I just thought it\u0027s more readable to have the lower and upper bounds of the window; and I\u0027d be very surprised if the compiler didn\u0027t replace this calculation with the calculated value already.",
+      "parentUuid": "9a57fde8_af9f19b3",
+      "revId": "83b75ade207930840a6967e1774b4e93679df553",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a57fde8_cfa45d0a",
         "filename": "provider_src/com/android/email/service/ImapService.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2015-06-11T04:49:18Z",
       "side": 1,
       "message": "I\u0027m not a fan of wake up the device every 28 to kick the connection. If the device is in sleep state (for 29 minutes or more) receving mails isn\u0027t a priority in the most of the case. If some other service wakeup the device then we can use that time for kick the connection. Up to you.\n\n+1 for the setWindow",
+      "revId": "83b75ade207930840a6967e1774b4e93679df553",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a57fde8_12dbeaee",
+        "filename": "provider_src/com/android/email/service/ImapService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-06-11T18:22:47Z",
+      "side": 1,
+      "message": "I don\u0027t really think relying on other wakeups to get the IDLE connection refreshed is a safe approach. If there is another app waking the device we\u0027re lucky, but if there isn\u0027t the IDLE connection will break silently and will cause larger network traffic to reestablish it afterwards (connection reestablishment, quick sync). Because of that potential additional traffic I think it\u0027s safer to just do the wakeup for 1 or 2 seconds every 25 minutes.\n\nWhat just came to my mind though is that\n- we need a wake lock to cover the time from receiving the broadcast to finishing the refresh\n- it might be better to use ELAPSED_REALTIME_WAKEUP as type to cover a changed system clock.",
+      "parentUuid": "9a57fde8_cfa45d0a",
       "revId": "83b75ade207930840a6967e1774b4e93679df553",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
