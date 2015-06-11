@@ -266,6 +266,24 @@
       "revId": "42d836c79680f35207ea4f5e134ab38218b4bea8",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a57fde8_cf6d3dce",
+        "filename": "provider_src/com/android/email/mail/store/ImapFolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1607,
+      "author": {
+        "id": 3134
+      },
+      "writtenOn": "2015-06-11T04:29:15Z",
+      "side": 1,
+      "message": "You are right, sorry. (https://tools.ietf.org/html/rfc3501  7.4.1)",
+      "parentUuid": "9a57fde8_af51d910",
+      "revId": "42d836c79680f35207ea4f5e134ab38218b4bea8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
