@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9a57fde8_6f48d15c",
+        "filename": "provider_src/com/android/email/mail/store/ImapFolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-06-11T04:29:49Z",
+      "side": 1,
+      "message": "Hmm, that\u0027s bad. We need some other way to interrupt receiving then in case the server doesn\u0027t respond.",
+      "parentUuid": "9a57fde8_af2ab97c",
+      "revId": "1b4de182226f997f14a9c7230fd1839e67ff56f6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a57fde8_8f4c1578",
         "filename": "provider_src/com/android/email/mail/store/ImapFolder.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2015-06-11T04:14:45Z",
       "side": 1,
       "message": "call to the nano join signature method isn\u0027t useful here (and if i recall correctly it has extra overhead). And this wait should be done inside the synchronized block.",
+      "revId": "1b4de182226f997f14a9c7230fd1839e67ff56f6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a57fde8_0f6825ba",
+        "filename": "provider_src/com/android/email/mail/store/ImapFolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-06-11T04:29:49Z",
+      "side": 1,
+      "message": "If we waited inside the synchronized block, I think we might deadlock as the thread also acquires this lock. I used the timeout variant to make sure to not wait indefinitely. I wonder whether we should just nuke the connection if there\u0027s no timely server response?",
+      "parentUuid": "9a57fde8_8f4c1578",
       "revId": "1b4de182226f997f14a9c7230fd1839e67ff56f6",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
