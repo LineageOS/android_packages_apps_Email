@@ -16,6 +16,24 @@
       "revId": "1cb430f4da064d1fad3e30059192015599509497",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a57fde8_d2e7a2aa",
+        "filename": "provider_src/com/android/email/service/ImapService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-06-11T18:51:34Z",
+      "side": 1,
+      "message": "That\u0027s not the way I read the code.\n- registerMailboxForIdle doesn\u0027t call reschedulePing(), that\u0027s done in the various error handlers in ImapIdleListener\n- the overhead done by registerMailboxForIdle() - namely opening the folder - is precisely what I want to avoid with this patch :)\n- my intention/thought was that if there\u0027s a problem talking to the server, we should notice that when sending DONE in stopIdling() and get a listener callback via that path, which then calls reschedulePing(); also the connection is already discarded in that case\n- startIdling will only throw if the folder isn\u0027t open, not if it can\u0027t talk to the server. It\u0027s true though that the folder might be closed due to the failure handling code mentioned above, but that\u0027s ok if the failure path actually works as it will be covered by reschedulePing()\n\nThe only thing I\u0027m not sure about is how to test the failure path actually works.",
+      "parentUuid": "9a57fde8_6fb6113f",
+      "revId": "1cb430f4da064d1fad3e30059192015599509497",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
