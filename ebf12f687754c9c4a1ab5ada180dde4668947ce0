@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3905b3_2d65ede0",
+        "filename": "provider_src/com/android/email/service/ImapService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 907,
+      "author": {
+        "id": 3134
+      },
+      "writtenOn": "2015-06-11T21:33:19Z",
+      "side": 1,
+      "message": "Shoudn\u0027t we adquire the wake inside the thread? In case the executor failed to run this code we\u0027ll leak the wake lock.",
+      "revId": "ebf12f687754c9c4a1ab5ada180dde4668947ce0",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
