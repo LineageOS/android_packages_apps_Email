@@ -16,6 +16,24 @@
       "revId": "ebf12f687754c9c4a1ab5ada180dde4668947ce0",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3905b3_cd40e90a",
+        "filename": "provider_src/com/android/email/service/ImapService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 907,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-06-11T23:32:01Z",
+      "side": 1,
+      "message": "We can\u0027t acquire it inside the thread, as the device may already be asleep again at the time the thread is due to start (the system only holds a wake lock for us for precisely as long as onStartCommand() runs.\nIs the executor failing to run stuff a realistic option; won\u0027t the app crash in that case?",
+      "parentUuid": "5a3905b3_2d65ede0",
+      "revId": "ebf12f687754c9c4a1ab5ada180dde4668947ce0",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
