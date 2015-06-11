@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5a3905b3_cd1f095a",
+        "filename": "provider_src/com/android/email/service/ImapService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 3134
+      },
+      "writtenOn": "2015-06-11T19:52:33Z",
+      "side": 1,
+      "message": "Ok",
+      "parentUuid": "9a57fde8_92c6fa14",
+      "revId": "83b75ade207930840a6967e1774b4e93679df553",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a57fde8_cfa45d0a",
         "filename": "provider_src/com/android/email/service/ImapService.java",
         "patchSetId": 1
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "I don\u0027t really think relying on other wakeups to get the IDLE connection refreshed is a safe approach. If there is another app waking the device we\u0027re lucky, but if there isn\u0027t the IDLE connection will break silently and will cause larger network traffic to reestablish it afterwards (connection reestablishment, quick sync). Because of that potential additional traffic I think it\u0027s safer to just do the wakeup for 1 or 2 seconds every 25 minutes.\n\nWhat just came to my mind though is that\n- we need a wake lock to cover the time from receiving the broadcast to finishing the refresh\n- it might be better to use ELAPSED_REALTIME_WAKEUP as type to cover a changed system clock.",
       "parentUuid": "9a57fde8_cfa45d0a",
+      "revId": "83b75ade207930840a6967e1774b4e93679df553",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3905b3_ed24c5b0",
+        "filename": "provider_src/com/android/email/service/ImapService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 3134
+      },
+      "writtenOn": "2015-06-11T19:52:33Z",
+      "side": 1,
+      "message": "Ok. I agree with your explanation.",
+      "parentUuid": "9a57fde8_12dbeaee",
       "revId": "83b75ade207930840a6967e1774b4e93679df553",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
