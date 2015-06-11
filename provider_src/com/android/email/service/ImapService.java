@@ -654,7 +654,7 @@ public class ImapService extends Service {
                     }
                 }
             } catch (MessagingException me) {
-                LogUtils.e(LOG_TAG, "Failed to process imap account " + id + " changes.", me);
+                LogUtils.e(LOG_TAG, me, "Failed to process imap account " + id + " changes.");
             }
 
             // Check if service should be started/stopped
@@ -667,7 +667,7 @@ public class ImapService extends Service {
                 try {
                     ImapIdleFolderHolder.getInstance().unregisterIdledMailboxLocked(id, true);
                 } catch (MessagingException me) {
-                    LogUtils.e(LOG_TAG, "Failed to process imap mailbox " + id + " changes.", me);
+                    LogUtils.e(LOG_TAG, me, "Failed to process imap mailbox " + id + " changes.");
                 }
                 return;
             }
@@ -706,7 +706,7 @@ public class ImapService extends Service {
                     }
                 }
             } catch (MessagingException me) {
-                LogUtils.e(LOG_TAG, "Failed to process imap mailbox " + id + " changes.", me);
+                LogUtils.e(LOG_TAG, me, "Failed to process imap mailbox " + id + " changes.");
             }
         }
 
@@ -734,7 +734,7 @@ public class ImapService extends Service {
                 Store remoteStore = Store.getInstance(account, mContext);
                 processPendingActionsSynchronous(mContext, account, remoteStore, false);
             } catch (MessagingException me) {
-                LogUtils.e(LOG_TAG, "Failed to process imap message " + id + " changes.", me);
+                LogUtils.e(LOG_TAG, me, "Failed to process imap message " + id + " changes.");
             }
         }
     }
