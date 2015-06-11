@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a57fde8_ef0da138",
+        "filename": "provider_src/com/android/email/service/ImapService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2802,
+      "author": {
+        "id": 3134
+      },
+      "writtenOn": "2015-06-11T03:33:12Z",
+      "side": 1,
+      "message": "wrap to 100 chars",
+      "revId": "ea43502211d05688571b8b9e30c645a82fe0d2ab",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
