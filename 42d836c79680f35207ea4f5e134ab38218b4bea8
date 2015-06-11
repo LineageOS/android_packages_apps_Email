@@ -248,6 +248,24 @@
       "revId": "42d836c79680f35207ea4f5e134ab38218b4bea8",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a57fde8_af51d910",
+        "filename": "provider_src/com/android/email/mail/store/ImapFolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1607,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-06-11T04:14:36Z",
+      "side": 1,
+      "message": "No, it doesn\u0027t :) It means the message with MSN was expunged. See the IMAP4 RFC (2066 IIRC)",
+      "parentUuid": "ba5201f7_d9f26706",
+      "revId": "42d836c79680f35207ea4f5e134ab38218b4bea8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
