@@ -173,14 +173,14 @@ public class ImapList extends ImapElement {
             for (ImapElement e : mList) {
                 e.destroy();
             }
-            mList = null;
+            mList.clear();
         }
         super.destroy();
     }
 
     @Override
     public String toString() {
-        return mList != null ? mList.toString() : "[null]";
+        return mList.toString();
     }
 
     /**
