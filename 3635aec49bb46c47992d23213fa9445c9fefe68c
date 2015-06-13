@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a461143_ef13dd0b",
+        "filename": "provider_src/com/android/email/mail/store/ImapFolder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 3134
+      },
+      "writtenOn": "2015-06-13T23:14:49Z",
+      "side": 1,
+      "message": "Only call to only one of these two. If the connection is closed, then we shouldn\u0027t return it to the pool. Both destroy the imap response, so probably connection.close(); is the one that we want to use here.",
+      "revId": "3635aec49bb46c47992d23213fa9445c9fefe68c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a461143_0ff909c9",
+        "filename": "provider_src/com/android/email/mail/store/ImapFolder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 3134
+      },
+      "writtenOn": "2015-06-13T23:14:49Z",
+      "side": 1,
+      "message": "This is a bit risky. connection.close(); doesn\u0027t expect to launch any exception to wait for the reader to exit could lead to dead lock, isn\u0027t?",
+      "revId": "3635aec49bb46c47992d23213fa9445c9fefe68c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
