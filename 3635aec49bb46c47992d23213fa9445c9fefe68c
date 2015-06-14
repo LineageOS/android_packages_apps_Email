@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3a461143_4fadd187",
+        "filename": "provider_src/com/android/email/mail/store/ImapFolder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-06-14T00:49:22Z",
+      "side": 1,
+      "message": "We definitely need connection.close() because it\u0027s what makes the thread exit if the server doesn\u0027t respond. Why shouldn\u0027t we pool closed connections? AFAICT they\u0027re closed anyway on unpooling, or am I missing something?",
+      "parentUuid": "3a461143_ef13dd0b",
+      "revId": "3635aec49bb46c47992d23213fa9445c9fefe68c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a461143_0ff909c9",
         "filename": "provider_src/com/android/email/mail/store/ImapFolder.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2015-06-13T23:14:49Z",
       "side": 1,
       "message": "This is a bit risky. connection.close(); doesn\u0027t expect to launch any exception to wait for the reader to exit could lead to dead lock, isn\u0027t?",
+      "revId": "3635aec49bb46c47992d23213fa9445c9fefe68c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a461143_6faa8d72",
+        "filename": "provider_src/com/android/email/mail/store/ImapFolder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-06-14T00:49:22Z",
+      "side": 1,
+      "message": "What do you mean exactly? Do you mean that the thread might not exit? If so, why? The read code properly should deal with a closed stream and exit.",
+      "parentUuid": "3a461143_0ff909c9",
       "revId": "3635aec49bb46c47992d23213fa9445c9fefe68c",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
