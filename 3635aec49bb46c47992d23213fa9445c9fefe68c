@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3a461143_8f033976",
+        "filename": "provider_src/com/android/email/mail/store/ImapFolder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 3134
+      },
+      "writtenOn": "2015-06-14T03:12:05Z",
+      "side": 1,
+      "message": "No, the connection isn\u0027t close when it is returned to the pool. It\u0027s recycled when the ImapStore is destroyed. IHMO, isn\u0027t useful to return closed connections to a pool of open connections. In that pool we want connections that we want to use later (a closed connection means we have to discard it and reopened again, so there is no gain in returned to the pool).",
+      "parentUuid": "3a461143_4fadd187",
+      "revId": "3635aec49bb46c47992d23213fa9445c9fefe68c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a461143_0ff909c9",
         "filename": "provider_src/com/android/email/mail/store/ImapFolder.java",
         "patchSetId": 3
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "What do you mean exactly? Do you mean that the thread might not exit? If so, why? The read code properly should deal with a closed stream and exit.",
       "parentUuid": "3a461143_0ff909c9",
+      "revId": "3635aec49bb46c47992d23213fa9445c9fefe68c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a461143_af08f592",
+        "filename": "provider_src/com/android/email/mail/store/ImapFolder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 3134
+      },
+      "writtenOn": "2015-06-14T03:12:05Z",
+      "side": 1,
+      "message": "Is there any possibility that we doesn\u0027t exit from this join? All the IOExceptions are capture inside the transport, so could this lead to not exit from the thread? Also, closing the connection will run this code:\n\n  destroyResponses();\n  mParser \u003d null;\n  mImapStore \u003d null;\n\nMany things can happens from here, I\u0027m not sure we control all of them.",
+      "parentUuid": "3a461143_6faa8d72",
       "revId": "3635aec49bb46c47992d23213fa9445c9fefe68c",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
