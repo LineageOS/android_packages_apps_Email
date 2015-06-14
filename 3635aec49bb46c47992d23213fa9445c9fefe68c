@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "3a461143_ef103dab",
+        "filename": "provider_src/com/android/email/mail/store/ImapFolder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-06-14T05:09:37Z",
+      "side": 1,
+      "message": "I thought it\u0027s closed when pulling it out of the pool again, see here: https://github.com/CyanogenMod/android_packages_apps_Email/blob/cm-12.1/provider_src/com/android/email/mail/store/ImapStore.java#L575\n\nAm I misinterpreting this code?",
+      "parentUuid": "3a461143_8f033976",
+      "revId": "3635aec49bb46c47992d23213fa9445c9fefe68c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a461143_0ff909c9",
         "filename": "provider_src/com/android/email/mail/store/ImapFolder.java",
         "patchSetId": 3
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "Is there any possibility that we doesn\u0027t exit from this join? All the IOExceptions are capture inside the transport, so could this lead to not exit from the thread? Also, closing the connection will run this code:\n\n  destroyResponses();\n  mParser \u003d null;\n  mImapStore \u003d null;\n\nMany things can happens from here, I\u0027m not sure we control all of them.",
       "parentUuid": "3a461143_6faa8d72",
+      "revId": "3635aec49bb46c47992d23213fa9445c9fefe68c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a461143_0f266916",
+        "filename": "provider_src/com/android/email/mail/store/ImapFolder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-06-14T05:09:37Z",
+      "side": 1,
+      "message": "I\u0027ve verified that closing the connection causes the exception callback in the idle reader to be called. The exception is generated via [1] in that case and propagates up.\n\nmParser and mImapStore being reset indeed can cause issues and in fact _do_ cause issues: The NPE mentioned earlier is thrown from [2] I think. We\u0027ll probably need to fix those cases (for the NPE it\u0027s easy: just save mParser to a local variable); as mentioned earlier I see no other way out of the pending read than closing the connection\u0027s input and output streams. If you have any better idea I\u0027m all ears :)\n\n[1] https://github.com/CyanogenMod/android_packages_apps_Email/blob/cm-12.1/provider_src/com/android/email/mail/store/imap/ImapResponseParser.java#L124\n[2] https://github.com/CyanogenMod/android_packages_apps_Email/blob/cm-12.1/provider_src/com/android/email/mail/store/ImapConnection.java#L421",
+      "parentUuid": "3a461143_af08f592",
       "revId": "3635aec49bb46c47992d23213fa9445c9fefe68c",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
