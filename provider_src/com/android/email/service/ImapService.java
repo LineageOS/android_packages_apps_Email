@@ -296,7 +296,7 @@ public class ImapService extends Service {
             i.setAction(ACTION_RESTART_IDLE_CONNECTION);
             i.putExtra(EXTRA_MAILBOX, (int) mMailbox.mId);
             return PendingIntent.getService(mContext, requestCode, i,
-                    PendingIntent.FLAG_CANCEL_CURRENT);
+                    PendingIntent.FLAG_UPDATE_CURRENT);
         }
 
         private void scheduleKickIdleConnection() {
@@ -318,7 +318,7 @@ public class ImapService extends Service {
             i.setAction(ACTION_KICK_IDLE_CONNECTION);
             i.putExtra(EXTRA_MAILBOX, mMailbox.mId);
             return PendingIntent.getService(mContext, requestCode,
-                    i, PendingIntent.FLAG_CANCEL_CURRENT);
+                    i, PendingIntent.FLAG_UPDATE_CURRENT);
         }
     }
 
@@ -591,7 +591,7 @@ public class ImapService extends Service {
         private PendingIntent getIdleConnectionRestartIntent() {
             Intent i = new Intent(mContext, ImapService.class);
             i.setAction(ACTION_RESTART_ALL_IDLE_CONNECTIONS);
-            return PendingIntent.getService(mContext, 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
+            return PendingIntent.getService(mContext, 0, i, 0);
         }
     }
 
