@@ -185,6 +185,12 @@ public class ImapService extends Service {
         }
 
         @Override
+        public void onIdlingDone() {
+            cancelKickIdleConnection();
+            resetPingDelay();
+        }
+
+        @Override
         public void onNewServerChange(final boolean needSync, final List<String> fetchMessages) {
             // Instead of checking every received change, request a sync of the mailbox
             if (Logging.LOGD) {
@@ -538,6 +544,10 @@ public class ImapService extends Service {
             mContext = context;
         }
 
+        public void destroy() {
+            cancelIdleConnectionRestart();
+        }
+
         @Override
         public void onConnectivityRestored(int networkType) {
             if (Logging.LOGD) {
@@ -765,6 +775,7 @@ public class ImapService extends Service {
         ImapIdleFolderHolder.getInstance().unregisterAllIdledMailboxes(true);
         mConnectivityManager.unregister();
         getContentResolver().unregisterContentObserver(mLocalChangesObserver);
+        mConnectivityManager.destroy();
 
         super.onDestroy();
     }
