@@ -18,9 +18,6 @@ package com.android.email.service;
 
 import static com.android.emailcommon.Logging.LOG_TAG;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 import android.content.AbstractThreadedSyncAdapter;
 import android.content.ComponentName;
 import android.content.ContentProviderClient;
@@ -48,8 +45,6 @@ public class LegacyImapSyncAdapterService extends PopImapSyncAdapterService {
     // seconds for it to appear. If it takes longer than that, we will fail the sync.
     private static final long MAX_WAIT_FOR_SERVICE_MS = 10 * DateUtils.SECOND_IN_MILLIS;
 
-    private static final ExecutorService sExecutor = Executors.newCachedThreadPool();
-
     private IEmailService mImapService;
 
     private final ServiceConnection mConnection = new ServiceConnection() {
@@ -61,15 +56,6 @@ public class LegacyImapSyncAdapterService extends PopImapSyncAdapterService {
             synchronized (mConnection) {
                 mImapService = IEmailService.Stub.asInterface(binder);
                 mConnection.notify();
-
-                // We need to run this task in the background (not in UI-Thread)
-                sExecutor.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        final Context context = LegacyImapSyncAdapterService.this;
-                        ImapService.registerAllImapIdleMailboxes(context, mImapService);
-                    }
-                });
             }
         }
 

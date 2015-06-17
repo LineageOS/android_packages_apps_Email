@@ -547,10 +547,9 @@ public class ImapService extends Service {
                 sExecutor.execute(new Runnable() {
                     @Override
                     public void run() {
-                        ImapService.registerAllImapIdleMailboxes(mContext, mService);
-
-                        // Since we could have missed some changes, request a sync
-                        // for the IDLEd accounts
+                        // Initiate a sync for all IDLEd accounts, since there might have
+                        // been changes while we lost connectivity. At the end of the sync
+                        // the IDLE connection will be re-established.
                         ContentResolver cr = mContext.getContentResolver();
                         Cursor c = cr.query(Account.CONTENT_URI,
                                 Account.CONTENT_PROJECTION, null, null, null);
@@ -1006,35 +1005,6 @@ public class ImapService extends Service {
     public IBinder onBind(Intent intent) {
         mBinder.init(this);
         return mBinder;
-    }
-
-    protected static void registerAllImapIdleMailboxes(Context context, IEmailService service) {
-        ContentResolver cr = context.getContentResolver();
-        Cursor c = cr.query(Account.CONTENT_URI, Account.CONTENT_PROJECTION, null, null, null);
-        if (c != null) {
-            try {
-                while (c.moveToNext()) {
-                    final Account account = new Account();
-                    account.restore(c);
-
-                    // Only imap push accounts
-                    if (account.getSyncInterval() != Account.CHECK_INTERVAL_PUSH) {
-                        continue;
-                    }
-                    if (!isLegacyImapProtocol(context, account)) {
-                        continue;
-                    }
-
-                    try {
-                        service.pushModify(account.mId);
-                    } catch (RemoteException ex) {
-                        LogUtils.d(LOG_TAG, "Failed to call pushModify for account " + account.mId);
-                    }
-                }
-            } finally {
-                c.close();
-            }
-        }
     }
 
     private static void requestSync(Context context, Account account, long mailbox, boolean full) {
