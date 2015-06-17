@@ -509,42 +509,44 @@ public class ImapService extends Service {
                     }
                 }
             }
-            stopIdlingForFolders(foldersToStop);
+            stopIdlingForFoldersInBackground(foldersToStop);
         }
 
         private void unregisterAllIdledMailboxes(final boolean disconnect) {
-            // Run away from the UI thread
+            final ArrayList<ImapFolder> foldersToStop = new ArrayList<>();
+            synchronized (mIdledFolders) {
+                LogUtils.i(LOG_TAG, "Unregister all idle mailboxes");
+
+                if (disconnect) {
+                    int count = mIdledFolders.size();
+                    for (int i = 0; i < count; i++) {
+                        ImapFolder folder = mIdledFolders.get(mIdledFolders.keyAt(i));
+                        if (folder != null && folder.isIdling()) {
+                            foldersToStop.add(folder);
+                        }
+                    }
+                }
+                mIdledFolders.clear();
+            }
+            stopIdlingForFoldersInBackground(foldersToStop);
+        }
+
+        private void stopIdlingForFoldersInBackground(final List<ImapFolder> folders) {
+            if (folders.isEmpty()) {
+                return;
+            }
             sExecutor.execute(new Runnable() {
                 @Override
                 public void run() {
-                    final ArrayList<ImapFolder> foldersToStop = new ArrayList<>();
-                    synchronized (mIdledFolders) {
-                        LogUtils.i(LOG_TAG, "Unregister all idle mailboxes");
-
-                        if (disconnect) {
-                            int count = mIdledFolders.size();
-                            for (int i = 0; i < count; i++) {
-                                ImapFolder folder = mIdledFolders.get(mIdledFolders.keyAt(i));
-                                if (folder != null && folder.isIdling()) {
-                                    foldersToStop.add(folder);
-                                }
-                            }
+                    for (ImapFolder folder : folders) {
+                        try {
+                            folder.stopIdling(true);
+                        } catch (MessagingException me) {
+                            // ignored
                         }
-                        mIdledFolders.clear();
                     }
-                    stopIdlingForFolders(foldersToStop);
                 }
             });
-        }
-
-        private void stopIdlingForFolders(final List<ImapFolder> folders) {
-            for (ImapFolder folder : folders) {
-                try {
-                    folder.stopIdling(true);
-                } catch (MessagingException me) {
-                    // ignored
-                }
-            }
         }
     }
 
