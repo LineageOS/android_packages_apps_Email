@@ -1820,6 +1820,8 @@ public class EmailProvider extends ContentProvider
                 extras.putBoolean(ContentResolver.SYNC_EXTRAS_DO_NOT_RETRY, true);
                 extras.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
                 ContentResolver.requestSync(amAccount, EmailContent.AUTHORITY, extras);
+                LogUtils.i(TAG, "requestSync EmailProvider restoreAccounts %s, %s",
+                        account.toString(), extras.toString());
                 restoredCount++;
             }
         }
@@ -5978,7 +5980,7 @@ public class EmailProvider extends ContentProvider
         extras.putString(EmailServiceStatus.SYNC_EXTRAS_CALLBACK_METHOD,
                 SYNC_STATUS_CALLBACK_METHOD);
         ContentResolver.requestSync(account, EmailContent.AUTHORITY, extras);
-        LogUtils.i(TAG, "requestSync EmailProvider startSync %s, %s", account.toString(),
+        LogUtils.i(TAG, "requestSync EmailProvider restartPush %s, %s", account.toString(),
                 extras.toString());
     }
 
