@@ -270,6 +270,9 @@ public class ImapService extends Service {
                         // Request a quick sync to make sure we didn't lose any new mails
                         // during the failure time
                         ImapService.requestSync(mContext, account, mMailbox.mId, false);
+                        LogUtils.d(LOG_TAG, "requestSync after reschedulePing for account %s (%s)",
+                                account.toString(), mMailbox.mDisplayName);
+
                     } catch (MessagingException ex) {
                         LogUtils.w(LOG_TAG, ex, "Failed to register mailbox for idle. Reschedule.");
                         reschedulePing(increasePingDelay());
@@ -544,6 +547,8 @@ public class ImapService extends Service {
                                     // Request a "recents" sync
                                     ImapService.requestSync(mContext,
                                             account, Mailbox.NO_MAILBOX, false);
+                                    LogUtils.d(LOG_TAG, "requestSync after restarting IDLE "
+                                            + "for account %s", account.toString());
                                 }
                             } finally {
                                 c.close();
@@ -806,6 +811,8 @@ public class ImapService extends Service {
             }
             mBinder.init(context);
             mBinder.requestSync(inboxId,true,0);
+            LogUtils.d(LOG_TAG, "requestSync on user request for account %d (%d)",
+                    accountId, inboxId);
         } else if (ACTION_DELETE_MESSAGE.equals(action)) {
             final long messageId = intent.getLongExtra(EXTRA_MESSAGE_ID, -1);
             if (Logging.LOGD) {
@@ -1007,10 +1014,6 @@ public class ImapService extends Service {
     }
 
     private static void requestSync(Context context, Account account, long mailbox, boolean full) {
-        if (Logging.LOGD) {
-            LogUtils.d(LOG_TAG, "Request sync due to idle response for mailbox " + mailbox);
-        }
-
         final EmailServiceUtils.EmailServiceInfo info = EmailServiceUtils.getServiceInfoForAccount(
                 context, account.mId);
         final android.accounts.Account acct = new android.accounts.Account(
