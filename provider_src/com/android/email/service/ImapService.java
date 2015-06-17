@@ -111,8 +111,6 @@ public class ImapService extends Service {
     // Kick idle connection every ~25 minutes (in a window between 25 and 28 minutes)
     private static final int KICK_IDLE_CONNECTION_TIMEOUT = 25 * 60 * 1000;
     private static final int KICK_IDLE_CONNECTION_MAX_DELAY = 3 * 60 * 1000;
-    private static final int ALARM_REQUEST_KICK_IDLE_CODE = 1000;
-    private static final int ALARM_REQUEST_REFRESH_IDLE_CODE = 1001;
 
     // Restart idle connection between 30 seconds and 1 minute after re-gaining connectivity
     private static final int RESTART_IDLE_DELAY_MIN = 30 * 1000;
@@ -291,12 +289,11 @@ public class ImapService extends Service {
         }
 
         private PendingIntent getIdleRefreshIntent() {
-            int requestCode = ALARM_REQUEST_REFRESH_IDLE_CODE + (int) mMailbox.mId;
             Intent i = new Intent(mContext, ImapService.class);
             i.setAction(ACTION_RESTART_IDLE_CONNECTION);
-            i.putExtra(EXTRA_MAILBOX, (int) mMailbox.mId);
-            return PendingIntent.getService(mContext, requestCode, i,
-                    PendingIntent.FLAG_CANCEL_CURRENT);
+            i.putExtra(EXTRA_MAILBOX, mMailbox.mId);
+            return PendingIntent.getService(mContext, (int) mMailbox.mId, i,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
         }
 
         private void scheduleKickIdleConnection() {
@@ -313,12 +310,11 @@ public class ImapService extends Service {
         }
 
         private PendingIntent getKickIdleConnectionPendingIntent() {
-            int requestCode = ALARM_REQUEST_KICK_IDLE_CODE + (int) mMailbox.mId;
             Intent i = new Intent(mContext, ImapService.class);
             i.setAction(ACTION_KICK_IDLE_CONNECTION);
             i.putExtra(EXTRA_MAILBOX, mMailbox.mId);
-            return PendingIntent.getService(mContext, requestCode,
-                    i, PendingIntent.FLAG_CANCEL_CURRENT);
+            return PendingIntent.getService(mContext, (int) mMailbox.mId,
+                    i, PendingIntent.FLAG_UPDATE_CURRENT);
         }
     }
 
@@ -591,7 +587,7 @@ public class ImapService extends Service {
         private PendingIntent getIdleConnectionRestartIntent() {
             Intent i = new Intent(mContext, ImapService.class);
             i.setAction(ACTION_RESTART_ALL_IDLE_CONNECTIONS);
-            return PendingIntent.getService(mContext, 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
+            return PendingIntent.getService(mContext, 0, i, 0);
         }
     }
 
