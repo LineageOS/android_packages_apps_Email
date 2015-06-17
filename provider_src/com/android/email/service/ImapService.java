@@ -112,6 +112,7 @@ public class ImapService extends Service {
     private static final int KICK_IDLE_CONNECTION_TIMEOUT = 25 * 60 * 1000;
     private static final int KICK_IDLE_CONNECTION_MAX_DELAY = 3 * 60 * 1000;
     private static final int ALARM_REQUEST_KICK_IDLE_CODE = 1000;
+    private static final int ALARM_REQUEST_REFRESH_IDLE_CODE = 1001;
 
     // Restart idle connection between 30 seconds and 1 minute after re-gaining connectivity
     private static final int RESTART_IDLE_DELAY_MIN = 30 * 1000;
@@ -154,13 +155,14 @@ public class ImapService extends Service {
     private static final String EXTRA_MESSAGE_INFO = "com.android.email.intent.extra.MESSAGE_INFO";
     private static final String ACTION_RESTART_IDLE_CONNECTION =
             "com.android.email.intent.action.RESTART_IDLE_CONNECTION";
+    private static final String ACTION_RESTART_ALL_IDLE_CONNECTIONS =
+            "com.android.email.intent.action.RESTART_ALL_IDLE_CONNECTIONS";
     private static final String ACTION_KICK_IDLE_CONNECTION =
             "com.android.email.intent.action.KICK_IDLE_CONNECTION";
     private static final String EXTRA_MAILBOX = "com.android.email.intent.extra.MAILBOX";
 
-    private static final long RESCHEDULE_PING_DELAY = 150L;
+    private static final long RESCHEDULE_PING_DELAY = 500L;
     private static final long MAX_PING_DELAY = 30 * 60 * 1000L;
-    private static final SparseLongArray sPingDelay = new SparseLongArray();
 
     private static String sLegacyImapProtocol;
 
@@ -179,6 +181,7 @@ public class ImapService extends Service {
     }
 
     private static class ImapIdleListener implements ImapFolder.IdleCallback {
+        private static final SparseLongArray sPingDelay = new SparseLongArray();
         private final Context mContext;
 
         private final Account mAccount;
@@ -199,6 +202,7 @@ public class ImapService extends Service {
         @Override
         public void onIdlingDone() {
             cancelKickIdleConnection();
+            cancelPing();
             resetPingDelay();
         }
 
@@ -209,6 +213,7 @@ public class ImapService extends Service {
                 LogUtils.d(LOG_TAG, "Server notified new changes for mailbox " + mMailbox.mId);
             }
             cancelKickIdleConnection();
+            cancelPing();
             resetPingDelay();
 
             // Request a sync but wait a bit for new incoming messages from server
@@ -248,63 +253,50 @@ public class ImapService extends Service {
             }
         }
 
-        private void reschedulePing(final long delay) {
+        private void reschedulePing(long delay) {
             // Check for connectivity before reschedule
             ConnectivityManager cm =
                     (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
             if (activeNetwork == null || !activeNetwork.isConnected()) {
-                return;
+                cancelPing();
+            } else {
+                PendingIntent pi = getIdleRefreshIntent();
+                AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+                am.set(AlarmManager.RTC_WAKEUP, delay, pi);
             }
+        }
 
-            sExecutor.execute(new Runnable() {
-                @Override
-                public void run() {
-                    LogUtils.i(LOG_TAG, "Reschedule delayed ping (" + delay +
-                            ") for mailbox " + mMailbox.mId);
-                    try {
-                        Thread.sleep(delay);
-                    } catch (InterruptedException ie) {
-                    }
-
-                    try {
-                        // Check that the account is ready for push
-                        Account account = Account.restoreAccountWithId(
-                                mContext, mMailbox.mAccountKey);
-                        if (account.getSyncInterval() != Account.CHECK_INTERVAL_PUSH) {
-                            LogUtils.i(LOG_TAG, "Account isn't declared for push: " + account.mId);
-                            return;
-                        }
-
-                        ImapIdleFolderHolder holder = ImapIdleFolderHolder.getInstance();
-                        holder.registerMailboxForIdle(mContext, account, mMailbox);
-
-                        // Request a quick sync to make sure we didn't lose any new mails
-                        // during the failure time
-                        ImapService.requestSync(mContext, account, mMailbox.mId, false);
-                        LogUtils.d(LOG_TAG, "requestSync after reschedulePing for account %s (%s)",
-                                account.toString(), mMailbox.mDisplayName);
-
-                    } catch (MessagingException ex) {
-                        LogUtils.w(LOG_TAG, ex, "Failed to register mailbox for idle. Reschedule.");
-                        reschedulePing(increasePingDelay());
-                    }
-                }
-            });
+        private void cancelPing() {
+            AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+            am.cancel(getIdleRefreshIntent());
         }
 
         private void resetPingDelay() {
-            int index = sPingDelay.indexOfKey((int) mMailbox.mId);
-            if (index >= 0) {
-                sPingDelay.removeAt(index);
+            synchronized (sPingDelay) {
+                int index = sPingDelay.indexOfKey((int) mMailbox.mId);
+                if (index >= 0) {
+                    sPingDelay.removeAt(index);
+                }
             }
         }
 
         private long increasePingDelay() {
-            long delay = Math.max(RESCHEDULE_PING_DELAY, sPingDelay.get((int) mMailbox.mId));
-            delay = Math.min(MAX_PING_DELAY, delay * 2);
-            sPingDelay.put((int) mMailbox.mId, delay);
-            return delay;
+            synchronized (sPingDelay) {
+                long delay = Math.max(RESCHEDULE_PING_DELAY, sPingDelay.get((int) mMailbox.mId));
+                delay = Math.min(MAX_PING_DELAY, delay * 2);
+                sPingDelay.put((int) mMailbox.mId, delay);
+                return delay;
+            }
+        }
+
+        private PendingIntent getIdleRefreshIntent() {
+            int requestCode = ALARM_REQUEST_REFRESH_IDLE_CODE + (int) mMailbox.mId;
+            Intent i = new Intent(mContext, ImapService.class);
+            i.setAction(ACTION_RESTART_IDLE_CONNECTION);
+            i.putExtra(EXTRA_MAILBOX, (int) mMailbox.mId);
+            return PendingIntent.getService(mContext, requestCode, i,
+                    PendingIntent.FLAG_CANCEL_CURRENT);
         }
 
         private void scheduleKickIdleConnection() {
@@ -598,7 +590,7 @@ public class ImapService extends Service {
 
         private PendingIntent getIdleConnectionRestartIntent() {
             Intent i = new Intent(mContext, ImapService.class);
-            i.setAction(ACTION_RESTART_IDLE_CONNECTION);
+            i.setAction(ACTION_RESTART_ALL_IDLE_CONNECTIONS);
             return PendingIntent.getService(mContext, 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
         }
     }
@@ -909,7 +901,7 @@ public class ImapService extends Service {
             } catch (Exception e) {
                LogUtils.e(Logging.LOG_TAG,"RemoteException " +e);
             }
-        } else if (ACTION_RESTART_IDLE_CONNECTION.equals(action)) {
+        } else if (ACTION_RESTART_ALL_IDLE_CONNECTIONS.equals(action)) {
             // Initiate a sync for all IDLEd accounts, since there might have
             // been changes while we lost connectivity. At the end of the sync
             // the IDLE connection will be re-established.
@@ -934,16 +926,51 @@ public class ImapService extends Service {
                             // Only imap push accounts
                             if (account.getSyncInterval() == Account.CHECK_INTERVAL_PUSH
                                     && isLegacyImapProtocol(context, account)) {
-                                // Request a "recents" sync
-                                requestSync(context, account, Mailbox.NO_MAILBOX, false);
-                                LogUtils.d(LOG_TAG, "requestSync after restarting IDLE "
-                                        + "for account %s", account.toString());
+                                requestSyncForAccountMailboxesIfNotIdled(account);
                             }
                         }
                     } finally {
                         if (c != null) {
                             c.close();
                         }
+                        mIdleRefreshWakeLock.release();
+                    }
+                }
+            });
+        } else if (ACTION_RESTART_IDLE_CONNECTION.equals(action)) {
+            final long mailboxId = intent.getLongExtra(EXTRA_MAILBOX, -1);
+            if (mailboxId < 0) {
+                 return START_NOT_STICKY;
+            }
+
+            mIdleRefreshWakeLock.acquire();
+
+            sExecutor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        // Check that the account is ready for push
+                        Mailbox mailbox = Mailbox.restoreMailboxWithId(context, mailboxId);
+                        if (mailbox == null) {
+                            return;
+                        }
+                        Account account = Account.restoreAccountWithId(context,
+                                mailbox.mAccountKey);
+                        if (account == null) {
+                            return;
+                        }
+
+                        if (account.getSyncInterval() != Account.CHECK_INTERVAL_PUSH) {
+                            LogUtils.i(LOG_TAG, "Account isn't declared for push: " + account.mId);
+                            return;
+                        }
+
+                        // Request a quick sync to make sure we didn't lose any new mails
+                        // during the failure time; IDLE will restart afterwards
+                        ImapService.requestSync(context, account, mailboxId, false);
+                        LogUtils.d(LOG_TAG, "requestSync after reschedulePing for account %s (%s)",
+                                account.toString(), mailbox.mDisplayName);
+                    } finally {
                         mIdleRefreshWakeLock.release();
                     }
                 }
@@ -986,6 +1013,28 @@ public class ImapService extends Service {
         }
 
         return Service.START_STICKY;
+    }
+
+    private void requestSyncForAccountMailboxesIfNotIdled(Account account) {
+        Cursor c = Mailbox.getLoopBackMailboxIdsForSync(getContentResolver(), account.mId);
+        if (c == null) {
+            return;
+        }
+
+        ImapIdleFolderHolder holder = ImapIdleFolderHolder.getInstance();
+        try {
+            while (c.moveToNext()) {
+                long mailboxId = c.getLong(c.getColumnIndex(BaseColumns._ID));
+                if (!holder.isMailboxIdled(mailboxId)) {
+                    final Mailbox mailbox = Mailbox.restoreMailboxWithId(this, mailboxId);
+                    requestSync(this, account, mailboxId, false);
+                    LogUtils.d(LOG_TAG, "requestSync after restarting IDLE for account %s (%s)",
+                            account.toString(), mailbox.mDisplayName);
+                }
+            }
+        } finally {
+            c.close();
+        }
     }
 
     /**
@@ -1664,7 +1713,7 @@ public class ImapService extends Service {
 
         NotificationController nc = null;
         Store remoteStore = null;
-        ImapIdleFolderHolder imapHolder = null;
+        final ImapIdleFolderHolder imapHolder = ImapIdleFolderHolder.getInstance();
 
         try {
             mSyncLock = true;
@@ -1674,7 +1723,6 @@ public class ImapService extends Service {
             nc = NotificationControllerCreatorHolder.getInstance(ctx);
 
             remoteStore = Store.getInstance(acct, ctx);
-            imapHolder = ImapIdleFolderHolder.getInstance();
 
             final ContentResolver resolver = ctx.getContentResolver();
 
@@ -1896,8 +1944,12 @@ public class ImapService extends Service {
             if (remoteStore != null) {
                 remoteStore.closeConnections();
 
+                final boolean registered;
+                synchronized (imapHolder.mIdledFolders) {
+                    registered = imapHolder.mIdledFolders.indexOfKey((int) mailbox.mId) >= 0;
+                }
                 // Register the imap idle again
-                if (imapHolder != null && acct.getSyncInterval() == Account.CHECK_INTERVAL_PUSH) {
+                if (registered && acct.getSyncInterval() == Account.CHECK_INTERVAL_PUSH) {
                     imapHolder.registerMailboxForIdle(ctx, acct, mailbox);
                 }
             }
