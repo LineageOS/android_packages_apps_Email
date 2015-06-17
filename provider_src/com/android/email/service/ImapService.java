@@ -113,6 +113,10 @@ public class ImapService extends Service {
     private static final int KICK_IDLE_CONNECTION_MAX_DELAY = 3 * 60 * 1000;
     private static final int ALARM_REQUEST_KICK_IDLE_CODE = 1000;
 
+    // Restart idle connection between 30 seconds and 1 minute after re-gaining connectivity
+    private static final int RESTART_IDLE_DELAY_MIN = 30 * 1000;
+    private static final int RESTART_IDLE_DELAY_MAX = 60 * 1000;
+
     /**
      * Simple cache for last search result mailbox by account and serverId, since the most common
      * case will be repeated use of the same mailbox
@@ -148,6 +152,8 @@ public class ImapService extends Service {
         "com.android.email.intent.action.MAIL_SERVICE_SEND_PENDING";
     private static final String EXTRA_MESSAGE_ID = "com.android.email.intent.extra.MESSAGE_ID";
     private static final String EXTRA_MESSAGE_INFO = "com.android.email.intent.extra.MESSAGE_INFO";
+    private static final String ACTION_RESTART_IDLE_CONNECTION =
+            "com.android.email.intent.action.RESTART_IDLE_CONNECTION";
     private static final String ACTION_KICK_IDLE_CONNECTION =
             "com.android.email.intent.action.KICK_IDLE_CONNECTION";
     private static final String EXTRA_MAILBOX = "com.android.email.intent.extra.MAILBOX";
@@ -538,85 +544,50 @@ public class ImapService extends Service {
 
     private static class ImapEmailConnectivityManager extends EmailConnectivityManager {
         private final Context mContext;
-        private final Handler mHandler;
-        private final IEmailService mService;
 
-        private final Runnable mRegisterIdledFolderRunnable = new Runnable() {
-            @Override
-            public void run() {
-                sExecutor.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        // Initiate a sync for all IDLEd accounts, since there might have
-                        // been changes while we lost connectivity. At the end of the sync
-                        // the IDLE connection will be re-established.
-                        ContentResolver cr = mContext.getContentResolver();
-                        Cursor c = cr.query(Account.CONTENT_URI,
-                                Account.CONTENT_PROJECTION, null, null, null);
-                        if (c != null) {
-                            try {
-                                while (c.moveToNext()) {
-                                    final Account account = new Account();
-                                    account.restore(c);
-
-                                    // Only imap push accounts
-                                    if (account.getSyncInterval() != Account.CHECK_INTERVAL_PUSH) {
-                                        continue;
-                                    }
-                                    if (!isLegacyImapProtocol(mContext, account)) {
-                                        continue;
-                                    }
-
-                                    // Request a "recents" sync
-                                    ImapService.requestSync(mContext,
-                                            account, Mailbox.NO_MAILBOX, false);
-                                    LogUtils.d(LOG_TAG, "requestSync after restarting IDLE "
-                                            + "for account %s", account.toString());
-                                }
-                            } finally {
-                                c.close();
-                            }
-                        }
-                    }
-                });
-            }
-        };
-
-        public ImapEmailConnectivityManager(Context context, IEmailService service) {
+        public ImapEmailConnectivityManager(Context context) {
             super(context, LOG_TAG);
             mContext = context;
-            mHandler = new Handler();
-            mService = service;
         }
 
         @Override
         public void onConnectivityRestored(int networkType) {
-            // Restore idled folders. Execute in background
             if (Logging.LOGD) {
                 LogUtils.d(Logging.LOG_TAG, "onConnectivityRestored ("
                         + "networkType=" + networkType + ")");
             }
 
-            // Hold the register a bit to trying to avoid unstable networking
-            mHandler.removeCallbacks(mRegisterIdledFolderRunnable);
-            mHandler.postDelayed(mRegisterIdledFolderRunnable, 10000);
+            scheduleIdleConnectionRestart();
         }
 
         @Override
         public void onConnectivityLost(int networkType) {
-            // Unlink idled folders. Execute in background
             if (Logging.LOGD) {
                 LogUtils.d(Logging.LOG_TAG, "onConnectivityLost ("
                         + "networkType=" + networkType + ")");
             }
-            sExecutor.execute(new Runnable() {
-                @Override
-                public void run() {
-                    // Only remove references. We have no network to kill idled
-                    // connections
-                    ImapIdleFolderHolder.getInstance().unregisterAllIdledMailboxes(false);
-                }
-            });
+            // Only remove references. We have no network to kill idled connections
+            ImapIdleFolderHolder.getInstance().unregisterAllIdledMailboxes(false);
+            cancelIdleConnectionRestart();
+        }
+
+        private void scheduleIdleConnectionRestart() {
+            PendingIntent pi = getIdleConnectionRestartIntent();
+            long due = SystemClock.elapsedRealtime() + RESTART_IDLE_DELAY_MIN;
+            long windowLength = RESTART_IDLE_DELAY_MAX - RESTART_IDLE_DELAY_MIN;
+            AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+            am.setWindow(AlarmManager.ELAPSED_REALTIME_WAKEUP, due, windowLength, pi);
+        }
+
+        private void cancelIdleConnectionRestart() {
+            AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+            am.cancel(getIdleConnectionRestartIntent());
+        }
+
+        private PendingIntent getIdleConnectionRestartIntent() {
+            Intent i = new Intent(mContext, ImapService.class);
+            i.setAction(ACTION_RESTART_IDLE_CONNECTION);
+            return PendingIntent.getService(mContext, 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
         }
     }
 
@@ -783,7 +754,7 @@ public class ImapService extends Service {
 
         // Initialize the email provider and the listeners/observers
         EmailContent.init(this);
-        mConnectivityManager = new ImapEmailConnectivityManager(this, mBinder);
+        mConnectivityManager = new ImapEmailConnectivityManager(this);
         mLocalChangesObserver = new LocalChangesContentObserver(this, mServiceHandler);
 
         // Initialize wake locks
@@ -925,6 +896,45 @@ public class ImapService extends Service {
             } catch (Exception e) {
                LogUtils.e(Logging.LOG_TAG,"RemoteException " +e);
             }
+        } else if (ACTION_RESTART_IDLE_CONNECTION.equals(action)) {
+            // Initiate a sync for all IDLEd accounts, since there might have
+            // been changes while we lost connectivity. At the end of the sync
+            // the IDLE connection will be re-established.
+
+            mIdleRefreshWakeLock.acquire();
+
+            sExecutor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    ContentResolver cr = context.getContentResolver();
+                    Cursor c = null;
+                    try {
+                        c = cr.query(Account.CONTENT_URI, Account.CONTENT_PROJECTION,
+                                null, null, null);
+                        if (c == null) {
+                            return;
+                        }
+                        while (c.moveToNext()) {
+                            final Account account = new Account();
+                            account.restore(c);
+
+                            // Only imap push accounts
+                            if (account.getSyncInterval() == Account.CHECK_INTERVAL_PUSH
+                                    && isLegacyImapProtocol(context, account)) {
+                                // Request a "recents" sync
+                                requestSync(context, account, Mailbox.NO_MAILBOX, false);
+                                LogUtils.d(LOG_TAG, "requestSync after restarting IDLE "
+                                        + "for account %s", account.toString());
+                            }
+                        }
+                    } finally {
+                        if (c != null) {
+                            c.close();
+                        }
+                        mIdleRefreshWakeLock.release();
+                    }
+                }
+            });
         } else if (ACTION_KICK_IDLE_CONNECTION.equals(action)) {
             if (Logging.LOGD) {
                 LogUtils.d(Logging.LOG_TAG, "action: Send Pending Mail "+accountId);
