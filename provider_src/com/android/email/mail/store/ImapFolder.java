@@ -85,6 +85,10 @@ public class ImapFolder extends Folder {
          */
         public void onIdled();
         /**
+         * Invoked when idle state is left
+         */
+        public void onIdlingDone();
+        /**
          * Invoked when a new change is communicated by the server.
          *
          * @param needSync whether a sync is required
@@ -313,6 +317,9 @@ public class ImapFolder extends Folder {
                         mIdling = false;
                     }
 
+                    if (callback != null) {
+                        callback.onIdlingDone();
+                    }
                 } catch (MessagingException me) {
                     cleanupConnection(connection, false);
                     synchronized (mIdleSync) {
