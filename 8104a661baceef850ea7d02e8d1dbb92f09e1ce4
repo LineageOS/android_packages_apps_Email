@@ -16,6 +16,24 @@
       "revId": "8104a661baceef850ea7d02e8d1dbb92f09e1ce4",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da36d5c6_2c3edbb8",
+        "filename": "provider_src/com/android/email/service/ImapService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-06-18T02:30:04Z",
+      "side": 1,
+      "message": "You mean like I do in line 790? ;-)",
+      "parentUuid": "da36d5c6_ac2acb7c",
+      "revId": "8104a661baceef850ea7d02e8d1dbb92f09e1ce4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
