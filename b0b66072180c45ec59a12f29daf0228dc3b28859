@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da36d5c6_4c34efdd",
+        "filename": "provider_src/com/android/email/service/ImapService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 3134
+      },
+      "writtenOn": "2015-06-18T02:10:06Z",
+      "side": 1,
+      "message": "should we use setExact here?",
+      "revId": "b0b66072180c45ec59a12f29daf0228dc3b28859",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
