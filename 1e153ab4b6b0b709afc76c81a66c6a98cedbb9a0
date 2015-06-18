@@ -33,6 +33,24 @@
       "revId": "1e153ab4b6b0b709afc76c81a66c6a98cedbb9a0",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da36d5c6_8917b953",
+        "filename": "provider_src/com/android/email/service/ImapService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-06-18T00:37:17Z",
+      "side": 1,
+      "message": "Other places (EmailProvider, EmailServiceStub, Mailbox, ...) didn\u0027t do this either; I just followed their example.",
+      "parentUuid": "da36d5c6_29224dba",
+      "revId": "1e153ab4b6b0b709afc76c81a66c6a98cedbb9a0",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
