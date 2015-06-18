@@ -16,6 +16,24 @@
       "revId": "b0b66072180c45ec59a12f29daf0228dc3b28859",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da36d5c6_8c7347b4",
+        "filename": "provider_src/com/android/email/service/ImapService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-06-18T02:32:49Z",
+      "side": 1,
+      "message": "Good question. As this basically just schedules a new sync, I\u0027d argue that some additional delay doesn\u0027t matter though, so I tend towards keeping set().",
+      "parentUuid": "da36d5c6_4c34efdd",
+      "revId": "b0b66072180c45ec59a12f29daf0228dc3b28859",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
