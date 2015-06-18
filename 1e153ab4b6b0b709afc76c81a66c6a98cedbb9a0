@@ -16,6 +16,24 @@
       "revId": "1e153ab4b6b0b709afc76c81a66c6a98cedbb9a0",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da36d5c6_cc6d3fce",
+        "filename": "provider_src/com/android/email/service/LegacyImapSyncAdapterService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-06-18T02:35:16Z",
+      "side": 0,
+      "message": "I\u0027ve tried the usual cases (reboot, kill app, kill and restart connectivity) and all of them worked. My assumption was that if the sync adapter service is started, a sync is imminent, which in turn will start the idle connection. My debug output seems to agree with that (IDLE was established just to be killed moments later), but I might be missing something. If you remember the cases this was designed for, please let me know :)",
+      "parentUuid": "da36d5c6_ac51eb10",
+      "revId": "1e153ab4b6b0b709afc76c81a66c6a98cedbb9a0",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
