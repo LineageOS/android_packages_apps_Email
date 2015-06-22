@@ -17,8 +17,8 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="account_settings_notify_every_message_label">Jakinarazi mezu bakoitza</string>
-  <string name="account_setup_options_mail_check_frequency_2hour">2 orduro</string>
-  <string name="account_setup_options_mail_check_frequency_4hour">4 orduro</string>
+  <string name="account_setup_options_mail_check_frequency_2hour">2 ordutik behin</string>
+  <string name="account_setup_options_mail_check_frequency_4hour">4 ordutik behin</string>
   <string name="account_setup_options_mail_check_frequency_1day">Egunero</string>
   <string name="account_settings">Kontuaren ezarpenak</string>
   <string name="delete_account_title">Ezabatu kontua</string>
