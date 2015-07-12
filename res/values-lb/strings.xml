@@ -207,6 +207,7 @@
   <string name="account_settings_sync_calendar_summary">Kalenner-Rendezvouse fir dëse Kont synchroniséieren</string>
   <string name="account_settings_sync_email_enable">E-Mail synchroniséieren</string>
   <string name="account_settings_sync_email_summary">E-Maile vum Kont synchroniséieren</string>
+  <string name="label_notification_vibrate_title">Vibréieren</string>
   <string name="account_settings_ringtone">Schelltoun auswielen</string>
   <string name="account_settings_servers">Serverastellungen</string>
   <string name="mailbox_settings_activity_title">Sync-Optiounen</string>
@@ -231,6 +232,8 @@
   <string name="quick_3">Ech liesen dat méi spéit a kommen op dech zréck.</string>
   <string name="quick_4">Looss eis e Rendezvous festleeë fir dat ze diskutéieren.</string>
   <string name="confirm_response">Äntwert gëtt geschéckt&#8230;</string>
+  <string name="imap_name">Privat (IMAP)</string>
+  <string name="pop3_name">Privat (POP3)</string>
   <string name="trash_folder_selection_title">Wiel de Poubellesdossier fir <xliff:g id="account">%s</xliff:g> aus</string>
   <string name="sent_folder_selection_title">Dossier \"Verschéckt Elementer\" vum Server fir <xliff:g id="ACCOUNT">%s</xliff:g> auswielen</string>
   <string name="account_waiting_for_folders_msg">D\'Lëscht vun den Dossiere gëtt gelueden&#8230;</string>
