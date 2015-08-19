@@ -17,4 +17,7 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="delete_account">حذف حساب</string>
+  <string name="delete_account_confirmation_msg">این کار تمام تنظیمات و ایمیل‌های حساب کاربری <xliff:g id="account">%s</xliff:g> را حذف خواهد کرد. این عملیات غیرقابل بازگشت است.\n\n ادامه می‌دهید؟</string>
+  <string name="deleting_account_msg">حذف حساب\u2026</string>
+  <string name="delete_account_failed">ناتوان در حذف حساب</string>
 </resources>

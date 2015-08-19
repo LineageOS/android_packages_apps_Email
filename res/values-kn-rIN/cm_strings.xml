@@ -16,8 +16,8 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="delete_account">Ta bort konto</string>
-  <string name="delete_account_confirmation_msg">Detta kommer att ta bort alla inställningar och e-post på kontot <xliff:g id="account">%s</xliff:g>. Denna åtgärd kan inte ångras.\n\nFortsätt?</string>
-  <string name="deleting_account_msg">Tar bort konto\u2026</string>
-  <string name="delete_account_failed">Kunde inte ta bort kontot</string>
+  <string name="delete_account">ಖಾತೆಯನ್ನು ಅಳಿಸಿ</string>
+  <string name="delete_account_confirmation_msg">ಇದು <xliff:g id="account">%s</xliff:g> ಖಾತೆಯ ಎಲ್ಲಾ ಸೆಟ್ಟಿಂಗ್ಸ್ ಹಾಗು ಇಮೇಲ್‍ಗಳನ್ನು ಅಳಿಸಿಹಾಕುತ್ತದೆ. ಈ ಕಾರ್ಯಾಚರಣೆಯನ್ನು ಹಿಂದಿರುಗಿಸಲು ಆಗುವುದಿಲ್ಲ.\n\nಮುಂದುವರಿಯುವುದೇ?</string>
+  <string name="deleting_account_msg">ಖಾತೆಯನ್ಮು ಅಳಿಸಲಾಗುತ್ತಿದೆ\u2026</string>
+  <string name="delete_account_failed">ಖಾತೆಯನ್ನು ಅಳಿಸಲಾಗಲಿಲ್ಲ</string>
 </resources>
