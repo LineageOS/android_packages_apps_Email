@@ -26,7 +26,7 @@
   <string name="delete_account_confirmation_msg">Se vor șterge toate setările și email-urile contului <xliff:g id="account">%s</xliff:g>. Această operație nu poate fi anulată.\n\nContinuați?</string>
   <string name="deleting_account_msg">Se șterge contul\u2026</string>
   <string name="delete_account_failed">Contul nu a putut fi șters</string>
-  <string name="account_auto_fetch_attachments_label">Preluare automata a atașamentelor</string>
+  <string name="account_auto_fetch_attachments_label">Preluare automată a atașamentelor</string>
   <string name="account_auto_fetch_attachments_entries_never">Niciodată</string>
   <string name="account_auto_fetch_attachments_entries_wifi">Numai prin Wi-Fi</string>
   <string name="account_auto_fetch_attachments_entries_always">Întotdeauna</string>
@@ -39,8 +39,8 @@
   <string name="account_setup_options_mail_sync_size_1M">1MO</string>
   <string name="category_label_general_settings">Setări generale</string>
   <string name="category_label_attachment_settings">Setări de atașament</string>
-  <string name="general_preference_add_attachment_label">Adăugați alt tip de fişier</string>
-  <string name="general_preference_select_recipients_label">Selectaţi destinatarii din contacte</string>
+  <string name="general_preference_add_attachment_label">Adăugați alt tip de fișier</string>
+  <string name="general_preference_select_recipients_label">Selectați destinatarii din contacte</string>
   <string name="general_preference_confirm_forward_label">Confirmare înainte de expediere</string>
-  <string name="general_preference_confirm_forward_summary">Alegeţi dacă să se utilizeze ataşamente de la serverul de e-mail, sau de la dispozitiv înainte de expediere</string>
+  <string name="general_preference_confirm_forward_summary">Alegeți dacă să se utilizeze atașamente de la serverul de e-mail, sau de la dispozitiv înainte de expediere</string>
 </resources>
