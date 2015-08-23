@@ -16,7 +16,8 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="account_settings_notify_every_message_label">برای هر پیام اعلام کن</string>
+  <string name="account_settings_notify_every_message_label">برای هر پیام اطلاع بده</string>
+  <string name="account_setup_options_mail_check_frequency_2hour">هر ۲ ساعت</string>
   <string name="account_settings">تنظیمات حساب</string>
   <string name="account_auto_fetch_attachments_entries_wifi">فقط با وای‌فای</string>
 </resources>
