@@ -2163,7 +2163,22 @@ public class EmailProvider extends ContentProvider
                     updateValues.remove(BodyColumns.HTML_CONTENT);
                     updateValues.remove(BodyColumns.TEXT_CONTENT);
 
-                    result = db.update(tableName, updateValues, selection, selectionArgs);
+                    // Since we removed the html and text values from the update operation,
+                    // db.update() can fail because updateValues is empty. Just to a safe check
+                    // before continue, and in case check if we found at least the selection
+                    // record in db and fill the result variable for later hack check.
+                    if (updateValues.size() == 0) {
+                        final String proj[] = {BaseColumns._ID};
+                        final Cursor c = db.query(Body.TABLE_NAME, proj, selection, selectionArgs,
+                                null, null, null);
+                        try {
+                            result = c.getCount();
+                        } finally {
+                            c.close();
+                        }
+                    } else {
+                        result = db.update(tableName, updateValues, selection, selectionArgs);
+                    }
 
                     if (result == 0 && selection.equals(Body.SELECTION_BY_MESSAGE_KEY)) {
                         // TODO: This is a hack. Notably, the selection equality test above
