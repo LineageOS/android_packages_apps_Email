@@ -16,6 +16,7 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="delete_account">حذف الحساب</string>
   <string name="delete_account_confirmation_msg">سيؤدي هذا إلى حذف كافة الإعدادات ورسائل البريد الإلكتروني من الحساب<xliff:g id="account">%s</xliff:g>.هذه العملية لا يمكن التراجع فيها.\n\nاستمرار؟</string>
   <string name="deleting_account_msg">جاري حذف الحساب\u2026</string>
   <string name="delete_account_failed">لا يمكن حذف الحساب</string>
