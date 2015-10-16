@@ -50,6 +50,7 @@ import com.android.emailcommon.utility.Utility;
 import com.android.mail.providers.Folder;
 import com.android.mail.providers.UIProvider;
 import com.android.mail.ui.MailAsyncTaskLoader;
+import com.android.mail.ui.settings.BasePreferenceActivity;
 import com.android.mail.utils.LogUtils;
 import com.google.common.base.Preconditions;
 
@@ -69,7 +70,7 @@ import java.util.Map;
  * sync window may result in removal of messages.  Instead, we only save to the database in {@link
  * #onDestroy()}, unless it's called for configuration changes.
  */
-public class MailboxSettings extends PreferenceActivity {
+public class MailboxSettings extends BasePreferenceActivity {
     private static final String EXTRA_FOLDERS_URI = "FOLDERS_URI";
     private static final String EXTRA_INBOX_ID = "INBOX_ID";
 
@@ -100,15 +101,6 @@ public class MailboxSettings extends PreferenceActivity {
         }
 
         super.onCreate(savedInstanceState);
-
-        // Always show "app up" as we expect our parent to be an Email activity.
-        ActionBar actionBar = getActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayOptions(ActionBar.DISPLAY_HOME_AS_UP, ActionBar.DISPLAY_HOME_AS_UP);
-            // Hide the app icon.
-            actionBar.setIcon(android.R.color.transparent);
-            actionBar.setDisplayUseLogoEnabled(false);
-        }
     }
 
     @Override
