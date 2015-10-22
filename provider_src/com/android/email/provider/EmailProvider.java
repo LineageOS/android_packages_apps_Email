@@ -2864,6 +2864,7 @@ public class EmailProvider extends ContentProvider
             + " WHEN " + Mailbox.TYPE_SENT    + " THEN " + R.drawable.ic_drawer_sent_24dp
             + " WHEN " + Mailbox.TYPE_TRASH   + " THEN " + R.drawable.ic_drawer_trash_24dp
             + " WHEN " + Mailbox.TYPE_STARRED + " THEN " + R.drawable.ic_drawer_starred_24dp
+            + " WHEN " + Mailbox.TYPE_JUNK    + " THEN " + R.drawable.ic_drawer_junk_24dp
             + " ELSE " + R.drawable.ic_drawer_folder_24dp + " END";
 
     /**
