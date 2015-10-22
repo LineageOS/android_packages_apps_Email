@@ -4033,7 +4033,8 @@ public class EmailProvider extends ContentProvider
                 values[i] = combinedUriString("uifolder", idString);
             } else if (column.equals(UIProvider.FolderColumns.NAME)) {
                 // default empty string since all of these should use resource strings
-                values[i] = getFolderDisplayName(getFolderTypeFromMailboxType(mailboxType), "");
+                values[i] = getFolderDisplayName(
+                        getFolderTypeFromMailboxType(mailboxType), "", false);
             } else if (column.equals(UIProvider.FolderColumns.HAS_CHILDREN)) {
                 values[i] = 0;
             } else if (column.equals(UIProvider.FolderColumns.CAPABILITIES)) {
@@ -4517,7 +4518,7 @@ public class EmailProvider extends ContentProvider
      */
     private Cursor getUiFolderCursorRowFromMailboxCursorRow(
             MatrixCursor mc, int projectionLength, Cursor mailboxCursor,
-            int nameColumn, int typeColumn) {
+            int nameColumn, int typeColumn, int parentUriColumn) {
         final MatrixCursor.RowBuilder builder = mc.newRow();
         for (int i = 0; i < projectionLength; i++) {
             // If we are at the name column, get the type
@@ -4529,7 +4530,9 @@ public class EmailProvider extends ContentProvider
                 // type has also been requested. If not, this will
                 // error in unknown ways.
                 final int type = mailboxCursor.getInt(typeColumn);
-                builder.add(getFolderDisplayName(type, mailboxCursor.getString(i)));
+                final boolean rootFolder = parentUriColumn == -1 ||
+                        TextUtils.isEmpty(mailboxCursor.getString(parentUriColumn));
+                builder.add(getFolderDisplayName(type, mailboxCursor.getString(i), rootFolder));
             } else {
                 builder.add(mailboxCursor.getString(i));
             }
@@ -4565,6 +4568,7 @@ public class EmailProvider extends ContentProvider
         final int idColumn = inputCursor.getColumnIndex(BaseColumns._ID);
         final int typeColumn = inputCursor.getColumnIndex(UIProvider.FolderColumns.TYPE);
         final int nameColumn = inputCursor.getColumnIndex(UIProvider.FolderColumns.NAME);
+        final int parentUriColumn = inputCursor.getColumnIndex(UIProvider.FolderColumns.PARENT_URI);
         final int capabilitiesColumn =
                 inputCursor.getColumnIndex(UIProvider.FolderColumns.CAPABILITIES);
         final int persistentIdColumn =
@@ -4582,6 +4586,7 @@ public class EmailProvider extends ContentProvider
         while (inputCursor.moveToNext()) {
             final MatrixCursor.RowBuilder builder = outputCursor.newRow();
             final int folderType = inputCursor.getInt(typeColumn);
+            final boolean rootFolder = TextUtils.isEmpty(inputCursor.getString(parentUriColumn));
             for (int i = 0; i < uiProjection.length; i++) {
                 // Find the index in the input cursor corresponding the column requested in the
                 // output projection.
@@ -4596,7 +4601,7 @@ public class EmailProvider extends ContentProvider
                 final boolean remapped;
                 if (nameColumn == index) {
                     // Remap folder name for system folders.
-                    builder.add(getFolderDisplayName(folderType, value));
+                    builder.add(getFolderDisplayName(folderType, value, rootFolder));
                     remapped = true;
                 } else if (capabilitiesColumn == index) {
                     // Get the correct capabilities for this folder.
@@ -4646,9 +4651,15 @@ public class EmailProvider extends ContentProvider
      * @param folderType {@link UIProvider.FolderType} value for the folder
      * @param defaultName a {@link String} to use in case the {@link UIProvider.FolderType}
      *                    provided is not a system folder.
+     * @param rootFolder whether the folder is a root folder
      * @return a {@link String} to use as the display name for the folder
      */
-    private String getFolderDisplayName(int folderType, String defaultName) {
+    private String getFolderDisplayName(int folderType, String defaultName, boolean rootFolder) {
+        if (!rootFolder && !TextUtils.isEmpty(defaultName)) {
+            // If the folder is not a root, we must use the provided folder name
+            return defaultName;
+        }
+
         final int resId;
         switch (folderType) {
             case UIProvider.FolderType.INBOX:
@@ -4903,12 +4914,15 @@ public class EmailProvider extends ContentProvider
                     final List<String> projectionList = Arrays.asList(uiProjection);
                     final int nameColumn = projectionList.indexOf(UIProvider.FolderColumns.NAME);
                     final int typeColumn = projectionList.indexOf(UIProvider.FolderColumns.TYPE);
+                    final int parentUriColumn =
+                            projectionList.indexOf(UIProvider.FolderColumns.PARENT_URI);
                     if (c.moveToFirst()) {
                         final Cursor closeThis = c;
                         try {
                             c = getUiFolderCursorRowFromMailboxCursorRow(
                                     new MatrixCursorWithCachedColumns(uiProjection),
-                                    uiProjection.length, c, nameColumn, typeColumn);
+                                    uiProjection.length, c, nameColumn,
+                                    typeColumn, parentUriColumn);
                         } finally {
                             closeThis.close();
                         }
