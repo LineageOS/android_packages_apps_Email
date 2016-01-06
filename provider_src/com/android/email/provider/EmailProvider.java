@@ -3253,7 +3253,8 @@ public class EmailProvider extends ContentProvider
                         "=" + Mailbox.TYPE_INBOX + ")");
                 break;
             case Mailbox.TYPE_STARRED:
-                sb.append(MessageColumns.FLAG_FAVORITE + "=1");
+                sb.append(MessageColumns.FLAG_FAVORITE + "=1 AND "+MessageColumns.MAILBOX_KEY
+                        +"<>5");
                 break;
             case Mailbox.TYPE_UNREAD:
                 sb.append(MessageColumns.FLAG_READ + "=0 AND " + MessageColumns.MAILBOX_KEY +
@@ -3959,7 +3960,8 @@ public class EmailProvider extends ContentProvider
                         whereArgs = new String[] { Long.toString(accountId) };
                     }
                     final int starredCount = EmailContent.count(getContext(), Message.CONTENT_URI,
-                            accountKeyClause + MessageColumns.FLAG_FAVORITE + "=1", whereArgs);
+                            accountKeyClause + MessageColumns.FLAG_FAVORITE + "=1 AND "
+                            + MessageColumns.MAILBOX_KEY + "<>5", whereArgs);
                     values[i] = starredCount;
                 }
             } else if (column.equals(UIProvider.FolderColumns.ICON_RES_ID)) {
