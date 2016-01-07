@@ -324,6 +324,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:host="com.android.email.ACCOUNT_SETTINGS" />
+                <data android:host="com.android.email.ACCOUNT_SECURITY" />
                 <data android:scheme="auth"/>
             </intent-filter>
         </activity>
