@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1fcbff3d_d9e0de99",
+        "filename": "src/com/android/email/EmailNotificationController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2016-01-15T19:47:39Z",
+      "side": 1,
+      "message": "Good point.",
+      "parentUuid": "1fcbff3d_d94bfead",
+      "range": {
+        "startLine": 241,
+        "startChar": 32,
+        "endLine": 241,
+        "endChar": 33
+      },
+      "revId": "7af561764b53050a45dd735af98a05431a20b072",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fcbff3d_f954ba56",
         "filename": "src/com/android/email/EmailNotificationController.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2016-01-15T19:20:58Z",
       "side": 1,
       "message": "Shouldn\u0027t this also be delayed to avoid the original attempt to reduce spamming notifications?",
+      "range": {
+        "startLine": 598,
+        "startChar": 12,
+        "endLine": 598,
+        "endChar": 32
+      },
+      "revId": "7af561764b53050a45dd735af98a05431a20b072",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1fcbff3d_79ef6a87",
+        "filename": "src/com/android/email/EmailNotificationController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2016-01-15T19:47:39Z",
+      "side": 1,
+      "message": "Right. I used the example of the original code which updated right away if the boolean is false, but I see the problem. Maybe we should additionally insert a second (delayed) message here.",
+      "parentUuid": "1fcbff3d_f954ba56",
       "range": {
         "startLine": 598,
         "startChar": 12,
