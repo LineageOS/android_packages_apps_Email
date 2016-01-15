@@ -213,9 +213,7 @@ public class EmailNotificationController implements NotificationController {
      */
 
     private static final int NOTIFICATION_DELAYED_MESSAGE = 0;
-    private static final long NOTIFICATION_DELAY = 15 * DateUtils.SECOND_IN_MILLIS;
-    // True if we're coalescing notification updates
-    private static boolean sNotificationDelayedMessagePending;
+    private static final long NOTIFICATION_DELAY = 2 * DateUtils.SECOND_IN_MILLIS;
     // True if accounts have changed and we need to refresh everything
     private static boolean sRefreshAllNeeded;
     // Set of accounts we need to regenerate notifications for
@@ -236,7 +234,6 @@ public class EmailNotificationController implements NotificationController {
                              */
                             LogUtils.d(LOG_TAG, "Delayed notification processing");
                             synchronized (sNotificationDelayedMessageLock) {
-                                sNotificationDelayedMessagePending = false;
                                 final Context context = (Context)message.obj;
                                 if (sRefreshAllNeeded) {
                                     sRefreshAllNeeded = false;
@@ -590,19 +587,23 @@ public class EmailNotificationController implements NotificationController {
         notificationManager.cancel((int) (NOTIFICATION_ID_BASE_SECURITY_CHANGED + account.mId));
     }
 
+    private static void scheduleNotificationUpdateLocked(final Context context) {
+        ensureHandlerExists();
+        android.os.Message msg = android.os.Message.obtain(sNotificationHandler,
+                NOTIFICATION_DELAYED_MESSAGE, context);
+        if (sNotificationHandler.hasMessages(NOTIFICATION_DELAYED_MESSAGE)) {
+            sNotificationHandler.removeMessages(NOTIFICATION_DELAYED_MESSAGE);
+            sNotificationHandler.sendMessageDelayed(msg, NOTIFICATION_DELAY);
+        } else {
+            sNotificationHandler.sendMessage(msg);
+        }
+    }
+
     private static void refreshNotificationsForAccount(final Context context,
             final long accountId) {
         synchronized (sNotificationDelayedMessageLock) {
-            if (sNotificationDelayedMessagePending) {
-                sRefreshAccountSet.add(accountId);
-            } else {
-                ensureHandlerExists();
-                sNotificationHandler.sendMessageDelayed(
-                        android.os.Message.obtain(sNotificationHandler,
-                                NOTIFICATION_DELAYED_MESSAGE, context), NOTIFICATION_DELAY);
-                sNotificationDelayedMessagePending = true;
-                refreshNotificationsForAccountInternal(context, accountId);
-            }
+            sRefreshAccountSet.add(accountId);
+            scheduleNotificationUpdateLocked(context);
         }
     }
 
@@ -724,16 +725,8 @@ public class EmailNotificationController implements NotificationController {
 
     private static void refreshAllNotifications(final Context context) {
         synchronized (sNotificationDelayedMessageLock) {
-            if (sNotificationDelayedMessagePending) {
-                sRefreshAllNeeded = true;
-            } else {
-                ensureHandlerExists();
-                sNotificationHandler.sendMessageDelayed(
-                        android.os.Message.obtain(sNotificationHandler,
-                                NOTIFICATION_DELAYED_MESSAGE, context), NOTIFICATION_DELAY);
-                sNotificationDelayedMessagePending = true;
-                refreshAllNotificationsInternal(context);
-            }
+            sRefreshAllNeeded = true;
+            scheduleNotificationUpdateLocked(context);
         }
     }
 
