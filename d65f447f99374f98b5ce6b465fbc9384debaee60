@@ -22,6 +22,30 @@
       "revId": "d65f447f99374f98b5ce6b465fbc9384debaee60",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1fcbff3d_99c256e9",
+        "filename": "src/com/android/email/EmailNotificationController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2016-01-15T20:26:18Z",
+      "side": 1,
+      "message": "Most of the times the body is already ready when the notification is created; it\u0027s a rare case that it\u0027s missing (maybe 10% of all cases). I think it\u0027s better to notify immediately and add missing content later than delaying the notification completely, especially as the old code did the same thing (see my comment in the old code)",
+      "parentUuid": "1fcbff3d_59a38e50",
+      "range": {
+        "startLine": 605,
+        "startChar": 33,
+        "endLine": 605,
+        "endChar": 44
+      },
+      "revId": "d65f447f99374f98b5ce6b465fbc9384debaee60",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fcbff3d_d98e9ecf",
+        "filename": "src/com/android/email/EmailNotificationController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2016-01-15T20:26:18Z",
+      "side": 0,
+      "message": "Before the first refresh happened immediately. See here.",
+      "revId": "34fb128e4325f764267c54629c4ee563e08aa6c7",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
