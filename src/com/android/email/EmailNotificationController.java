@@ -213,9 +213,7 @@ public class EmailNotificationController implements NotificationController {
      */
 
     private static final int NOTIFICATION_DELAYED_MESSAGE = 0;
-    private static final long NOTIFICATION_DELAY = 15 * DateUtils.SECOND_IN_MILLIS;
-    // True if we're coalescing notification updates
-    private static boolean sNotificationDelayedMessagePending;
+    private static final long NOTIFICATION_DELAY = 2 * DateUtils.SECOND_IN_MILLIS;
     // True if accounts have changed and we need to refresh everything
     private static boolean sRefreshAllNeeded;
     // Set of accounts we need to regenerate notifications for
@@ -228,28 +226,30 @@ public class EmailNotificationController implements NotificationController {
             sNotificationThread = new NotificationThread();
             sNotificationHandler = new Handler(sNotificationThread.getLooper(),
                     new Handler.Callback() {
-                        @Override
-                        public boolean handleMessage(final android.os.Message message) {
-                            /**
-                             * To reduce spamming the notifications, we quiesce updates for a few
-                             * seconds to batch them up, then handle them here.
-                             */
-                            LogUtils.d(LOG_TAG, "Delayed notification processing");
-                            synchronized (sNotificationDelayedMessageLock) {
-                                sNotificationDelayedMessagePending = false;
-                                final Context context = (Context)message.obj;
-                                if (sRefreshAllNeeded) {
-                                    sRefreshAllNeeded = false;
-                                    refreshAllNotificationsInternal(context);
-                                }
+                @Override
+                public boolean handleMessage(final android.os.Message message) {
+                    /**
+                     * To reduce spamming the notifications, we quiesce updates for a few
+                     * seconds to batch them up, then handle them here.
+                     */
+                    if (message.arg1 != 0) {
+                        LogUtils.d(LOG_TAG, "Delayed notification processing");
+                        synchronized (sNotificationDelayedMessageLock) {
+                            final Context context = (Context)message.obj;
+                            if (sRefreshAllNeeded) {
+                                sRefreshAllNeeded = false;
+                                refreshAllNotificationsInternal(context);
+                            } else {
                                 for (final Long accountId : sRefreshAccountSet) {
                                     refreshNotificationsForAccountInternal(context, accountId);
                                 }
-                                sRefreshAccountSet.clear();
                             }
-                            return true;
+                            sRefreshAccountSet.clear();
                         }
-                    });
+                    }
+                    return true;
+                }
+            });
         }
     }
 
@@ -590,19 +590,29 @@ public class EmailNotificationController implements NotificationController {
         notificationManager.cancel((int) (NOTIFICATION_ID_BASE_SECURITY_CHANGED + account.mId));
     }
 
+    private static void scheduleNotificationUpdateLocked(final Context context) {
+        ensureHandlerExists();
+        android.os.Message msg = android.os.Message.obtain(sNotificationHandler,
+                NOTIFICATION_DELAYED_MESSAGE, 1, 0 , context);
+        if (sNotificationHandler.hasMessages(NOTIFICATION_DELAYED_MESSAGE)) {
+            // we're in the delay window, restart timer
+            sNotificationHandler.removeMessages(NOTIFICATION_DELAYED_MESSAGE);
+            sNotificationHandler.sendMessageDelayed(msg, NOTIFICATION_DELAY);
+        } else {
+            // no refreshes happened in the last delay window; refresh immediately
+            // and send a dummy message to ensure the delay window is respected
+            // when the next update comes in
+            sNotificationHandler.sendMessage(msg);
+            sNotificationHandler.sendEmptyMessageDelayed(NOTIFICATION_DELAYED_MESSAGE,
+                    NOTIFICATION_DELAY);
+        }
+    }
+
     private static void refreshNotificationsForAccount(final Context context,
             final long accountId) {
         synchronized (sNotificationDelayedMessageLock) {
-            if (sNotificationDelayedMessagePending) {
-                sRefreshAccountSet.add(accountId);
-            } else {
-                ensureHandlerExists();
-                sNotificationHandler.sendMessageDelayed(
-                        android.os.Message.obtain(sNotificationHandler,
-                                NOTIFICATION_DELAYED_MESSAGE, context), NOTIFICATION_DELAY);
-                sNotificationDelayedMessagePending = true;
-                refreshNotificationsForAccountInternal(context, accountId);
-            }
+            sRefreshAccountSet.add(accountId);
+            scheduleNotificationUpdateLocked(context);
         }
     }
 
@@ -724,16 +734,8 @@ public class EmailNotificationController implements NotificationController {
 
     private static void refreshAllNotifications(final Context context) {
         synchronized (sNotificationDelayedMessageLock) {
-            if (sNotificationDelayedMessagePending) {
-                sRefreshAllNeeded = true;
-            } else {
-                ensureHandlerExists();
-                sNotificationHandler.sendMessageDelayed(
-                        android.os.Message.obtain(sNotificationHandler,
-                                NOTIFICATION_DELAYED_MESSAGE, context), NOTIFICATION_DELAY);
-                sNotificationDelayedMessagePending = true;
-                refreshAllNotificationsInternal(context);
-            }
+            sRefreshAllNeeded = true;
+            scheduleNotificationUpdateLocked(context);
         }
     }
 
