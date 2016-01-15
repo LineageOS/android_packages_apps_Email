@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fcbff3d_59a38e50",
+        "filename": "src/com/android/email/EmailNotificationController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 3134
+      },
+      "writtenOn": "2016-01-15T20:07:40Z",
+      "side": 1,
+      "message": "Why not just send only this msg as delayed ^^^? Original all the message were delayed (if i read it correctly). So basically, you are going to push a message with body all the times. It\u0027s not better to wait n seconds so it can be replaced and show the entired notification without spamming the system?\n\nwith that it all is ok, when a mail was received, it wait 2 seconds to display the notification and if in that time the body is complete then push the whole message after 4 seconds of receiving the message, and with all its content with only one notification. Isn\u0027t that better that publish a uncomplete message, and then refresh the notification with the body?",
+      "range": {
+        "startLine": 605,
+        "startChar": 33,
+        "endLine": 605,
+        "endChar": 44
+      },
+      "revId": "d65f447f99374f98b5ce6b465fbc9384debaee60",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
