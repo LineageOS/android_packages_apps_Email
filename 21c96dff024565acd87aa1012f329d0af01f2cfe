@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fcbff3d_700d2f8f",
+        "filename": "src/com/android/email/EmailNotificationController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 3134
+      },
+      "writtenOn": "2016-01-21T05:02:30Z",
+      "side": 1,
+      "message": "extra space in \"1, 0 ,\"",
+      "range": {
+        "startLine": 598,
+        "startChar": 50,
+        "endLine": 598,
+        "endChar": 51
+      },
+      "revId": "21c96dff024565acd87aa1012f329d0af01f2cfe",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
