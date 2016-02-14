@@ -16,7 +16,7 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="delete_account">Șterge contul</string>
+  <string name="delete_account">Ștergere cont</string>
   <string name="delete_account_confirmation_msg">Se vor șterge toate setările și email-urile contului <xliff:g id="account">%s</xliff:g>. Această operație nu poate fi anulată.\n\nContinuați?</string>
   <string name="deleting_account_msg">Se șterge contul\u2026</string>
   <string name="delete_account_failed">Contul nu a putut fi șters</string>
