@@ -16,12 +16,17 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <!-- Delete account -->
   <string name="delete_account">खाता हटाएँ</string>
   <string name="delete_account_confirmation_msg">यह खाता <xliff:g id="account">%s</xliff:g> से संबंधित सभी सेटिंग और ईमेलों को हटा देगा। इस प्रचालन को पलटा नहीं जा सकेगा।\n\nआगे बढ़ें?</string>
   <string name="deleting_account_msg">खाता हटा रहे हैं\u2026</string>
   <string name="delete_account_failed">खाता हटा नहीं सके</string>
+  <!-- Mailbox notification settings activity title [CHAR LIMIT=none] -->
   <string name="mailbox_notify_settings_activity_title">अधिसूचना विकल्प</string>
+  <!-- Mailbox settings activity title, with the target folder name [CHAR LIMIT=none] -->
   <string name="mailbox_notify_settings_activity_title_with_mailbox">अधिसूचना विकल्प (<xliff:g id="mailbox_name" example="Family">%s</xliff:g>)</string>
+  <!-- Name for preference entry which leads to the per-folder notification settings activity -->
   <string name="folder_notify_settings_pref_title">फ़ोल्डर अधिसूचना सेटिंग</string>
+  <!-- On Settings screen, notification lights pop-up menu label -->
   <string name="label_notification_lights_title">रोशनी</string>
 </resources>

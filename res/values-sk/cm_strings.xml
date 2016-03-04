@@ -16,12 +16,17 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <!-- Delete account -->
   <string name="delete_account">Vymazať účet</string>
   <string name="delete_account_confirmation_msg">Vymažú sa všetky nastavenia a e-maily účtu <xliff:g id="account">%s</xliff:g>. Túto operáciu nemožno vrátiť späť.\n\nPokračovať?</string>
   <string name="deleting_account_msg">Vymazávanie účtu\u2026</string>
   <string name="delete_account_failed">Nemožno vymazať účet</string>
+  <!-- Mailbox notification settings activity title [CHAR LIMIT=none] -->
   <string name="mailbox_notify_settings_activity_title">Možnosti oznámenia</string>
+  <!-- Mailbox settings activity title, with the target folder name [CHAR LIMIT=none] -->
   <string name="mailbox_notify_settings_activity_title_with_mailbox">Možnosti oznámení (<xliff:g id="mailbox_name" example="Family">%s</xliff:g>)</string>
+  <!-- Name for preference entry which leads to the per-folder notification settings activity -->
   <string name="folder_notify_settings_pref_title">Nastavenia oznámení priečinkov</string>
+  <!-- On Settings screen, notification lights pop-up menu label -->
   <string name="label_notification_lights_title">Svetlá</string>
 </resources>
