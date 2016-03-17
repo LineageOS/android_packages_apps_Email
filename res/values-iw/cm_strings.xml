@@ -18,7 +18,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Delete account -->
   <string name="delete_account">מחק חשבון</string>
-  <string name="delete_account_confirmation_msg">פעולה זאת תמחק את כל ההגדרות וההודעות של החשבון \"<xliff:g id="account">%s</xliff:g>\". פעולה זו אינה ניתנת לשחזור.\n\nלהמשיך?</string>
+  <string name="delete_account_confirmation_msg">פעולה זו תמחק את כל ההגדרות וההודעות של החשבון \"<xliff:g id="account">%s</xliff:g>\". פעולה זו אינה ניתנת לביטול.\n\nלהמשיך?</string>
   <string name="deleting_account_msg">מוחק חשבון\u2026</string>
   <string name="delete_account_failed">לא ניתן למחוק את החשבון</string>
   <!-- Mailbox notification settings activity title [CHAR LIMIT=none] -->
