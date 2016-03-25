@@ -5509,7 +5509,7 @@ public class EmailProvider extends ContentProvider
         if (msg == null) return 0;
         Mailbox mailbox = Mailbox.restoreMailboxWithId(context, msg.mMailboxKey);
         if (mailbox == null) return 0;
-        if (mailbox.mType == Mailbox.TYPE_TRASH || mailbox.mType == Mailbox.TYPE_DRAFTS) {
+        if (mailbox.mType == Mailbox.TYPE_TRASH) {
             // We actually delete these, including attachments
             AttachmentUtilities.deleteAllAttachmentFiles(context, msg.mAccountKey, msg.mId);
             final int r = context.getContentResolver().delete(
