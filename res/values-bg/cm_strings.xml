@@ -16,12 +16,17 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <!-- Delete account -->
   <string name="delete_account">Изтриване на акаунт</string>
   <string name="delete_account_confirmation_msg">Това ще изтрие всички настройки и имейли от акаунта <xliff:g id="account"> %s </xliff:g>. Тази операция не може да бъде отменена.\n\nПродължавате ли?</string>
   <string name="deleting_account_msg">Изтриване на акаунт\u2026</string>
   <string name="delete_account_failed">Не може да изтриете акаунта</string>
-  <string name="mailbox_notify_settings_activity_title">Настройки за известията</string>
+  <!-- Mailbox notification settings activity title [CHAR LIMIT=none] -->
+  <string name="mailbox_notify_settings_activity_title">Настройки за известия</string>
+  <!-- Mailbox settings activity title, with the target folder name [CHAR LIMIT=none] -->
   <string name="mailbox_notify_settings_activity_title_with_mailbox">Настройки за известията (<xliff:g id="mailbox_name" example="Family">%s</xliff:g>)</string>
-  <string name="folder_notify_settings_pref_title">Уведомления за папки</string>
-  <string name="label_notification_lights_title">Светлини</string>
+  <!-- Name for preference entry which leads to the per-folder notification settings activity -->
+  <string name="folder_notify_settings_pref_title">Известия за папки</string>
+  <!-- On Settings screen, notification lights pop-up menu label -->
+  <string name="label_notification_lights_title">Светлинни индикации</string>
 </resources>
