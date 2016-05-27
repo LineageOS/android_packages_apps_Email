@@ -1130,7 +1130,8 @@ public class AccountSetupFinal extends AccountSetupActivity
             newFlags |= Account.FLAGS_BACKGROUND_ATTACHMENTS;
         }
         final HostAuth hostAuth = account.getOrCreateHostAuthRecv(this);
-        if (hostAuth.mProtocol.equals(getString(R.string.protocol_eas))) {
+        if (hostAuth.mProtocol.equals(getString(R.string.protocol_eas))
+                && account.mProtocolVersion != null) {
             try {
                 final double protocolVersionDouble = Double.parseDouble(account.mProtocolVersion);
                 if (protocolVersionDouble >= 12.0) {
