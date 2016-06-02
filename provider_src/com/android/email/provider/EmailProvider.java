@@ -279,6 +279,7 @@ public class EmailProvider extends ContentProvider
     private static final int UI_ACCTSETTINGS = UI_BASE + 22;
     private static final int UI_MESSAGE_LOAD_MORE = UI_BASE + 23;
 
+    private static final int UI_LOCAL_SEARCH = UI_BASE + 24;
     private static final int BODY_BASE = 0xA000;
     private static final int BODY = BODY_BASE;
     private static final int BODY_ID = BODY_BASE + 1;
@@ -1237,6 +1238,9 @@ public class EmailProvider extends ContentProvider
             sURIMatcher.addURI(EmailContent.AUTHORITY, "uipurgefolder/#", UI_PURGE_FOLDER);
             sURIMatcher.addURI(EmailContent.AUTHORITY, "uimessageloadmore/#",
                     UI_MESSAGE_LOAD_MORE);
+
+            sURIMatcher.addURI(EmailContent.AUTHORITY, "uilocalsearch/#",
+                    UI_LOCAL_SEARCH);
         }
     }
 
@@ -1315,6 +1319,11 @@ public class EmailProvider extends ContentProvider
                 case UI_SEARCH:
                     c = uiSearch(uri, projection);
                     return c;
+
+                case UI_LOCAL_SEARCH:
+                    c = uiLocalSearch(uri, projection);
+                    return c;
+
                 case UI_ACCTS:
                     final String suppressParam =
                             uri.getQueryParameter(EmailContent.SUPPRESS_COMBINED_ACCOUNT_PARAM);
@@ -3186,7 +3195,8 @@ public class EmailProvider extends ContentProvider
      * @param unseenOnly <code>true</code> to only return unseen messages
      * @return the SQLite query to be executed on the EmailProvider database
      */
-    private static String genQueryMailboxMessages(String[] uiProjection, final boolean unseenOnly) {
+    private static String genQueryMailboxMessages(String[] uiProjection, final boolean unseenOnly,
+            String selection) {
         StringBuilder sb = genSelect(getMessageListMap(), uiProjection);
         appendConversationInfoColumns(sb);
         sb.append(" FROM " + Message.TABLE_NAME + " WHERE " +
@@ -3195,6 +3205,10 @@ public class EmailProvider extends ContentProvider
         if (unseenOnly) {
             sb.append("AND ").append(MessageColumns.FLAG_SEEN).append(" = 0 ");
             sb.append("AND ").append(MessageColumns.FLAG_READ).append(" = 0 ");
+        }
+
+        if (!TextUtils.isEmpty(selection)) {
+            sb.append("AND ").append(selection);
         }
         sb.append("ORDER BY " + MessageColumns.TIMESTAMP + " DESC ");
         sb.append("LIMIT " + UIProvider.CONVERSATION_PROJECTION_QUERY_CURSOR_WINDOW_LIMIT);
@@ -3209,8 +3223,8 @@ public class EmailProvider extends ContentProvider
      * @param unseenOnly <code>true</code> to only return unseen messages
      * @return the SQLite query to be executed on the EmailProvider database
      */
-    private static Cursor getVirtualMailboxMessagesCursor(SQLiteDatabase db, String[] uiProjection,
-            long mailboxId, final boolean unseenOnly) {
+    private  Cursor getVirtualMailboxMessagesCursor(SQLiteDatabase db, String[] uiProjection,
+            long mailboxId, final boolean unseenOnly, String selection) {
         ContentValues values = new ContentValues();
         values.put(UIProvider.ConversationColumns.COLOR, CONVERSATION_COLOR);
         final int virtualMailboxId = getVirtualMailboxType(mailboxId);
@@ -3249,7 +3263,14 @@ public class EmailProvider extends ContentProvider
             default:
                 throw new IllegalArgumentException("No virtual mailbox for: " + mailboxId);
         }
+
+        if (!TextUtils.isEmpty(selection)) {
+            sb.append(" AND ").append(selection);
+        }
+
         sb.append(" ORDER BY " + MessageColumns.TIMESTAMP + " DESC");
+
+
         return db.rawQuery(sb.toString(), selectionArgs);
     }
 
@@ -4717,10 +4738,13 @@ public class EmailProvider extends ContentProvider
                     return new MatrixCursor(uiProjection);
                 }
                 if (isVirtualMailbox(mailboxId)) {
-                    c = getVirtualMailboxMessagesCursor(db, uiProjection, mailboxId, unseenOnly);
+                    c = getVirtualMailboxMessagesCursor(db, uiProjection, mailboxId, unseenOnly,
+                            null);
                 } else {
                     c = db.rawQuery(
-                            genQueryMailboxMessages(uiProjection, unseenOnly), new String[] {id});
+                            genQueryMailboxMessages(uiProjection, unseenOnly, null), new String[] {
+                                id
+                            });
                 }
                 notifyUri = UIPROVIDER_CONVERSATION_NOTIFIER.buildUpon().appendPath(id).build();
                 c = new EmailConversationCursor(context, c, folder, mailboxId);
@@ -6087,6 +6111,59 @@ public class EmailProvider extends ContentProvider
         // This will look just like a "normal" folder
         return uiQuery(UI_FOLDER, ContentUris.withAppendedId(Mailbox.CONTENT_URI,
                 searchMailbox.mId), projection, false);
+    }
+
+
+    private Cursor uiLocalSearch(Uri uri, String[] uiProjection) {
+        Context context = getContext();
+        SQLiteDatabase db = getDatabase(context);
+
+        Cursor c = null;
+        Uri notifyUri = null;
+        String id = uri.getPathSegments().get(1);
+
+        final String seenParam = uri.getQueryParameter(UIProvider.SEEN_QUERY_PARAMETER);
+        final boolean unseenOnly =
+                seenParam != null && Boolean.FALSE.toString().equals(seenParam);
+
+        final String queryFilter = uri.getQueryParameter(SearchParams.BUNDLE_QUERY_FILTER);
+        final String queryFactor = uri.getQueryParameter(SearchParams.BUNDLE_QUERY_FACTOR);
+
+        if (TextUtils.isEmpty(queryFilter) || TextUtils.isEmpty(queryFactor)) {
+
+            return new MatrixCursor(uiProjection);
+        }
+
+        long mailboxId = Long.parseLong(id);
+        final Folder folder = getFolder(context, mailboxId);
+        if (folder == null) {
+
+            return new MatrixCursor(uiProjection);
+        }
+
+        String selection = Message.buildLocalSearchSelection(context, mailboxId, queryFilter,
+                queryFactor);
+
+        if (null == selection) {
+            return new MatrixCursor(uiProjection);
+        }
+
+        if (isVirtualMailbox(mailboxId)) {
+            c = getVirtualMailboxMessagesCursor(db, uiProjection, mailboxId,
+                    unseenOnly, selection);
+        } else {
+            c = db.rawQuery(
+                    genQueryMailboxMessages(uiProjection, unseenOnly, selection),
+                    new String[] {
+                        id
+                    });
+        }
+        c = new EmailConversationCursor(context, c, folder, mailboxId);
+
+        if (notifyUri != null) {
+            c.setNotificationUri(context.getContentResolver(), notifyUri);
+        }
+        return c;
     }
 
     private static final String MAILBOXES_FOR_ACCOUNT_SELECTION = MailboxColumns.ACCOUNT_KEY + "=?";
