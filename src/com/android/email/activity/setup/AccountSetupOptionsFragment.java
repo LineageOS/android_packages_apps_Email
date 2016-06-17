@@ -22,6 +22,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.Spinner;
 
 import com.android.email.R;
@@ -29,11 +31,14 @@ import com.android.email.activity.UiUtilities;
 import com.android.email.service.EmailServiceUtils;
 import com.android.emailcommon.provider.Account;
 import com.android.emailcommon.provider.Policy;
+import com.android.emailcommon.service.SyncSize;
 import com.android.emailcommon.service.SyncWindow;
 
 public class AccountSetupOptionsFragment extends AccountSetupFragment {
     private Spinner mCheckFrequencyView;
     private Spinner mSyncWindowView;
+    private CheckBox mSyncSizeEnableView;
+    private Spinner mSyncSizeView;
     private View mSyncwindowLabel;
     private CheckBox mNotifyView;
     private CheckBox mSyncContactsView;
@@ -60,6 +65,8 @@ public class AccountSetupOptionsFragment extends AccountSetupFragment {
 
         mCheckFrequencyView = UiUtilities.getView(view, R.id.account_check_frequency);
         mSyncWindowView = UiUtilities.getView(view, R.id.account_sync_window);
+        mSyncSizeEnableView = UiUtilities.getView(view, R.id.account_sync_size_enable);
+        mSyncSizeView = UiUtilities.getView(view, R.id.account_sync_size);
         mNotifyView = UiUtilities.getView(view, R.id.account_notify);
         mNotifyView.setChecked(true);
         mSyncContactsView = UiUtilities.getView(view, R.id.account_sync_contacts);
@@ -105,6 +112,26 @@ public class AccountSetupOptionsFragment extends AccountSetupFragment {
 
         if (serviceInfo.offerLookback) {
             enableLookbackSpinner(account);
+        }
+
+        // Configure the sync size
+        mSyncSizeEnableView.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                int visibility = isChecked ? View.VISIBLE : View.INVISIBLE;
+                mSyncSizeView.setVisibility(visibility);
+                UiUtilities.setVisibilitySafe(view, R.id.account_sync_size, visibility);
+            }
+        });
+        buildSyncSizeSpinner(account);
+        if (account.isSetSyncSizeEnabled()) {
+            mSyncSizeEnableView.setChecked(true);
+            mSyncSizeView.setVisibility(View.VISIBLE);
+            UiUtilities.setVisibilitySafe(view, R.id.account_sync_size, View.VISIBLE);
+        } else {
+            mSyncSizeEnableView.setChecked(false);
+            mSyncSizeView.setVisibility(View.INVISIBLE);
+            UiUtilities.setVisibilitySafe(view, R.id.account_sync_size, View.INVISIBLE);
         }
 
         if (serviceInfo.syncContacts) {
@@ -209,5 +236,50 @@ public class AccountSetupOptionsFragment extends AccountSetupFragment {
 
     public boolean getNotifyValue() {
         return mNotifyView.isChecked();
+    }
+
+    public boolean getSyncSizeEnabledValue() {
+        return mSyncSizeEnableView.isChecked();
+    }
+
+    public int getSyncSizeValue() {
+        if (mSyncSizeView.getVisibility() != View.VISIBLE) {
+            return SyncSize.SYNC_SIZE_ENTIRE_MAIL;
+        }
+        return (int) ((SpinnerOption)mSyncSizeView.getSelectedItem()).value;
+    }
+
+    /**
+     * Build an additional spinner to let the user could choose sync size.
+     */
+    private void buildSyncSizeSpinner(Account account) {
+        // Generate spinner entries using XML arrays used by the preferences
+        CharSequence[] sizeValues = getResources().getTextArray(
+                R.array.account_setup_options_mail_sync_size_entries_values);
+        CharSequence[] sizeEntries = getResources().getTextArray(
+                R.array.account_setup_options_mail_sync_size_entries_labels);
+
+        // Now create the array used by the Spinner
+        SpinnerOption[] syncSizes = new SpinnerOption[sizeEntries.length];
+        int defaultIndex = -1;
+        for (int i = 0; i < sizeEntries.length; ++i) {
+            final int value = Integer.valueOf(sizeValues[i].toString());
+            syncSizes[i] = new SpinnerOption(value, sizeEntries[i].toString());
+            if (value == SyncSize.SYNC_SIZE_DEFAULT_VALUE) {
+                defaultIndex = i;
+            }
+        }
+
+        ArrayAdapter<SpinnerOption> syncSizesAdapter = new ArrayAdapter<SpinnerOption>(
+                getActivity(), android.R.layout.simple_spinner_item, syncSizes);
+        syncSizesAdapter
+                .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSyncSizeView.setAdapter(syncSizesAdapter);
+
+        // set the default value
+        SpinnerOption.setSpinnerOptionValue(mSyncSizeView, account.getSyncSize());
+        if (defaultIndex >= 0) {
+            mSyncSizeView.setSelection(defaultIndex);
+        }
     }
 }

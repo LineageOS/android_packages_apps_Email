@@ -45,6 +45,19 @@ import java.util.ArrayList;
 
 public class Utilities {
     /**
+     * Update the local message's load status.
+     *
+     * @param messageId the local message's id
+     * @param loadStatus the new load status
+     */
+    public static void updateMessageLoadStatus(Context context, long messageId, int loadStatus) {
+        ContentValues cv = new ContentValues();
+        cv.put(EmailContent.MessageColumns.FLAG_LOADED, loadStatus);
+        Uri uri = ContentUris.withAppendedId(EmailContent.Message.CONTENT_URI, messageId);
+        context.getContentResolver().update(uri, cv, null, null);
+    }
+
+    /**
      * Copy one downloaded message (which may have partially-loaded sections)
      * into a newly created EmailProvider Message, given the account and mailbox
      *
@@ -138,7 +151,11 @@ public class Utilities {
                     // TODO(pwestbro): What should happen with unknown status?
                     LegacyConversions.updateAttachments(context, localMessage, attachments);
                     LegacyConversions.updateInlineAttachments(context, localMessage, viewables);
-                } else {
+                }
+
+                // if the message didn't loaded complete, add a dummy attachment.
+                if (loadStatus == EmailContent.Message.FLAG_LOADED_PARTIAL
+                        || loadStatus == EmailContent.Message.FLAG_LOADED_PARTIAL_COMPLETE) {
                     EmailContent.Attachment att = new EmailContent.Attachment();
                     // Since we haven't actually loaded the attachment, we're just putting
                     // a dummy placeholder here. When the user taps on it, we'll load the attachment
@@ -163,7 +180,7 @@ public class Utilities {
                     att.mAccountKey = localMessage.mAccountKey;
                     att.mFlags = Attachment.FLAG_DUMMY_ATTACHMENT;
                     att.save(context);
-                    localMessage.mFlagAttachment = true;
+                    // localMessage.mFlagAttachment = true;
                 }
 
                 // One last update of message with two updated flags

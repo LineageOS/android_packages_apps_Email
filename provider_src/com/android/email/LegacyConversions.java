@@ -310,7 +310,10 @@ public class LegacyConversions {
             localMessage.mAttachments = new ArrayList<Attachment>();
         }
         localMessage.mAttachments.add(localAttachment);
-        localMessage.mFlagAttachment = true;
+        if (TextUtils.isEmpty(localAttachment.mContentId)) {
+            // This isn't the viewable part, set the local message has attachment.
+            localMessage.mFlagAttachment = true;
+        }
     }
 
     /**

@@ -93,6 +93,10 @@ public class BluetoothPop3Service extends Pop3Service {
      * Create our EmailService implementation here.
      */
     private final EmailServiceStub mBinder = new EmailServiceStub() {
+        @Override
+        public void loadMore(long messageId) throws RemoteException {
+            LogUtils.i(TAG, "Try to load more content for message: " + messageId);
+        }
     };
 
     @Override

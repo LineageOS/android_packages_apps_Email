@@ -57,6 +57,7 @@ import com.android.emailcommon.provider.MessageStateChange;
 import com.android.emailcommon.provider.Policy;
 import com.android.emailcommon.provider.QuickResponse;
 import com.android.emailcommon.service.LegacyPolicySet;
+import com.android.emailcommon.service.SyncSize;
 import com.android.emailcommon.service.SyncWindow;
 import com.android.mail.providers.UIProvider;
 import com.android.mail.utils.LogUtils;
@@ -184,7 +185,8 @@ public final class DBHelper {
     // Version 126: Decode address lists for To, From, Cc, Bcc and Reply-To columns in Message.
     // Version 127: Force mFlags to contain the correct flags for EAS accounts given a protocol
     //              version above 12.0
-    public static final int DATABASE_VERSION = 127;
+    // Version 128: Add setSyncSizeEnabled and syncSize columns for Account table.
+    public static final int DATABASE_VERSION = 128;
 
     // Any changes to the database format *must* include update-in-place code.
     // Original version: 2
@@ -516,7 +518,9 @@ public final class DBHelper {
             + AccountColumns.SIGNATURE + " text, "
             + AccountColumns.POLICY_KEY + " integer, "
             + AccountColumns.MAX_ATTACHMENT_SIZE + " integer, "
-            + AccountColumns.PING_DURATION + " integer"
+            + AccountColumns.PING_DURATION + " integer, "
+            + AccountColumns.SET_SYNC_SIZE_ENABLED + " integer, "
+            + AccountColumns.SYNC_SIZE + " integer"
             + ");";
         db.execSQL("create table " + Account.TABLE_NAME + s);
         // Deleting an account deletes associated Mailboxes and HostAuth's
@@ -1468,6 +1472,20 @@ public final class DBHelper {
 
             if (oldVersion <= 126) {
                 upgradeFromVersion126ToVersion127(mContext, db);
+            }
+
+            if (oldVersion <= 127) {
+                try {
+                    db.execSQL("alter table " + Account.TABLE_NAME
+                            + " add column " + AccountColumns.SET_SYNC_SIZE_ENABLED + " integer"
+                            + " default " + SyncSize.ENABLED_DEFAULT_VALUE + ";");
+                    db.execSQL("alter table " + Account.TABLE_NAME
+                            + " add column " + AccountColumns.SYNC_SIZE + " integer"
+                            + " default " + SyncSize.SYNC_SIZE_DEFAULT_VALUE + ";");
+                } catch (SQLException e) {
+                    // Shouldn't be needed unless we're debugging and interrupt the process
+                    LogUtils.w(TAG, "Exception upgrading EmailProvider.db from 127 to 128", e);
+                }
             }
         }
 

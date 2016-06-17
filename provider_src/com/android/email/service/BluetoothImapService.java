@@ -28,6 +28,7 @@ import android.database.Cursor;
 import android.net.TrafficStats;
 import android.net.Uri;
 import android.os.IBinder;
+import android.os.RemoteException;
 import android.os.SystemClock;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
@@ -198,6 +199,10 @@ public class BluetoothImapService extends ImapService {
       Create our EmailService implementation here.
      */
     class BluetoothEmailServiceStub extends EmailServiceStub {
+       @Override
+        public void loadMore(long messageId) throws RemoteException {
+            LogUtils.i("ImapService", "Try to load more content for message: " + messageId);
+        }
         /**
          * Delete a single message by moving it to the trash, or really delete it if it's already in
          * trash or a draft message.

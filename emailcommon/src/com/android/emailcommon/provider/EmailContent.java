@@ -34,6 +34,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.RemoteException;
 import android.provider.BaseColumns;
+import android.text.TextUtils;
 
 import com.android.emailcommon.Logging;
 import com.android.emailcommon.R;
@@ -827,8 +828,9 @@ public abstract class EmailContent {
          */
         public static final String FLAG_LOADED_SELECTION =
             MessageColumns.FLAG_LOADED + " IN ("
-            +     Message.FLAG_LOADED_PARTIAL + "," + Message.FLAG_LOADED_COMPLETE
-            +     ")";
+            +     Message.FLAG_LOADED_PARTIAL + "," + Message.FLAG_LOADED_COMPLETE + ","
+            +     Message.FLAG_LOADED_PARTIAL_COMPLETE + ","
+            +     Message.FLAG_LOADED_PARTIAL_FETCHING +")";
 
         public static final String ALL_FAVORITE_SELECTION =
             MessageColumns.FLAG_FAVORITE + "=1 AND "
@@ -939,8 +941,10 @@ public abstract class EmailContent {
         public static final int FLAG_LOADED_UNLOADED = 0;
         public static final int FLAG_LOADED_COMPLETE = 1;
         public static final int FLAG_LOADED_PARTIAL = 2;
-        public static final int FLAG_LOADED_DELETED = 3;
-        public static final int FLAG_LOADED_UNKNOWN = 4;
+        public static final int FLAG_LOADED_PARTIAL_COMPLETE = 3;
+        public static final int FLAG_LOADED_PARTIAL_FETCHING = 4;
+        public static final int FLAG_LOADED_DELETED = 5;
+        public static final int FLAG_LOADED_UNKNOWN = 6;
 
         // Bits used in mFlags
         // The following three states are mutually exclusive, and indicate whether the message is an
@@ -1721,6 +1725,10 @@ public abstract class EmailContent {
         public static final String MAX_ATTACHMENT_SIZE = "maxAttachmentSize";
         // Current duration of the Exchange ping
         public static final String PING_DURATION = "pingDuration";
+        // If the user could set the sync size for this account.
+        public static final String SET_SYNC_SIZE_ENABLED = "setSyncSizeEnabled";
+        // The sync size for each message of this account.
+        public static final String SYNC_SIZE = "syncSize";
     }
 
     public interface QuickResponseColumns extends BaseColumns {

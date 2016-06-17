@@ -31,6 +31,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.RemoteException;
 
+import com.android.emailcommon.service.SyncSize;
 import com.android.emailcommon.utility.Utility;
 import com.android.mail.utils.LogUtils;
 import com.google.common.annotations.VisibleForTesting;
@@ -150,6 +151,10 @@ public final class Account extends EmailContent implements Parcelable {
     public transient HostAuth mHostAuthSend;
     public transient Policy mPolicy;
 
+    // To save the sync size of this account.
+    public int mSetSyncSizeEnabled;
+    public int mSyncSize;
+
     // Marks this account as being a temporary entry, so we know to use it directly and not go
     // through the database or any caches
     private transient boolean mTemporary;
@@ -171,6 +176,8 @@ public final class Account extends EmailContent implements Parcelable {
     public static final int CONTENT_POLICY_KEY_COLUMN = 14;
     public static final int CONTENT_PING_DURATION_COLUMN = 15;
     public static final int CONTENT_MAX_ATTACHMENT_SIZE_COLUMN = 16;
+    public static final int CONTENT_SET_SYNC_SIZE_ENABLED_COLUMN = 17;
+    public static final int CONTENT_SYNC_SIZE_COLUMN = 18;
 
     public static final String[] CONTENT_PROJECTION = {
         AttachmentColumns._ID, AccountColumns.DISPLAY_NAME,
@@ -181,7 +188,8 @@ public final class Account extends EmailContent implements Parcelable {
         AccountColumns.RINGTONE_URI, AccountColumns.PROTOCOL_VERSION,
         AccountColumns.SECURITY_SYNC_KEY,
         AccountColumns.SIGNATURE, AccountColumns.POLICY_KEY, AccountColumns.PING_DURATION,
-        AccountColumns.MAX_ATTACHMENT_SIZE
+        AccountColumns.MAX_ATTACHMENT_SIZE, AccountColumns.SET_SYNC_SIZE_ENABLED,
+        AccountColumns.SYNC_SIZE
     };
 
     public static final int ACCOUNT_FLAGS_COLUMN_ID = 0;
@@ -204,6 +212,8 @@ public final class Account extends EmailContent implements Parcelable {
         mSyncInterval = -1;
         mSyncLookback = -1;
         mFlags = 0;
+        mSetSyncSizeEnabled = SyncSize.ENABLED_DEFAULT_VALUE;
+        mSyncSize = SyncSize.SYNC_SIZE_ENTIRE_MAIL;
     }
 
     public static Account restoreAccountWithId(Context context, long id) {
@@ -279,6 +289,8 @@ public final class Account extends EmailContent implements Parcelable {
         mSignature = cursor.getString(CONTENT_SIGNATURE_COLUMN);
         mPolicyKey = cursor.getLong(CONTENT_POLICY_KEY_COLUMN);
         mPingDuration = cursor.getLong(CONTENT_PING_DURATION_COLUMN);
+        mSetSyncSizeEnabled = cursor.getInt(CONTENT_SET_SYNC_SIZE_ENABLED_COLUMN);
+        mSyncSize = cursor.getInt(CONTENT_SYNC_SIZE_COLUMN);
     }
 
     public boolean isTemporary() {
@@ -400,6 +412,39 @@ public final class Account extends EmailContent implements Parcelable {
      */
     public void setPingDuration(long value) {
         mPingDuration = value;
+    }
+
+    /**
+     * @return If this account enabled the sync size function, return true.
+     */
+    public boolean isSetSyncSizeEnabled() {
+        return mSetSyncSizeEnabled == SyncSize.ENABLED ? true : false;
+    }
+
+    /**
+     * Set the sync size function if enabled for this account.
+     * @param enabled the state of sync size function for this account.
+     */
+    public void setSyncSizeEnabled(boolean enabled) {
+        mSetSyncSizeEnabled = enabled ? SyncSize.ENABLED : SyncSize.DISABLED;
+    }
+
+    /**
+     * @return The max size per mail will be sync from service
+     * TODO define the values for "all", "20KB", "100KB", etc. See arrays.xml
+     */
+    public int getSyncSize() {
+        return mSyncSize;
+    }
+
+    /**
+     * Set the max size per mail will be sync from service. Be sure to call save() to
+     * commit to database.
+     * TODO define the values for "all", "20KB", "100KB", etc. See arrays.xml
+     * @param size the max size per mail would be sync from service.
+     */
+    public void setSyncSize(int size) {
+        mSyncSize = size;
     }
 
     /**
@@ -749,6 +794,8 @@ public final class Account extends EmailContent implements Parcelable {
         values.put(AccountColumns.SIGNATURE, mSignature);
         values.put(AccountColumns.POLICY_KEY, mPolicyKey);
         values.put(AccountColumns.PING_DURATION, mPingDuration);
+        values.put(AccountColumns.SET_SYNC_SIZE_ENABLED, mSetSyncSizeEnabled);
+        values.put(AccountColumns.SYNC_SIZE, mSyncSize);
         return values;
     }
 
@@ -889,6 +936,8 @@ public final class Account extends EmailContent implements Parcelable {
         dest.writeString(mSecuritySyncKey);
         dest.writeString(mSignature);
         dest.writeLong(mPolicyKey);
+        dest.writeInt(mSetSyncSizeEnabled);
+        dest.writeInt(mSyncSize);
 
         if (mHostAuthRecv != null) {
             dest.writeByte((byte)1);
@@ -927,6 +976,8 @@ public final class Account extends EmailContent implements Parcelable {
         mSecuritySyncKey = in.readString();
         mSignature = in.readString();
         mPolicyKey = in.readLong();
+        mSetSyncSizeEnabled = in.readInt();
+        mSyncSize = in.readInt();
 
         mHostAuthRecv = null;
         if (in.readByte() == 1) {

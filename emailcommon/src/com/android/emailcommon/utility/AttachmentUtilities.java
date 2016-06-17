@@ -398,16 +398,38 @@ public class AttachmentUtilities {
         final ContentValues cv = new ContentValues();
         final long attachmentId = attachment.mId;
         final long accountId = attachment.mAccountKey;
-        final String contentUri;
-        final long size;
+        String contentUri = null;
+        long size = attachment.mSize;
 
         try {
             ContentResolver resolver = context.getContentResolver();
-            if (attachment.mUiDestination == UIProvider.AttachmentDestination.CACHE) {
+            // As we changed the save attachment process to use the cached content first,
+            // if the cached do not exist, we will try to download it. Then under this case
+            // we need save the content to cache and external both.
+            if (attachment.mUiDestination == UIProvider.AttachmentDestination.CACHE
+                    || !Utility.attachmentExists(context, attachment)) {
                 Uri attUri = getAttachmentUri(accountId, attachmentId);
                 size = copyFile(in, resolver.openOutputStream(attUri));
                 contentUri = attUri.toString();
-            } else if (Utility.isExternalStorageMounted()) {
+
+                // Update the attachment
+                cv.put(AttachmentColumns.SIZE, size);
+                cv.put(AttachmentColumns.CONTENT_URI, contentUri);
+                cv.put(AttachmentColumns.UI_STATE, UIProvider.AttachmentState.SAVED);
+                context.getContentResolver().update(uri, cv, null, null);
+            } else {
+                // Do not use the input stream, close it.
+                in.close();
+            }
+
+            // If the destination is external, try to save the content to external.
+            if (attachment.mUiDestination == UIProvider.AttachmentDestination.EXTERNAL) {
+                if (!Utility.isExternalStorageMounted()) {
+                    LogUtils.w(Logging.LOG_TAG,
+                            "Trying to save an attachment without external storage?");
+                    throw new IOException();
+                }
+
                 if (TextUtils.isEmpty(attachment.mFileName)) {
                     // TODO: This will prevent a crash but does not surface the underlying problem
                     // to the user correctly.
@@ -419,7 +441,8 @@ public class AttachmentUtilities {
                         Environment.DIRECTORY_DOWNLOADS);
                 downloads.mkdirs();
                 File file = Utility.createUniqueFile(downloads, attachment.mFileName);
-                size = copyFile(in, new FileOutputStream(file));
+                Uri attUri = getAttachmentUri(accountId, attachmentId);
+                size = copyFile(resolver.openInputStream(attUri), new FileOutputStream(file));
                 String absolutePath = file.getAbsolutePath();
 
                 // Although the download manager can scan media files, scanning only happens
@@ -440,25 +463,17 @@ public class AttachmentUtilities {
                             false /* do not use media scanner */,
                             mimeType, absolutePath, size,
                             true /* show notification */);
-                    contentUri = dm.getUriForDownloadedFile(id).toString();
+                    LogUtils.d(Logging.LOG_TAG, "Save the att to download manager, id = %d", id);
                 } catch (final IllegalArgumentException e) {
                     LogUtils.d(LogUtils.TAG, e, "IAE from DownloadManager while saving attachment");
                     throw new IOException(e);
                 }
-            } else {
-                LogUtils.w(Logging.LOG_TAG,
-                        "Trying to save an attachment without external storage?");
-                throw new IOException();
             }
-
-            // Update the attachment
-            cv.put(AttachmentColumns.SIZE, size);
-            cv.put(AttachmentColumns.CONTENT_URI, contentUri);
-            cv.put(AttachmentColumns.UI_STATE, UIProvider.AttachmentState.SAVED);
         } catch (IOException e) {
             // Handle failures here...
+            cv.clear();
             cv.put(AttachmentColumns.UI_STATE, UIProvider.AttachmentState.FAILED);
+            context.getContentResolver().update(uri, cv, null, null);
         }
-        context.getContentResolver().update(uri, cv, null, null);
     }
 }

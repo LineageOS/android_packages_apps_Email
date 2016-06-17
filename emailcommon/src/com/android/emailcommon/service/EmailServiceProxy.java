@@ -248,6 +248,22 @@ public class EmailServiceProxy extends ServiceProxy implements IEmailService {
     }
 
     /**
+     * Request the sync adapter to load a complete message; the service MUST give higher priority
+     * to non-background loading.
+     *
+     * @param messageId the id of the message to be loaded
+     */
+    @Override
+    public void loadMore(final long messageId) throws RemoteException {
+        setTask(new ProxyTask() {
+            @Override
+            public void run() throws RemoteException {
+                mService.loadMore(messageId);
+            }
+        }, "loadMore");
+    }
+
+    /**
      * Request the service to delete the account's PIM (personal information management) data. This
      * data includes any data that is 1) associated with the account and 2) created/stored by the
      * service or its sync adapters and 3) not stored in the EmailProvider database (e.g. contact
