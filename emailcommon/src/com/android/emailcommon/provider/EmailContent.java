@@ -514,8 +514,8 @@ public abstract class EmailContent {
 
             // Assign values for each row.
             values.put(BodyColumns.MESSAGE_KEY, mMessageKey);
-            values.put(BodyColumns.HTML_CONTENT, mHtmlContent);
-            values.put(BodyColumns.TEXT_CONTENT, mTextContent);
+            values.put(BodyColumns.HTML_CONTENT, Utility.compress(mHtmlContent));
+            values.put(BodyColumns.TEXT_CONTENT, Utility.compress(mTextContent));
             values.put(BodyColumns.SOURCE_MESSAGE_KEY, mSourceKey);
             return values;
         }
@@ -1167,10 +1167,10 @@ public abstract class EmailContent {
             // Create and save the body
             ContentValues cv = new ContentValues();
             if (mText != null) {
-                cv.put(BodyColumns.TEXT_CONTENT, mText);
+                cv.put(BodyColumns.TEXT_CONTENT, Utility.compress(mText));
             }
             if (mHtml != null) {
-                cv.put(BodyColumns.HTML_CONTENT, mHtml);
+                cv.put(BodyColumns.HTML_CONTENT, Utility.compress(mHtml));
             }
             if (mSourceKey != 0) {
                 cv.put(BodyColumns.SOURCE_MESSAGE_KEY, mSourceKey);

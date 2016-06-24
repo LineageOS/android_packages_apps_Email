@@ -44,6 +44,7 @@ import com.android.mail.utils.LogUtils;
 import com.google.common.annotations.VisibleForTesting;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -62,6 +63,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 import java.util.regex.Pattern;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 public class Utility {
     public static final Charset UTF_8 = Charset.forName("UTF-8");
@@ -73,6 +76,8 @@ public class Utility {
     private static final Pattern DATE_CLEANUP_PATTERN_WRONG_TIMEZONE =
             Pattern.compile("GMT([-+]\\d{4})$");
 
+    // the temp encode for compress and decompress
+    private static final String TEMP_ENCODE = "ISO-8859-1";
     private static Handler sMainThreadHandler;
 
     /**
@@ -787,5 +792,42 @@ public class Utility {
         StrictMode.setVmPolicy(enabled
                 ? new StrictMode.VmPolicy.Builder().detectAll().build()
                 : StrictMode.VmPolicy.LAX);
+    }
+
+    public static String compress(String str) {
+        if (str == null || str.length() == 0) {
+            return str;
+        }
+        try {
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            GZIPOutputStream gzip = new GZIPOutputStream(out);
+            gzip.write(str.getBytes());
+            gzip.close();
+            return out.toString(TEMP_ENCODE);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return str;
+    }
+
+    public static String uncompress(String str) {
+        if (str == null || str.length() == 0) {
+            return str;
+        }
+        try {
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            ByteArrayInputStream in = new ByteArrayInputStream(str
+                    .getBytes(TEMP_ENCODE));
+            GZIPInputStream gunzip = new GZIPInputStream(in);
+            byte[] buffer = new byte[256];
+            int n;
+            while ((n = gunzip.read(buffer)) >= 0) {
+                out.write(buffer, 0, n);
+            }
+            return out.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return str;
     }
 }
