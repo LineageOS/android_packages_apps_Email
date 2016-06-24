@@ -132,13 +132,7 @@ public class AttachmentInfo {
 
         // Check for unacceptable attachments by filename extension
         String extension = AttachmentUtilities.getFilenameExtension(mName);
-        if (!TextUtils.isEmpty(extension) &&
-                Utility.arrayContains(AttachmentUtilities.UNACCEPTABLE_ATTACHMENT_EXTENSIONS,
-                        extension)) {
-            canView = false;
-            canSave = false;
-            denyFlags |= DENY_MALWARE;
-        }
+
 
         // Check for policy restrictions on download
         if ((flags & Attachment.FLAG_POLICY_DISALLOWS_DOWNLOAD) != 0) {
@@ -147,21 +141,8 @@ public class AttachmentInfo {
             denyFlags |= DENY_POLICY;
         }
 
-        // Check for installable attachments by filename extension
-        extension = AttachmentUtilities.getFilenameExtension(mName);
-        if (!TextUtils.isEmpty(extension) &&
-                Utility.arrayContains(AttachmentUtilities.INSTALLABLE_ATTACHMENT_EXTENSIONS,
-                        extension)) {
-            boolean sideloadEnabled;
-            sideloadEnabled = Settings.Secure.getInt(context.getContentResolver(),
-                    Settings.Secure.INSTALL_NON_MARKET_APPS, 0 /* sideload disabled */) == 1;
-            canSave &= sideloadEnabled;
-            canView = canSave;
-            canInstall = canSave;
-            if (!sideloadEnabled) {
-                denyFlags |= DENY_NOSIDELOAD;
-            }
-        }
+
+
 
         // Check for file size exceeded
         // The size limit is overridden when on a wifi connection - any size is OK
@@ -178,11 +159,7 @@ public class AttachmentInfo {
         Intent intent = getAttachmentIntent(context, 0);
         PackageManager pm = context.getPackageManager();
         List<ResolveInfo> activityList = pm.queryIntentActivities(intent, 0 /*no account*/);
-        if (activityList.isEmpty()) {
-            canView = false;
-            canSave = false;
-            denyFlags |= DENY_NOINTENT;
-        }
+
 
         mAllowView = canView;
         mAllowSave = canSave;
@@ -221,7 +198,7 @@ public class AttachmentInfo {
      * @return whether the attachment is eligible for download
      */
     public boolean isEligibleForDownload() {
-        return mAllowView || mAllowSave;
+        return mAllowView || mAllowSave || mAllowInstall;
     }
 
     @Override
