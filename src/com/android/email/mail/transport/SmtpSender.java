@@ -213,6 +213,13 @@ public class SmtpSender extends Sender {
         } catch (IOException ioe) {
             throw new MessagingException("Unable to send message", ioe);
         }
+        finally {
+           try {
+               close();
+           } catch (RuntimeException ioe) {
+               throw new RuntimeException("DEBUG #Unable to send message", ioe);
+           }
+        }
     }
 
     /**
