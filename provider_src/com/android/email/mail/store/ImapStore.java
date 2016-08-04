@@ -458,10 +458,11 @@ public class ImapStore extends Store {
             // In order to properly map INBOX -> Inbox, handle it as a special case.
             final Mailbox inbox =
                     Mailbox.restoreMailboxOfType(mContext, mAccount.mId, Mailbox.TYPE_INBOX);
-            final ImapFolder newFolder = addMailbox(
-                    mContext, mAccount.mId, inbox.mServerId, '\0', true /*selectable*/, inbox);
-            mailboxes.put(ImapConstants.INBOX, newFolder);
-
+            if (inbox != null) {
+                final ImapFolder newFolder = addMailbox(
+                        mContext, mAccount.mId, inbox.mServerId, '\0', true /*selectable*/, inbox);
+                mailboxes.put(ImapConstants.INBOX, newFolder);
+            }
             createHierarchy(mailboxes);
             saveMailboxList(mContext, mailboxes);
             return mailboxes.values().toArray(new Folder[mailboxes.size()]);
