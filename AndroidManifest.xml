@@ -680,6 +680,154 @@
                 android:resource="@xml/authenticator_eas"
                 />
         </service>
+
+        <service
+            android:name=".service.AliceAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+            >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_alice"
+                />
+        </service>
+
+        <service
+            android:name=".service.YahooAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+            >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_yahoo"
+                />
+        </service>
+
+        <service
+            android:name=".service.OutLookAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+            >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_outlook"
+                />
+        </service>
+
+        <service
+            android:name=".service.GmailAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+            >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_gmail"
+                />
+        </service>
+
+        <service
+            android:name=".service.SfrAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+            >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_sfr"
+                />
+        </service>
+
+        <service
+            android:name=".service.AolAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+            >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_aol"
+                />
+        </service>
+
+        <service
+            android:name=".service.LaposteAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+            >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_laposte"
+                />
+        </service>
+
+        <service
+            android:name=".service.NoosAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+            >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_noos"
+                />
+        </service>
+        <service
+            android:name=".service.OrangeAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+            >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_orange"
+                />
+        </service>
+        <service
+            android:name=".service.FreeAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+            >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_free"
+                />
+        </service>
         <!--Required stanza to register the EasTestAuthenticatorService with AccountManager -->
         <service
             android:name=".service.EasTestAuthenticatorService"
