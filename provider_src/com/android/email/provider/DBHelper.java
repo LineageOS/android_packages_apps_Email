@@ -48,7 +48,6 @@ import com.android.emailcommon.provider.EmailContent.Message;
 import com.android.emailcommon.provider.EmailContent.MessageColumns;
 import com.android.emailcommon.provider.EmailContent.PolicyColumns;
 import com.android.emailcommon.provider.EmailContent.QuickResponseColumns;
-import com.android.emailcommon.provider.EmailContent.SuggestedContactColumns;
 import com.android.emailcommon.provider.EmailContent.SyncColumns;
 import com.android.emailcommon.provider.HostAuth;
 import com.android.emailcommon.provider.Mailbox;
@@ -57,8 +56,6 @@ import com.android.emailcommon.provider.MessageMove;
 import com.android.emailcommon.provider.MessageStateChange;
 import com.android.emailcommon.provider.Policy;
 import com.android.emailcommon.provider.QuickResponse;
-import com.android.emailcommon.provider.SuggestedContact;
-import com.android.emailcommon.service.EmailServiceProxy;
 import com.android.emailcommon.service.LegacyPolicySet;
 import com.android.emailcommon.service.SyncWindow;
 import com.android.mail.providers.UIProvider;
@@ -187,9 +184,7 @@ public final class DBHelper {
     // Version 126: Decode address lists for To, From, Cc, Bcc and Reply-To columns in Message.
     // Version 127: Force mFlags to contain the correct flags for EAS accounts given a protocol
     //              version above 12.0
-    // Version 129: Update all IMAP INBOX mailboxes to force synchronization
-    // Version 130: Account capabilities (check EmailServiceProxy#CAPABILITY_*)
-    public static final int DATABASE_VERSION = 130;
+    public static final int DATABASE_VERSION = 127;
 
     // Any changes to the database format *must* include update-in-place code.
     // Original version: 2
@@ -202,11 +197,6 @@ public final class DBHelper {
     // Version 100 is the first Email2 version
     // Version 101: Move body contents to external files
     public static final int BODY_DATABASE_VERSION = 101;
-
-    // Any changes to the database format *must* include update-in-place code.
-    // Original version: 1
-    // Version 1: Suggested contacts
-    public static final int EXTRAS_DATABASE_VERSION = 1;
 
     /*
      * Internal helper method for index creation.
@@ -526,9 +516,7 @@ public final class DBHelper {
             + AccountColumns.SIGNATURE + " text, "
             + AccountColumns.POLICY_KEY + " integer, "
             + AccountColumns.MAX_ATTACHMENT_SIZE + " integer, "
-            + AccountColumns.PING_DURATION + " integer, "
-            + AccountColumns.AUTO_FETCH_ATTACHMENTS + " integer, "
-            + AccountColumns.CAPABILITIES + " integer default 0"
+            + AccountColumns.PING_DURATION + " integer"
             + ");";
         db.execSQL("create table " + Account.TABLE_NAME + s);
         // Deleting an account deletes associated Mailboxes and HostAuth's
@@ -697,24 +685,6 @@ public final class DBHelper {
         db.execSQL(createIndex(Body.TABLE_NAME, BodyColumns.MESSAGE_KEY));
     }
 
-    private static void createSuggestedContactTable(SQLiteDatabase db) {
-        String s = " (" + SuggestedContactColumns._ID + " integer primary key autoincrement, "
-            + SuggestedContactColumns.ACCOUNT_KEY + " integer, "
-            + SuggestedContactColumns.ADDRESS + " text, "
-            + SuggestedContactColumns.NAME + " text, "
-            + SuggestedContactColumns.DISPLAY_NAME + " text, "
-            + SuggestedContactColumns.LAST_SEEN + " integer"
-            + ");";
-        db.execSQL("create table " + SuggestedContact.TABLE_NAME + s);
-
-        // Create a unique index for account-address
-        String indexDDL = "create unique index " + SuggestedContact.TABLE_NAME.toLowerCase()
-                + "_account_address" + " on " + SuggestedContact.TABLE_NAME
-                + " (" + SuggestedContactColumns.ACCOUNT_KEY + ", "
-                + SuggestedContactColumns.ADDRESS + ");";
-        db.execSQL(indexDDL);
-    }
-
     private static void upgradeBodyToVersion5(final SQLiteDatabase db) {
         try {
             db.execSQL("drop table " + Body.TABLE_NAME);
@@ -853,29 +823,6 @@ public final class DBHelper {
         }
     }
 
-    protected static class ExtrasDatabaseHelper extends SQLiteOpenHelper {
-        final Context mContext;
-
-        ExtrasDatabaseHelper(Context context, String name) {
-            super(context, name, null, EXTRAS_DATABASE_VERSION);
-            mContext = context;
-        }
-
-        @Override
-        public void onCreate(SQLiteDatabase db) {
-            LogUtils.d(TAG, "Creating EmailProviderExtras database");
-            createSuggestedContactTable(db);
-        }
-
-        @Override
-        public void onUpgrade(final SQLiteDatabase db, final int oldVersion, final int newVersion) {
-        }
-
-        @Override
-        public void onOpen(SQLiteDatabase db) {
-        }
-    }
-
     /** Counts the number of messages in each mailbox, and updates the message count column. */
     @VisibleForTesting
     static void recalculateMessageCount(SQLiteDatabase db) {
@@ -921,9 +868,6 @@ public final class DBHelper {
         @Override
         @SuppressWarnings("deprecation")
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
-            boolean fromCM11 = false;
-
             // For versions prior to 5, delete all data
             // Versions >= 5 require that data be preserved!
             if (oldVersion < 5) {
@@ -1509,11 +1453,7 @@ public final class DBHelper {
                 }
             }
 
-            if (oldVersion == 126) {
-                fromCM11 = true;
-            }
-
-            if (oldVersion <= 124 || fromCM11) {
+            if (oldVersion <= 124) {
                 createCredentialsTable(db);
                 // Add the credentialKey column, and set it to -1 for all pre-existing hostAuths.
                 db.execSQL("alter table " + HostAuth.TABLE_NAME
@@ -1522,100 +1462,13 @@ public final class DBHelper {
                         + HostAuthColumns.CREDENTIAL_KEY + "=-1");
             }
 
-            if (oldVersion <= 125 || fromCM11) {
+            if (oldVersion <= 125) {
                 upgradeFromVersion125ToVersion126(db);
             }
 
-            if (oldVersion <= 126 || fromCM11) {
+            if (oldVersion <= 126) {
                 upgradeFromVersion126ToVersion127(mContext, db);
             }
-            if (oldVersion <= 127 && !fromCM11) {
-                try {
-                    db.execSQL("alter table " + Account.TABLE_NAME
-                            + " add column " + AccountColumns.AUTO_FETCH_ATTACHMENTS
-                            + " integer" + ";");
-                    final ContentValues cv = new ContentValues(1);
-                    cv.put(AccountColumns.AUTO_FETCH_ATTACHMENTS, 0);
-                    db.update(Account.TABLE_NAME, cv, null, null);
-                } catch (final SQLException e) {
-                    // Shouldn't be needed unless we're debugging and interrupt the process
-                    LogUtils.w(TAG, "Exception upgrading EmailProvider.db from v127 to v128", e);
-                }
-            }
-
-            // This statement changes the syncInterval column to 1 for all IMAP INBOX mailboxes.
-            // It does this by matching mailboxes against all account IDs whose receive auth is
-            // either R.string.protocol_legacy_imap, R.string.protocol_imap or "imap"
-            // It needed in order to mark
-            // We do it here to avoid the minor collisions with aosp main db
-            if (oldVersion <= 129) {
-                db.execSQL("update " + Mailbox.TABLE_NAME + " set "
-                        + MailboxColumns.SYNC_INTERVAL + "= 1 where "
-                        + MailboxColumns.TYPE + "= " + Mailbox.TYPE_INBOX + " and "
-                        + MailboxColumns.ACCOUNT_KEY + " in (select "
-                        + Account.TABLE_NAME + "." + AccountColumns._ID + " from "
-                        + Account.TABLE_NAME + " join " + HostAuth.TABLE_NAME + " where "
-                        + HostAuth.TABLE_NAME + "." + HostAuthColumns._ID + "="
-                        + Account.TABLE_NAME + "." + AccountColumns.HOST_AUTH_KEY_RECV
-                        + " and (" + HostAuth.TABLE_NAME + "."
-                        + HostAuthColumns.PROTOCOL + "='"
-                        + mContext.getString(R.string.protocol_legacy_imap) + "' or "
-                        + HostAuth.TABLE_NAME + "." + HostAuthColumns.PROTOCOL + "='"
-                        + mContext.getString(R.string.protocol_imap) + "' or "
-                        + HostAuth.TABLE_NAME + "." + HostAuthColumns.PROTOCOL + "='imap'));");
-            }
-
-            if (oldVersion <= 130) {
-                //Account capabilities (check EmailServiceProxy#CAPABILITY_*)
-                try {
-                    // Create capabilities field
-                    db.execSQL("alter table " + Account.TABLE_NAME
-                            + " add column " + AccountColumns.CAPABILITIES
-                            + " integer" + " default 0;");
-
-                    // Update all accounts with the appropriate capabilities
-                    Cursor c = db.rawQuery("select " + Account.TABLE_NAME + "."
-                            + AccountColumns._ID + ", " + HostAuth.TABLE_NAME + "."
-                            + HostAuthColumns.PROTOCOL + " from " + Account.TABLE_NAME + ", "
-                            + HostAuth.TABLE_NAME + " where " + Account.TABLE_NAME + "."
-                            + AccountColumns.HOST_AUTH_KEY_RECV + " = " + HostAuth.TABLE_NAME
-                            + "." + HostAuthColumns._ID + ";", null);
-                    if (c != null) {
-                        try {
-                            while(c.moveToNext()) {
-                                long id = c.getLong(c.getColumnIndexOrThrow(AccountColumns._ID));
-                                String protocol = c.getString(c.getColumnIndexOrThrow(
-                                        HostAuthColumns.PROTOCOL));
-
-                                int capabilities = 0;
-                                if (protocol.equals(LEGACY_SCHEME_IMAP)
-                                        || protocol.equals(LEGACY_SCHEME_EAS)) {
-                                    // Don't know yet if the imap server supports the IDLE
-                                    // capability, but since this is upgrading the account,
-                                    // just assume that all imap servers supports the push
-                                    // capability and let disable it by the IMAP service
-                                    capabilities |= EmailServiceProxy.CAPABILITY_PUSH;
-                                }
-                                final ContentValues cv = new ContentValues(1);
-                                cv.put(AccountColumns.CAPABILITIES, capabilities);
-                                db.update(Account.TABLE_NAME, cv, AccountColumns._ID + " = ?",
-                                        new String[]{String.valueOf(id)});
-                            }
-                        } finally {
-                            c.close();
-                        }
-                    }
-                } catch (final SQLException e) {
-                    // Shouldn't be needed unless we're debugging and interrupt the process
-                    LogUtils.w(TAG, "Exception upgrading EmailProvider.db from v129 to v130", e);
-                }
-            }
-
-            // Due to a bug in commit 44a064e5f16ddaac25f2acfc03c118f65bc48aec,
-            // AUTO_FETCH_ATTACHMENTS column could not be available in the Account table.
-            // Since cm12 and up doesn't use this column, we are leave as is it. In case
-            // the feature were added, then we need to create a new exception to ensure
-            // that the columns is re-added.
         }
 
         @Override

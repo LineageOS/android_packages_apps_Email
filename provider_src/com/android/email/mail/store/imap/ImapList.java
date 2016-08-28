@@ -173,7 +173,7 @@ public class ImapList extends ImapElement {
             for (ImapElement e : mList) {
                 e.destroy();
             }
-            mList.clear();
+            mList = null;
         }
         super.destroy();
     }

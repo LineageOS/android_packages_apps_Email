@@ -145,8 +145,6 @@ public abstract class EmailContent {
     // delete, or update) and is intended as an optimization for use by clients of message list
     // cursors (initially, the email AppWidget).
     public static String NOTIFIER_AUTHORITY;
-    // The sync settings changed authority is used to notify when a sync setting changed (interval)
-    public static String SYNC_SETTING_CHANGED_AUTHORITY;
     public static Uri CONTENT_URI;
     public static final String PARAMETER_LIMIT = "limit";
 
@@ -155,7 +153,6 @@ public abstract class EmailContent {
      */
     public static final String SUPPRESS_COMBINED_ACCOUNT_PARAM = "suppress_combined";
     public static Uri CONTENT_NOTIFIER_URI;
-    public static Uri CONTENT_SYNC_SETTING_CHANGED_URI;
     public static Uri PICK_TRASH_FOLDER_URI;
     public static Uri PICK_SENT_FOLDER_URI;
     public static Uri MAILBOX_NOTIFICATION_URI;
@@ -178,11 +175,8 @@ public abstract class EmailContent {
             AUTHORITY = EMAIL_PACKAGE_NAME + ".provider";
             LogUtils.d("EmailContent", "init for " + AUTHORITY);
             NOTIFIER_AUTHORITY = EMAIL_PACKAGE_NAME + ".notifier";
-            SYNC_SETTING_CHANGED_AUTHORITY = EMAIL_PACKAGE_NAME + ".sync_setting_changed";
             CONTENT_URI = Uri.parse("content://" + AUTHORITY);
             CONTENT_NOTIFIER_URI = Uri.parse("content://" + NOTIFIER_AUTHORITY);
-            CONTENT_SYNC_SETTING_CHANGED_URI = Uri.parse(
-                    "content://" + SYNC_SETTING_CHANGED_AUTHORITY);
             PICK_TRASH_FOLDER_URI = Uri.parse("content://" + AUTHORITY + "/pickTrashFolder");
             PICK_SENT_FOLDER_URI = Uri.parse("content://" + AUTHORITY + "/pickSentFolder");
             MAILBOX_NOTIFICATION_URI = Uri.parse("content://" + AUTHORITY + "/mailboxNotification");
@@ -202,7 +196,6 @@ public abstract class EmailContent {
             MessageStateChange.init();
             Body.initBody();
             Attachment.initAttachment();
-            SuggestedContact.initSuggestedContact();
         }
     }
 
@@ -1728,10 +1721,6 @@ public abstract class EmailContent {
         public static final String MAX_ATTACHMENT_SIZE = "maxAttachmentSize";
         // Current duration of the Exchange ping
         public static final String PING_DURATION = "pingDuration";
-        // Automatically fetch pop3 attachments
-        public static final String AUTO_FETCH_ATTACHMENTS = "autoFetchAttachments";
-        // Account capabilities (check EmailServiceProxy#CAPABILITY_*)
-        public static final String CAPABILITIES = "capabilities";
     }
 
     public interface QuickResponseColumns extends BaseColumns {
@@ -1861,13 +1850,5 @@ public abstract class EmailContent {
         // Tokenized strings indicating protocol specific policies enforced/unsupported
         public static final String PROTOCOL_POLICIES_ENFORCED = "protocolPoliciesEnforced";
         public static final String PROTOCOL_POLICIES_UNSUPPORTED = "protocolPoliciesUnsupported";
-    }
-
-    public interface SuggestedContactColumns extends BaseColumns {
-        static final String ACCOUNT_KEY = "accountKey";
-        static final String ADDRESS = "address";
-        static final String NAME = "name";
-        static final String DISPLAY_NAME = "display_name";
-        static final String LAST_SEEN = "last_seen";
     }
 }

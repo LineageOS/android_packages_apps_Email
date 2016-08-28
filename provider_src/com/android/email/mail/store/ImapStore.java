@@ -467,7 +467,6 @@ public class ImapStore extends Store {
             return mailboxes.values().toArray(new Folder[mailboxes.size()]);
         } catch (IOException ioe) {
             connection.close();
-            connection = null;
             throw new MessagingException("Unable to get folder list", ioe);
         } catch (AuthenticationFailedException afe) {
             // We do NOT want this connection pooled, or we will continue to send NOOP and SELECT
@@ -502,14 +501,6 @@ public class ImapStore extends Store {
             connection.destroyResponses();
         }
         bundle.putInt(EmailServiceProxy.VALIDATE_BUNDLE_RESULT_CODE, result);
-
-        // Shared capabilities (check EmailProxyServices for available shared capabilities)
-        int capabilities = 0;
-        if (connection.isCapable(ImapConnection.CAPABILITY_IDLE)) {
-            capabilities |= EmailServiceProxy.CAPABILITY_PUSH;
-        }
-        bundle.putInt(EmailServiceProxy.SETTINGS_BUNDLE_CAPABILITIES, capabilities);
-
         return bundle;
     }
 
@@ -565,7 +556,6 @@ public class ImapStore extends Store {
         while ((connection = mConnectionPool.poll()) != null) {
             try {
                 connection.setStore(this);
-                connection.setReadTimeout(MailTransport.SOCKET_READ_TIMEOUT);
                 connection.executeSimpleCommand(ImapConstants.NOOP);
                 break;
             } catch (MessagingException e) {

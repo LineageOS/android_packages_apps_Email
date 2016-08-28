@@ -42,7 +42,6 @@ import android.database.CursorWrapper;
 import android.database.DatabaseUtils;
 import android.database.MatrixCursor;
 import android.database.MergeCursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteStatement;
@@ -101,7 +100,6 @@ import com.android.emailcommon.provider.MessageMove;
 import com.android.emailcommon.provider.MessageStateChange;
 import com.android.emailcommon.provider.Policy;
 import com.android.emailcommon.provider.QuickResponse;
-import com.android.emailcommon.provider.SuggestedContact;
 import com.android.emailcommon.service.EmailServiceProxy;
 import com.android.emailcommon.service.EmailServiceStatus;
 import com.android.emailcommon.service.IEmailService;
@@ -164,7 +162,6 @@ public class EmailProvider extends ContentProvider
     // exposed for testing
     public static final String DATABASE_NAME = "EmailProvider.db";
     public static final String BODY_DATABASE_NAME = "EmailProviderBody.db";
-    public static final String EXTRAS_DATABASE_NAME = "EmailProviderExtras.db";
 
     // We don't back up to the backup database anymore, just keep this constant here so we can
     // delete the old backups and trigger a new backup to the account manager
@@ -189,11 +186,11 @@ public class EmailProvider extends ContentProvider
         "vnd.android.cursor.item/email-attachment";
 
     /** Appended to the notification URI for delete operations */
-    public static final String NOTIFICATION_OP_DELETE = "delete";
+    private static final String NOTIFICATION_OP_DELETE = "delete";
     /** Appended to the notification URI for insert operations */
-    public static final String NOTIFICATION_OP_INSERT = "insert";
+    private static final String NOTIFICATION_OP_INSERT = "insert";
     /** Appended to the notification URI for update operations */
-    public static final String NOTIFICATION_OP_UPDATE = "update";
+    private static final String NOTIFICATION_OP_UPDATE = "update";
 
     /** The query string to trigger a folder refresh. */
     protected static String QUERY_UIREFRESH = "uirefresh";
@@ -290,15 +287,11 @@ public class EmailProvider extends ContentProvider
     private static final int CREDENTIAL = CREDENTIAL_BASE;
     private static final int CREDENTIAL_ID = CREDENTIAL_BASE + 1;
 
-    private static final int SUGGESTED_CONTACT_BASE = 0xC000;
-    private static final int SUGGESTED_CONTACT= SUGGESTED_CONTACT_BASE;
-    private static final int SUGGESTED_CONTACT_ID = SUGGESTED_CONTACT_BASE + 1;
-
     private static final int BASE_SHIFT = 12;  // 12 bits to the base type: 0, 0x1000, 0x2000, etc.
 
     private static final SparseArray<String> TABLE_NAMES;
     static {
-        SparseArray<String> array = new SparseArray<String>(12);
+        SparseArray<String> array = new SparseArray<String>(11);
         array.put(ACCOUNT_BASE >> BASE_SHIFT, Account.TABLE_NAME);
         array.put(MAILBOX_BASE >> BASE_SHIFT, Mailbox.TABLE_NAME);
         array.put(MESSAGE_BASE >> BASE_SHIFT, Message.TABLE_NAME);
@@ -311,7 +304,6 @@ public class EmailProvider extends ContentProvider
         array.put(UI_BASE >> BASE_SHIFT, null);
         array.put(BODY_BASE >> BASE_SHIFT, Body.TABLE_NAME);
         array.put(CREDENTIAL_BASE >> BASE_SHIFT, Credential.TABLE_NAME);
-        array.put(SUGGESTED_CONTACT_BASE >> BASE_SHIFT, SuggestedContact.TABLE_NAME);
         TABLE_NAMES = array;
     }
 
@@ -392,7 +384,6 @@ public class EmailProvider extends ContentProvider
 
     private SQLiteDatabase mDatabase;
     private SQLiteDatabase mBodyDatabase;
-    private SQLiteDatabase mExtrasDatabase;
 
     private Handler mDelayedSyncHandler;
     private final Set<SyncRequestMessage> mDelayedSyncRequests = new HashSet<SyncRequestMessage>();
@@ -503,13 +494,6 @@ public class EmailProvider extends ContentProvider
                 String bodyFileName = mBodyDatabase.getPath();
                 mDatabase.execSQL("attach \"" + bodyFileName + "\" as BodyDatabase");
             }
-            DBHelper.ExtrasDatabaseHelper extrasHelper =
-                    new DBHelper.ExtrasDatabaseHelper(context, EXTRAS_DATABASE_NAME);
-            mExtrasDatabase = extrasHelper.getWritableDatabase();
-            if (mExtrasDatabase != null) {
-                String extrasFileName = mExtrasDatabase.getPath();
-                mDatabase.execSQL("attach \"" + extrasFileName + "\" as ExtrasDatabase");
-            }
 
             // Restore accounts if the database is corrupted...
             restoreIfNeeded(context, mDatabase);
@@ -590,10 +574,6 @@ public class EmailProvider extends ContentProvider
         if (mBodyDatabase != null) {
             mBodyDatabase.close();
             mBodyDatabase = null;
-        }
-        if (mExtrasDatabase != null) {
-            mExtrasDatabase.close();
-            mExtrasDatabase = null;
         }
     }
 
@@ -726,7 +706,6 @@ public class EmailProvider extends ContentProvider
                 case POLICY_ID:
                 case QUICK_RESPONSE_ID:
                 case CREDENTIAL_ID:
-                case SUGGESTED_CONTACT_ID:
                     id = uri.getPathSegments().get(1);
                     if (match == SYNCED_MESSAGE_ID) {
                         // For synced messages, first copy the old message to the deleted table and
@@ -748,11 +727,6 @@ public class EmailProvider extends ContentProvider
                     if (match == ACCOUNT_ID) {
                         notifyUI(UIPROVIDER_ACCOUNT_NOTIFIER, id);
                         notifyUI(UIPROVIDER_ALL_ACCOUNTS_NOTIFIER, null);
-
-                        // Delete account suggested contacts
-                        db.delete(SuggestedContact.TABLE_NAME,
-                                SuggestedContact.ACCOUNT_KEY + " = ?", new String[]{id});
-
                     } else if (match == MAILBOX_ID) {
                         notifyUIFolder(id, accountId);
                     } else if (match == ATTACHMENT_ID) {
@@ -776,13 +750,7 @@ public class EmailProvider extends ContentProvider
                 case ACCOUNT:
                 case HOSTAUTH:
                 case POLICY:
-                case SUGGESTED_CONTACT:
                     result = db.delete(tableName, selection, selectionArgs);
-                    if (match == ACCOUNT) {
-                        // TODO extract account deleted
-                        // As a fallback clean all suggested contacts
-                        db.delete(SuggestedContact.TABLE_NAME, null, null);
-                    }
                     break;
                 case MESSAGE_MOVE:
                     db.delete(MessageMove.TABLE_NAME, selection, selectionArgs);
@@ -833,7 +801,6 @@ public class EmailProvider extends ContentProvider
 
         // Notify all notifier cursors
         sendNotifierChange(getBaseNotificationUri(match), NOTIFICATION_OP_DELETE, id);
-        sendSyncSettingChanged(getBaseSyncSettingChangedUri(match), NOTIFICATION_OP_DELETE, id);
 
         // Notify all email content cursors
         notifyUI(EmailContent.CONTENT_URI, null);
@@ -882,10 +849,6 @@ public class EmailProvider extends ContentProvider
                 return "vnd.android.cursor.dir/email-hostauth";
             case HOSTAUTH_ID:
                 return "vnd.android.cursor.item/email-hostauth";
-            case SUGGESTED_CONTACT:
-                return "vnd.android.cursor.item/email-suggested-contact";
-            case SUGGESTED_CONTACT_ID:
-                return "vnd.android.cursor.dir/email-suggested-contact";
             case ATTACHMENTS_CACHED_FILE_ACCESS: {
                 SQLiteDatabase db = getDatabase(getContext());
                 Cursor c = db.query(Attachment.TABLE_NAME, MIME_TYPE_PROJECTION,
@@ -924,7 +887,7 @@ public class EmailProvider extends ContentProvider
     private static Uri UIPROVIDER_RECENT_FOLDERS_NOTIFIER;
 
     @Override
-    public Uri insert(Uri uri, final ContentValues values) {
+    public Uri insert(Uri uri, ContentValues values) {
         Log.d(TAG, "Insert: " + uri);
         final int match = findMatch(uri, "insert");
         final Context context = getContext();
@@ -972,20 +935,6 @@ public class EmailProvider extends ContentProvider
                 case DELETED_MESSAGE:
                 case MESSAGE:
                     decodeEmailAddresses(values);
-
-                    // Update the suggested contacts of this email in the background
-                    if (!MailPrefs.get(context).getSuggestedContactMode().equals(
-                            MailPrefs.SuggestedContactsMode.NONE)) {
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if(match == MESSAGE) {
-                                    addOrUpdateSuggestedContactsFromHeaders(values);
-                                }
-                            }
-                        }).start();
-                    }
-
                 case ATTACHMENT:
                 case MAILBOX:
                 case ACCOUNT:
@@ -1076,7 +1025,6 @@ public class EmailProvider extends ContentProvider
 
         // Notify all notifier cursors
         sendNotifierChange(getBaseNotificationUri(match), NOTIFICATION_OP_INSERT, id);
-        sendSyncSettingChanged(getBaseSyncSettingChangedUri(match), NOTIFICATION_OP_INSERT, id);
 
         // Notify all existing cursors.
         notifyUI(EmailContent.CONTENT_URI, null);
@@ -1285,19 +1233,14 @@ public class EmailProvider extends ContentProvider
             sURIMatcher.addURI(EmailContent.AUTHORITY, "pickSentFolder/#",
                     ACCOUNT_PICK_SENT_FOLDER);
             sURIMatcher.addURI(EmailContent.AUTHORITY, "uipurgefolder/#", UI_PURGE_FOLDER);
-
-            // Suggested Contact
-            sURIMatcher.addURI(EmailContent.AUTHORITY, "suggestedcontact", SUGGESTED_CONTACT);
-            sURIMatcher.addURI(EmailContent.AUTHORITY, "suggestedcontact/#", SUGGESTED_CONTACT_ID);
         }
     }
 
     /**
-     * The idea here is that the three databases (EmailProvider.db, EmailProviderBody.db
-     * and EmailProviderExtras.db must always be in sync (i.e. there are three database or
-     * NO databases).  This code will delete any "orphan" database, so that both will be
-     * created together.  Note that an "orphan" database will exist after either of the individual
-     * databases is deleted due to data corruption.
+     * The idea here is that the two databases (EmailProvider.db and EmailProviderBody.db must
+     * always be in sync (i.e. there are two database or NO databases).  This code will delete
+     * any "orphan" database, so that both will be created together.  Note that an "orphan" database
+     * will exist after either of the individual databases is deleted due to data corruption.
      */
     public void checkDatabases() {
         synchronized (sDatabaseLock) {
@@ -1308,32 +1251,17 @@ public class EmailProvider extends ContentProvider
             if (mBodyDatabase != null) {
                 mBodyDatabase = null;
             }
-            if (mExtrasDatabase != null) {
-                mExtrasDatabase = null;
-            }
             // Look for orphans, and delete as necessary; these must always be in sync
             final File databaseFile = getContext().getDatabasePath(DATABASE_NAME);
             final File bodyFile = getContext().getDatabasePath(BODY_DATABASE_NAME);
-            final File extrasFile = getContext().getDatabasePath(BODY_DATABASE_NAME);
 
             // TODO Make sure attachments are deleted
-            boolean mainDbExists = databaseFile.exists();
-            boolean bodyDbExists = bodyFile.exists();
-            boolean extrasDbExists = extrasFile.exists();
-            boolean extrasDbShouldExists = DBHelper.EXTRAS_DATABASE_VERSION <= 1;
-            if (mainDbExists && (!bodyDbExists || (!extrasDbExists && extrasDbShouldExists))) {
+            if (databaseFile.exists() && !bodyFile.exists()) {
                 LogUtils.w(TAG, "Deleting orphaned EmailProvider database...");
                 getContext().deleteDatabase(DATABASE_NAME);
-            }
-            if (bodyDbExists && (!mainDbExists || (!extrasDbExists && extrasDbShouldExists))) {
+            } else if (bodyFile.exists() && !databaseFile.exists()) {
                 LogUtils.w(TAG, "Deleting orphaned EmailProviderBody database...");
                 getContext().deleteDatabase(BODY_DATABASE_NAME);
-            }
-            if (extrasDbExists && (!mainDbExists || !bodyDbExists)) {
-                if (DBHelper.EXTRAS_DATABASE_VERSION > 1) {
-                    LogUtils.w(TAG, "Deleting orphaned EmailProviderExtras database...");
-                    getContext().deleteDatabase(EXTRAS_DATABASE_NAME);
-                }
             }
         }
     }
@@ -1363,7 +1291,6 @@ public class EmailProvider extends ContentProvider
                     case HOSTAUTH_ID:
                     case CREDENTIAL_ID:
                     case POLICY_ID:
-                    case SUGGESTED_CONTACT_ID:
                         return new MatrixCursorWithCachedColumns(projection, 0);
                 }
             }
@@ -1536,15 +1463,6 @@ public class EmailProvider extends ContentProvider
                     // All quick responses for the given account
                     id = uri.getPathSegments().get(2);
                     c = uiQuickResponseAccount(projection, id);
-                    break;
-                case SUGGESTED_CONTACT:
-                    c = db.query(tableName, projection,
-                            selection, selectionArgs, null, null, sortOrder, limit);
-                    break;
-                case SUGGESTED_CONTACT_ID:
-                    id = uri.getPathSegments().get(1);
-                    c = db.query(tableName, projection, whereWithId(id, selection),
-                            selectionArgs, null, null, sortOrder, limit);
                     break;
                 case ATTACHMENTS_CACHED_FILE_ACCESS:
                     if (projection == null) {
@@ -1820,8 +1738,6 @@ public class EmailProvider extends ContentProvider
                 extras.putBoolean(ContentResolver.SYNC_EXTRAS_DO_NOT_RETRY, true);
                 extras.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
                 ContentResolver.requestSync(amAccount, EmailContent.AUTHORITY, extras);
-                LogUtils.i(TAG, "requestSync EmailProvider restoreAccounts %s, %s",
-                        account.toString(), extras.toString());
                 restoredCount++;
             }
         }
@@ -1928,7 +1844,7 @@ public class EmailProvider extends ContentProvider
     private static final int INDEX_SYNC_KEY = 2;
 
     /**
-     * Restart push if we need it.
+     * Restart push if we need it (currently only for Exchange accounts).
      * @param context A {@link Context}.
      * @param db The {@link SQLiteDatabase}.
      * @param id The id of the thing we're looking for.
@@ -1941,13 +1857,9 @@ public class EmailProvider extends ContentProvider
             try {
                 if (c.moveToFirst()) {
                     final String protocol = c.getString(INDEX_PROTOCOL);
-                    final String syncKey = c.getString(INDEX_SYNC_KEY);
-                    final boolean supportsPush =
-                            context.getString(R.string.protocol_eas).equals(protocol) ||
-                            context.getString(R.string.protocol_legacy_imap).equals(protocol);
-
-                    // Only restart push for EAS or IMAP accounts that have completed initial sync.
-                    if (supportsPush && !EmailContent.isInitialSyncKey(syncKey)) {
+                    // Only restart push for EAS accounts that have completed initial sync.
+                    if (context.getString(R.string.protocol_eas).equals(protocol) &&
+                            !EmailContent.isInitialSyncKey(c.getString(INDEX_SYNC_KEY))) {
                         final String emailAddress = c.getString(INDEX_EMAIL_ADDRESS);
                         final android.accounts.Account account =
                                 getAccountManagerAccount(context, emailAddress, protocol);
@@ -2018,7 +1930,6 @@ public class EmailProvider extends ContentProvider
         final SQLiteDatabase db = getDatabase(context);
         final int table = match >> BASE_SHIFT;
         int result;
-        boolean syncSettingChanged = false;
 
         // We do NOT allow setting of unreadCount/messageCount via the provider
         // These columns are maintained via triggers
@@ -2168,14 +2079,6 @@ public class EmailProvider extends ContentProvider
                         }
                     } else if (match == MESSAGE_ID) {
                         db.execSQL(UPDATED_MESSAGE_DELETE + id);
-                    } else if (match == MAILBOX_ID) {
-                        if (values.containsKey(MailboxColumns.SYNC_INTERVAL)) {
-                            syncSettingChanged = true;
-                        }
-                    } else if (match == ACCOUNT_ID) {
-                        if (values.containsKey(AccountColumns.SYNC_INTERVAL)) {
-                            syncSettingChanged = true;
-                        }
                     }
                     result = db.update(tableName, values, whereWithId(id, selection),
                             selectionArgs);
@@ -2243,22 +2146,7 @@ public class EmailProvider extends ContentProvider
                     updateValues.remove(BodyColumns.HTML_CONTENT);
                     updateValues.remove(BodyColumns.TEXT_CONTENT);
 
-                    // Since we removed the html and text values from the update operation,
-                    // db.update() can fail because updateValues is empty. Just to a safe check
-                    // before continue, and in case check if we found at least the selection
-                    // record in db and fill the result variable for later hack check.
-                    if (updateValues.size() == 0) {
-                        final String proj[] = {BaseColumns._ID};
-                        final Cursor c = db.query(Body.TABLE_NAME, proj, selection, selectionArgs,
-                                null, null, null);
-                        try {
-                            result = c.getCount();
-                        } finally {
-                            c.close();
-                        }
-                    } else {
-                        result = db.update(tableName, updateValues, selection, selectionArgs);
-                    }
+                    result = db.update(tableName, updateValues, selection, selectionArgs);
 
                     if (result == 0 && selection.equals(Body.SELECTION_BY_MESSAGE_KEY)) {
                         // TODO: This is a hack. Notably, the selection equality test above
@@ -2325,10 +2213,6 @@ public class EmailProvider extends ContentProvider
                                 TextUtils.isEmpty(values.getAsString(AttachmentColumns.LOCATION))) {
                             LogUtils.w(TAG, new Throwable(), "attachment with blank location");
                         }
-                    } else if (match == MAILBOX) {
-                        if (values.containsKey(MailboxColumns.SYNC_INTERVAL)) {
-                            syncSettingChanged = true;
-                        }
                     }
                     result = db.update(tableName, values, selection, selectionArgs);
                     break;
@@ -2350,10 +2234,6 @@ public class EmailProvider extends ContentProvider
         // Notify all notifier cursors if some records where changed in the database
         if (result > 0) {
             sendNotifierChange(getBaseNotificationUri(match), NOTIFICATION_OP_UPDATE, id);
-            if (syncSettingChanged) {
-                sendSyncSettingChanged(getBaseSyncSettingChangedUri(match),
-                        NOTIFICATION_OP_UPDATE, id);
-            }
             notifyUI(notificationUri, null);
         }
         return result;
@@ -2584,21 +2464,6 @@ public class EmailProvider extends ContentProvider
         return baseUri;
     }
 
-    private static Uri getBaseSyncSettingChangedUri(int match) {
-        Uri baseUri = null;
-        switch (match) {
-            case ACCOUNT:
-            case ACCOUNT_ID:
-                baseUri = Account.SYNC_SETTING_CHANGED_URI;
-                break;
-            case MAILBOX:
-            case MAILBOX_ID:
-                baseUri = Mailbox.SYNC_SETTING_CHANGED_URI;
-                break;
-        }
-        return baseUri;
-    }
-
     /**
      * Sends a change notification to any cursors observers of the given base URI. The final
      * notification URI is dynamically built to contain the specified information. It will be
@@ -2634,25 +2499,6 @@ public class EmailProvider extends ContentProvider
         // We want to send the message list changed notification if baseUri is Message.NOTIFIER_URI.
         if (baseUri.equals(Message.NOTIFIER_URI)) {
             sendMessageListDataChangedNotification();
-        }
-    }
-
-    private void sendSyncSettingChanged(Uri baseUri, String op, String id) {
-        if (baseUri == null) return;
-
-        // Append the operation, if specified
-        if (op != null) {
-            baseUri = baseUri.buildUpon().appendEncodedPath(op).build();
-        }
-
-        long longId = 0L;
-        try {
-            longId = Long.valueOf(id);
-        } catch (NumberFormatException ignore) {}
-        if (longId > 0) {
-            notifyUI(baseUri, id);
-        } else {
-            notifyUI(baseUri, null);
         }
     }
 
@@ -2944,7 +2790,6 @@ public class EmailProvider extends ContentProvider
             + " WHEN " + Mailbox.TYPE_SENT    + " THEN " + R.drawable.ic_drawer_sent_24dp
             + " WHEN " + Mailbox.TYPE_TRASH   + " THEN " + R.drawable.ic_drawer_trash_24dp
             + " WHEN " + Mailbox.TYPE_STARRED + " THEN " + R.drawable.ic_drawer_starred_24dp
-            + " WHEN " + Mailbox.TYPE_JUNK    + " THEN " + R.drawable.ic_drawer_junk_24dp
             + " ELSE " + R.drawable.ic_drawer_folder_24dp + " END";
 
     /**
@@ -4034,8 +3879,7 @@ public class EmailProvider extends ContentProvider
                 values[i] = combinedUriString("uifolder", idString);
             } else if (column.equals(UIProvider.FolderColumns.NAME)) {
                 // default empty string since all of these should use resource strings
-                values[i] = getFolderDisplayName(
-                        getFolderTypeFromMailboxType(mailboxType), "", false);
+                values[i] = getFolderDisplayName(getFolderTypeFromMailboxType(mailboxType), "");
             } else if (column.equals(UIProvider.FolderColumns.HAS_CHILDREN)) {
                 values[i] = 0;
             } else if (column.equals(UIProvider.FolderColumns.CAPABILITIES)) {
@@ -4519,7 +4363,7 @@ public class EmailProvider extends ContentProvider
      */
     private Cursor getUiFolderCursorRowFromMailboxCursorRow(
             MatrixCursor mc, int projectionLength, Cursor mailboxCursor,
-            int nameColumn, int typeColumn, int parentUriColumn) {
+            int nameColumn, int typeColumn) {
         final MatrixCursor.RowBuilder builder = mc.newRow();
         for (int i = 0; i < projectionLength; i++) {
             // If we are at the name column, get the type
@@ -4531,9 +4375,7 @@ public class EmailProvider extends ContentProvider
                 // type has also been requested. If not, this will
                 // error in unknown ways.
                 final int type = mailboxCursor.getInt(typeColumn);
-                final boolean rootFolder = parentUriColumn == -1 ||
-                        TextUtils.isEmpty(mailboxCursor.getString(parentUriColumn));
-                builder.add(getFolderDisplayName(type, mailboxCursor.getString(i), rootFolder));
+                builder.add(getFolderDisplayName(type, mailboxCursor.getString(i)));
             } else {
                 builder.add(mailboxCursor.getString(i));
             }
@@ -4569,7 +4411,6 @@ public class EmailProvider extends ContentProvider
         final int idColumn = inputCursor.getColumnIndex(BaseColumns._ID);
         final int typeColumn = inputCursor.getColumnIndex(UIProvider.FolderColumns.TYPE);
         final int nameColumn = inputCursor.getColumnIndex(UIProvider.FolderColumns.NAME);
-        final int parentUriColumn = inputCursor.getColumnIndex(UIProvider.FolderColumns.PARENT_URI);
         final int capabilitiesColumn =
                 inputCursor.getColumnIndex(UIProvider.FolderColumns.CAPABILITIES);
         final int persistentIdColumn =
@@ -4587,7 +4428,6 @@ public class EmailProvider extends ContentProvider
         while (inputCursor.moveToNext()) {
             final MatrixCursor.RowBuilder builder = outputCursor.newRow();
             final int folderType = inputCursor.getInt(typeColumn);
-            final boolean rootFolder = TextUtils.isEmpty(inputCursor.getString(parentUriColumn));
             for (int i = 0; i < uiProjection.length; i++) {
                 // Find the index in the input cursor corresponding the column requested in the
                 // output projection.
@@ -4602,7 +4442,7 @@ public class EmailProvider extends ContentProvider
                 final boolean remapped;
                 if (nameColumn == index) {
                     // Remap folder name for system folders.
-                    builder.add(getFolderDisplayName(folderType, value, rootFolder));
+                    builder.add(getFolderDisplayName(folderType, value));
                     remapped = true;
                 } else if (capabilitiesColumn == index) {
                     // Get the correct capabilities for this folder.
@@ -4652,15 +4492,9 @@ public class EmailProvider extends ContentProvider
      * @param folderType {@link UIProvider.FolderType} value for the folder
      * @param defaultName a {@link String} to use in case the {@link UIProvider.FolderType}
      *                    provided is not a system folder.
-     * @param rootFolder whether the folder is a root folder
      * @return a {@link String} to use as the display name for the folder
      */
-    private String getFolderDisplayName(int folderType, String defaultName, boolean rootFolder) {
-        if (!rootFolder && !TextUtils.isEmpty(defaultName)) {
-            // If the folder is not a root, we must use the provided folder name
-            return defaultName;
-        }
-
+    private String getFolderDisplayName(int folderType, String defaultName) {
         final int resId;
         switch (folderType) {
             case UIProvider.FolderType.INBOX:
@@ -4915,15 +4749,12 @@ public class EmailProvider extends ContentProvider
                     final List<String> projectionList = Arrays.asList(uiProjection);
                     final int nameColumn = projectionList.indexOf(UIProvider.FolderColumns.NAME);
                     final int typeColumn = projectionList.indexOf(UIProvider.FolderColumns.TYPE);
-                    final int parentUriColumn =
-                            projectionList.indexOf(UIProvider.FolderColumns.PARENT_URI);
                     if (c.moveToFirst()) {
                         final Cursor closeThis = c;
                         try {
                             c = getUiFolderCursorRowFromMailboxCursorRow(
                                     new MatrixCursorWithCachedColumns(uiProjection),
-                                    uiProjection.length, c, nameColumn,
-                                    typeColumn, parentUriColumn);
+                                    uiProjection.length, c, nameColumn, typeColumn);
                         } finally {
                             closeThis.close();
                         }
@@ -6010,7 +5841,7 @@ public class EmailProvider extends ContentProvider
         extras.putString(EmailServiceStatus.SYNC_EXTRAS_CALLBACK_METHOD,
                 SYNC_STATUS_CALLBACK_METHOD);
         ContentResolver.requestSync(account, EmailContent.AUTHORITY, extras);
-        LogUtils.i(TAG, "requestSync EmailProvider restartPush %s, %s", account.toString(),
+        LogUtils.i(TAG, "requestSync EmailProvider startSync %s, %s", account.toString(),
                 extras.toString());
     }
 
@@ -6255,79 +6086,6 @@ public class EmailProvider extends ContentProvider
             final String replyTo = values.getAsString(Message.MessageColumns.REPLY_TO_LIST);
             values.put(Message.MessageColumns.REPLY_TO_LIST,
                     Address.fromHeaderToString(replyTo));
-        }
-    }
-
-    /**
-     * This method extract the address of a new email to insert in the database
-     * and extract and update he suggested contact table with this addresses.
-     */
-    private void addOrUpdateSuggestedContactsFromHeaders(ContentValues values) {
-        List<Address> suggestedContacts = new ArrayList<>();
-
-        Long accountId = values.getAsLong(MessageColumns.ACCOUNT_KEY);
-        if (accountId == null) {
-            // Ignore the entire content. We don't have enough information to
-            // update the suggested contact
-            return;
-        }
-
-        if (values.containsKey(Message.MessageColumns.TO_LIST)) {
-            final String to = values.getAsString(Message.MessageColumns.TO_LIST);
-            suggestedContacts.addAll(Arrays.asList(Address.fromHeader(to)));
-        }
-
-        if (values.containsKey(Message.MessageColumns.CC_LIST)) {
-            final String cc = values.getAsString(Message.MessageColumns.CC_LIST);
-            suggestedContacts.addAll(Arrays.asList(Address.fromHeader(cc)));
-        }
-
-        if (values.containsKey(Message.MessageColumns.BCC_LIST)) {
-            final String bcc = values.getAsString(Message.MessageColumns.BCC_LIST);
-            suggestedContacts.addAll(Arrays.asList(Address.fromHeader(bcc)));
-        }
-
-        if (values.containsKey(Message.MessageColumns.REPLY_TO_LIST)) {
-            final String replyTo = values.getAsString(Message.MessageColumns.REPLY_TO_LIST);
-            suggestedContacts.addAll(Arrays.asList(Address.fromHeader(replyTo)));
-        }
-
-        // Update or insert every suggested contact
-        for (Address suggestedContact : suggestedContacts) {
-            addOrUpdateSuggestedContact(accountId, suggestedContact);
-        }
-    }
-
-    private void addOrUpdateSuggestedContact(long accountId, Address address) {
-        try {
-            // Update first the suggested contact, and if not exists add a new row
-            if (address == null) {
-                return;
-            }
-
-            // Update
-            String emailAddress = address.getAddress().toLowerCase();
-            String where = SuggestedContact.ACCOUNT_KEY + " = ? and "
-                    + SuggestedContact.ADDRESS + " = ?";
-            String[] args = {String.valueOf(accountId), emailAddress};
-            ContentValues values = new ContentValues();
-            values.put(SuggestedContact.NAME, TextUtils.isEmpty(address.getPersonal())
-                    ? emailAddress : address.getPersonal());
-            values.put(SuggestedContact.DISPLAY_NAME, address.toString());
-            values.put(SuggestedContact.LAST_SEEN, System.currentTimeMillis());
-            long affectedRecords = mDatabase.update(
-                    SuggestedContact.TABLE_NAME, values, where, args);
-
-            // Insert
-            if (affectedRecords == 0) {
-                values.put(SuggestedContact.ACCOUNT_KEY, accountId);
-                values.put(SuggestedContact.ADDRESS, emailAddress);
-                mDatabase.insertOrThrow(SuggestedContact.TABLE_NAME, null, values);
-            }
-
-        } catch (SQLException ex) {
-            Log.w(TAG, "Failed to insert/update suggested contact address: "
-                    + String.valueOf(address), ex);
         }
     }
 

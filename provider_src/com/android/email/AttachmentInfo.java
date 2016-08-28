@@ -180,6 +180,7 @@ public class AttachmentInfo {
         List<ResolveInfo> activityList = pm.queryIntentActivities(intent, 0 /*no account*/);
         if (activityList.isEmpty()) {
             canView = false;
+            canSave = false;
             denyFlags |= DENY_NOINTENT;
         }
 

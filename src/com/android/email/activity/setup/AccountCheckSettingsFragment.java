@@ -347,8 +347,6 @@ public class AccountCheckSettingsFragment extends Fragment {
                     if (isCancelled()) return null;
                     LogUtils.d(Logging.LOG_TAG, "Begin auto-discover for %s", mCheckEmail);
                     publishProgress(STATE_CHECK_AUTODISCOVER);
-
-                    mSetupData.setAutodiscover(false);
                     final Store store = Store.getInstance(mAccount, mContext);
                     final Bundle result = store.autoDiscover(mContext, mCheckEmail, mCheckPassword);
                     // Result will be one of:
@@ -359,21 +357,20 @@ public class AccountCheckSettingsFragment extends Fragment {
                     if (result == null) {
                         return new AutoDiscoverResults(false, null);
                     }
-                    int errorCode = result.getInt(
-                            EmailServiceProxy.AUTO_DISCOVER_BUNDLE_MESSAGING_ERROR_CODE);
+                    int errorCode =
+                            result.getInt(EmailServiceProxy.AUTO_DISCOVER_BUNDLE_ERROR_CODE);
                     if (errorCode == MessagingException.AUTODISCOVER_AUTHENTICATION_FAILED) {
                         return new AutoDiscoverResults(true, null);
-                    } else if (errorCode != MessagingException.AUTODISCOVER_AUTHENTICATION_RESULT) {
+                    } else if (errorCode != MessagingException.NO_ERROR) {
                         return new AutoDiscoverResults(false, null);
                     } else {
                         final HostAuthCompat hostAuthCompat =
                             result.getParcelable(EmailServiceProxy.AUTO_DISCOVER_BUNDLE_HOST_AUTH);
-                        Account account = mSetupData.getAccount();
+                        HostAuth serverInfo = null;
                         if (hostAuthCompat != null) {
-                            account.mHostAuthRecv = hostAuthCompat.toHostAuth();
+                            serverInfo = hostAuthCompat.toHostAuth();
                         }
-                        mSetupData.setAutodiscover(true);
-                        return new AutoDiscoverResults(false, account.mHostAuthRecv);
+                        return new AutoDiscoverResults(false, serverInfo);
                     }
                 }
 
@@ -387,10 +384,6 @@ public class AccountCheckSettingsFragment extends Fragment {
                     if (bundle == null) {
                         return new MessagingException(MessagingException.UNSPECIFIED_EXCEPTION);
                     }
-
-                    // Save account protocol and capabilities
-                    mAccount.mCapabilities = bundle.getInt(
-                            EmailServiceProxy.SETTINGS_BUNDLE_CAPABILITIES, 0);
                     mAccount.mProtocolVersion = bundle.getString(
                             EmailServiceProxy.VALIDATE_BUNDLE_PROTOCOL_VERSION);
                     int resultCode = bundle.getInt(EmailServiceProxy.VALIDATE_BUNDLE_RESULT_CODE);
