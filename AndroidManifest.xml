@@ -80,7 +80,7 @@
         android:name=".EmailApplication"
         android:icon="@mipmap/ic_launcher_mail"
         android:label="@string/app_name"
-        android:requiredAccountType="com.android.exchange,com.android.email.imap,com.android.email.pop3,com.android.email.legacy.imap"
+        android:requiredAccountType="com.android.exchange,com.android.email"
         android:theme="@style/UnifiedEmailTheme"
         android:hardwareAccelerated="true"
         android:allowBackup="false"
@@ -448,23 +448,13 @@
 
         <receiver
             android:name=".service.EmailBroadcastReceiver"
-            android:enabled="true"
-            android:permission="com.android.email.permission.ACCESS_PROVIDER">
+            android:enabled="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.DEVICE_STORAGE_LOW" />
                 <action android:name="android.intent.action.DEVICE_STORAGE_OK" />
                 <action android:name="android.intent.action.LOCALE_CHANGED"/>
                 <action android:name="android.accounts.LOGIN_ACCOUNTS_CHANGED" />
-                <action android:name="org.codeaurora.email.intent.action.MAIL_SERVICE_WAKEUP" />
-                <action
-                    android:name="org.codeaurora.email.intent.action.MAIL_SERVICE_DELETE_MESSAGE" />
-                <action
-                    android:name="org.codeaurora.email.intent.action.MAIL_SERVICE_MOVE_MESSAGE" />
-                <action
-                    android:name="org.codeaurora.email.intent.action.MAIL_SERVICE_MESSAGE_READ" />
-                <action
-                    android:name="org.codeaurora.email.intent.action.MAIL_SERVICE_SEND_PENDING" />
             </intent-filter>
             <!-- To handle new message notifications -->
             <intent-filter>
@@ -591,14 +581,6 @@
             <intent-filter>
                 <action
                     android:name="com.android.email.IMAP_INTENT" />
-                <action
-                    android:name="org.codeaurora.email.intent.action.MAIL_SERVICE_DELETE_MESSAGE" />
-                <action
-                    android:name="org.codeaurora.email.intent.action.MAIL_SERVICE_MOVE_MESSAGE" />
-                <action
-                    android:name="org.codeaurora.email.intent.action.MAIL_SERVICE_MESSAGE_READ" />
-                <action
-                    android:name="org.codeaurora.email.intent.action.MAIL_SERVICE_SEND_PENDING" />
             </intent-filter>
         </service>
 

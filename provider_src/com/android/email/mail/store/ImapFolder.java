@@ -557,8 +557,7 @@ class ImapFolder extends Folder {
     public Message[] getMessages(long startDate, long endDate, MessageRetrievalListener listener)
             throws MessagingException {
         String [] uids = null;
-        String command = generateDateRangeCommand(startDate, endDate, false)
-                + " NOT DELETED";
+        String command = generateDateRangeCommand(startDate, endDate, false);
         LogUtils.d(Logging.LOG_TAG, "getMessages dateRange " + command.toString());
 
         try {
@@ -571,8 +570,7 @@ class ImapFolder extends Folder {
             // See b/11183568
             LogUtils.d(Logging.LOG_TAG, e, "query failed %s, trying alternate",
                     command.toString());
-            command = generateDateRangeCommand(startDate, endDate, true)
-                    + " NOT DELETED";
+            command = generateDateRangeCommand(startDate, endDate, true);
             try {
                 uids = searchForUids(command, true);
             } catch (ImapException e2) {

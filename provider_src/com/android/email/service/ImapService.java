@@ -74,8 +74,8 @@ import java.util.List;
 public class ImapService extends Service {
     // TODO get these from configurations or settings.
     private static final long QUICK_SYNC_WINDOW_MILLIS = DateUtils.DAY_IN_MILLIS;
+    private static final long FULL_SYNC_WINDOW_MILLIS = 7 * DateUtils.DAY_IN_MILLIS;
     private static final long FULL_SYNC_INTERVAL_MILLIS = 4 * DateUtils.HOUR_IN_MILLIS;
-    private static final String TAG = "ImapService";
 
     // The maximum number of messages to fetch in a single command.
     private static final int MAX_MESSAGES_TO_FETCH = 500;
@@ -108,20 +108,6 @@ public class ImapService extends Service {
      * We write this into the serverId field of messages that will never be upsynced.
      */
     private static final String LOCAL_SERVERID_PREFIX = "Local-";
-    private static final String ACTION_CHECK_MAIL =
-            "org.codeaurora.email.intent.action.MAIL_SERVICE_WAKEUP";
-    private static final String EXTRA_ACCOUNT = "org.codeaurora.email.intent.extra.ACCOUNT";
-    private static final String ACTION_DELETE_MESSAGE =
-            "org.codeaurora.email.intent.action.MAIL_SERVICE_DELETE_MESSAGE";
-    private static final String ACTION_MOVE_MESSAGE =
-            "org.codeaurora.email.intent.action.MAIL_SERVICE_MOVE_MESSAGE";
-    private static final String ACTION_MESSAGE_READ =
-            "org.codeaurora.email.intent.action.MAIL_SERVICE_MESSAGE_READ";
-    private static final String ACTION_SEND_PENDING_MAIL =
-            "org.codeaurora.email.intent.action.MAIL_SERVICE_SEND_PENDING";
-    private static final String EXTRA_MESSAGE_ID = "org.codeaurora.email.intent.extra.MESSAGE_ID";
-    private static final String EXTRA_MESSAGE_INFO =
-            "org.codeaurora.email.intent.extra.MESSAGE_INFO";
 
     private static String sMessageDecodeErrorString;
 
@@ -143,105 +129,6 @@ public class ImapService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
-        final String action = intent.getAction();
-        if (Logging.LOGD) {
-            LogUtils.d(Logging.LOG_TAG, "Action: ", action);
-        }
-        final long accountId = intent.getLongExtra(EXTRA_ACCOUNT, -1);
-        Context context = getApplicationContext();
-        if (ACTION_CHECK_MAIL.equals(action)) {
-            final long inboxId = Mailbox.findMailboxOfType(context, accountId,
-                    Mailbox.TYPE_INBOX);
-            if (Logging.LOGD) {
-                LogUtils.d(Logging.LOG_TAG, "accountId is " + accountId);
-                LogUtils.d(Logging.LOG_TAG, "inboxId is " + inboxId);
-            }
-            if (accountId <= -1 || inboxId <= -1 ) {
-                return START_NOT_STICKY;
-            }
-            mBinder.init(context);
-            mBinder.requestSync(inboxId,true,0);
-        } else if (ACTION_DELETE_MESSAGE.equals(action)) {
-            final long messageId = intent.getLongExtra(EXTRA_MESSAGE_ID, -1);
-            if (Logging.LOGD) {
-                LogUtils.d(Logging.LOG_TAG, "action: Delete Message mail");
-                LogUtils.d(Logging.LOG_TAG, "action: delmsg " + messageId);
-            }
-            if (accountId <= -1 || messageId <= -1 ) {
-                return START_NOT_STICKY;
-            }
-            Store remoteStore = null;
-            try {
-                remoteStore = Store.getInstance(Account.getAccountForMessageId(context, messageId),
-                        context);
-                mBinder.init(context);
-                mBinder.deleteMessage(messageId);
-                processPendingActionsSynchronous(context,
-                        Account.getAccountForMessageId(context, messageId), remoteStore, true);
-            } catch (Exception e) {
-                LogUtils.d(Logging.LOG_TAG, "RemoteException " + e);
-            }
-        } else if (ACTION_MESSAGE_READ.equals(action)) {
-            final long messageId = intent.getLongExtra(EXTRA_MESSAGE_ID, -1);
-            final int flagRead = intent.getIntExtra(EXTRA_MESSAGE_INFO, 0);
-            if (Logging.LOGD) {
-                LogUtils.d(Logging.LOG_TAG, "action: Message Mark Read or UnRead ");
-                LogUtils.d(Logging.LOG_TAG, "action: delmsg " + messageId);
-            }
-            if (accountId <= -1 || messageId <= -1 ) {
-                return START_NOT_STICKY;
-            }
-            Store remoteStore = null;
-            try {
-                mBinder.init(context);
-                mBinder.setMessageRead(messageId, (flagRead == 1)? true:false);
-                remoteStore = Store.getInstance(Account.getAccountForMessageId(context, messageId),
-                        context);
-                processPendingActionsSynchronous(context,
-                        Account.getAccountForMessageId(context, messageId), remoteStore, true);
-            } catch (Exception e){
-                LogUtils.d(Logging.LOG_TAG, "RemoteException " + e);
-            }
-        } else if (ACTION_MOVE_MESSAGE.equals(action)) {
-            final long messageId = intent.getLongExtra(EXTRA_MESSAGE_ID, -1);
-            final int  mailboxType = intent.getIntExtra(EXTRA_MESSAGE_INFO, Mailbox.TYPE_INBOX);
-            final long mailboxId = Mailbox.findMailboxOfType(context, accountId, mailboxType);
-            if (Logging.LOGD) {
-                LogUtils.d(Logging.LOG_TAG, "action:  Move Message mail");
-                LogUtils.d(Logging.LOG_TAG, "action: movemsg " + messageId +
-                        "mailbox: " + mailboxType + "accountId: " + accountId + "mailboxId: "
-                        + mailboxId);
-            }
-            if (accountId <= -1 || messageId <= -1 || mailboxId <= -1){
-                return START_NOT_STICKY;
-            }
-            Store remoteStore = null;
-            try {
-                mBinder.init(context);
-                mBinder.MoveMessages(messageId, mailboxId);
-                remoteStore = Store.getInstance(Account.getAccountForMessageId(context, messageId),
-                        context);
-                processPendingActionsSynchronous(context,
-                        Account.getAccountForMessageId(context, messageId),remoteStore, true);
-            } catch (Exception e){
-                LogUtils.d(Logging.LOG_TAG, "RemoteException " + e);
-            }
-        } else if (ACTION_SEND_PENDING_MAIL.equals(action)) {
-            if (Logging.LOGD) {
-                LogUtils.d(Logging.LOG_TAG, "action: Send Pending Mail " + accountId);
-            }
-            if (accountId <= -1 ) {
-                 return START_NOT_STICKY;
-            }
-            try {
-                mBinder.init(context);
-                mBinder.sendMail(accountId);
-            } catch (Exception e) {
-                LogUtils.e(Logging.LOG_TAG, "RemoteException " + e);
-            }
-        }
-
         return Service.START_STICKY;
     }
 
@@ -502,12 +389,38 @@ public class ImapService extends Service {
         final boolean fullSync = (uiRefresh || loadMore ||
                 timeSinceLastFullSync >= FULL_SYNC_INTERVAL_MILLIS || timeSinceLastFullSync < 0);
 
-        if (fullSync) {
-            int syncLookBack = mailbox.mSyncLookback == SyncWindow.SYNC_WINDOW_ACCOUNT
-                    ? account.mSyncLookback
-                    : mailbox.mSyncLookback;
-            endDate = System.currentTimeMillis() -
-                    (SyncWindow.toDays(syncLookBack) * DateUtils.DAY_IN_MILLIS);
+        if (account.mSyncLookback == SyncWindow.SYNC_WINDOW_ALL) {
+            // This is really for testing. There is no UI that allows setting the sync window for
+            // IMAP, but it can be set by sending a special intent to AccountSetupFinal activity.
+            endDate = 0;
+        } else if (fullSync) {
+            // Find the oldest message in the local store. We need our time window to include
+            // all messages that are currently present locally.
+            endDate = System.currentTimeMillis() - FULL_SYNC_WINDOW_MILLIS;
+            Cursor localOldestCursor = null;
+            try {
+                // b/11520812 Ignore message with timestamp = 0 (which includes NULL)
+                localOldestCursor = resolver.query(EmailContent.Message.CONTENT_URI,
+                        OldestTimestampInfo.PROJECTION,
+                        EmailContent.MessageColumns.ACCOUNT_KEY + "=?" + " AND " +
+                                MessageColumns.MAILBOX_KEY + "=? AND " +
+                                MessageColumns.TIMESTAMP + "!=0",
+                        new String[] {String.valueOf(account.mId), String.valueOf(mailbox.mId)},
+                        null);
+                if (localOldestCursor != null && localOldestCursor.moveToFirst()) {
+                    long oldestLocalMessageDate = localOldestCursor.getLong(
+                            OldestTimestampInfo.COLUMN_OLDEST_TIMESTAMP);
+                    if (oldestLocalMessageDate > 0) {
+                        endDate = Math.min(endDate, oldestLocalMessageDate);
+                        LogUtils.d(
+                                Logging.LOG_TAG, "oldest local message " + oldestLocalMessageDate);
+                    }
+                }
+            } finally {
+                if (localOldestCursor != null) {
+                    localOldestCursor.close();
+                }
+            }
             LogUtils.d(Logging.LOG_TAG, "full sync: original window: now - " + endDate);
         } else {
             // We are doing a frequent, quick sync. This only syncs a small time window, so that

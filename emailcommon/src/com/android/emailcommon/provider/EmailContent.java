@@ -196,7 +196,6 @@ public abstract class EmailContent {
             MessageStateChange.init();
             Body.initBody();
             Attachment.initAttachment();
-            SuggestedContact.initSuggestedContact();
         }
     }
 
@@ -1722,8 +1721,6 @@ public abstract class EmailContent {
         public static final String MAX_ATTACHMENT_SIZE = "maxAttachmentSize";
         // Current duration of the Exchange ping
         public static final String PING_DURATION = "pingDuration";
-        // Automatically fetch pop3 attachments
-        public static final String AUTO_FETCH_ATTACHMENTS = "autoFetchAttachments";
     }
 
     public interface QuickResponseColumns extends BaseColumns {
@@ -1853,13 +1850,5 @@ public abstract class EmailContent {
         // Tokenized strings indicating protocol specific policies enforced/unsupported
         public static final String PROTOCOL_POLICIES_ENFORCED = "protocolPoliciesEnforced";
         public static final String PROTOCOL_POLICIES_UNSUPPORTED = "protocolPoliciesUnsupported";
-    }
-
-    public interface SuggestedContactColumns extends BaseColumns {
-        static final String ACCOUNT_KEY = "accountKey";
-        static final String ADDRESS = "address";
-        static final String NAME = "name";
-        static final String DISPLAY_NAME = "display_name";
-        static final String LAST_SEEN = "last_seen";
     }
 }

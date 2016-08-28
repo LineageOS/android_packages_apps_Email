@@ -33,8 +33,6 @@
 
 package com.android.emailcommon.utility;
 
-import com.android.mail.utils.LogUtils;
-
 import org.apache.http.conn.scheme.HostNameResolver;
 import org.apache.http.conn.scheme.LayeredSocketFactory;
 import org.apache.http.conn.ssl.AllowAllHostnameVerifier;
@@ -51,10 +49,7 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
-
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
@@ -148,9 +143,6 @@ import java.security.UnrecoverableKeyException;
  */
 
 public class SSLSocketFactory implements LayeredSocketFactory {
-
-    private static final boolean LOG_ENABLED = false;
-    private static final String TAG = "Email.SslFactory";
 
     public static final String TLS   = "TLS";
     public static final String SSL   = "SSL";
@@ -331,14 +323,6 @@ public class SSLSocketFactory implements LayeredSocketFactory {
         sslsock.connect(remoteAddress, connTimeout);
 
         sslsock.setSoTimeout(soTimeout);
-
-        // Set Server Name Indication if is available for this socket
-        setSocketHostname(sslsock, host);
-
-        // Start handshake prior to hostname verification to ensure
-        // handshake exceptions do not get silenced by hostname verification.
-        sslsock.startHandshake();
-
         try {
             hostnameVerifier.verify(host, sslsock);
             // verifyHostName() didn't blowup - good!
@@ -402,14 +386,6 @@ public class SSLSocketFactory implements LayeredSocketFactory {
               port,
               autoClose
         );
-
-        // Set Server Name Indication if it's available for this socket
-        setSocketHostname(sslSocket, host);
-
-        // Start handshake prior to hostname verification to ensure
-        // handshake exceptions do not get silenced by hostname verification.
-        sslSocket.startHandshake();
-
         hostnameVerifier.verify(host, sslSocket);
         // verifyHostName() didn't blowup - good!
         return sslSocket;
@@ -424,23 +400,6 @@ public class SSLSocketFactory implements LayeredSocketFactory {
 
     public X509HostnameVerifier getHostnameVerifier() {
         return hostnameVerifier;
-    }
-
-    private void setSocketHostname(SSLSocket sslSocket, String hostname) {
-        try {
-            Method method = sslSocket.getClass().getMethod("setHostname", String.class);
-            method.invoke(sslSocket, hostname);
-            return;
-        } catch (NoSuchMethodException ex) {
-            // Ignore
-        } catch (InvocationTargetException ex) {
-            // Ignore
-        } catch (IllegalAccessException ex) {
-            // Ignore
-        }
-        if (LOG_ENABLED) {
-            LogUtils.i(TAG, "setHostname isn't available for this socket.");
-        }
     }
 
 }

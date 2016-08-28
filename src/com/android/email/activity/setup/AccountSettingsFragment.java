@@ -16,15 +16,11 @@
 
 package com.android.email.activity.setup;
 
-import android.accounts.AccountManager;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.LoaderManager;
-import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.content.res.Resources;
@@ -32,11 +28,7 @@ import android.database.Cursor;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Handler.Callback;
-import android.os.Message;
 import android.os.Vibrator;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
@@ -51,12 +43,8 @@ import android.provider.ContactsContract;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.Window;
-import android.widget.Toast;
 
 import com.android.email.R;
 import com.android.email.SecurityPolicy;
@@ -75,7 +63,6 @@ import com.android.mail.providers.Folder;
 import com.android.mail.providers.UIProvider;
 import com.android.mail.ui.MailAsyncTaskLoader;
 import com.android.mail.ui.settings.MailAccountPrefsFragment;
-import com.android.mail.ui.settings.PublicPreferenceActivity;
 import com.android.mail.ui.settings.SettingsUtils;
 import com.android.mail.utils.ContentProviderTask.UpdateTask;
 import com.android.mail.utils.LogUtils;
@@ -103,14 +90,12 @@ public class AccountSettingsFragment extends MailAccountPrefsFragment
     private static final String PREFERENCE_QUICK_RESPONSES = "account_quick_responses";
     private static final String PREFERENCE_FREQUENCY = "account_check_frequency";
     private static final String PREFERENCE_SYNC_WINDOW = "account_sync_window";
-    private static final String PREFERENCE_SYNC_SETTINGS = MailboxSettings.PREFERENCE_SYNC_SETTINGS;
+    private static final String PREFERENCE_SYNC_SETTINGS = "account_sync_settings";
     private static final String PREFERENCE_SYNC_EMAIL = "account_sync_email";
     private static final String PREFERENCE_SYNC_CONTACTS = "account_sync_contacts";
     private static final String PREFERENCE_SYNC_CALENDAR = "account_sync_calendar";
     private static final String PREFERENCE_BACKGROUND_ATTACHMENTS =
             "account_background_attachments";
-    private static final String PREFERENCE_PER_FOLDER_NOTIFICATIONS =
-            MailboxSettings.PREFERENCE_PER_FOLDER_NOTIFICATIONS;
     private static final String PREFERENCE_CATEGORY_DATA_USAGE = "data_usage";
     private static final String PREFERENCE_CATEGORY_NOTIFICATIONS = "account_notifications";
     private static final String PREFERENCE_CATEGORY_SERVER = "account_servers";
@@ -133,9 +118,6 @@ public class AccountSettingsFragment extends MailAccountPrefsFragment
     // Request code to start different activities.
     private static final int RINGTONE_REQUEST_CODE = 0;
 
-    // Message codes
-    private static final int MSG_DELETE_ACCOUNT = 0;
-
     private EditTextPreference mAccountDescription;
     private EditTextPreference mAccountName;
     private EditTextPreference mAccountSignature;
@@ -144,10 +126,8 @@ public class AccountSettingsFragment extends MailAccountPrefsFragment
     private Preference mSyncSettings;
     private CheckBoxPreference mInboxVibrate;
     private Preference mInboxRingtone;
-    private Preference mPerFolderNotification;
 
     private Context mContext;
-    private Handler mHandler;
 
     private Account mAccount;
     private com.android.mail.providers.Account mUiAccount;
@@ -155,18 +135,6 @@ public class AccountSettingsFragment extends MailAccountPrefsFragment
     private Folder mInboxFolder;
 
     private Ringtone mRingtone;
-
-    private MenuItem mDeleteAccountItem;
-
-    private final Callback mHandlerCallback = new Callback() {
-        @Override
-        public boolean handleMessage(Message msg) {
-            if (msg.what == MSG_DELETE_ACCOUNT) {
-                deleteAccount();
-            }
-            return false;
-        }
-    };
 
     /**
      * This may be null if the account exists but the inbox has not yet been created in the database
@@ -208,7 +176,6 @@ public class AccountSettingsFragment extends MailAccountPrefsFragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mHandler = new Handler(mHandlerCallback);
 
         setHasOptionsMenu(true);
 
@@ -310,10 +277,9 @@ public class AccountSettingsFragment extends MailAccountPrefsFragment
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen,
             @NonNull Preference preference) {
         final String key = preference.getKey();
-        if (key.equals(PREFERENCE_SYNC_SETTINGS) ||
-                key.equals(PREFERENCE_PER_FOLDER_NOTIFICATIONS)) {
+        if (key.equals(PREFERENCE_SYNC_SETTINGS)) {
             startActivity(MailboxSettings.getIntent(getActivity(), mUiAccount.fullFolderListUri,
-                    mInboxFolder, key));
+                    mInboxFolder));
             return true;
         } else {
             return super.onPreferenceTreeClick(preferenceScreen, preference);
@@ -446,38 +412,8 @@ public class AccountSettingsFragment extends MailAccountPrefsFragment
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
-
-        // Delete account item
-        mDeleteAccountItem = menu.add(Menu.NONE, Menu.NONE, 0, R.string.delete_account);
-        mDeleteAccountItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-
         inflater.inflate(R.menu.settings_fragment_menu, menu);
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.equals(mDeleteAccountItem)) {
-            AlertDialog.Builder alertBuilder = new AlertDialog.Builder(mContext);
-            alertBuilder.setTitle(R.string.delete_account);
-            String msg = getString(R.string.delete_account_confirmation_msg, mAccountEmail);
-            alertBuilder.setMessage(msg);
-            alertBuilder.setCancelable(true);
-            final DialogInterface.OnClickListener cb = new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                    mHandler.dispatchMessage(Message.obtain(mHandler, MSG_DELETE_ACCOUNT));
-                }
-            };
-            alertBuilder.setPositiveButton(android.R.string.ok, cb);
-            alertBuilder.setNegativeButton(android.R.string.cancel, null);
-            alertBuilder.create().show();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-
 
     /**
      * Async task loader to load account in order to view/edit it
@@ -851,77 +787,43 @@ public class AccountSettingsFragment extends MailAccountPrefsFragment
                 (PreferenceCategory) findPreference(PREFERENCE_CATEGORY_NOTIFICATIONS);
 
         if (mInboxFolderPreferences != null) {
-            if (mServiceInfo.offerLookback) {
-                // This account supports per-folder notifications
+            final CheckBoxPreference inboxNotify = (CheckBoxPreference) findPreference(
+                FolderPreferences.PreferenceKeys.NOTIFICATIONS_ENABLED);
+            inboxNotify.setChecked(mInboxFolderPreferences.areNotificationsEnabled());
+            inboxNotify.setOnPreferenceChangeListener(this);
 
-                // Enable per-folder notifications preference
-                if (mPerFolderNotification == null) {
-                    mPerFolderNotification = new Preference(mContext);
-                    mPerFolderNotification.setKey(PREFERENCE_PER_FOLDER_NOTIFICATIONS);
-                    notificationsCategory.addPreference(mPerFolderNotification);
-                }
-                mPerFolderNotification.setTitle(R.string.folder_notify_settings_pref_title);
+            mInboxRingtone = findPreference(FolderPreferences.PreferenceKeys.NOTIFICATION_RINGTONE);
+            final String ringtoneUri = mInboxFolderPreferences.getNotificationRingtoneUri();
+            if (!TextUtils.isEmpty(ringtoneUri)) {
+                mRingtone = RingtoneManager.getRingtone(getActivity(), Uri.parse(ringtoneUri));
+            }
+            setRingtoneSummary();
+            mInboxRingtone.setOnPreferenceChangeListener(this);
+            mInboxRingtone.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(final Preference preference) {
+                    showRingtonePicker();
 
-                // Remove Inbox per-account preferences
-                final CheckBoxPreference inboxNotify = (CheckBoxPreference) findPreference(
-                        FolderPreferences.PreferenceKeys.NOTIFICATIONS_ENABLED);
-                if (inboxNotify != null) {
-                    notificationsCategory.removePreference(inboxNotify);
+                    return true;
                 }
-                mInboxRingtone = findPreference(
-                        FolderPreferences.PreferenceKeys.NOTIFICATION_RINGTONE);
-                if (mInboxRingtone != null) {
-                    notificationsCategory.removePreference(mInboxRingtone);
-                }
-                mInboxVibrate = (CheckBoxPreference) findPreference(
-                        FolderPreferences.PreferenceKeys.NOTIFICATION_VIBRATE);
-                if (mInboxVibrate != null) {
+            });
+
+            notificationsCategory.setEnabled(true);
+
+            // Set the vibrator value, or hide it on devices w/o a vibrator
+            mInboxVibrate = (CheckBoxPreference) findPreference(
+                    FolderPreferences.PreferenceKeys.NOTIFICATION_VIBRATE);
+            if (mInboxVibrate != null) {
+                mInboxVibrate.setChecked(
+                        mInboxFolderPreferences.isNotificationVibrateEnabled());
+                Vibrator vibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
+                if (vibrator.hasVibrator()) {
+                    // When the value is changed, update the setting.
+                    mInboxVibrate.setOnPreferenceChangeListener(this);
+                } else {
+                    // No vibrator present. Remove the preference altogether.
                     notificationsCategory.removePreference(mInboxVibrate);
-                }
-
-                notificationsCategory.setEnabled(true);
-
-            } else {
-                final CheckBoxPreference inboxNotify = (CheckBoxPreference) findPreference(
-                    FolderPreferences.PreferenceKeys.NOTIFICATIONS_ENABLED);
-                inboxNotify.setChecked(mInboxFolderPreferences.areNotificationsEnabled());
-                inboxNotify.setOnPreferenceChangeListener(this);
-
-                mInboxRingtone = findPreference(
-                        FolderPreferences.PreferenceKeys.NOTIFICATION_RINGTONE);
-                final String ringtoneUri = mInboxFolderPreferences.getNotificationRingtoneUri();
-                if (!TextUtils.isEmpty(ringtoneUri)) {
-                    mRingtone = RingtoneManager.getRingtone(getActivity(), Uri.parse(ringtoneUri));
-                }
-                setRingtoneSummary();
-                mInboxRingtone.setOnPreferenceChangeListener(this);
-                mInboxRingtone.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-                    @Override
-                    public boolean onPreferenceClick(final Preference preference) {
-                        showRingtonePicker();
-
-                        return true;
-                    }
-                });
-
-                notificationsCategory.setEnabled(true);
-
-                // Set the vibrator value, or hide it on devices w/o a vibrator
-                mInboxVibrate = (CheckBoxPreference) findPreference(
-                        FolderPreferences.PreferenceKeys.NOTIFICATION_VIBRATE);
-                if (mInboxVibrate != null) {
-                    mInboxVibrate.setChecked(
-                            mInboxFolderPreferences.isNotificationVibrateEnabled());
-                    Vibrator vibrator = (Vibrator) mContext.getSystemService(
-                            Context.VIBRATOR_SERVICE);
-                    if (vibrator.hasVibrator()) {
-                        // When the value is changed, update the setting.
-                        mInboxVibrate.setOnPreferenceChangeListener(this);
-                    } else {
-                        // No vibrator present. Remove the preference altogether.
-                        notificationsCategory.removePreference(mInboxVibrate);
-                        mInboxVibrate = null;
-                    }
+                    mInboxVibrate = null;
                 }
             }
         } else {
@@ -1084,60 +986,5 @@ public class AccountSettingsFragment extends MailAccountPrefsFragment
         final Intent intent =
                 AccountServerSettingsActivity.getIntentForOutgoing(getActivity(), account);
         getActivity().startActivity(intent);
-    }
-
-    private void deleteAccount() {
-        AsyncTask<Void, Void, Boolean> task = new AsyncTask<Void, Void, Boolean>() {
-            private ProgressDialog mDialog;
-
-            @Override
-            protected void onPreExecute() {
-                // Display an alert dialog to advise the user that the operation is in progress
-                mDialog = new ProgressDialog(mContext);
-                mDialog.setMessage(mContext.getString(R.string.deleting_account_msg));
-                mDialog.setCancelable(false);
-                mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                mDialog.show();
-            }
-
-            @Override
-            protected void onPostExecute(Boolean result) {
-                if (!result) {
-                    Toast.makeText(mContext, R.string.delete_account_failed,
-                            Toast.LENGTH_SHORT).show();
-                }
-                mDialog.dismiss();
-            }
-
-            @Override
-            protected Boolean doInBackground(Void... params) {
-                try {
-                    // Retrieve the necessary information
-                    AccountManager accountManager = (AccountManager)mContext.getSystemService(
-                            Context.ACCOUNT_SERVICE);
-                    android.accounts.Account account = mUiAccount.getAccountManagerAccount();
-
-                    // Remove the email account and its notifications
-                    ContentResolver resolver = mContext.getContentResolver();
-                    int ret = resolver.delete(mUiAccount.uri, null, null);
-                    if (ret <= 0) {
-                        LogUtils.w(LogUtils.TAG, "Failed to delete account %s", mAccountEmail);
-                        return Boolean.FALSE;
-                    }
-                    NotificationUtils.clearAccountNotifications(mContext, account);
-
-                    // And now we remove the system account that holds the email service
-                    accountManager.removeAccount(account, getActivity(), null, null);
-
-                    // Finish after account is deleted
-                    getActivity().finish();
-                } catch (Exception ex) {
-                    LogUtils.w(LogUtils.TAG, ex, "Failed to delete account %s", mAccountEmail);
-                    return Boolean.FALSE;
-                }
-                return Boolean.TRUE;
-            }
-        };
-        task.execute();
     }
 }
