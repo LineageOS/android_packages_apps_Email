@@ -143,6 +143,13 @@ public class AccountSettingsEditQuickResponsesFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
         inflater.inflate(R.menu.quick_response_prefs_fragment_menu, menu);
+
+        MenuItem feedbackMenuItem = menu.findItem(R.id.feedback_menu_item);
+        Uri feedbackUri = Utils.getValidUri(getString(R.string.email_feedback_uri));
+
+        if (feedbackMenuItem != null) {
+            feedbackMenuItem.setVisible(!Uri.EMPTY.equals(feedbackUri));
+        }
     }
 
     @Override
