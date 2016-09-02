@@ -705,4 +705,24 @@
     <string name="default_email_signature"></string>
     <string name="default_email_signature_with_brand"></string>
     <string name="missing_required_permission">You have disabled a required permission.</string>
+    <string name="account_manager_type_alice" translatable="false">com.android.alice</string>
+    <string name="alice_eas_name" translatable="false">Alice</string>
+    <string name="account_manager_type_yahoo" translatable="false">com.android.yahoo</string>
+    <string name="yahoo_eas_name" translatable="false">Yahoo</string>
+    <string name="account_manager_type_outlook" translatable="false">com.android.outlook</string>
+    <string name="outlook_eas_name" translatable="false">Outlook</string>
+    <string name="account_manager_type_gmail" translatable="false">com.android.gmail</string>
+    <string name="gmail_eas_name" translatable="false">Gmail</string>
+    <string name="account_manager_type_aol" translatable="false">com.android.aol</string>
+    <string name="aol_eas_name" translatable="false">Aol</string>
+    <string name="account_manager_type_free" translatable="false">com.android.free</string>
+    <string name="free_eas_name" translatable="false">Free</string>
+    <string name="account_manager_type_laposte" translatable="false">com.android.laposte</string>
+    <string name="laposte_eas_name" translatable="false">Laposte</string>
+    <string name="account_manager_type_sfr" translatable="false">com.android.sfr</string>
+    <string name="sfr_eas_name" translatable="false">Sfr</string>
+    <string name="account_manager_type_orange" translatable="false">com.android.orange</string>
+    <string name="orange_eas_name" translatable="false">Orange</string>
+    <string name="account_manager_type_noos" translatable="false">com.android.noos</string>
+    <string name="noos_eas_name" translatable="false">Noos</string>
 </resources>
