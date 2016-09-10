@@ -801,6 +801,76 @@
                 />
         </service>
         <service
+            android:name=".service.VodafoneAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+        >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_vodafone"
+            />
+        </service>
+        <service
+            android:name=".service.HotmailAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+        >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_hotmail"
+            />
+        </service>
+        <service
+            android:name=".service.SapoAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+        >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_sapo"
+            />
+        </service>
+        <service
+            android:name=".service.NetcaboAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+        >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_netcabo"
+            />
+        </service>
+        <service
+            android:name=".service.ClixAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+        >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_clix"
+            />
+        </service>
+        <service
             android:name=".service.OrangeAuthenticatorService"
             android:exported="true"
             android:enabled="true"

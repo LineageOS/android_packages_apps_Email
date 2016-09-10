@@ -725,4 +725,14 @@
     <string name="orange_eas_name" translatable="false">Orange</string>
     <string name="account_manager_type_noos" translatable="false">com.android.noos</string>
     <string name="noos_eas_name" translatable="false">Noos</string>
+    <string name="account_manager_type_vodafone" translatable="false">com.android.vodafone</string>
+    <string name="vodafone_eas_name" translatable="false">Vodafone mail</string>
+    <string name="account_manager_type_hotmail" translatable="false">com.android.hotmail</string>
+    <string name="hotmail_eas_name" translatable="false">Hotmail</string>
+    <string name="account_manager_type_sapo" translatable="false">com.android.sapo</string>
+    <string name="sapo_eas_name" translatable="false">Sapo</string>
+    <string name="account_manager_type_netcabo" translatable="false">com.android.netcabo</string>
+    <string name="netcabo_eas_name" translatable="false">Netcabo</string>
+    <string name="account_manager_type_clix" translatable="false">com.android.clix</string>
+    <string name="clix_eas_name" translatable="false">clix</string>
 </resources>
