@@ -44,6 +44,7 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MenuInflater;
 
 import com.android.email.R;
@@ -67,6 +68,7 @@ import com.android.mail.ui.settings.SettingsUtils;
 import com.android.mail.utils.ContentProviderTask.UpdateTask;
 import com.android.mail.utils.LogUtils;
 import com.android.mail.utils.NotificationUtils;
+import com.android.mail.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -421,6 +423,13 @@ public class AccountSettingsFragment extends MailAccountPrefsFragment
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
         inflater.inflate(R.menu.settings_fragment_menu, menu);
+
+        MenuItem feedbackMenuItem = menu.findItem(R.id.feedback_menu_item);
+        Uri feedbackUri = Utils.getValidUri(getString(R.string.email_feedback_uri));
+
+        if (feedbackMenuItem != null) {
+            feedbackMenuItem.setVisible(!Uri.EMPTY.equals(feedbackUri));
+        }
     }
 
     /**
