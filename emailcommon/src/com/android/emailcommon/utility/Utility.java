@@ -824,6 +824,9 @@ public class Utility {
             while ((n = gunzip.read(buffer)) >= 0) {
                 out.write(buffer, 0, n);
             }
+            if (gunzip != null) {
+                gunzip.close();
+            }
             return out.toString();
         } catch (IOException e) {
             e.printStackTrace();
