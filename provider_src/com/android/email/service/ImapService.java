@@ -780,7 +780,6 @@ public class ImapService extends Service {
         if (Logging.LOGD) {
             LogUtils.d(Logging.LOG_TAG, "Action: ", action);
         }
-        final long accountId = intent.getLongExtra(EXTRA_ACCOUNT, -1);
         final Context context = getApplicationContext();
 
         if (ACTION_RESTART_ALL_IDLE_CONNECTIONS.equals(action)) {
@@ -858,9 +857,6 @@ public class ImapService extends Service {
                 }
             });
         } else if (ACTION_KICK_IDLE_CONNECTION.equals(action)) {
-            if (Logging.LOGD) {
-                LogUtils.d(Logging.LOG_TAG, "action: Send Pending Mail "+accountId);
-            }
             final long mailboxId = intent.getLongExtra(EXTRA_MAILBOX, -1);
             if (mailboxId <= -1) {
                  return START_NOT_STICKY;
