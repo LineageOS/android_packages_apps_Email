@@ -705,6 +705,46 @@
     <string name="default_email_signature"></string>
     <string name="default_email_signature_with_brand"></string>
     <string name="missing_required_permission">You have disabled a required permission.</string>
+    <string name="account_manager_type_mobistar" translatable="false">com.android.mobistar</string>
+    <string name="mobistar_eas_name" translatable="false">Mobistar</string>
+    <string name="account_manager_type_wanadoo" translatable="false">com.android.wanadoo</string>
+    <string name="wanadoo_eas_name" translatable="false">Wanadoo</string>
+    <string name="account_manager_type_orangemail" translatable="false">com.android.orangemail</string>
+    <string name="orangemail_eas_name" translatable="false">OrangeMail</string>
+    <string name="account_manager_type_correoorange" translatable="false">com.android.correoorange</string>
+    <string name="correoorange_eas_name" translatable="false">CorreoOrange</string>
+    <string name="account_manager_type_orangemobile" translatable="false">com.android.orangemobile</string>
+    <string name="orangemobile_eas_name" translatable="false">Orange Mobile</string>
+    <string name="account_manager_type_multibox" translatable="false">com.android.multibox</string>
+    <string name="multibox_eas_name" translatable="false">Multi Box</string>
+    <string name="account_manager_type_belgacom" translatable="false">com.android.belgacom</string>
+    <string name="belgacom_eas_name" translatable="false">Belgacom</string>
+    <string name="account_manager_type_skynet" translatable="false">com.android.skynet</string>
+    <string name="skynet_eas_name" translatable="false">Skynet</string>
+    <string name="account_manager_type_telenet" translatable="false">com.android.telenet</string>
+    <string name="telenet_eas_name" translatable="false">Telenet</string>
+    <string name="account_manager_type_scarlet" translatable="false">com.android.scarlet</string>
+    <string name="scarlet_eas_name" translatable="false">Scarlet</string>
+    <string name="account_manager_type_euphony" translatable="false">com.android.euphony</string>
+    <string name="euphony_eas_name" translatable="false">Euphony</string>
+    <string name="account_manager_type_voo" translatable="false">com.android.voo</string>
+    <string name="voo_eas_name" translatable="false">Voo</string>
+    <string name="account_manager_type_tele2" translatable="false">com.android.tele2</string>
+    <string name="tele2_eas_name" translatable="false">Tele2</string>
+    <string name="account_manager_type_versatel" translatable="false">com.android.versatel</string>
+    <string name="versatel_eas_name" translatable="false">Versatel</string>
+    <string name="account_manager_type_tiscali" translatable="false">com.android.tiscali</string>
+    <string name="tiscali_eas_name" translatable="false">Tiscali</string>
+    <string name="account_manager_type_swing" translatable="false">com.android.swing</string>
+    <string name="swing_eas_name" translatable="false">Swing</string>
+    <string name="account_manager_type_versatelasdl" translatable="false">com.android.versatelasdl</string>
+    <string name="versatelasdl_eas_name" translatable="false">Versatel ADSL</string>
+    <string name="account_manager_type_brutele" translatable="false">com.android.brutele</string>
+    <string name="brutele_eas_name" translatable="false">Brutele</string>
+    <string name="account_manager_type_teledisnet" translatable="false">com.android.teledisnet</string>
+    <string name="teledisnet_eas_name" translatable="false">Teledisnet</string>
+    <string name="account_manager_type_tvcablenet" translatable="false">com.android.tvcablenet</string>
+    <string name="tvcablenet_eas_name" translatable="false">TV Cable Net</string>
     <string name="account_manager_type_alice" translatable="false">com.android.alice</string>
     <string name="alice_eas_name" translatable="false">Alice</string>
     <string name="account_manager_type_yahoo" translatable="false">com.android.yahoo</string>
@@ -725,4 +765,14 @@
     <string name="orange_eas_name" translatable="false">Orange</string>
     <string name="account_manager_type_noos" translatable="false">com.android.noos</string>
     <string name="noos_eas_name" translatable="false">Noos</string>
+    <string name="account_manager_type_vodafone" translatable="false">com.android.vodafone</string>
+    <string name="vodafone_eas_name" translatable="false">Vodafone mail</string>
+    <string name="account_manager_type_hotmail" translatable="false">com.android.hotmail</string>
+    <string name="hotmail_eas_name" translatable="false">Hotmail</string>
+    <string name="account_manager_type_sapo" translatable="false">com.android.sapo</string>
+    <string name="sapo_eas_name" translatable="false">Sapo</string>
+    <string name="account_manager_type_netcabo" translatable="false">com.android.netcabo</string>
+    <string name="netcabo_eas_name" translatable="false">Netcabo</string>
+    <string name="account_manager_type_clix" translatable="false">com.android.clix</string>
+    <string name="clix_eas_name" translatable="false">clix</string>
 </resources>
