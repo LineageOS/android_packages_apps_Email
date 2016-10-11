@@ -34,4 +34,7 @@
 
     <!-- Customize Email account's signature -->
     <string name="customize_set_email_signature"></string>
+
+    <!-- Boolean value indicating whether we should allow force create account -->
+    <bool name="enable_force_configure_account">false</bool>
 </resources>
