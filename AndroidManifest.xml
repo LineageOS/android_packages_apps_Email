@@ -982,21 +982,6 @@
         </service>
 
         <service
-            android:name=".service.AliceAuthenticatorService"
-            android:exported="true"
-            android:enabled="true"
-            >
-            <intent-filter>
-                <action
-                    android:name="android.accounts.AccountAuthenticator" />
-            </intent-filter>
-            <meta-data
-                android:name="android.accounts.AccountAuthenticator"
-                android:resource="@xml/authenticator_mobistar"
-                />
-        </service>
-
-        <service
             android:name=".service.WanadooAuthenticatorService"
             android:exported="true"
             android:enabled="true"
