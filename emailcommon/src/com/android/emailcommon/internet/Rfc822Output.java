@@ -282,6 +282,15 @@ public class Rfc822Output {
                     "when sending attachment");
             throw new MessagingException("Invalid attachment.", ioe);
         }
+        finally {
+           try {
+               if (inStream != null) {
+                   inStream.close();
+               }
+           } catch (IOException e) {
+               LogUtils.e(TAG, e, "Failed to close stream");
+           }
+        }
     }
 
     /**
