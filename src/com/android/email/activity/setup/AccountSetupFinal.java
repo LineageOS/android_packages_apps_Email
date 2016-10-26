@@ -352,12 +352,17 @@ public class AccountSetupFinal extends AccountSetupActivity
             updateContentFragment(false /* addToBackstack */);
             getFragmentManager().executePendingTransactions();
 
-            if (!DEBUG_ALLOW_NON_TEST_HARNESS_CREATION &&
-                    !ActivityManager.isRunningInTestHarness()) {
-                LogUtils.e(LogUtils.TAG,
-                        "ERROR: Force account create only allowed while in test harness");
-                finish();
-                return;
+            //Enabling force create account for OMA CP
+            boolean forceConfigurationEnabled = getResources()
+                    .getBoolean(R.bool.enable_force_configure_account);
+            if(!forceConfigurationEnabled){
+                if (!DEBUG_ALLOW_NON_TEST_HARNESS_CREATION &&
+                        !ActivityManager.isRunningInTestHarness()) {
+                    LogUtils.e(LogUtils.TAG,
+                            "ERROR: Force account create only allowed while in test harness");
+                    finish();
+                    return;
+                }
             }
 
             mForceCreate = true;
