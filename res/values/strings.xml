@@ -745,4 +745,6 @@
     <string name="default_ninteenth_eas_name" translatable="false">Default Ninteenth</string>
     <string name="account_manager_type_default_twentith" translatable="false">com.android.email.default.twentith</string>
     <string name="default_twentith_eas_name" translatable="false">Default Twentith</string>
+    <!-- string to show Email signature with brand -->
+    <string name="default_email_signature_with_brand"></string>
 </resources>
