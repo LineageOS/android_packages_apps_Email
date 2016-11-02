@@ -188,10 +188,10 @@ public final class DBHelper {
     // Version 126: Decode address lists for To, From, Cc, Bcc and Reply-To columns in Message.
     // Version 127: Force mFlags to contain the correct flags for EAS accounts given a protocol
     //              version above 12.0
-    // Version 128: Add setSyncSizeEnabled and syncSize columns for Account table.
     // Version 129: Update all IMAP INBOX mailboxes to force synchronization
     // Version 130: Account capabilities (check EmailServiceProxy#CAPABILITY_*)
-    public static final int DATABASE_VERSION = 130;
+    // Version 131: Add setSyncSizeEnabled and syncSize columns for Account table.
+    public static final int DATABASE_VERSION = 131;
 
     // Any changes to the database format *must* include update-in-place code.
     // Original version: 2
@@ -1534,20 +1534,6 @@ public final class DBHelper {
                 upgradeFromVersion126ToVersion127(mContext, db);
             }
 
-            if (oldVersion <= 127) {
-                try {
-                    db.execSQL("alter table " + Account.TABLE_NAME
-                            + " add column " + AccountColumns.SET_SYNC_SIZE_ENABLED + " integer"
-                            + " default " + SyncSize.ENABLED_DEFAULT_VALUE + ";");
-                    db.execSQL("alter table " + Account.TABLE_NAME
-                            + " add column " + AccountColumns.SYNC_SIZE + " integer"
-                            + " default " + SyncSize.SYNC_SIZE_DEFAULT_VALUE + ";");
-                } catch (SQLException e) {
-                    // Shouldn't be needed unless we're debugging and interrupt the process
-                    LogUtils.w(TAG, "Exception upgrading EmailProvider.db from 127 to 128", e);
-                }
-            }
-
             if (oldVersion <= 128 && !fromCM11) {
                 try {
                     db.execSQL("alter table " + Account.TABLE_NAME
@@ -1627,6 +1613,20 @@ public final class DBHelper {
                 } catch (final SQLException e) {
                     // Shouldn't be needed unless we're debugging and interrupt the process
                     LogUtils.w(TAG, "Exception upgrading EmailProvider.db from v129 to v130", e);
+                }
+            }
+
+            if (oldVersion <= 131) {
+                try {
+                    db.execSQL("alter table " + Account.TABLE_NAME
+                            + " add column " + AccountColumns.SET_SYNC_SIZE_ENABLED + " integer"
+                            + " default " + SyncSize.ENABLED_DEFAULT_VALUE + ";");
+                    db.execSQL("alter table " + Account.TABLE_NAME
+                            + " add column " + AccountColumns.SYNC_SIZE + " integer"
+                            + " default " + SyncSize.SYNC_SIZE_DEFAULT_VALUE + ";");
+                } catch (SQLException e) {
+                    // Shouldn't be needed unless we're debugging and interrupt the process
+                    LogUtils.w(TAG, "Exception upgrading EmailProvider.db from 130 to 131", e);
                 }
             }
 
