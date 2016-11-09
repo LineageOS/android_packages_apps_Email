@@ -942,6 +942,11 @@ public class AccountSetupFinal extends AccountSetupActivity
         final Account account = mSetupData.getAccount();
         String deviceName = Build.MODEL;
         String signature = getResources().getString(R.string.default_email_signature, deviceName);
+        if (getResources().getBoolean(
+                R.bool.config_email_signature_with_brand)) {
+            signature = String.format(getResources().getString(
+                R.string.default_email_signature_with_brand) ,Build.BRAND);
+        }
         if (!TextUtils.isEmpty(signature)) {
             account.setSignature(signature);
         }

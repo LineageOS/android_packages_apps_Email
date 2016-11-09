@@ -37,4 +37,7 @@
 
     <!-- Boolean value indicating whether we should allow force create account -->
     <bool name="enable_force_configure_account">false</bool>
+
+    <!-- Boolean value to show Customize Email signature with brand -->
+    <bool name="config_email_signature_with_brand">false</bool>
 </resources>
