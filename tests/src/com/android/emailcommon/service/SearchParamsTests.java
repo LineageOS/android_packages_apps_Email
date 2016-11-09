@@ -23,7 +23,7 @@ import android.test.suitebuilder.annotation.Suppress;
 @Suppress
 public class SearchParamsTests extends AndroidTestCase {
     public void brokentestParcel() {
-        SearchParams params = new SearchParams(1, "query", "factor");
+        SearchParams params = new SearchParams(1, "query");
         params.mIncludeChildren = true;
         params.mLimit = 66;
         params.mOffset = 99;
