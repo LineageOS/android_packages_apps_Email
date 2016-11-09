@@ -318,7 +318,7 @@
         Incoming Account Settings fragment -->
         <activity
             android:name=".activity.setup.HeadlessAccountSettingsLoader"
-            android:theme="@android:style/Theme.NoDisplay"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
             >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
