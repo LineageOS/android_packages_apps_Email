@@ -519,4 +519,7 @@
   <string name="gmail_name">Gmail</string>
   <!-- Name for preference entry which leads to the per-folder sync settings activity -->
   <string name="folder_sync_settings_pref_title">Axustes de sync de carpetes</string>
+  <!-- In Account setup options & Account Settings screens, Email sync size option. -->
+  <!--Delete email account -->
+  <!-- Customize Email account's signature -->
 </resources>

@@ -33,6 +33,7 @@
   <!-- In the UI, the drafts will be displayed with this name -->
   <!-- In the UI, the trash will be displayed with this name -->
   <!-- In the UI, the sent will be displayed with this name -->
+  <string name="mailbox_name_display_sent">Sendita</string>
   <!-- In the UI, the junk will be displayed with this name -->
   <!-- In the UI, the starred will be displayed with this name -->
   <!-- In the UI, the unread will be displayed with this name [CHAR LIMIT=15] -->
@@ -72,6 +73,7 @@
   <!-- Label for signing in with Google using OAuth -->
   <!-- On "Set up email" screen, hint for account email password text field, should be uppercase where applicable -->
   <!-- hint for account email password text field -->
+  <string name="password_hint">Pasvorto</string>
   <!--  On the "Setup up email" screen, label indicating what service we are signed in with [CHAR LIMIT=40] -->
   <!-- Label for the authentication section, should be uppercase where applicable [CHAR LIMIT=20] -->
   <!-- Label for the add authentication icon [CHAR LIMIT=40] -->
@@ -97,8 +99,10 @@
   <!-- "Add new email account" screen, text that appears on screen -->
   <!-- "Incoming server settings" screen, headline (text over divider) [CHAR LIMIT=none] -->
   <!-- "Incoming server settings" screen, label for text field, should be uppercase where applicable -->
+  <string name="account_setup_incoming_username_label">UZANTNOMO</string>
   <!-- "Incoming server settings" screen, label for text field, should be uppercase where applicable -->
   <!-- "Incoming server settings" screen, label for text field -->
+  <string name="account_setup_password_subheading">Pasvorto</string>
   <!-- "Incoming server settings" screen, label for text field, should be uppercase where applicable -->
   <!-- "Incoming server settings" screen, label for text field, should be uppercase where applicable -->
   <!-- "Incoming server settings" screen, label for pop-up menu, should be uppercase where applicable -->
@@ -118,6 +122,7 @@
   <!-- "Incoming server settings" screen, label for pop-up menu -->
   <!-- "Incoming server settings" screen, options in pop-up menu for Delete email from server: -->
   <!-- "Incoming server settings" screen, options in pop-up menu for Delete email from server: -->
+  <string name="account_setup_incoming_delete_policy_never_label">Neniam</string>
   <!-- "Incoming server settings" screen, options in pop-up menu for Delete email from server: -->
   <!-- "Incoming server settings" screen, label for setting IMAP path prefix: -->
   <!-- "Incoming server settings" screen, hint for setting IMAP path prefix: -->
@@ -127,16 +132,19 @@
   <!-- On "Outgoing server settings" screen, label for pop-up menu, should be uppercase where applicable -->
   <!-- On "Outgoing server settings" screen, label for check box, should be uppercase where applicable -->
   <!-- On "Outgoing server settings" screen, label for text field, should be uppercase where applicable-->
+  <string name="account_setup_outgoing_username_label">UZANTNOMO</string>
   <!-- On "Exchange" setup screen, a heading title for the current client certificate, should be uppercase where applicable [CHAR LIMIT=50] -->
   <!-- On "Exchange" setup screen, a button label to include a client certificate [CHAR LIMIT=35] -->
   <!-- On "Exchange" setup screen, a button label to include a client certificate [CHAR LIMIT=35] -->
   <!-- On "Exchange" setup screen, a button label to remove the currently used client certificate [CHAR LIMIT=35] -->
+  <string name="account_setup_exchange_remove_certificate">Forigi</string>
   <!-- On "Exchange" setup screen, placeholder text to indicate no client
          certificate is used [CHAR LIMIT=50] -->
   <!-- On "Exchange" setup screen, the exchange device-id label, should be uppercase where applicable [CHAR LIMIT=30] -->
   <!-- In Account setup options screen, Activity headline [CHAR LIMIT=none] -->
   <!-- In Account setup options screen, label for email check frequency selector -->
   <!-- In Account setup options & Account Settings screens, label for email check frequency option -->
+  <string name="account_setup_options_mail_check_frequency_never">Neniam</string>
   <!-- In Account setup options & Account Settings screens, label for email check frequency option -->
   <!-- In Account setup options & Account Settings screens, email check frequency option -->
   <!-- In Account setup options & Account Settings screens, email check frequency option -->
@@ -248,6 +256,7 @@
   <!-- On Settings screen, section heading -->
   <!-- On settings screen, dialog heading informing user to create or edit a quick response -->
   <!-- On settings screen, edit quick response dialog's "save" button -->
+  <string name="save_action">Konservi</string>
   <!-- On settings screen, sync contacts check box label [CHAR LIMIT=20]-->
   <!-- On settings screen, sync contacts summary text [CHAR LIMIT=35] -->
   <!-- On settings screen, sync calendar check box label [CHAR LIMIT=20]-->
@@ -283,6 +292,7 @@
         customized as necessary by the translator, in case one or more of these is inappropriate in
         a particular locale or if there are better options available. -->
   <!-- A "quick response", i.e. a quick reply to a received mail [CHAR LIMIT=NONE] -->
+  <string name="quick_1">Dankon!</string>
   <!-- A "quick response", i.e. a quick reply to a received mail [CHAR LIMIT=NONE] -->
   <!-- A "quick response", i.e. a quick reply to a received mail [CHAR LIMIT=NONE] -->
   <!-- A "quick response", i.e. a quick reply to a received mail [CHAR LIMIT=NONE] -->
@@ -299,4 +309,7 @@
   <!-- Activity name of the compose activity that should be reconciled -->
   <!-- Gmail name for redirecting during account setup -->
   <!-- Name for preference entry which leads to the per-folder sync settings activity -->
+  <!-- In Account setup options & Account Settings screens, Email sync size option. -->
+  <!--Delete email account -->
+  <!-- Customize Email account's signature -->
 </resources>
