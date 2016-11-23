@@ -541,4 +541,7 @@
   <!-- Activity name of the compose activity that should be reconciled -->
   <!-- Gmail name for redirecting during account setup -->
   <!-- Name for preference entry which leads to the per-folder sync settings activity -->
+  <!-- In Account setup options & Account Settings screens, Email sync size option. -->
+  <!--Delete email account -->
+  <!-- Customize Email account's signature -->
 </resources>
