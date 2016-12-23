@@ -705,74 +705,46 @@
     <string name="default_email_signature"></string>
     <string name="default_email_signature_with_brand"></string>
     <string name="missing_required_permission">You have disabled a required permission.</string>
-    <string name="account_manager_type_mobistar" translatable="false">com.android.mobistar</string>
-    <string name="mobistar_eas_name" translatable="false">Mobistar</string>
-    <string name="account_manager_type_wanadoo" translatable="false">com.android.wanadoo</string>
-    <string name="wanadoo_eas_name" translatable="false">Wanadoo</string>
-    <string name="account_manager_type_orangemail" translatable="false">com.android.orangemail</string>
-    <string name="orangemail_eas_name" translatable="false">OrangeMail</string>
-    <string name="account_manager_type_correoorange" translatable="false">com.android.correoorange</string>
-    <string name="correoorange_eas_name" translatable="false">CorreoOrange</string>
-    <string name="account_manager_type_orangemobile" translatable="false">com.android.orangemobile</string>
-    <string name="orangemobile_eas_name" translatable="false">Orange Mobile</string>
-    <string name="account_manager_type_multibox" translatable="false">com.android.multibox</string>
-    <string name="multibox_eas_name" translatable="false">Multi Box</string>
-    <string name="account_manager_type_belgacom" translatable="false">com.android.belgacom</string>
-    <string name="belgacom_eas_name" translatable="false">Belgacom</string>
-    <string name="account_manager_type_skynet" translatable="false">com.android.skynet</string>
-    <string name="skynet_eas_name" translatable="false">Skynet</string>
-    <string name="account_manager_type_telenet" translatable="false">com.android.telenet</string>
-    <string name="telenet_eas_name" translatable="false">Telenet</string>
-    <string name="account_manager_type_scarlet" translatable="false">com.android.scarlet</string>
-    <string name="scarlet_eas_name" translatable="false">Scarlet</string>
-    <string name="account_manager_type_euphony" translatable="false">com.android.euphony</string>
-    <string name="euphony_eas_name" translatable="false">Euphony</string>
-    <string name="account_manager_type_voo" translatable="false">com.android.voo</string>
-    <string name="voo_eas_name" translatable="false">Voo</string>
-    <string name="account_manager_type_tele2" translatable="false">com.android.tele2</string>
-    <string name="tele2_eas_name" translatable="false">Tele2</string>
-    <string name="account_manager_type_versatel" translatable="false">com.android.versatel</string>
-    <string name="versatel_eas_name" translatable="false">Versatel</string>
-    <string name="account_manager_type_tiscali" translatable="false">com.android.tiscali</string>
-    <string name="tiscali_eas_name" translatable="false">Tiscali</string>
-    <string name="account_manager_type_swing" translatable="false">com.android.swing</string>
-    <string name="swing_eas_name" translatable="false">Swing</string>
-    <string name="account_manager_type_versatelasdl" translatable="false">com.android.versatelasdl</string>
-    <string name="versatelasdl_eas_name" translatable="false">Versatel ADSL</string>
-    <string name="account_manager_type_brutele" translatable="false">com.android.brutele</string>
-    <string name="brutele_eas_name" translatable="false">Brutele</string>
-    <string name="account_manager_type_teledisnet" translatable="false">com.android.teledisnet</string>
-    <string name="teledisnet_eas_name" translatable="false">Teledisnet</string>
-    <string name="account_manager_type_tvcablenet" translatable="false">com.android.tvcablenet</string>
-    <string name="tvcablenet_eas_name" translatable="false">TV Cable Net</string>
-    <string name="account_manager_type_alice" translatable="false">com.android.alice</string>
-    <string name="alice_eas_name" translatable="false">Alice</string>
-    <string name="account_manager_type_yahoo" translatable="false">com.android.yahoo</string>
-    <string name="yahoo_eas_name" translatable="false">Yahoo</string>
-    <string name="account_manager_type_outlook" translatable="false">com.android.outlook</string>
-    <string name="outlook_eas_name" translatable="false">Outlook</string>
-    <string name="account_manager_type_gmail" translatable="false">com.android.gmail</string>
-    <string name="gmail_eas_name" translatable="false">Gmail</string>
-    <string name="account_manager_type_aol" translatable="false">com.android.aol</string>
-    <string name="aol_eas_name" translatable="false">Aol</string>
-    <string name="account_manager_type_free" translatable="false">com.android.free</string>
-    <string name="free_eas_name" translatable="false">Free</string>
-    <string name="account_manager_type_laposte" translatable="false">com.android.laposte</string>
-    <string name="laposte_eas_name" translatable="false">Laposte</string>
-    <string name="account_manager_type_sfr" translatable="false">com.android.sfr</string>
-    <string name="sfr_eas_name" translatable="false">Sfr</string>
-    <string name="account_manager_type_orange" translatable="false">com.android.orange</string>
-    <string name="orange_eas_name" translatable="false">Orange</string>
-    <string name="account_manager_type_noos" translatable="false">com.android.noos</string>
-    <string name="noos_eas_name" translatable="false">Noos</string>
-    <string name="account_manager_type_vodafone" translatable="false">com.android.vodafone</string>
-    <string name="vodafone_eas_name" translatable="false">Vodafone mail</string>
-    <string name="account_manager_type_hotmail" translatable="false">com.android.hotmail</string>
-    <string name="hotmail_eas_name" translatable="false">Hotmail</string>
-    <string name="account_manager_type_sapo" translatable="false">com.android.sapo</string>
-    <string name="sapo_eas_name" translatable="false">Sapo</string>
-    <string name="account_manager_type_netcabo" translatable="false">com.android.netcabo</string>
-    <string name="netcabo_eas_name" translatable="false">Netcabo</string>
-    <string name="account_manager_type_clix" translatable="false">com.android.clix</string>
-    <string name="clix_eas_name" translatable="false">clix</string>
+    <string name="account_manager_type_default_first" translatable="false">com.android.email.default.first</string>
+    <string name="default_first_eas_name" translatable="false">Default First</string>
+    <string name="account_manager_type_default_second" translatable="false">com.android.email.default.second</string>
+    <string name="default_second_eas_name" translatable="false">Default Second</string>
+    <string name="account_manager_type_default_third" translatable="false">com.android.email.default.third</string>
+    <string name="default_third_eas_name" translatable="false">Default Third</string>
+    <string name="account_manager_type_default_fourth" translatable="false">com.android.email.default.fourth</string>
+    <string name="default_fourth_eas_name" translatable="false">Default Fourth</string>
+    <string name="account_manager_type_default_fifth" translatable="false">com.android.email.default.fifth</string>
+    <string name="default_fifth_eas_name" translatable="false">Default Fifth</string>
+    <string name="account_manager_type_default_sixth" translatable="false">com.android.email.default.sixth</string>
+    <string name="default_sixth_eas_name" translatable="false">Default Sixth</string>
+    <string name="account_manager_type_default_seventh" translatable="false">com.android.email.default.seventh</string>
+    <string name="default_seventh_eas_name" translatable="false">Default Seventh</string>
+    <string name="account_manager_type_default_eighth" translatable="false">com.android.email.default.eighth</string>
+    <string name="default_eighth_eas_name" translatable="false">Default Eighth</string>
+    <string name="account_manager_type_default_ninth" translatable="false">com.android.email.default.ninth</string>
+    <string name="default_ninth_eas_name" translatable="false">Default Ninth</string>
+    <string name="account_manager_type_default_tenth" translatable="false">com.android.email.default.tenth</string>
+    <string name="default_tenth_eas_name" translatable="false">Default Tenth</string>
+    <string name="account_manager_type_default_eleventh" translatable="false">com.android.email.default.eleventh</string>
+    <string name="default_eleventh_eas_name" translatable="false">Default Eleventh</string>
+    <string name="account_manager_type_default_twelfth" translatable="false">com.android.email.default.twelfth</string>
+    <string name="default_twelfth_eas_name" translatable="false">Default Twelfth</string>
+    <string name="account_manager_type_default_thirteenth" translatable="false">com.android.email.default.thirteenth</string>
+    <string name="default_thirteenth_eas_name" translatable="false">Default Thirteenth</string>
+    <string name="account_manager_type_default_fourteenth" translatable="false">com.android.email.default.fourteenth</string>
+    <string name="default_fourteenth_eas_name" translatable="false">Default Fourteenth</string>
+    <string name="account_manager_type_default_fifteenth" translatable="false">com.android.email.default.fifteenth</string>
+    <string name="default_fifteenth_eas_name" translatable="false">Default Fifteenth</string>
+    <string name="account_manager_type_default_sixteenth" translatable="false">com.android.email.default.fifteenth</string>
+    <string name="default_sixteenth_eas_name" translatable="false">Default Sixteenth</string>
+    <string name="account_manager_type_default_seventeenth" translatable="false">com.android.email.default.seventeenth</string>
+    <string name="default_seventeenth_eas_name" translatable="false">Default Seventeenth</string>
+    <string name="account_manager_type_default_eighteenth" translatable="false">com.android.email.default.eighteenth</string>
+    <string name="default_eighteenth_eas_name" translatable="false">Default Eighteenth</string>
+    <string name="account_manager_type_default_ninteenth" translatable="false">com.android.email.default.ninteenth</string>
+    <string name="default_ninteenth_eas_name" translatable="false">Default Ninteenth</string>
+    <string name="account_manager_type_default_twentith" translatable="false">com.android.email.default.twentith</string>
+    <string name="default_twentith_eas_name" translatable="false">Default Twentith</string>
+    <!-- string to show Email signature with brand -->
+    <string name="default_email_signature_with_brand"></string>
 </resources>

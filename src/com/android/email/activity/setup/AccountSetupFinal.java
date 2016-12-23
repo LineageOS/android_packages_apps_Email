@@ -35,6 +35,7 @@ import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Build;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
@@ -351,12 +352,17 @@ public class AccountSetupFinal extends AccountSetupActivity
             updateContentFragment(false /* addToBackstack */);
             getFragmentManager().executePendingTransactions();
 
-            if (!DEBUG_ALLOW_NON_TEST_HARNESS_CREATION &&
-                    !ActivityManager.isRunningInTestHarness()) {
-                LogUtils.e(LogUtils.TAG,
-                        "ERROR: Force account create only allowed while in test harness");
-                finish();
-                return;
+            //Enabling force create account for OMA CP
+            boolean forceConfigurationEnabled = getResources()
+                    .getBoolean(R.bool.enable_force_configure_account);
+            if(!forceConfigurationEnabled){
+                if (!DEBUG_ALLOW_NON_TEST_HARNESS_CREATION &&
+                        !ActivityManager.isRunningInTestHarness()) {
+                    LogUtils.e(LogUtils.TAG,
+                            "ERROR: Force account create only allowed while in test harness");
+                    finish();
+                    return;
+                }
             }
 
             mForceCreate = true;
@@ -934,7 +940,13 @@ public class AccountSetupFinal extends AccountSetupActivity
      */
     private void populateSetupData(String senderName, String senderEmail) {
         final Account account = mSetupData.getAccount();
-        String signature = getResources().getString(R.string.default_email_signature);
+        String deviceName = Build.MODEL;
+        String signature = getResources().getString(R.string.default_email_signature, deviceName);
+        if (getResources().getBoolean(
+                R.bool.config_email_signature_with_brand)) {
+            signature = String.format(getResources().getString(
+                R.string.default_email_signature_with_brand) ,Build.BRAND);
+        }
         if (!TextUtils.isEmpty(signature)) {
             account.setSignature(signature);
         }
