@@ -30,6 +30,7 @@
   <!-- Name of application on Home screen -->
   <string name="app_name">پۆستی ئەلەکترۆنی</string>
   <!-- Actions will be used as buttons and in menu items -->
+  <skip></skip>
   <!--  Menu item used to create a new quick response [CHAR_LIMIT=16] -->
   <string name="create_action">دروستکردنی دانه‌یه‌کی نوێ</string>
   <!-- Message informing user when a list that would contain quick responses
