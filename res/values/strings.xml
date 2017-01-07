@@ -703,7 +703,6 @@
     <string name="default_domain"></string>
     <!-- Customize Email account's signature -->
     <string name="default_email_signature"></string>
-    <string name="default_email_signature_with_brand"></string>
     <string name="missing_required_permission">You have disabled a required permission.</string>
     <string name="account_manager_type_default_first" translatable="false">com.android.email.default.first</string>
     <string name="default_first_eas_name" translatable="false">Default First</string>
