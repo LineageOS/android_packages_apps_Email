@@ -689,7 +689,7 @@
         <service
             android:name=".service.ExtendAuthenticatorService$DefaultFirstAuthenticatorService"
             android:exported="true"
-            android:enabled="true"
+            android:enabled="false"
             >
             <intent-filter>
                 <action
@@ -704,7 +704,7 @@
         <service
             android:name=".service.ExtendAuthenticatorService$DefaultSecondAuthenticatorService"
             android:exported="true"
-            android:enabled="true"
+            android:enabled="false"
             >
             <intent-filter>
                 <action
@@ -719,7 +719,7 @@
         <service
             android:name=".service.ExtendAuthenticatorService$DefaultThirdAuthenticatorService"
             android:exported="true"
-            android:enabled="true"
+            android:enabled="false"
             >
             <intent-filter>
                 <action
@@ -734,7 +734,7 @@
         <service
             android:name=".service.ExtendAuthenticatorService$DefaultFourthAuthenticatorService"
             android:exported="true"
-            android:enabled="true"
+            android:enabled="false"
             >
             <intent-filter>
                 <action
@@ -749,7 +749,7 @@
         <service
             android:name=".service.ExtendAuthenticatorService$DefaultFifthAuthenticatorService"
             android:exported="true"
-            android:enabled="true"
+            android:enabled="false"
             >
             <intent-filter>
                 <action
@@ -764,7 +764,7 @@
         <service
             android:name=".service.ExtendAuthenticatorService$DefaultSixthAuthenticatorService"
             android:exported="true"
-            android:enabled="true"
+            android:enabled="false"
             >
             <intent-filter>
                 <action
@@ -779,7 +779,7 @@
         <service
             android:name=".service.ExtendAuthenticatorService$DefaultSeventhAuthenticatorService"
             android:exported="true"
-            android:enabled="true"
+            android:enabled="false"
             >
             <intent-filter>
                 <action
@@ -794,7 +794,7 @@
         <service
             android:name=".service.ExtendAuthenticatorService$DefaultEighthAuthenticatorService"
             android:exported="true"
-            android:enabled="true"
+            android:enabled="false"
             >
             <intent-filter>
                 <action
@@ -809,7 +809,7 @@
         <service
             android:name=".service.ExtendAuthenticatorService$DefaultNinthAuthenticatorService"
             android:exported="true"
-            android:enabled="true"
+            android:enabled="false"
             >
             <intent-filter>
                 <action
@@ -824,7 +824,7 @@
         <service
             android:name=".service.ExtendAuthenticatorService$DefaultTenthAuthenticatorService"
             android:exported="true"
-            android:enabled="true"
+            android:enabled="false"
             >
             <intent-filter>
                 <action
@@ -839,7 +839,7 @@
         <service
             android:name=".service.ExtendAuthenticatorService$DefaultEleventhAuthenticatorService"
             android:exported="true"
-            android:enabled="true"
+            android:enabled="false"
             >
             <intent-filter>
                 <action
@@ -854,7 +854,7 @@
         <service
             android:name=".service.ExtendAuthenticatorService$DefaultTwelfthAuthenticatorService"
             android:exported="true"
-            android:enabled="true"
+            android:enabled="false"
             >
             <intent-filter>
                 <action
@@ -869,7 +869,7 @@
         <service
             android:name=".service.ExtendAuthenticatorService$DefaultThirteenthAuthenticatorService"
             android:exported="true"
-            android:enabled="true"
+            android:enabled="false"
             >
             <intent-filter>
                 <action
@@ -884,7 +884,7 @@
         <service
             android:name=".service.ExtendAuthenticatorService$DefaultFourteenthAuthenticatorService"
             android:exported="true"
-            android:enabled="true"
+            android:enabled="false"
             >
             <intent-filter>
                 <action
@@ -899,7 +899,7 @@
         <service
             android:name=".service.ExtendAuthenticatorService$DefaultFifteenthAuthenticatorService"
             android:exported="true"
-            android:enabled="true"
+            android:enabled="false"
             >
             <intent-filter>
                 <action
@@ -914,7 +914,7 @@
         <service
             android:name=".service.ExtendAuthenticatorService$DefaultSixteenthAuthenticatorService"
             android:exported="true"
-            android:enabled="true"
+            android:enabled="false"
             >
             <intent-filter>
                 <action
@@ -929,7 +929,7 @@
         <service
             android:name=".service.ExtendAuthenticatorService$DefaultSeventeenthAuthenticatorService"
             android:exported="true"
-            android:enabled="true"
+            android:enabled="false"
             >
             <intent-filter>
                 <action
@@ -944,7 +944,7 @@
         <service
             android:name=".service.ExtendAuthenticatorService$DefaultEighteenthAuthenticatorService"
             android:exported="true"
-            android:enabled="true"
+            android:enabled="false"
             >
             <intent-filter>
                 <action
@@ -959,7 +959,7 @@
         <service
             android:name=".service.ExtendAuthenticatorService$DefaultNinteenthAuthenticatorService"
             android:exported="true"
-            android:enabled="true"
+            android:enabled="false"
             >
             <intent-filter>
                 <action
@@ -974,7 +974,7 @@
         <service
             android:name=".service.ExtendAuthenticatorService$DefaultTwentithAuthenticatorService"
             android:exported="true"
-            android:enabled="true"
+            android:enabled="false"
             >
             <intent-filter>
                 <action
