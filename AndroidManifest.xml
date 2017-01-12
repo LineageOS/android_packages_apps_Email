@@ -687,7 +687,7 @@
         </service>
 
         <service
-            android:name=".service.ExtendAuthenticatorService$DefaultFirstAuthenticatorService"
+            android:name=".service.MobistarAuthenticatorService"
             android:exported="true"
             android:enabled="true"
             >
@@ -697,12 +697,12 @@
             </intent-filter>
             <meta-data
                 android:name="android.accounts.AccountAuthenticator"
-                android:resource="@xml/authenticator_default_first"
+                android:resource="@xml/authenticator_mobistar"
                 />
         </service>
 
         <service
-            android:name=".service.ExtendAuthenticatorService$DefaultSecondAuthenticatorService"
+            android:name=".service.WanadooAuthenticatorService"
             android:exported="true"
             android:enabled="true"
             >
@@ -712,12 +712,12 @@
             </intent-filter>
             <meta-data
                 android:name="android.accounts.AccountAuthenticator"
-                android:resource="@xml/authenticator_default_second"
+                android:resource="@xml/authenticator_wanadoo"
                 />
         </service>
 
         <service
-            android:name=".service.ExtendAuthenticatorService$DefaultThirdAuthenticatorService"
+            android:name=".service.OrangeMailAuthenticatorService"
             android:exported="true"
             android:enabled="true"
             >
@@ -727,12 +727,12 @@
             </intent-filter>
             <meta-data
                 android:name="android.accounts.AccountAuthenticator"
-                android:resource="@xml/authenticator_default_third"
+                android:resource="@xml/authenticator_orangemail"
                 />
         </service>
 
         <service
-            android:name=".service.ExtendAuthenticatorService$DefaultFourthAuthenticatorService"
+            android:name=".service.CorreoOrangeAuthenticatorService"
             android:exported="true"
             android:enabled="true"
             >
@@ -742,12 +742,12 @@
             </intent-filter>
             <meta-data
                 android:name="android.accounts.AccountAuthenticator"
-                android:resource="@xml/authenticator_default_fourth"
+                android:resource="@xml/authenticator_correoorange"
                 />
         </service>
 
         <service
-            android:name=".service.ExtendAuthenticatorService$DefaultFifthAuthenticatorService"
+            android:name=".service.OrangeMobileAuthenticatorService"
             android:exported="true"
             android:enabled="true"
             >
@@ -757,12 +757,12 @@
             </intent-filter>
             <meta-data
                 android:name="android.accounts.AccountAuthenticator"
-                android:resource="@xml/authenticator_default_fifth"
+                android:resource="@xml/authenticator_orangemobile"
                 />
         </service>
 
         <service
-            android:name=".service.ExtendAuthenticatorService$DefaultSixthAuthenticatorService"
+            android:name=".service.MultiBoxAuthenticatorService"
             android:exported="true"
             android:enabled="true"
             >
@@ -772,12 +772,12 @@
             </intent-filter>
             <meta-data
                 android:name="android.accounts.AccountAuthenticator"
-                android:resource="@xml/authenticator_default_sixth"
+                android:resource="@xml/authenticator_multibox"
                 />
         </service>
 
         <service
-            android:name=".service.ExtendAuthenticatorService$DefaultSeventhAuthenticatorService"
+            android:name=".service.BelgacomAuthenticatorService"
             android:exported="true"
             android:enabled="true"
             >
@@ -787,12 +787,12 @@
             </intent-filter>
             <meta-data
                 android:name="android.accounts.AccountAuthenticator"
-                android:resource="@xml/authenticator_default_seventh"
+                android:resource="@xml/authenticator_belgacom"
                 />
         </service>
 
         <service
-            android:name=".service.ExtendAuthenticatorService$DefaultEighthAuthenticatorService"
+            android:name=".service.SkynetAuthenticatorService"
             android:exported="true"
             android:enabled="true"
             >
@@ -802,12 +802,12 @@
             </intent-filter>
             <meta-data
                 android:name="android.accounts.AccountAuthenticator"
-                android:resource="@xml/authenticator_default_eighth"
+                android:resource="@xml/authenticator_skynet"
                 />
         </service>
 
         <service
-            android:name=".service.ExtendAuthenticatorService$DefaultNinthAuthenticatorService"
+            android:name=".service.TelenetAuthenticatorService"
             android:exported="true"
             android:enabled="true"
             >
@@ -817,12 +817,12 @@
             </intent-filter>
             <meta-data
                 android:name="android.accounts.AccountAuthenticator"
-                android:resource="@xml/authenticator_default_ninth"
+                android:resource="@xml/authenticator_telenet"
                 />
         </service>
 
         <service
-            android:name=".service.ExtendAuthenticatorService$DefaultTenthAuthenticatorService"
+            android:name=".service.ScarletAuthenticatorService"
             android:exported="true"
             android:enabled="true"
             >
@@ -832,12 +832,12 @@
             </intent-filter>
             <meta-data
                 android:name="android.accounts.AccountAuthenticator"
-                android:resource="@xml/authenticator_default_tenth"
+                android:resource="@xml/authenticator_scarlet"
                 />
         </service>
 
         <service
-            android:name=".service.ExtendAuthenticatorService$DefaultEleventhAuthenticatorService"
+            android:name=".service.EuphonyAuthenticatorService"
             android:exported="true"
             android:enabled="true"
             >
@@ -847,12 +847,12 @@
             </intent-filter>
             <meta-data
                 android:name="android.accounts.AccountAuthenticator"
-                android:resource="@xml/authenticator_default_eleventh"
+                android:resource="@xml/authenticator_euphony"
                 />
         </service>
 
         <service
-            android:name=".service.ExtendAuthenticatorService$DefaultTwelfthAuthenticatorService"
+            android:name=".service.VooAuthenticatorService"
             android:exported="true"
             android:enabled="true"
             >
@@ -862,12 +862,12 @@
             </intent-filter>
             <meta-data
                 android:name="android.accounts.AccountAuthenticator"
-                android:resource="@xml/authenticator_default_twelfth"
+                android:resource="@xml/authenticator_voo"
                 />
         </service>
 
         <service
-            android:name=".service.ExtendAuthenticatorService$DefaultThirteenthAuthenticatorService"
+            android:name=".service.Tele2AuthenticatorService"
             android:exported="true"
             android:enabled="true"
             >
@@ -877,12 +877,12 @@
             </intent-filter>
             <meta-data
                 android:name="android.accounts.AccountAuthenticator"
-                android:resource="@xml/authenticator_default_thirteenth"
+                android:resource="@xml/authenticator_tele2"
                 />
         </service>
 
         <service
-            android:name=".service.ExtendAuthenticatorService$DefaultFourteenthAuthenticatorService"
+            android:name=".service.VersatelAuthenticatorService"
             android:exported="true"
             android:enabled="true"
             >
@@ -892,12 +892,12 @@
             </intent-filter>
             <meta-data
                 android:name="android.accounts.AccountAuthenticator"
-                android:resource="@xml/authenticator_default_fourteenth"
+                android:resource="@xml/authenticator_versatel"
                 />
         </service>
 
         <service
-            android:name=".service.ExtendAuthenticatorService$DefaultFifteenthAuthenticatorService"
+            android:name=".service.TiscaliAuthenticatorService"
             android:exported="true"
             android:enabled="true"
             >
@@ -907,12 +907,12 @@
             </intent-filter>
             <meta-data
                 android:name="android.accounts.AccountAuthenticator"
-                android:resource="@xml/authenticator_default_fifteenth"
+                android:resource="@xml/authenticator_tiscali"
                 />
         </service>
 
         <service
-            android:name=".service.ExtendAuthenticatorService$DefaultSixteenthAuthenticatorService"
+            android:name=".service.SwingAuthenticatorService"
             android:exported="true"
             android:enabled="true"
             >
@@ -922,12 +922,12 @@
             </intent-filter>
             <meta-data
                 android:name="android.accounts.AccountAuthenticator"
-                android:resource="@xml/authenticator_default_sixteenth"
+                android:resource="@xml/authenticator_swing"
                 />
         </service>
 
         <service
-            android:name=".service.ExtendAuthenticatorService$DefaultSeventeenthAuthenticatorService"
+            android:name=".service.VersatelADSLAuthenticatorService"
             android:exported="true"
             android:enabled="true"
             >
@@ -937,12 +937,12 @@
             </intent-filter>
             <meta-data
                 android:name="android.accounts.AccountAuthenticator"
-                android:resource="@xml/authenticator_default_seventeenth"
+                android:resource="@xml/authenticator_versatelasdl"
                 />
         </service>
 
         <service
-            android:name=".service.ExtendAuthenticatorService$DefaultEighteenthAuthenticatorService"
+            android:name=".service.BruteleAuthenticatorService"
             android:exported="true"
             android:enabled="true"
             >
@@ -952,12 +952,12 @@
             </intent-filter>
             <meta-data
                 android:name="android.accounts.AccountAuthenticator"
-                android:resource="@xml/authenticator_default_eighteenth"
+                android:resource="@xml/authenticator_brutele"
                 />
         </service>
 
         <service
-            android:name=".service.ExtendAuthenticatorService$DefaultNinteenthAuthenticatorService"
+            android:name=".service.TeledisnetAuthenticatorService"
             android:exported="true"
             android:enabled="true"
             >
@@ -967,12 +967,12 @@
             </intent-filter>
             <meta-data
                 android:name="android.accounts.AccountAuthenticator"
-                android:resource="@xml/authenticator_default_ninteenth"
+                android:resource="@xml/authenticator_teledisnet"
                 />
         </service>
 
         <service
-            android:name=".service.ExtendAuthenticatorService$DefaultTwentithAuthenticatorService"
+            android:name=".service.TVCableNetAuthenticatorService"
             android:exported="true"
             android:enabled="true"
             >
@@ -982,10 +982,512 @@
             </intent-filter>
             <meta-data
                 android:name="android.accounts.AccountAuthenticator"
-                android:resource="@xml/authenticator_default_twentith"
+                android:resource="@xml/authenticator_tvcablenet"
                 />
         </service>
 
+        <service
+            android:name=".service.WanadooAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+            >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_wanadoo"
+                />
+        </service>
+
+        <service
+            android:name=".service.OrangeMailAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+            >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_orangemail"
+                />
+        </service>
+
+        <service
+            android:name=".service.CorreoOrangeAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+            >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_correoorange"
+                />
+        </service>
+
+        <service
+            android:name=".service.OrangeMobileAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+            >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_orangemobile"
+                />
+        </service>
+
+        <service
+            android:name=".service.MultiBoxAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+            >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_multibox"
+                />
+        </service>
+
+        <service
+            android:name=".service.BelgacomAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+            >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_belgacom"
+                />
+        </service>
+
+        <service
+            android:name=".service.SkynetAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+            >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_skynet"
+                />
+        </service>
+
+        <service
+            android:name=".service.TelenetAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+            >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_telenet"
+                />
+        </service>
+
+        <service
+            android:name=".service.ScarletAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+            >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_scarlet"
+                />
+        </service>
+
+        <service
+            android:name=".service.EuphonyAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+            >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_euphony"
+                />
+        </service>
+
+        <service
+            android:name=".service.VooAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+            >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_voo"
+                />
+        </service>
+
+        <service
+            android:name=".service.Tele2AuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+            >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_tele2"
+                />
+        </service>
+
+        <service
+            android:name=".service.VersatelAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+            >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_versatel"
+                />
+        </service>
+
+        <service
+            android:name=".service.TiscaliAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+            >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_tiscali"
+                />
+        </service>
+
+        <service
+            android:name=".service.SwingAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+            >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_swing"
+                />
+        </service>
+
+        <service
+            android:name=".service.VersatelADSLAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+            >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_versatelasdl"
+                />
+        </service>
+
+        <service
+            android:name=".service.BruteleAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+            >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_brutele"
+                />
+        </service>
+
+        <service
+            android:name=".service.TeledisnetAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+            >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_teledisnet"
+                />
+        </service>
+
+        <service
+            android:name=".service.TVCableNetAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+            >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_tvcablenet"
+                />
+        </service>
+
+        <service
+            android:name=".service.AliceAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+            >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_alice"
+                />
+        </service>
+
+        <service
+            android:name=".service.YahooAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+            >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_yahoo"
+                />
+        </service>
+
+        <service
+            android:name=".service.OutLookAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+            >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_outlook"
+                />
+        </service>
+
+        <service
+            android:name=".service.GmailAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+            >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_gmail"
+                />
+        </service>
+
+        <service
+            android:name=".service.SfrAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+            >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_sfr"
+                />
+        </service>
+
+        <service
+            android:name=".service.AolAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+            >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_aol"
+                />
+        </service>
+
+        <service
+            android:name=".service.LaposteAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+            >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_laposte"
+                />
+        </service>
+
+        <service
+            android:name=".service.NoosAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+            >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_noos"
+                />
+        </service>
+        <service
+            android:name=".service.VodafoneAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+        >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_vodafone"
+            />
+        </service>
+        <service
+            android:name=".service.HotmailAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+        >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_hotmail"
+            />
+        </service>
+        <service
+            android:name=".service.SapoAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+        >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_sapo"
+            />
+        </service>
+        <service
+            android:name=".service.NetcaboAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+        >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_netcabo"
+            />
+        </service>
+        <service
+            android:name=".service.ClixAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+        >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_clix"
+            />
+        </service>
+        <service
+            android:name=".service.OrangeAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+            >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_orange"
+                />
+        </service>
+        <service
+            android:name=".service.FreeAuthenticatorService"
+            android:exported="true"
+            android:enabled="true"
+            >
+            <intent-filter>
+                <action
+                    android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_free"
+                />
+        </service>
         <!--Required stanza to register the EasTestAuthenticatorService with AccountManager -->
         <service
             android:name=".service.EasTestAuthenticatorService"
