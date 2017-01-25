@@ -316,4 +316,6 @@
   <!-- Customize Email account's signature -->
   <string name="default_email_signature"></string>
   <string name="default_email_signature_with_brand"></string>
+  <!-- string to show Email signature with brand -->
+  <string name="default_email_signature_with_brand"></string>
 </resources>
