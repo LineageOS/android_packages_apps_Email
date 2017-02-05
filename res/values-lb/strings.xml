@@ -28,7 +28,6 @@
   <!-- Name of application on Home screen -->
   <string name="app_name">E-Mail</string>
   <!-- Actions will be used as buttons and in menu items -->
-  <skip></skip>
   <!--  Menu item used to create a new quick response [CHAR_LIMIT=16] -->
   <string name="create_action">Nei erstellen</string>
   <!-- Message informing user when a list that would contain quick responses
@@ -527,10 +526,6 @@
   <string name="folder_sync_settings_pref_title">Synchroniséierungsastellunge vum Dossier</string>
   <!-- In Account setup options & Account Settings screens, Email sync size option. -->
   <!--Delete email account -->
-  <string name="default_domain"></string>
   <!-- Customize Email account's signature -->
-  <string name="default_email_signature"></string>
-  <string name="default_email_signature_with_brand"></string>
   <!-- string to show Email signature with brand -->
-  <string name="default_email_signature_with_brand"></string>
 </resources>
