@@ -396,7 +396,7 @@
         <provider
             android:authorities="com.android.email.conversation.provider"
             android:label="@string/conversation_content_provider"
-            android:exported="true"
+            android:exported="false"
             android:name="com.android.mail.browse.EmailConversationProvider" >
             <grant-uri-permission android:pathPattern=".*" />
         </provider>
@@ -1541,7 +1541,7 @@
             android:name=".provider.AttachmentProvider"
             android:authorities="com.android.email.attachmentprovider"
             android:grantUriPermissions="true"
-            android:exported="true"
+            android:exported="false"
             android:readPermission="com.android.email.permission.READ_ATTACHMENT"
             />
 
