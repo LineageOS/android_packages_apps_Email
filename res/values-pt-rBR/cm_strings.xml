@@ -17,7 +17,7 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Delete account -->
-  <string name="delete_account">Apagar conta</string>
+  <string name="delete_account">Excluir conta</string>
   <string name="delete_account_confirmation_msg">Todas as configurações e e-mails da conta <xliff:g id="account">%s</xliff:g> serão apagados. Essa operação não pode ser desfeita.\n\nDeseja continuar?</string>
   <string name="deleting_account_msg">Apagando a conta\u2026</string>
   <string name="delete_account_failed">Não foi possível apagar a conta</string>
