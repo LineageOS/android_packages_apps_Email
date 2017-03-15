@@ -102,6 +102,7 @@
   <!-- "Incoming server settings" screen, label for text field, should be uppercase where applicable -->
   <!-- "Incoming server settings" screen, label for text field, should be uppercase where applicable -->
   <!-- "Incoming server settings" screen, label for pop-up menu, should be uppercase where applicable -->
+  <string name="account_setup_incoming_security_label">TRIBA DE SEGURANZA</string>
   <!-- "Incoming server settings" screen, option for "Security type" pop-up menu indicating
         the desire for an unencrypted session -->
   <!-- "Incoming server settings" screen, option for "Security type" pop-up menu indicating
@@ -125,6 +126,7 @@
   <!-- On "Outgoing server settings" screen, label for text field, should be uppercase where applicable -->
   <!-- On "Outgoing server settings" screen, label for text field, should be uppercase where applicable -->
   <!-- On "Outgoing server settings" screen, label for pop-up menu, should be uppercase where applicable -->
+  <string name="account_setup_outgoing_security_label">TRIBA DE SEGURANZA</string>
   <!-- On "Outgoing server settings" screen, label for check box, should be uppercase where applicable -->
   <!-- On "Outgoing server settings" screen, label for text field, should be uppercase where applicable-->
   <!-- On "Exchange" setup screen, a heading title for the current client certificate, should be uppercase where applicable [CHAR LIMIT=50] -->
@@ -197,6 +199,7 @@
   <!-- Dialog shown when the account requires some amount of device security provisioning,
          just before jumping into system settings such as Device Policy grant, PIN/password,
          or encryption setup.  [CHAR_LIMIT=40] -->
+  <string name="account_security_dialog_title">Anovamientu de seguranza</string>
   <!-- Additional diagnostic text when the account requires some amount of device security
          provisioning, just before jumping into system settings such as Device Policy grant,
          PIN/password, or encryption setup.  [CHAR LIMIT=none] -->
@@ -207,6 +210,7 @@
   <!-- Notification content title when device security policies have changed [CHAR_LIMIT=36] -->
   <!-- Notification content title when device security policies cannot be met [CHAR_LIMIT=30] -->
   <!-- Title of the activity that dispatches changes to device security.  Not normally seen. -->
+  <string name="account_security_title">Seguranza de preséu</string>
   <!-- Additional diagnostic text when the email app asserts control of the phone.
         [CHAR LIMIT=none] -->
   <!-- "Setup could not finish" dialog action button -->
@@ -245,7 +249,9 @@
   <!-- On Settings screen, setting option summary [CHAR LIMIT=64] -->
   <!-- On Settings screen, section heading -->
   <!-- On Settings screen, section heading for data usage [CHAR LIMIT=70] -->
+  <string name="account_settings_data_usage">Usu de datos</string>
   <!-- On Settings screen, section heading -->
+  <string name="account_settings_policies">Polítiques de seguranza</string>
   <!-- On settings screen, dialog heading informing user to create or edit a quick response -->
   <!-- On settings screen, edit quick response dialog's "save" button -->
   <!-- On settings screen, sync contacts check box label [CHAR LIMIT=20]-->
