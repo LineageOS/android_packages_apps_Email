@@ -62,6 +62,7 @@
   <!-- Title of screen when trying to get oauth authentication -->
   <!-- Title of screen to choose with authentication to use -->
   <!-- Warning if there is a problem authenticating with oauth -->
+  <string name="oauth_error_description">Nun pue autenticase</string>
   <!-- Warning label displayed when the email address or password are incorrect -->
   <!-- Label displayed to confirm what email address we are trying to validate -->
   <!-- Headline of screen when setting up new email account (large text over divider)
@@ -182,6 +183,7 @@
   <!-- Additional diagnostic text when TLS was required but the server doesn't support it -->
   <!-- Additional diagnostic text when server does not support any of our authentication methods -->
   <!-- Additional diagnostic text when server connection failed due to security error -->
+  <string name="account_setup_failed_security">Nun pudo abrise la conexón del sirvidor pola mor d\'un fallu de seguranza.</string>
   <!-- Additional diagnostic text when server connection failed due to io error (connection) -->
   <!-- Additional diagnostic text when server connection failed due to our inability to support a
          required EAS protocol version [CHAR LIMIT=none] -->
@@ -207,12 +209,16 @@
   <!-- Notification ticker when device security required (note: unused in Holo XL) -->
   <!-- Notification ticker when device security required (note: unused in Holo XL) -->
   <!-- Notification content title when device security required [CHAR_LIMIT=30] -->
+  <string name="security_notification_content_update_title">Ríquense anovamientos de seguranza</string>
   <!-- Notification content title when device security policies have changed [CHAR_LIMIT=36] -->
   <!-- Notification content title when device security policies cannot be met [CHAR_LIMIT=30] -->
   <!-- Title of the activity that dispatches changes to device security.  Not normally seen. -->
   <string name="account_security_title">Seguranza de preséu</string>
   <!-- Additional diagnostic text when the email app asserts control of the phone.
         [CHAR LIMIT=none] -->
+  <string name="account_security_policy_explanation_fmt">
+         El sirvidor <xliff:g id="server">%s</xliff:g> rique que-y deas permisu pa controlarrequires that you allow it to remotely control
+         remotamente delles carauterístiques de seguranza del to preséu Android.</string>
   <!-- "Setup could not finish" dialog action button -->
   <!-- Notification ticker when device password is getting ready to expire [CHAR_LIMIT=80] -->
   <!-- Notification content title when device password is getting ready to expire
@@ -233,8 +239,10 @@
   <!-- On Settings screen, setting summary text -->
   <!-- On Settings screen, setting option name and title of dialog box that opens -->
   <!-- On Settings screen, setting option name -->
+  <string name="account_settings_incoming_label">Axustes d\'entrada</string>
   <!-- On Settings screen, setting option summary [CHAR LIMIT=64] -->
   <!-- On Settings screen, setting option name -->
+  <string name="account_settings_outgoing_label">Axustes de salida</string>
   <!-- On Settings screen, setting option summary [CHAR LIMIT=64] -->
   <!-- On Settings screen, setting option name -->
   <!-- On Settings screen, setting option summary [CHAR LIMIT=64] -->
@@ -262,6 +270,7 @@
   <!-- On settings screen, sync email summary text [CHAR LIMIT=35] -->
   <!-- On Settings screen, vibrate pop-up menu label -->
   <!-- On Settings screen, setting option name -->
+  <string name="account_settings_ringtone">Escoyer timbre</string>
   <!-- On Settings screen, section heading -->
   <!-- Mailbox settings activity title [CHAR LIMIT=none] -->
   <!-- Mailbox settings activity title, with the target folder name [CHAR LIMIT=none] -->
