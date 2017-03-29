@@ -262,6 +262,7 @@
   <string name="account_settings_policies">Polítiques de seguranza</string>
   <!-- On settings screen, dialog heading informing user to create or edit a quick response -->
   <!-- On settings screen, edit quick response dialog's "save" button -->
+  <string name="save_action">Guardar</string>
   <!-- On settings screen, sync contacts check box label [CHAR LIMIT=20]-->
   <!-- On settings screen, sync contacts summary text [CHAR LIMIT=35] -->
   <!-- On settings screen, sync calendar check box label [CHAR LIMIT=20]-->
