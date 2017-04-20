@@ -17,8 +17,16 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Delete account -->
+  <string name="delete_account">Fshi llogarinë</string>
+  <string name="delete_account_confirmation_msg">Ky veprim do të fshijë të gjithë parametrat dhe email-et e llogarisë <xliff:g id="account">%s</xliff:g>. Ky veprim nuk mund të zhbëhet.\n\nDëshiron të vazhdosh?</string>
+  <string name="deleting_account_msg">Duke fshirë llogarinë\u2026</string>
+  <string name="delete_account_failed">Llogaria nuk mund të fshihej</string>
   <!-- Mailbox notification settings activity title [CHAR LIMIT=none] -->
+  <string name="mailbox_notify_settings_activity_title">Opsionet e njoftimeve</string>
   <!-- Mailbox settings activity title, with the target folder name [CHAR LIMIT=none] -->
+  <string name="mailbox_notify_settings_activity_title_with_mailbox">Opsionet e njoftimeve (<xliff:g id="mailbox_name" example="Family">%s</xliff:g>)</string>
   <!-- Name for preference entry which leads to the per-folder notification settings activity -->
+  <string name="folder_notify_settings_pref_title">Parametrat e njoftimeve të dosjeve</string>
   <!-- On Settings screen, notification lights pop-up menu label -->
+  <string name="label_notification_lights_title">Dritat</string>
 </resources>
