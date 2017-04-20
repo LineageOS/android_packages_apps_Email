@@ -6205,10 +6205,26 @@ public class EmailProvider extends ContentProvider
     private Cursor uiSearch(Uri uri, String[] projection) {
         LogUtils.d(TAG, "runSearchQuery in search %s", uri);
         final long accountId = Long.parseLong(uri.getLastPathSegment());
+        long folderId = -1;
 
-        // TODO: Check the actual mailbox
-        Mailbox inbox = Mailbox.restoreMailboxOfType(getContext(), accountId, Mailbox.TYPE_INBOX);
-        if (inbox == null) {
+        try {
+            String folderIdString = uri.getQueryParameter(
+                    UIProvider.SearchQueryParameters.FOLDER_ID);
+            if (folderIdString != null) {
+                folderId = Long.valueOf(folderIdString);
+            }
+        } catch (NumberFormatException e) {
+            // ignore and keep -1
+        }
+
+        Mailbox folder = null;
+        if (folderId >= 0) {
+            folder = Mailbox.restoreMailboxWithId(getContext(), folderId);
+        }
+        if (folder == null) {
+            folder = Mailbox.restoreMailboxOfType(getContext(), accountId, Mailbox.TYPE_INBOX);
+        }
+        if (folder == null) {
             LogUtils.w(Logging.LOG_TAG, "In uiSearch, inbox doesn't exist for account "
                     + accountId);
 
@@ -6224,7 +6240,7 @@ public class EmailProvider extends ContentProvider
         Mailbox searchMailbox = getSearchMailbox(accountId);
         final long searchMailboxId = searchMailbox.mId;
 
-        mSearchParams = new SearchParams(inbox.mId, filter, searchMailboxId);
+        mSearchParams = new SearchParams(folder.mId, filter, searchMailboxId);
 
         final Context context = getContext();
         if (mSearchParams.mOffset == 0) {
