@@ -17,8 +17,16 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Delete account -->
+  <string name="delete_account">Delete account</string>
+  <string name="delete_account_confirmation_msg">This will delete all the settings and emails of the account <xliff:g id="account">%s</xliff:g>. This operation cannot be undone.\n\nContinue?</string>
+  <string name="deleting_account_msg">Deleting account\u2026</string>
+  <string name="delete_account_failed">Couldn\'t delete the account</string>
   <!-- Mailbox notification settings activity title [CHAR LIMIT=none] -->
+  <string name="mailbox_notify_settings_activity_title">Notification options</string>
   <!-- Mailbox settings activity title, with the target folder name [CHAR LIMIT=none] -->
+  <string name="mailbox_notify_settings_activity_title_with_mailbox">Notification options (<xliff:g id="mailbox_name" example="Family">%s</xliff:g>)</string>
   <!-- Name for preference entry which leads to the per-folder notification settings activity -->
+  <string name="folder_notify_settings_pref_title">Folder notification settings</string>
   <!-- On Settings screen, notification lights pop-up menu label -->
+  <string name="label_notification_lights_title">Lights</string>
 </resources>
