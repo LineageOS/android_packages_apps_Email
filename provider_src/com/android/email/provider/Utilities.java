@@ -40,6 +40,8 @@ import com.android.emailcommon.utility.ConversionUtilities;
 import com.android.mail.utils.LogUtils;
 import com.android.mail.utils.Utils;
 
+import org.apache.commons.io.IOUtils;
+
 import java.io.InputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -133,8 +135,9 @@ public class Utilities {
                 MimeUtility.collectParts(message, viewables, attachments);
 
                 // Don't close the viewables attachment InputStream yet
+                final ArrayList<InputStream> bodyInputStreams = new ArrayList<InputStream>();
                 final ConversionUtilities.BodyFieldData data =
-                        ConversionUtilities.parseBodyFields(viewables, false);
+                        ConversionUtilities.parseBodyFields(viewables, bodyInputStreams);
 
                 // set body and local message values
                 localMessage.setFlags(data.isQuotedReply, data.isQuotedForward);
@@ -186,18 +189,8 @@ public class Utilities {
                 }
 
                 // Close any parts that may still be open
-                for (final Part part : viewables) {
-                    if (part.getBody() == null) {
-                        continue;
-                    }
-                    try {
-                        InputStream is = part.getBody().getInputStream();
-                        if (is != null) {
-                            is.close();
-                        }
-                    } catch (IOException | MessagingException io) {
-                        // Ignore
-                    }
+                for (final InputStream is : bodyInputStreams) {
+                    IOUtils.closeQuietly(is);
                 }
 
                 // One last update of message with two updated flags
