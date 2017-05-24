@@ -1784,7 +1784,7 @@ public class ImapService extends Service {
                             LocalMessageInfo.PROJECTION,
                             EmailContent.MessageColumns.ACCOUNT_KEY + "=?"
                                     + " AND " + MessageColumns.MAILBOX_KEY + "=?"
-                                    + " AND " + MessageColumns.SERVER_ID + ">=?",
+                                    + " AND " + MessageColumns.SERVER_ID + "=?",
                             new String[] {
                                     String.valueOf(acct.mId),
                                     String.valueOf(mailbox.mId),
@@ -1877,6 +1877,9 @@ public class ImapService extends Service {
                     // Delete associated data (attachment files)
                     // Attachment & Body records are auto-deleted when we delete the Message record
                     AttachmentUtilities.deleteAllAttachmentFiles(ctx, acct.mId, info.mId);
+
+                    // Make sure we don't sync deleted messages we just got a flag update for
+                    unsyncedMessages.remove(remoteMessage);
 
                     // Delete the message itself
                     final Uri uriToDelete = ContentUris.withAppendedId(
