@@ -1105,7 +1105,7 @@ public class ImapStoreUnitTests extends InstrumentationTestCase {
         MimeUtility.collectParts(message1, viewables, attachments);
         assertTrue(viewables.size() == 1);
         emptyBodyPart = viewables.get(0);
-        String text = MimeUtility.getTextFromPart(emptyBodyPart, true);
+        String text = MimeUtility.getTextFromPart(emptyBodyPart, null);
         assertNull(text);
     }
 
