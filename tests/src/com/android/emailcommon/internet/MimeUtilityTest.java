@@ -369,19 +369,19 @@ public class MimeUtilityTest extends TestCase {
         // 1. test basic text/plain mode
         p.setHeader(MimeHeader.HEADER_CONTENT_TYPE, "text/plain");
         p.setBody(tb);
-        String gotText = MimeUtility.getTextFromPart(p, true);
+        String gotText = MimeUtility.getTextFromPart(p, null);
         assertEquals(theText, gotText);
 
         // 2. mixed case is OK
         p.setHeader(MimeHeader.HEADER_CONTENT_TYPE, "TEXT/PLAIN");
         p.setBody(tb);
-        gotText = MimeUtility.getTextFromPart(p, true);
+        gotText = MimeUtility.getTextFromPart(p, null);
         assertEquals(theText, gotText);
 
         // 3. wildcards OK
         p.setHeader(MimeHeader.HEADER_CONTENT_TYPE, "text/other");
         p.setBody(tb);
-        gotText = MimeUtility.getTextFromPart(p, true);
+        gotText = MimeUtility.getTextFromPart(p, null);
         assertEquals(theText, gotText);
     }
 
@@ -411,13 +411,13 @@ public class MimeUtilityTest extends TestCase {
         p.setBody(tb);
         // We call setHeader after setBody, since setBody overwrites Content-Type
         p.setHeader(MimeHeader.HEADER_CONTENT_TYPE, "text/html; charset=utf-8");
-        gotText = MimeUtility.getTextFromPart(p, true);
+        gotText = MimeUtility.getTextFromPart(p, null);
         assertTrue(MimeUtility.mimeTypeMatches(p.getMimeType(), "text/html"));
         assertEquals(UNICODE_EXPECT, gotText);
 
         p.setBody(tb);
         p.setHeader(MimeHeader.HEADER_CONTENT_TYPE, "text/html; charset=windows-1252");
-        gotText = MimeUtility.getTextFromPart(p, true);
+        gotText = MimeUtility.getTextFromPart(p, null);
         assertTrue(MimeUtility.mimeTypeMatches(p.getMimeType(), "text/html"));
         assertEquals(WINDOWS1252_EXPECT, gotText);
 
@@ -425,14 +425,14 @@ public class MimeUtilityTest extends TestCase {
         p.setBody(tb);
         p.setHeader(MimeHeader.HEADER_CONTENT_TYPE,
                     "text/html; prop1 = \"test\"; charset = \"utf-8\"; prop2 = \"test\"");
-        gotText = MimeUtility.getTextFromPart(p, true);
+        gotText = MimeUtility.getTextFromPart(p, null);
         assertTrue(MimeUtility.mimeTypeMatches(p.getMimeType(), "text/html"));
         assertEquals(UNICODE_EXPECT, gotText);
 
         p.setBody(tb);
         p.setHeader(MimeHeader.HEADER_CONTENT_TYPE,
                     "text/html; prop1 = \"test\"; charset = \"windows-1252\"; prop2 = \"test\"");
-        gotText = MimeUtility.getTextFromPart(p, true);
+        gotText = MimeUtility.getTextFromPart(p, null);
         assertTrue(MimeUtility.mimeTypeMatches(p.getMimeType(), "text/html"));
         assertEquals(WINDOWS1252_EXPECT, gotText);
 
@@ -442,13 +442,13 @@ public class MimeUtilityTest extends TestCase {
 
         p.setBody(tb);
         p.setHeader(MimeHeader.HEADER_CONTENT_TYPE, "TEXT/HtmL ; CHARseT=utf-8");
-        gotText = MimeUtility.getTextFromPart(p, true);
+        gotText = MimeUtility.getTextFromPart(p, null);
         assertTrue(MimeUtility.mimeTypeMatches(p.getMimeType(), "text/html"));
         assertEquals(UNICODE_EXPECT, gotText);
 
         p.setBody(tb);
         p.setHeader(MimeHeader.HEADER_CONTENT_TYPE, "TEXT/HtmL ; CHARseT=windows-1252");
-        gotText = MimeUtility.getTextFromPart(p, true);
+        gotText = MimeUtility.getTextFromPart(p, null);
         assertTrue(MimeUtility.mimeTypeMatches(p.getMimeType(), "text/html"));
         assertEquals(WINDOWS1252_EXPECT, gotText);
 
@@ -459,7 +459,7 @@ public class MimeUtilityTest extends TestCase {
         p.setBody(tb);
         p.setHeader(MimeHeader.HEADER_CONTENT_TYPE,
                     "text/html; charset=utf-8 (Plain text)");
-        gotText = MimeUtility.getTextFromPart(p, true);
+        gotText = MimeUtility.getTextFromPart(p, null);
         assertTrue(MimeUtility.mimeTypeMatches(p.getMimeType(), "text/html"));
         // Note: This test does not pass.
         //assertEquals(UNICODE_EXPECT, gotText);
@@ -467,7 +467,7 @@ public class MimeUtilityTest extends TestCase {
         p.setBody(tb);
         p.setHeader(MimeHeader.HEADER_CONTENT_TYPE,
                     "text/html; charset=windows-1252 (Plain text)");
-        gotText = MimeUtility.getTextFromPart(p, true);
+        gotText = MimeUtility.getTextFromPart(p, null);
         assertTrue(MimeUtility.mimeTypeMatches(p.getMimeType(), "text/html"));
         // Note: These tests does not pass.
         //assertEquals(WINDOWS1252_EXPECT, gotText);
