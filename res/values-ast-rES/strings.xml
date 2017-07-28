@@ -143,9 +143,13 @@
   <!-- In Account setup options & Account Settings screens, label for email check frequency option -->
   <!-- In Account setup options & Account Settings screens, label for email check frequency option -->
   <!-- In Account setup options & Account Settings screens, email check frequency option -->
+  <string name="account_setup_options_mail_check_frequency_5min">Cada 5 minutos</string>
   <!-- In Account setup options & Account Settings screens, email check frequency option -->
+  <string name="account_setup_options_mail_check_frequency_10min">Cada 10 minutos</string>
   <!-- In Account setup options & Account Settings screens, email check frequency option -->
+  <string name="account_setup_options_mail_check_frequency_15min">Cada 15 minutos</string>
   <!-- In Account setup options & Account Settings screens, email check frequency option -->
+  <string name="account_setup_options_mail_check_frequency_30min">Cada 30 minutos</string>
   <!-- In Account setup options & Account Settings screens, email check frequency option -->
   <!-- In Account setup options & Account Settings screens, check box for new-mail notification -->
   <!-- In Account setup options screen, optional check box to also sync contacts -->
