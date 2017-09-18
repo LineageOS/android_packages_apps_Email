@@ -139,7 +139,6 @@
   <!-- On "Exchange" setup screen, a button label to include a client certificate [CHAR LIMIT=35] -->
   <!-- On "Exchange" setup screen, a button label to include a client certificate [CHAR LIMIT=35] -->
   <!-- On "Exchange" setup screen, a button label to remove the currently used client certificate [CHAR LIMIT=35] -->
-  <string name="account_setup_exchange_remove_certificate">Desaniciar</string>
   <!-- On "Exchange" setup screen, placeholder text to indicate no client
          certificate is used [CHAR LIMIT=50] -->
   <!-- On "Exchange" setup screen, the exchange device-id label, should be uppercase where applicable [CHAR LIMIT=30] -->
@@ -221,6 +220,8 @@
   <!-- Notification content title when device security required [CHAR_LIMIT=30] -->
   <string name="security_notification_content_update_title">Ríquense anovamientos de seguranza</string>
   <!-- Notification content title when device security policies have changed [CHAR_LIMIT=36] -->
+  <string name="security_notification_content_change_title">Camudaron les polítiques
+         de seguranza</string>
   <!-- Notification content title when device security policies cannot be met [CHAR_LIMIT=30] -->
   <!-- Title of the activity that dispatches changes to device security.  Not normally seen. -->
   <string name="account_security_title">Seguranza del preséu</string>
@@ -252,10 +253,8 @@
   <!-- On Settings screen, setting summary text -->
   <!-- On Settings screen, setting option name and title of dialog box that opens -->
   <!-- On Settings screen, setting option name -->
-  <string name="account_settings_incoming_label">Axustes d\'entrada</string>
   <!-- On Settings screen, setting option summary [CHAR LIMIT=64] -->
   <!-- On Settings screen, setting option name -->
-  <string name="account_settings_outgoing_label">Axustes de salida</string>
   <!-- On Settings screen, setting option summary [CHAR LIMIT=64] -->
   <!-- On Settings screen, setting option name -->
   <!-- On Settings screen, setting option summary [CHAR LIMIT=64] -->
@@ -270,12 +269,10 @@
   <!-- On Settings screen, setting option summary [CHAR LIMIT=64] -->
   <!-- On Settings screen, section heading -->
   <!-- On Settings screen, section heading for data usage [CHAR LIMIT=70] -->
-  <string name="account_settings_data_usage">Usu de datos</string>
   <!-- On Settings screen, section heading -->
   <string name="account_settings_policies">Polítiques de seguranza</string>
   <!-- On settings screen, dialog heading informing user to create or edit a quick response -->
   <!-- On settings screen, edit quick response dialog's "save" button -->
-  <string name="save_action">Guardar</string>
   <!-- On settings screen, sync contacts check box label [CHAR LIMIT=20]-->
   <!-- On settings screen, sync contacts summary text [CHAR LIMIT=35] -->
   <!-- On settings screen, sync calendar check box label [CHAR LIMIT=20]-->
@@ -318,7 +315,9 @@
   <!-- This is shown when a user responds to a meeting invitation [CHAR LIMIT=none]-->
   <!-- Used by AccountManager -->
   <!-- Account type name as used by AccountManager UI (IMAP is not translatable) [CHAR LIMIT=30] -->
+  <string name="imap_name">Personal (IMAP)</string>
   <!-- Account type name as used by AccountManager UI (POP3 is not translatable) [CHAR LIMIT=30] -->
+  <string name="pop3_name">Personal (POP3)</string>
   <!-- Displayed when the user must pick his server's trash folder from a list [CHAR LIMIT 30]-->
   <!-- Displayed when the user must pick his server's sent items folder from a list [CHAR LIMIT 30]-->
   <string name="account_waiting_for_folders_msg">Cargando\'l llistáu de carpetes&#8230;</string>
@@ -330,8 +329,19 @@
   <!-- Gmail name for redirecting during account setup -->
   <!-- Name for preference entry which leads to the per-folder sync settings activity -->
   <!-- In Account setup options & Account Settings screens, Email sync size option. -->
+  <string name="account_settings_sync_size_enable_summary">P\'aforrar datos, podríes configurar el tamañu de sincronización per corréu de la cuenta</string>
+  <string name="account_settings_sync_size_label">Escoyer tamañu de sincronización</string>
+  <string name="account_settings_sync_size_category_label">Axustes de tamañu de sincronización</string>
+  <string name="account_setup_options_mail_sync_size_20k">20KB</string>
+  <string name="account_setup_options_mail_sync_size_100k">100KB</string>
+  <string name="account_setup_options_mail_sync_size_200k">200KB</string>
+  <string name="account_setup_options_mail_sync_size_500k">500KB</string>
+  <string name="account_setup_options_mail_sync_size_1M">1MB</string>
   <!--Delete email account -->
+  <string name="remove_email_account">Desaniciar cuenta</string>
   <string name="remove_email_account_continue">SIGUIR</string>
+  <string name="remove_email_account_message">Tas a piques de dir a Axustes, onde pues desaniciar cuentes</string>
   <!-- Customize Email account's signature -->
+  <string name="missing_required_permission">Deshabilitesti un permisu riquíu.</string>
   <!-- string to show Email signature with brand -->
 </resources>
