@@ -444,4 +444,15 @@
         <incoming uri="imap+ssl+://android.imap.mail.yahoo.com" username="$email" />
         <outgoing uri="smtp+ssl+://android.smtp.mail.yahoo.com" username="$email" />
     </provider>
+
+    <!-- Ukraine -->
+    <provider id="freemail" label="FreeMail" domain="ukr.net">
+        <incoming uri="imap+ssl+://imap.ukr.net" username="$email" />
+        <outgoing uri="smtp+ssl+://smtp.ukr.net" username="$email" />
+    </provider>
+    <provider id="meta.ua" label="META" domain="meta.ua">
+        <incoming uri="pop3+ssl+://pop.meta.ua" username="$email" />
+        <outgoing uri="smtp+ssl+://smtp.meta.ua" username="$email" />
+    </provider>
+
 </providers>
