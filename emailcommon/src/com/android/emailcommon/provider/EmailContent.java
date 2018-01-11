@@ -1721,6 +1721,14 @@ public abstract class EmailContent {
         public static final String MAX_ATTACHMENT_SIZE = "maxAttachmentSize";
         // Current duration of the Exchange ping
         public static final String PING_DURATION = "pingDuration";
+        // If the user could set the sync size for this account.
+        public static final String SET_SYNC_SIZE_ENABLED = "setSyncSizeEnabled";
+        // The sync size for each message of this account.
+        public static final String SYNC_SIZE = "syncSize";
+        // Automatically fetch pop3 attachments
+        public static final String AUTO_FETCH_ATTACHMENTS = "autoFetchAttachments";
+        // Account capabilities (check EmailServiceProxy#CAPABILITY_*)
+        public static final String CAPABILITIES = "capabilities";
     }
 
     public interface QuickResponseColumns extends BaseColumns {
