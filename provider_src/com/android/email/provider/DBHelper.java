@@ -184,7 +184,10 @@ public final class DBHelper {
     // Version 126: Decode address lists for To, From, Cc, Bcc and Reply-To columns in Message.
     // Version 127: Force mFlags to contain the correct flags for EAS accounts given a protocol
     //              version above 12.0
-    public static final int DATABASE_VERSION = 127;
+    // Version 129: Update all IMAP INBOX mailboxes to force synchronization
+    // Version 130: Account capabilities (check EmailServiceProxy#CAPABILITY_*)
+    // Version 131: Add setSyncSizeEnabled and syncSize columns for Account table.
+    public static final int DATABASE_VERSION = 131;
 
     // Any changes to the database format *must* include update-in-place code.
     // Original version: 2
@@ -517,6 +520,10 @@ public final class DBHelper {
             + AccountColumns.POLICY_KEY + " integer, "
             + AccountColumns.MAX_ATTACHMENT_SIZE + " integer, "
             + AccountColumns.PING_DURATION + " integer"
+            + AccountColumns.SET_SYNC_SIZE_ENABLED + " integer, "
+            + AccountColumns.SYNC_SIZE + " integer, "
+            + AccountColumns.AUTO_FETCH_ATTACHMENTS + " integer, "
+            + AccountColumns.CAPABILITIES + " integer default 0"
             + ");";
         db.execSQL("create table " + Account.TABLE_NAME + s);
         // Deleting an account deletes associated Mailboxes and HostAuth's
@@ -1469,6 +1476,117 @@ public final class DBHelper {
             if (oldVersion <= 126) {
                 upgradeFromVersion126ToVersion127(mContext, db);
             }
+            if (oldVersion <= 128) {
+                try {
+                    db.execSQL("alter table " + Account.TABLE_NAME
+                            + " add column " + AccountColumns.AUTO_FETCH_ATTACHMENTS
+                            + " integer" + ";");
+                    final ContentValues cv = new ContentValues(1);
+                    cv.put(AccountColumns.AUTO_FETCH_ATTACHMENTS, 0);
+                    db.update(Account.TABLE_NAME, cv, null, null);
+                } catch (final SQLException e) {
+                    // Shouldn't be needed unless we're debugging and interrupt the process
+                    LogUtils.w(TAG, "Exception upgrading EmailProvider.db from v128 to v129", e);
+                }
+            }
+
+            // This statement changes the syncInterval column to 1 for all IMAP INBOX mailboxes.
+            // It does this by matching mailboxes against all account IDs whose receive auth is
+            // either R.string.protocol_legacy_imap, R.string.protocol_imap or "imap"
+            // It needed in order to mark
+            // We do it here to avoid the minor collisions with aosp main db
+            if (oldVersion <= 129) {
+                db.execSQL("update " + Mailbox.TABLE_NAME + " set "
+                        + MailboxColumns.SYNC_INTERVAL + "= 1 where "
+                        + MailboxColumns.TYPE + "= " + Mailbox.TYPE_INBOX + " and "
+                        + MailboxColumns.ACCOUNT_KEY + " in (select "
+                        + Account.TABLE_NAME + "." + AccountColumns._ID + " from "
+                        + Account.TABLE_NAME + " join " + HostAuth.TABLE_NAME + " where "
+                        + HostAuth.TABLE_NAME + "." + HostAuthColumns._ID + "="
+                        + Account.TABLE_NAME + "." + AccountColumns.HOST_AUTH_KEY_RECV
+                        + " and (" + HostAuth.TABLE_NAME + "."
+                        + HostAuthColumns.PROTOCOL + "='"
+                        + mContext.getString(R.string.protocol_legacy_imap) + "' or "
+                        + HostAuth.TABLE_NAME + "." + HostAuthColumns.PROTOCOL + "='"
+                        + mContext.getString(R.string.protocol_imap) + "' or "
+                        + HostAuth.TABLE_NAME + "." + HostAuthColumns.PROTOCOL + "='imap'));");
+            }
+
+            if (oldVersion <= 130) {
+                //Account capabilities (check EmailServiceProxy#CAPABILITY_*)
+                try {
+                    // Create capabilities field
+                    db.execSQL("alter table " + Account.TABLE_NAME
+                            + " add column " + AccountColumns.CAPABILITIES
+                            + " integer" + " default 0;");
+
+/* From old email app. We don't have EmailServiceProxy, so leave the default.
+                    // Update all accounts with the appropriate capabilities
+                    Cursor c = db.rawQuery("select " + Account.TABLE_NAME + "."
+                            + AccountColumns._ID + ", " + HostAuth.TABLE_NAME + "."
+                            + HostAuthColumns.PROTOCOL + " from " + Account.TABLE_NAME + ", "
+                            + HostAuth.TABLE_NAME + " where " + Account.TABLE_NAME + "."
+                            + AccountColumns.HOST_AUTH_KEY_RECV + " = " + HostAuth.TABLE_NAME
+                            + "." + HostAuthColumns._ID + ";", null);
+                    if (c != null) {
+                        try {
+                            while(c.moveToNext()) {
+                                long id = c.getLong(c.getColumnIndexOrThrow(AccountColumns._ID));
+                                String protocol = c.getString(c.getColumnIndexOrThrow(
+                                        HostAuthColumns.PROTOCOL));
+
+                                int capabilities = 0;
+                                if (protocol.equals(LEGACY_SCHEME_IMAP)
+                                        || protocol.equals(LEGACY_SCHEME_EAS)) {
+                                    // Don't know yet if the imap server supports the IDLE
+                                    // capability, but since this is upgrading the account,
+                                    // just assume that all imap servers supports the push
+                                    // capability and let disable it by the IMAP service
+                                    capabilities |= EmailServiceProxy.CAPABILITY_PUSH;
+                                }
+                                final ContentValues cv = new ContentValues(1);
+                                cv.put(AccountColumns.CAPABILITIES, capabilities);
+                                db.update(Account.TABLE_NAME, cv, AccountColumns._ID + " = ?",
+                                        new String[]{String.valueOf(id)});
+                            }
+                        } finally {
+                            c.close();
+                        }
+                    }
+*/
+                } catch (final SQLException e) {
+                    // Shouldn't be needed unless we're debugging and interrupt the process
+                    LogUtils.w(TAG, "Exception upgrading EmailProvider.db from v129 to v130", e);
+                }
+            }
+
+            if (oldVersion <= 131) {
+                try {
+/* From old email app. We don't have SyncSize so hard-code the defaults
+                    db.execSQL("alter table " + Account.TABLE_NAME
+                            + " add column " + AccountColumns.SET_SYNC_SIZE_ENABLED + " integer"
+                            + " default " + SyncSize.ENABLED_DEFAULT_VALUE + ";");
+                    db.execSQL("alter table " + Account.TABLE_NAME
+                            + " add column " + AccountColumns.SYNC_SIZE + " integer"
+                            + " default " + SyncSize.SYNC_SIZE_DEFAULT_VALUE + ";");
+*/
+                    db.execSQL("alter table " + Account.TABLE_NAME
+                            + " add column " + AccountColumns.SET_SYNC_SIZE_ENABLED + " integer"
+                            + " default " + 1 + ";");
+                    db.execSQL("alter table " + Account.TABLE_NAME
+                            + " add column " + AccountColumns.SYNC_SIZE + " integer"
+                            + " default " + 204800 + ";");
+                } catch (SQLException e) {
+                    // Shouldn't be needed unless we're debugging and interrupt the process
+                    LogUtils.w(TAG, "Exception upgrading EmailProvider.db from 130 to 131", e);
+                }
+            }
+
+            // Due to a bug in commit 44a064e5f16ddaac25f2acfc03c118f65bc48aec,
+            // AUTO_FETCH_ATTACHMENTS column could not be available in the Account table.
+            // Since cm12 and up doesn't use this column, we are leave as is it. In case
+            // the feature were added, then we need to create a new exception to ensure
+            // that the columns is re-added.
         }
 
         @Override
