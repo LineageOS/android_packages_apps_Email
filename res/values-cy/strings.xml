@@ -300,7 +300,21 @@
   <!-- Gmail name for redirecting during account setup -->
   <!-- Name for preference entry which leads to the per-folder sync settings activity -->
   <!-- In Account setup options & Account Settings screens, Email sync size option. -->
+  <string name="account_settings_sync_size_enable">Ffurfweddu maint cysoni fesul neges</string>
+  <string name="account_settings_sync_size_enable_summary">I arbed defnydd data, mae\'n bosib cyfyngu maint y negeseuon hynny i\'w cysoni.</string>
+  <string name="account_settings_sync_size_label">Dewis maint cysoni</string>
+  <string name="account_settings_sync_size_category_label">Gosodiadau maint cysoni</string>
+  <string name="account_setup_options_mail_sync_size_all">Y cyfan</string>
+  <string name="account_setup_options_mail_sync_size_20k">20KB</string>
+  <string name="account_setup_options_mail_sync_size_100k">100KB</string>
+  <string name="account_setup_options_mail_sync_size_200k">200KB</string>
+  <string name="account_setup_options_mail_sync_size_500k">500KB</string>
+  <string name="account_setup_options_mail_sync_size_1M">1MB</string>
   <!--Delete email account -->
+  <string name="remove_email_account">Tynnu\'r cyfrif</string>
+  <string name="remove_email_account_continue">PARHAU</string>
+  <string name="remove_email_account_message">Rwyt ar fin mynd i osodiadau\'r ap, ble mae\'n bosib tynnu cyfrifon.</string>
   <!-- Customize Email account's signature -->
+  <string name="missing_required_permission">Rwyt wedi analluogi caniatâd sy\'n angenrheidiol.</string>
   <!-- string to show Email signature with brand -->
 </resources>
