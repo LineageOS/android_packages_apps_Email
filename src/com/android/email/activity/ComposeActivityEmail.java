@@ -68,4 +68,9 @@ public class ComposeActivityEmail extends ComposeActivity
             mBodyView.setSelection(mBodyView.getText().length());
         }
     }
+
+    @Override
+    protected String getEmailAttachmentProviderAuthority() {
+        return EmailContent.Attachment.ATTACHMENT_PROVIDER_AUTHORITY;
+    }
 }
