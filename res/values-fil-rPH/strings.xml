@@ -69,7 +69,6 @@
   <!-- On "Set up email" screen, enthusiastic welcome message. -->
   <!-- On "Set up email" screen, hint for account email address text field -->
   <!-- Label between OAuth and password authentication, indicating the user must do one or the other [CHAR LIMIT=40] -->
-  <string name="or_label">NEU</string>
   <!-- Label for signing in with Google using OAuth -->
   <!-- On "Set up email" screen, hint for account email password text field, should be uppercase where applicable -->
   <!-- hint for account email password text field -->
@@ -154,9 +153,7 @@
   <!-- In account setup options & account settings screens (exchange), sync window length; this
         implies loading a 'reasonable' number of messages [CHAR LIMIT=25] -->
   <!-- A sync window length setting (i.e. load messages this far back) [CHAR LIMIT=25]  -->
-  <string name="account_setup_options_mail_window_1day">Y diwrnod diwethaf</string>
   <!-- A sync window length setting (i.e. load messages this far back) [CHAR LIMIT=25]  -->
-  <string name="account_setup_options_mail_window_3days">Y tridiau diwethaf</string>
   <!-- A sync window length setting (i.e. load messages this far back) [CHAR LIMIT=25]  -->
   <!-- A sync window length setting (i.e. load messages this far back) [CHAR LIMIT=25]  -->
   <!-- A sync window length setting (i.e. load messages this far back) [CHAR LIMIT=25]  -->
@@ -227,12 +224,9 @@
   <!-- On Settings screen, setting option name -->
   <!-- Title of account preference for downloading attachments in background [CHAR LIMIT=32] -->
   <!-- Summary of account preference for downloading attachments in background [CHAR LIMIT=64] -->
-  <string name="account_settings_notify_label">Hysbysiadau ebost</string>
   <!-- On Settings screen, summary line when called via AccountManager for Exchange accounts
         [CHAR LIMIT=50] -->
-  <string name="account_settings_summary">Amlder cysoni, hysbysiadau, ayb.</string>
   <!-- On Settings screen, setting summary text -->
-  <string name="account_settings_notify_summary">Anfon hysbysiad pan fydd yr e-bost yn cyrraedd</string>
   <!-- On Settings screen, setting option name and title of dialog box that opens -->
   <!-- On Settings screen, setting option name -->
   <!-- On Settings screen, setting option summary [CHAR LIMIT=64] -->
@@ -250,13 +244,11 @@
         for insertion in message body. [CHAR_LIMIT=24]-->
   <!-- On Settings screen, setting option summary [CHAR LIMIT=64] -->
   <!-- On Settings screen, section heading -->
-  <string name="account_settings_notifications">Gosodiadau hysbysiadau</string>
   <!-- On Settings screen, section heading for data usage [CHAR LIMIT=70] -->
   <!-- On Settings screen, section heading -->
   <!-- On settings screen, dialog heading informing user to create or edit a quick response -->
   <!-- On settings screen, edit quick response dialog's "save" button -->
   <!-- On settings screen, sync contacts check box label [CHAR LIMIT=20]-->
-  <string name="account_settings_sync_contacts_enable">Cysoni cysylltiadau</string>
   <!-- On settings screen, sync contacts summary text [CHAR LIMIT=35] -->
   <!-- On settings screen, sync calendar check box label [CHAR LIMIT=20]-->
   <!-- On settings screen, sync calendar summary text [CHAR LIMIT=50] -->
@@ -291,7 +283,6 @@
         customized as necessary by the translator, in case one or more of these is inappropriate in
         a particular locale or if there are better options available. -->
   <!-- A "quick response", i.e. a quick reply to a received mail [CHAR LIMIT=NONE] -->
-  <string name="quick_1">Diolch!</string>
   <!-- A "quick response", i.e. a quick reply to a received mail [CHAR LIMIT=NONE] -->
   <!-- A "quick response", i.e. a quick reply to a received mail [CHAR LIMIT=NONE] -->
   <!-- A "quick response", i.e. a quick reply to a received mail [CHAR LIMIT=NONE] -->
@@ -309,21 +300,7 @@
   <!-- Gmail name for redirecting during account setup -->
   <!-- Name for preference entry which leads to the per-folder sync settings activity -->
   <!-- In Account setup options & Account Settings screens, Email sync size option. -->
-  <string name="account_settings_sync_size_enable">Ffurfweddu maint cysoni fesul neges</string>
-  <string name="account_settings_sync_size_enable_summary">I arbed defnydd data, mae\'n bosib cyfyngu maint y negeseuon hynny i\'w cysoni.</string>
-  <string name="account_settings_sync_size_label">Dewis maint cysoni</string>
-  <string name="account_settings_sync_size_category_label">Gosodiadau maint cysoni</string>
-  <string name="account_setup_options_mail_sync_size_all">Y cyfan</string>
-  <string name="account_setup_options_mail_sync_size_20k">20KB</string>
-  <string name="account_setup_options_mail_sync_size_100k">100KB</string>
-  <string name="account_setup_options_mail_sync_size_200k">200KB</string>
-  <string name="account_setup_options_mail_sync_size_500k">500KB</string>
-  <string name="account_setup_options_mail_sync_size_1M">1MB</string>
   <!--Delete email account -->
-  <string name="remove_email_account">Tynnu\'r cyfrif</string>
-  <string name="remove_email_account_continue">PARHAU</string>
-  <string name="remove_email_account_message">Rwyt ar fin mynd i osodiadau\'r ap, ble mae\'n bosib tynnu cyfrifon.</string>
   <!-- Customize Email account's signature -->
-  <string name="missing_required_permission">Rwyt wedi analluogi caniatâd sy\'n angenrheidiol.</string>
   <!-- string to show Email signature with brand -->
 </resources>
