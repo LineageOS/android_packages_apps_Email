@@ -22,6 +22,7 @@
   <!-- Permissions label for accessing the main provider -->
   <!-- Permissions description for accessing the main provider -->
   <!-- Name of application on Home screen -->
+  <string name="app_name">Corréu</string>
   <!-- Actions will be used as buttons and in menu items -->
   <!--  Menu item used to create a new quick response [CHAR_LIMIT=16] -->
   <!-- Message informing user when a list that would contain quick responses
