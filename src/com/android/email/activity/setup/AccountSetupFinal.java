@@ -35,6 +35,7 @@ import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Build;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
@@ -43,6 +44,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.android.email.R;
+import com.android.email.activity.RequestPermissionsActivity;
 import com.android.email.setup.AuthenticatorSetupIntentHelper;
 import com.android.email.service.EmailServiceUtils;
 import com.android.emailcommon.VendorPolicyLoader;
@@ -182,6 +184,9 @@ public class AccountSetupFinal extends AccountSetupActivity
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        if (RequestPermissionsActivity.startPermissionActivity(this)) {
+            finish();
+        }
         super.onCreate(savedInstanceState);
 
         final Intent intent = getIntent();
@@ -347,12 +352,17 @@ public class AccountSetupFinal extends AccountSetupActivity
             updateContentFragment(false /* addToBackstack */);
             getFragmentManager().executePendingTransactions();
 
-            if (!DEBUG_ALLOW_NON_TEST_HARNESS_CREATION &&
-                    !ActivityManager.isRunningInTestHarness()) {
-                LogUtils.e(LogUtils.TAG,
-                        "ERROR: Force account create only allowed while in test harness");
-                finish();
-                return;
+            //Enabling force create account for OMA CP
+            boolean forceConfigurationEnabled = getResources()
+                    .getBoolean(R.bool.enable_force_configure_account);
+            if(!forceConfigurationEnabled){
+                if (!DEBUG_ALLOW_NON_TEST_HARNESS_CREATION &&
+                        !ActivityManager.isRunningInTestHarness()) {
+                    LogUtils.e(LogUtils.TAG,
+                            "ERROR: Force account create only allowed while in test harness");
+                    finish();
+                    return;
+                }
             }
 
             mForceCreate = true;
@@ -917,7 +927,7 @@ public class AccountSetupFinal extends AccountSetupActivity
     public void setDefaultsForProtocol(Account account) {
         final EmailServiceUtils.EmailServiceInfo info = mSetupData.getIncomingServiceInfo(this);
         if (info == null) return;
-        account.mSyncInterval = info.defaultSyncInterval;
+        account.setSyncInterval(info.defaultSyncInterval);
         account.mSyncLookback = info.defaultLookback;
         if (info.offerLocalDeletes) {
             account.setDeletePolicy(info.defaultLocalDeletes);
@@ -930,6 +940,16 @@ public class AccountSetupFinal extends AccountSetupActivity
      */
     private void populateSetupData(String senderName, String senderEmail) {
         final Account account = mSetupData.getAccount();
+        String deviceName = Build.MODEL;
+        String signature = getResources().getString(R.string.default_email_signature, deviceName);
+        if (getResources().getBoolean(
+                R.bool.config_email_signature_with_brand)) {
+            signature = String.format(getResources().getString(
+                R.string.default_email_signature_with_brand) ,Build.BRAND);
+        }
+        if (!TextUtils.isEmpty(signature)) {
+            account.setSignature(signature);
+        }
         account.setSenderName(senderName);
         account.setEmailAddress(senderEmail);
         account.setDisplayName(senderEmail);
@@ -1126,7 +1146,8 @@ public class AccountSetupFinal extends AccountSetupActivity
             newFlags |= Account.FLAGS_BACKGROUND_ATTACHMENTS;
         }
         final HostAuth hostAuth = account.getOrCreateHostAuthRecv(this);
-        if (hostAuth.mProtocol.equals(getString(R.string.protocol_eas))) {
+        if (hostAuth.mProtocol.equals(getString(R.string.protocol_eas))
+                && account.mProtocolVersion != null) {
             try {
                 final double protocolVersionDouble = Double.parseDouble(account.mProtocolVersion);
                 if (protocolVersionDouble >= 12.0) {
@@ -1143,6 +1164,8 @@ public class AccountSetupFinal extends AccountSetupActivity
         }
         account.setFlags(newFlags);
         account.setSyncInterval(fragment.getCheckFrequencyValue());
+        account.setSyncSizeEnabled(fragment.getSyncSizeEnabledValue());
+        account.setSyncSize(fragment.getSyncSizeValue());
         final Integer syncWindowValue = fragment.getAccountSyncWindowValue();
         if (syncWindowValue != null) {
             account.setSyncLookback(syncWindowValue);

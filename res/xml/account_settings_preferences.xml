@@ -83,6 +83,26 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory
+        android:title="@string/account_settings_sync_size_category_label">
+
+        <CheckBoxPreference
+            android:key="account_sync_size_enable"
+            android:enabled="false"
+            android:defaultValue="true"
+            android:title="@string/account_settings_sync_size_enable"
+            android:summary="@string/account_settings_sync_size_enable_summary" />
+
+        <ListPreference
+            android:key="account_sync_size"
+            android:enabled="false"
+            android:title="@string/account_settings_sync_size_label"
+            android:entries="@array/account_setup_options_mail_sync_size_entries_labels"
+            android:entryValues="@array/account_setup_options_mail_sync_size_entries_values"
+            android:dialogTitle="@string/account_settings_sync_size_label" />
+
+    </PreferenceCategory>
+
     <!-- This category is enabled after the folder preferences are loaded -->
     <PreferenceCategory
         android:enabled="false"
@@ -105,6 +125,12 @@
             android:dependency="notifications-enabled"
             android:defaultValue="false"
             android:title="@string/label_notification_vibrate_title" />
+
+        <com.android.mail.preferences.notifications.FolderNotificationLightPreference
+            android:key="notification-lights"
+            android:dependency="notifications-enabled"
+            android:defaultValue=""
+            android:title="@string/label_notification_lights_title" />
 
     </PreferenceCategory>
 

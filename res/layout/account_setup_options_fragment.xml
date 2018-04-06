@@ -73,4 +73,22 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:text="@string/account_setup_options_background_attachments_label" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <CheckBox
+            android:id="@+id/account_sync_size_enable"
+            style="@style/account_setup_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/account_settings_sync_size_enable" />
+        <Spinner
+            android:id="@+id/account_sync_size"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/account_sync_size_enable"
+            android:layout_alignTop="@+id/account_sync_size_enable"
+            android:layout_alignBottom="@+id/account_sync_size_enable"
+            android:visibility="invisible" />
+    </RelativeLayout>
 </LinearLayout>

@@ -31,6 +31,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 
 import com.android.email.R;
+import com.android.email.service.EmailServiceUtils.EmailServiceInfo;
 import com.android.emailcommon.TempDirectory;
 import com.android.emailcommon.mail.MessagingException;
 import com.android.emailcommon.provider.Account;
@@ -48,13 +49,16 @@ import java.util.ArrayList;
 
 public class PopImapSyncAdapterService extends Service {
     private static final String TAG = "PopImapSyncService";
-    private SyncAdapterImpl mSyncAdapter = null;
+    private AbstractThreadedSyncAdapter mSyncAdapter = null;
+
+    private static String sPop3Protocol;
+    private static String sLegacyImapProtocol;
 
     public PopImapSyncAdapterService() {
         super();
     }
 
-    private static class SyncAdapterImpl extends AbstractThreadedSyncAdapter {
+    static class SyncAdapterImpl extends AbstractThreadedSyncAdapter {
         public SyncAdapterImpl(Context context) {
             super(context, true /* autoInitialize */);
         }
@@ -67,10 +71,14 @@ public class PopImapSyncAdapterService extends Service {
         }
     }
 
+    public AbstractThreadedSyncAdapter getSyncAdapter() {
+        return new SyncAdapterImpl(getApplicationContext());
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
-        mSyncAdapter = new SyncAdapterImpl(getApplicationContext());
+        mSyncAdapter = getSyncAdapter();
     }
 
     @Override
@@ -82,40 +90,37 @@ public class PopImapSyncAdapterService extends Service {
      * @return whether or not this mailbox retrieves its data from the server (as opposed to just
      *     a local mailbox that is never synced).
      */
-    private static boolean loadsFromServer(Context context, Mailbox m, String protocol) {
-        String legacyImapProtocol = context.getString(R.string.protocol_legacy_imap);
-        String pop3Protocol = context.getString(R.string.protocol_pop3);
-        if (legacyImapProtocol.equals(protocol)) {
+    private static boolean loadsFromServer(Context context, Mailbox m, Account acct) {
+        if (isLegacyImapProtocol(context, acct)) {
             // TODO: actually use a sync flag when creating the mailboxes. Right now we use an
             // approximation for IMAP.
             return m.mType != Mailbox.TYPE_DRAFTS
                     && m.mType != Mailbox.TYPE_OUTBOX
                     && m.mType != Mailbox.TYPE_SEARCH;
 
-        } else if (pop3Protocol.equals(protocol)) {
+        } else if (isPop3Protocol(context, acct)) {
             return Mailbox.TYPE_INBOX == m.mType;
         }
 
         return false;
     }
 
-    private static void sync(final Context context, final long mailboxId,
+    private static boolean sync(final Context context, final long mailboxId,
             final Bundle extras, final SyncResult syncResult, final boolean uiRefresh,
             final int deltaMessageCount) {
         TempDirectory.setTempDirectory(context);
         Mailbox mailbox = Mailbox.restoreMailboxWithId(context, mailboxId);
-        if (mailbox == null) return;
+        if (mailbox == null) return false;
         Account account = Account.restoreAccountWithId(context, mailbox.mAccountKey);
-        if (account == null) return;
+        if (account == null) return false;
         ContentResolver resolver = context.getContentResolver();
-        String protocol = account.getProtocol(context);
         if ((mailbox.mType != Mailbox.TYPE_OUTBOX) &&
-                !loadsFromServer(context, mailbox, protocol)) {
+                !loadsFromServer(context, mailbox, account)) {
             // This is an update to a message in a non-syncing mailbox; delete this from the
             // updates table and return
             resolver.delete(Message.UPDATED_CONTENT_URI, MessageColumns.MAILBOX_KEY + "=?",
                     new String[] {Long.toString(mailbox.mId)});
-            return;
+            return true;
         }
         LogUtils.d(TAG, "About to sync mailbox: " + mailbox.mDisplayName);
 
@@ -129,7 +134,6 @@ public class PopImapSyncAdapterService extends Service {
         try {
             int lastSyncResult;
             try {
-                String legacyImapProtocol = context.getString(R.string.protocol_legacy_imap);
                 if (mailbox.mType == Mailbox.TYPE_OUTBOX) {
                     EmailServiceStub.sendMailImpl(context, account.mId);
                 } else {
@@ -138,7 +142,7 @@ public class PopImapSyncAdapterService extends Service {
                     EmailServiceStatus.syncMailboxStatus(resolver, extras, mailboxId,
                             EmailServiceStatus.IN_PROGRESS, 0, lastSyncResult);
                     final int status;
-                    if (protocol.equals(legacyImapProtocol)) {
+                    if (isLegacyImapProtocol(context, account)) {
                         status = ImapService.synchronizeMailboxSynchronous(context, account,
                                 mailbox, deltaMessageCount != 0, uiRefresh);
                     } else {
@@ -147,6 +151,7 @@ public class PopImapSyncAdapterService extends Service {
                     }
                     EmailServiceStatus.syncMailboxStatus(resolver, extras, mailboxId, status, 0,
                             lastSyncResult);
+                    return true;
                 }
             } catch (MessagingException e) {
                 final int type = e.getExceptionType();
@@ -186,6 +191,7 @@ public class PopImapSyncAdapterService extends Service {
             values.put(Mailbox.SYNC_TIME, System.currentTimeMillis());
             resolver.update(mailboxUri, values, null, null);
         }
+        return false;
     }
 
     /**
@@ -240,13 +246,21 @@ public class PopImapSyncAdapterService extends Service {
                     // Get the id for the mailbox we want to sync.
                     long [] mailboxIds = Mailbox.getMailboxIdsFromBundle(extras);
                     if (mailboxIds == null || mailboxIds.length == 0) {
-                        // No mailbox specified, just sync the inbox.
-                        // TODO: IMAP may eventually want to allow multiple auto-sync mailboxes.
-                        final long inboxId = Mailbox.findMailboxOfType(context, acct.mId,
-                                Mailbox.TYPE_INBOX);
-                        if (inboxId != Mailbox.NO_MAILBOX) {
-                            mailboxIds = new long[1];
-                            mailboxIds[0] = inboxId;
+                        EmailServiceInfo info = EmailServiceUtils.getServiceInfo(
+                                context, acct.getProtocol(context));
+                        // No mailbox specified, check if the protocol support auto-sync
+                        // multiple mailboxes. In that case retrieve the mailboxes to sync
+                        // from the account settings. Otherwise just sync the inbox.
+                        if (info.offerLookback) {
+                            mailboxIds = getLoopBackMailboxIdsForSync(context, acct);
+                        }
+                        if (mailboxIds == null || mailboxIds.length == 0) {
+                            final long inboxId = Mailbox.findMailboxOfType(context, acct.mId,
+                                    Mailbox.TYPE_INBOX);
+                            if (inboxId != Mailbox.NO_MAILBOX) {
+                                mailboxIds = new long[1];
+                                mailboxIds[0] = inboxId;
+                            }
                         }
                     }
 
@@ -255,9 +269,20 @@ public class PopImapSyncAdapterService extends Service {
                             extras.getBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, false);
                         int deltaMessageCount =
                                 extras.getInt(Mailbox.SYNC_EXTRA_DELTA_MESSAGE_COUNT, 0);
+                        boolean success = mailboxIds.length > 0;
                         for (long mailboxId : mailboxIds) {
-                            sync(context, mailboxId, extras, syncResult, uiRefresh,
-                                    deltaMessageCount);
+                            boolean result = sync(context, mailboxId, extras, syncResult,
+                                    uiRefresh, deltaMessageCount);
+                            if (!result) {
+                                success = false;
+                            }
+                        }
+
+                        // Initial sync performed?
+                        if (success) {
+                            // All mailboxes (that need a sync) are now synced. Assume we
+                            // have a valid sync key, in case this account has push support
+                            markAsInitialSyncKey(context, acct.mId);
                         }
                     }
                 }
@@ -269,5 +294,46 @@ public class PopImapSyncAdapterService extends Service {
                 c.close();
             }
         }
+    }
+
+    private static void markAsInitialSyncKey(Context context, long accountId) {
+        ContentResolver resolver = context.getContentResolver();
+        Uri accountUri = ContentUris.withAppendedId(Account.CONTENT_URI, accountId);
+        ContentValues values = new ContentValues();
+        values.put(AccountColumns.SYNC_KEY, "1");
+        resolver.update(accountUri, values, null, null);
+    }
+
+    private static boolean isLegacyImapProtocol(Context ctx, Account acct) {
+        if (sLegacyImapProtocol == null) {
+            sLegacyImapProtocol = ctx.getString(R.string.protocol_legacy_imap);
+        }
+        return acct.getProtocol(ctx).equals(sLegacyImapProtocol);
+    }
+
+    private static boolean isPop3Protocol(Context ctx, Account acct) {
+        if (sPop3Protocol == null) {
+            sPop3Protocol = ctx.getString(R.string.protocol_pop3);
+        }
+        return acct.getProtocol(ctx).equals(sPop3Protocol);
+    }
+
+    private static long[] getLoopBackMailboxIdsForSync(Context ctx, Account acct) {
+        final Cursor c = Mailbox.getLoopBackMailboxIdsForSync(ctx.getContentResolver(), acct.mId);
+        if (c == null) {
+            // No mailboxes
+            return null;
+        }
+        long[] mailboxes = new long[c.getCount()];
+        try {
+            int i = 0;
+            while (c.moveToNext()) {
+                mailboxes[i] = c.getLong(Mailbox.CONTENT_ID_COLUMN);
+                i++;
+            }
+        } finally {
+            c.close();
+        }
+        return mailboxes;
     }
 }
