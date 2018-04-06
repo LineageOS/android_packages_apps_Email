@@ -48,6 +48,7 @@ import com.android.emailcommon.provider.EmailContent.Message;
 import com.android.emailcommon.provider.EmailContent.MessageColumns;
 import com.android.emailcommon.provider.EmailContent.PolicyColumns;
 import com.android.emailcommon.provider.EmailContent.QuickResponseColumns;
+import com.android.emailcommon.provider.EmailContent.SuggestedContactColumns;
 import com.android.emailcommon.provider.EmailContent.SyncColumns;
 import com.android.emailcommon.provider.HostAuth;
 import com.android.emailcommon.provider.Mailbox;
@@ -56,7 +57,10 @@ import com.android.emailcommon.provider.MessageMove;
 import com.android.emailcommon.provider.MessageStateChange;
 import com.android.emailcommon.provider.Policy;
 import com.android.emailcommon.provider.QuickResponse;
+import com.android.emailcommon.provider.SuggestedContact;
+import com.android.emailcommon.service.EmailServiceProxy;
 import com.android.emailcommon.service.LegacyPolicySet;
+import com.android.emailcommon.service.SyncSize;
 import com.android.emailcommon.service.SyncWindow;
 import com.android.mail.providers.UIProvider;
 import com.android.mail.utils.LogUtils;
@@ -200,6 +204,11 @@ public final class DBHelper {
     // Version 100 is the first Email2 version
     // Version 101: Move body contents to external files
     public static final int BODY_DATABASE_VERSION = 101;
+
+    // Any changes to the database format *must* include update-in-place code.
+    // Original version: 1
+    // Version 1: Suggested contacts
+    public static final int EXTRAS_DATABASE_VERSION = 1;
 
     /*
      * Internal helper method for index creation.
@@ -692,6 +701,24 @@ public final class DBHelper {
         db.execSQL(createIndex(Body.TABLE_NAME, BodyColumns.MESSAGE_KEY));
     }
 
+    private static void createSuggestedContactTable(SQLiteDatabase db) {
+        String s = " (" + SuggestedContactColumns._ID + " integer primary key autoincrement, "
+            + SuggestedContactColumns.ACCOUNT_KEY + " integer, "
+            + SuggestedContactColumns.ADDRESS + " text, "
+            + SuggestedContactColumns.NAME + " text, "
+            + SuggestedContactColumns.DISPLAY_NAME + " text, "
+            + SuggestedContactColumns.LAST_SEEN + " integer"
+            + ");";
+        db.execSQL("create table " + SuggestedContact.TABLE_NAME + s);
+
+        // Create a unique index for account-address
+        String indexDDL = "create unique index " + SuggestedContact.TABLE_NAME.toLowerCase()
+                + "_account_address" + " on " + SuggestedContact.TABLE_NAME
+                + " (" + SuggestedContactColumns.ACCOUNT_KEY + ", "
+                + SuggestedContactColumns.ADDRESS + ");";
+        db.execSQL(indexDDL);
+    }
+
     private static void upgradeBodyToVersion5(final SQLiteDatabase db) {
         try {
             db.execSQL("drop table " + Body.TABLE_NAME);
@@ -830,6 +857,29 @@ public final class DBHelper {
         }
     }
 
+    protected static class ExtrasDatabaseHelper extends SQLiteOpenHelper {
+        final Context mContext;
+
+        ExtrasDatabaseHelper(Context context, String name) {
+            super(context, name, null, EXTRAS_DATABASE_VERSION);
+            mContext = context;
+        }
+
+        @Override
+        public void onCreate(SQLiteDatabase db) {
+            LogUtils.d(TAG, "Creating EmailProviderExtras database");
+            createSuggestedContactTable(db);
+        }
+
+        @Override
+        public void onUpgrade(final SQLiteDatabase db, final int oldVersion, final int newVersion) {
+        }
+
+        @Override
+        public void onOpen(SQLiteDatabase db) {
+        }
+    }
+
     /** Counts the number of messages in each mailbox, and updates the message count column. */
     @VisibleForTesting
     static void recalculateMessageCount(SQLiteDatabase db) {
@@ -875,6 +925,9 @@ public final class DBHelper {
         @Override
         @SuppressWarnings("deprecation")
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+            boolean fromCM11 = false;
+
             // For versions prior to 5, delete all data
             // Versions >= 5 require that data be preserved!
             if (oldVersion < 5) {
@@ -1460,7 +1513,11 @@ public final class DBHelper {
                 }
             }
 
-            if (oldVersion <= 124) {
+            if (oldVersion == 126) {
+                fromCM11 = true;
+            }
+
+            if (oldVersion <= 124 || fromCM11) {
                 createCredentialsTable(db);
                 // Add the credentialKey column, and set it to -1 for all pre-existing hostAuths.
                 db.execSQL("alter table " + HostAuth.TABLE_NAME
@@ -1469,14 +1526,15 @@ public final class DBHelper {
                         + HostAuthColumns.CREDENTIAL_KEY + "=-1");
             }
 
-            if (oldVersion <= 125) {
+            if (oldVersion <= 125 || fromCM11) {
                 upgradeFromVersion125ToVersion126(db);
             }
 
-            if (oldVersion <= 126) {
+            if (oldVersion <= 126 || fromCM11) {
                 upgradeFromVersion126ToVersion127(mContext, db);
             }
-            if (oldVersion <= 128) {
+
+            if (oldVersion <= 128 && !fromCM11) {
                 try {
                     db.execSQL("alter table " + Account.TABLE_NAME
                             + " add column " + AccountColumns.AUTO_FETCH_ATTACHMENTS
@@ -1562,31 +1620,17 @@ public final class DBHelper {
 
             if (oldVersion <= 131) {
                 try {
-/* From old email app. We don't have SyncSize so hard-code the defaults
                     db.execSQL("alter table " + Account.TABLE_NAME
                             + " add column " + AccountColumns.SET_SYNC_SIZE_ENABLED + " integer"
                             + " default " + SyncSize.ENABLED_DEFAULT_VALUE + ";");
                     db.execSQL("alter table " + Account.TABLE_NAME
                             + " add column " + AccountColumns.SYNC_SIZE + " integer"
                             + " default " + SyncSize.SYNC_SIZE_DEFAULT_VALUE + ";");
-*/
-                    db.execSQL("alter table " + Account.TABLE_NAME
-                            + " add column " + AccountColumns.SET_SYNC_SIZE_ENABLED + " integer"
-                            + " default " + 1 + ";");
-                    db.execSQL("alter table " + Account.TABLE_NAME
-                            + " add column " + AccountColumns.SYNC_SIZE + " integer"
-                            + " default " + 204800 + ";");
                 } catch (SQLException e) {
                     // Shouldn't be needed unless we're debugging and interrupt the process
                     LogUtils.w(TAG, "Exception upgrading EmailProvider.db from 130 to 131", e);
                 }
             }
-
-            // Due to a bug in commit 44a064e5f16ddaac25f2acfc03c118f65bc48aec,
-            // AUTO_FETCH_ATTACHMENTS column could not be available in the Account table.
-            // Since cm12 and up doesn't use this column, we are leave as is it. In case
-            // the feature were added, then we need to create a new exception to ensure
-            // that the columns is re-added.
         }
 
         @Override
