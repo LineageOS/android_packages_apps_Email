@@ -703,6 +703,10 @@ public class EmailServiceUtils {
         }
 
         @Override
+        public void loadMore(long arg0) throws RemoteException {
+        }
+
+        @Override
         public void updateFolderList(long accountId) throws RemoteException {}
 
         @Override

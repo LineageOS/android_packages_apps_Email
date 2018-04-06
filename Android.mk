@@ -55,6 +55,7 @@ LOCAL_STATIC_JAVA_LIBRARIES += android-support-v13
 LOCAL_STATIC_JAVA_LIBRARIES += android-opt-bitmap
 LOCAL_STATIC_JAVA_LIBRARIES += android-opt-datetimepicker
 LOCAL_STATIC_JAVA_LIBRARIES += owasp-html-sanitizer
+LOCAL_STATIC_JAVA_LIBRARIES += org.lineageos.platform.internal
 
 LOCAL_JAVA_LIBRARIES := org.apache.http.legacy
 
@@ -64,8 +65,6 @@ LOCAL_PROGUARD_FLAG_FILES := proguard.flags $(unified_email_dir)/proguard.flags
 ifeq (eng,$(TARGET_BUILD_VARIANT))
   LOCAL_PROGUARD_FLAG_FILES += proguard-test.flags
 endif
-
-LOCAL_SDK_VERSION := current
 
 include $(BUILD_PACKAGE)
 

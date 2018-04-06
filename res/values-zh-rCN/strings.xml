@@ -239,4 +239,17 @@
     <string name="no_quick_responses" msgid="8716297053803961304">"没有可供选择的快速回复"</string>
     <string name="gmail_name" msgid="2099786953868369991">"Gmail"</string>
     <string name="folder_sync_settings_pref_title" msgid="349478353401667107">"文件夹同步设置"</string>
+
+    <!-- In Account setup options & Account Settings screens, Email sync size option. -->
+    <string name="account_settings_sync_size_enable">配置邮件的同步缓存大小</string>
+    <string name="account_settings_sync_size_enable_summary">您可以自定义该账户中的邮件的同步缓存大小，从而节约数据流量</string>
+    <string name="account_settings_sync_size_label">选择同步缓存大小</string>
+    <string name="account_settings_sync_size_category_label">同步缓存大小配置</string>
+
+    <string name="account_setup_options_mail_sync_size_all">全部</string>
+    <string name="account_setup_options_mail_sync_size_20k">20KB</string>
+    <string name="account_setup_options_mail_sync_size_100k">100KB</string>
+    <string name="account_setup_options_mail_sync_size_200k">200KB</string>
+    <string name="account_setup_options_mail_sync_size_500k">500KB</string>
+    <string name="account_setup_options_mail_sync_size_1M">1MB</string>
 </resources>

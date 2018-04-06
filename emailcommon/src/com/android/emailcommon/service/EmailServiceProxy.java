@@ -18,6 +18,7 @@ package com.android.emailcommon.service;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -30,6 +31,7 @@ import com.android.emailcommon.provider.Policy;
 import com.android.mail.utils.LogUtils;
 
 import java.io.IOException;
+import java.util.concurrent.Executor;
 
 /**
  * The EmailServiceProxy class provides a simple interface for the UI to call into the various
@@ -50,6 +52,12 @@ public class EmailServiceProxy extends ServiceProxy implements IEmailService {
     private static final String TAG = "EmailServiceProxy";
 
     public static final String AUTO_DISCOVER_BUNDLE_ERROR_CODE = "autodiscover_error_code";
+    // This extra contains the autodiscovery error translated to a messaging exception
+    // error code. Our autodiscover service fills this code plus the above one, just because
+    // Gmail and others different clients still check the above one. This is only for our
+    // Email internal implementation
+    public static final String AUTO_DISCOVER_BUNDLE_MESSAGING_ERROR_CODE =
+            "autodiscover_messaging_error_code";
     public static final String AUTO_DISCOVER_BUNDLE_HOST_AUTH = "autodiscover_host_auth";
 
     public static final String VALIDATE_BUNDLE_RESULT_CODE = "validate_result_code";
@@ -59,6 +67,12 @@ public class EmailServiceProxy extends ServiceProxy implements IEmailService {
         "validate_unsupported_policies";
     public static final String VALIDATE_BUNDLE_PROTOCOL_VERSION = "validate_protocol_version";
     public static final String VALIDATE_BUNDLE_REDIRECT_ADDRESS = "validate_redirect_address";
+
+    // Service capabilities
+    public static final String SETTINGS_BUNDLE_CAPABILITIES = "settings_capabilities";
+
+    // List of common interesting services capabilities
+    public static final int CAPABILITY_PUSH = 1 << 0;
 
     private Object mReturn = null;
     private IEmailService mService;
@@ -248,6 +262,22 @@ public class EmailServiceProxy extends ServiceProxy implements IEmailService {
     }
 
     /**
+     * Request the sync adapter to load a complete message; the service MUST give higher priority
+     * to non-background loading.
+     *
+     * @param messageId the id of the message to be loaded
+     */
+    @Override
+    public void loadMore(final long messageId) throws RemoteException {
+        setTask(new ProxyTask() {
+            @Override
+            public void run() throws RemoteException {
+                mService.loadMore(messageId);
+            }
+        }, "loadMore");
+    }
+
+    /**
      * Request the service to delete the account's PIM (personal information management) data. This
      * data includes any data that is 1) associated with the account and 2) created/stored by the
      * service or its sync adapters and 3) not stored in the EmailProvider database (e.g. contact
@@ -258,6 +288,11 @@ public class EmailServiceProxy extends ServiceProxy implements IEmailService {
     @Override
     public void deleteExternalAccountPIMData(final String emailAddress) throws RemoteException {
         setTask(new ProxyTask() {
+            @Override
+            public Executor runInExecutor() {
+                return AsyncTask.THREAD_POOL_EXECUTOR;
+            }
+
             @Override
             public void run() throws RemoteException {
                 mService.deleteExternalAccountPIMData(emailAddress);
