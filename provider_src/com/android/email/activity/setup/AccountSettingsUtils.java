@@ -107,10 +107,12 @@ public class AccountSettingsUtils {
         cv.put(AccountColumns.DISPLAY_NAME, account.getDisplayName());
         cv.put(AccountColumns.SENDER_NAME, account.getSenderName());
         cv.put(AccountColumns.SIGNATURE, account.getSignature());
-        cv.put(AccountColumns.SYNC_INTERVAL, account.mSyncInterval);
+        cv.put(AccountColumns.SYNC_INTERVAL, account.getSyncInterval());
         cv.put(AccountColumns.FLAGS, account.mFlags);
         cv.put(AccountColumns.SYNC_LOOKBACK, account.mSyncLookback);
         cv.put(AccountColumns.SECURITY_SYNC_KEY, account.mSecuritySyncKey);
+        cv.put(AccountColumns.SET_SYNC_SIZE_ENABLED, account.mSetSyncSizeEnabled);
+        cv.put(AccountColumns.SYNC_SIZE, account.mSyncSize);
         return cv;
     }
 

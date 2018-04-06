@@ -34,6 +34,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.RemoteException;
 import android.provider.BaseColumns;
+import android.text.TextUtils;
 
 import com.android.emailcommon.Logging;
 import com.android.emailcommon.R;
@@ -145,6 +146,8 @@ public abstract class EmailContent {
     // delete, or update) and is intended as an optimization for use by clients of message list
     // cursors (initially, the email AppWidget).
     public static String NOTIFIER_AUTHORITY;
+    // The sync settings changed authority is used to notify when a sync setting changed (interval)
+    public static String SYNC_SETTING_CHANGED_AUTHORITY;
     public static Uri CONTENT_URI;
     public static final String PARAMETER_LIMIT = "limit";
 
@@ -153,6 +156,7 @@ public abstract class EmailContent {
      */
     public static final String SUPPRESS_COMBINED_ACCOUNT_PARAM = "suppress_combined";
     public static Uri CONTENT_NOTIFIER_URI;
+    public static Uri CONTENT_SYNC_SETTING_CHANGED_URI;
     public static Uri PICK_TRASH_FOLDER_URI;
     public static Uri PICK_SENT_FOLDER_URI;
     public static Uri MAILBOX_NOTIFICATION_URI;
@@ -175,8 +179,11 @@ public abstract class EmailContent {
             AUTHORITY = EMAIL_PACKAGE_NAME + ".provider";
             LogUtils.d("EmailContent", "init for " + AUTHORITY);
             NOTIFIER_AUTHORITY = EMAIL_PACKAGE_NAME + ".notifier";
+            SYNC_SETTING_CHANGED_AUTHORITY = EMAIL_PACKAGE_NAME + ".sync_setting_changed";
             CONTENT_URI = Uri.parse("content://" + AUTHORITY);
             CONTENT_NOTIFIER_URI = Uri.parse("content://" + NOTIFIER_AUTHORITY);
+            CONTENT_SYNC_SETTING_CHANGED_URI = Uri.parse(
+                    "content://" + SYNC_SETTING_CHANGED_AUTHORITY);
             PICK_TRASH_FOLDER_URI = Uri.parse("content://" + AUTHORITY + "/pickTrashFolder");
             PICK_SENT_FOLDER_URI = Uri.parse("content://" + AUTHORITY + "/pickSentFolder");
             MAILBOX_NOTIFICATION_URI = Uri.parse("content://" + AUTHORITY + "/mailboxNotification");
@@ -196,6 +203,7 @@ public abstract class EmailContent {
             MessageStateChange.init();
             Body.initBody();
             Attachment.initAttachment();
+            SuggestedContact.initSuggestedContact();
         }
     }
 
@@ -513,8 +521,8 @@ public abstract class EmailContent {
 
             // Assign values for each row.
             values.put(BodyColumns.MESSAGE_KEY, mMessageKey);
-            values.put(BodyColumns.HTML_CONTENT, mHtmlContent);
-            values.put(BodyColumns.TEXT_CONTENT, mTextContent);
+            values.put(BodyColumns.HTML_CONTENT, Utility.compress(mHtmlContent));
+            values.put(BodyColumns.TEXT_CONTENT, Utility.compress(mTextContent));
             values.put(BodyColumns.SOURCE_MESSAGE_KEY, mSourceKey);
             return values;
         }
@@ -827,8 +835,9 @@ public abstract class EmailContent {
          */
         public static final String FLAG_LOADED_SELECTION =
             MessageColumns.FLAG_LOADED + " IN ("
-            +     Message.FLAG_LOADED_PARTIAL + "," + Message.FLAG_LOADED_COMPLETE
-            +     ")";
+            +     Message.FLAG_LOADED_PARTIAL + "," + Message.FLAG_LOADED_COMPLETE + ","
+            +     Message.FLAG_LOADED_PARTIAL_COMPLETE + ","
+            +     Message.FLAG_LOADED_PARTIAL_FETCHING +")";
 
         public static final String ALL_FAVORITE_SELECTION =
             MessageColumns.FLAG_FAVORITE + "=1 AND "
@@ -939,8 +948,10 @@ public abstract class EmailContent {
         public static final int FLAG_LOADED_UNLOADED = 0;
         public static final int FLAG_LOADED_COMPLETE = 1;
         public static final int FLAG_LOADED_PARTIAL = 2;
-        public static final int FLAG_LOADED_DELETED = 3;
-        public static final int FLAG_LOADED_UNKNOWN = 4;
+        public static final int FLAG_LOADED_PARTIAL_COMPLETE = 3;
+        public static final int FLAG_LOADED_PARTIAL_FETCHING = 4;
+        public static final int FLAG_LOADED_DELETED = 5;
+        public static final int FLAG_LOADED_UNKNOWN = 6;
 
         // Bits used in mFlags
         // The following three states are mutually exclusive, and indicate whether the message is an
@@ -1163,10 +1174,10 @@ public abstract class EmailContent {
             // Create and save the body
             ContentValues cv = new ContentValues();
             if (mText != null) {
-                cv.put(BodyColumns.TEXT_CONTENT, mText);
+                cv.put(BodyColumns.TEXT_CONTENT, Utility.compress(mText));
             }
             if (mHtml != null) {
-                cv.put(BodyColumns.HTML_CONTENT, mHtml);
+                cv.put(BodyColumns.HTML_CONTENT, Utility.compress(mHtml));
             }
             if (mSourceKey != 0) {
                 cv.put(BodyColumns.SOURCE_MESSAGE_KEY, mSourceKey);
@@ -1858,5 +1869,13 @@ public abstract class EmailContent {
         // Tokenized strings indicating protocol specific policies enforced/unsupported
         public static final String PROTOCOL_POLICIES_ENFORCED = "protocolPoliciesEnforced";
         public static final String PROTOCOL_POLICIES_UNSUPPORTED = "protocolPoliciesUnsupported";
+    }
+
+    public interface SuggestedContactColumns extends BaseColumns {
+        static final String ACCOUNT_KEY = "accountKey";
+        static final String ADDRESS = "address";
+        static final String NAME = "name";
+        static final String DISPLAY_NAME = "display_name";
+        static final String LAST_SEEN = "last_seen";
     }
 }

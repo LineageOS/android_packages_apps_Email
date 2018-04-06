@@ -30,6 +30,9 @@ interface IEmailService {
     oneway void loadAttachment(IEmailServiceCallback cb, long accountId, long attachmentId,
             boolean background);
 
+    // Used to load uncompleted message.
+    oneway void loadMore(long messageId);
+
     void updateFolderList(long accountId);
 
     // TODO: For Eas, sync() will also sync the outbox. We should make IMAP and POP work the same

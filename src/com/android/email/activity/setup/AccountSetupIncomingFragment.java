@@ -199,6 +199,9 @@ public class AccountSetupIncomingFragment extends AccountServerBaseFragment
         final Account account = mSetupData.getAccount();
         final HostAuth recvAuth = account.getOrCreateHostAuthRecv(mAppContext);
 
+        // The data came from autodiscover?
+        final boolean autodiscover = mSetupData.isAutodiscover();
+
         // Pre-fill info as appropriate
         if (!mSetupData.isIncomingCredLoaded()) {
             recvAuth.mLogin = mSetupData.getEmail();
@@ -266,6 +269,14 @@ public class AccountSetupIncomingFragment extends AccountServerBaseFragment
             } else {
                 mAuthenticationLabel.setText(R.string.account_setup_basics_password_label);
             }
+        }
+
+        // If the data came from autodiscover then just try to validate the settings
+        if (autodiscover) {
+            performNextSetupAction();
+
+            // We don't want to validate this data anymore
+            mSetupData.setAutodiscover(false);
         }
     }
 

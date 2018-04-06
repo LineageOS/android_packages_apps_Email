@@ -189,7 +189,9 @@ public class AccountCreationFragment extends Fragment {
 
                     boolean createSuccess = false;
                     try {
-                        future.getResult();
+                        if (future != null) {
+                            future.getResult();
+                        }
                         createSuccess = true;
                     } catch (OperationCanceledException e) {
                         LogUtils.d(LogUtils.TAG, "addAccount was canceled");
