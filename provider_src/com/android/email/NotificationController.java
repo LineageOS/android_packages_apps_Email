@@ -36,4 +36,7 @@ public interface NotificationController {
     void showPasswordExpiringNotificationSynchronous(long accountId);
     void showPasswordExpiredNotificationSynchronous(long accountId);
     void cancelPasswordExpirationNotifications();
+    void showIgnoreBatteryOptimizationsNotification(int contentTextResId,
+            Intent successServiceIntent);
+    void cancelIgnoreBatteryOptimizationsNotification();
 }
