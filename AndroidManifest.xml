@@ -45,6 +45,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
 
     <!-- This needs to be present when we are doing unbundled releases. -->
     <uses-sdk android:targetSdkVersion="21" android:minSdkVersion="14" />
@@ -379,6 +380,11 @@
             android:name="com.android.mail.ui.LicensesActivity"
             android:label="@string/open_source_licenses">
         </activity>
+
+        <activity
+            android:name=".activity.BatteryOptimizationsExemptionProxyActivity"
+            android:theme="@style/Theme.AppCompat.Translucent"
+            android:excludeFromRecents="true" />
 
         <!-- additional activities -->
 
