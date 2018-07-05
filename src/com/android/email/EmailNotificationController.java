@@ -36,6 +36,7 @@ import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 
+import com.android.email.activity.BatteryOptimizationsExemptionProxyActivity;
 import com.android.email.activity.setup.AccountSecurity;
 import com.android.email.activity.setup.HeadlessAccountSettingsLoader;
 import com.android.email.provider.EmailProvider;
@@ -68,6 +69,7 @@ public class EmailNotificationController implements NotificationController {
     private static final int NOTIFICATION_ID_ATTACHMENT_WARNING = 3;
     private static final int NOTIFICATION_ID_PASSWORD_EXPIRING = 4;
     private static final int NOTIFICATION_ID_PASSWORD_EXPIRED = 5;
+    private static final int NOTIFICATION_ID_BATTERY_OPTIMIZATIONS = 6;
 
     private static final int NOTIFICATION_ID_BASE_MASK = 0xF0000000;
     private static final int NOTIFICATION_ID_BASE_LOGIN_WARNING = 0x20000000;
@@ -588,6 +590,33 @@ public class EmailNotificationController implements NotificationController {
         notificationManager.cancel((int) (NOTIFICATION_ID_BASE_LOGIN_WARNING + account.mId));
         notificationManager.cancel((int) (NOTIFICATION_ID_BASE_SECURITY_NEEDED + account.mId));
         notificationManager.cancel((int) (NOTIFICATION_ID_BASE_SECURITY_CHANGED + account.mId));
+    }
+
+    @Override
+    public void showIgnoreBatteryOptimizationsNotification(int contentTextResId,
+            Intent successServiceIntent) {
+        Intent activityIntent = BatteryOptimizationsExemptionProxyActivity.createIntent(
+                mContext, successServiceIntent);
+        PendingIntent clickIntent = PendingIntent.getActivity(
+                    mContext, 0, activityIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        CharSequence title = mContext.getString(R.string.battery_optimization_notification_title);
+        CharSequence text = mContext.getString(contentTextResId);
+
+        final NotificationCompat.Builder builder = new NotificationCompat.Builder(mContext)
+                .setContentTitle(title)
+                .setContentText(text)
+                .setContentIntent(clickIntent)
+                .setSmallIcon(R.drawable.ic_notification_mail_24dp)
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(text))
+                .setWhen(mClock.getTime())
+                .setOngoing(false);
+
+        mNotificationManager.notify(NOTIFICATION_ID_BATTERY_OPTIMIZATIONS, builder.build());
+    }
+
+    @Override
+    public void cancelIgnoreBatteryOptimizationsNotification() {
+        mNotificationManager.cancel(NOTIFICATION_ID_BATTERY_OPTIMIZATIONS);
     }
 
     private static void refreshNotificationsForAccount(final Context context,

@@ -26,7 +26,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.ContentObserver;
 import android.database.Cursor;
-import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.TrafficStats;
 import android.net.Uri;
@@ -240,11 +239,14 @@ public class ImapService extends Service {
 
         private void reschedulePing(long delay) {
             // Check for connectivity before reschedule
-            ConnectivityManager cm =
-                    (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-            if (activeNetwork == null || !activeNetwork.isConnected()) {
+            boolean connected = EmailConnectivityManager.isConnected(mContext);
+            if (Logging.LOGD) {
+                LogUtils.d(LOG_TAG, "Rescheduling ping for mailbox " + mMailbox.mId
+                        + ", delay " + delay + "ms, connected " + connected);
+            }
+            if (!connected) {
                 cancelPing();
+                ImapService.checkBatteryOptimizationsExemption(mContext);
             } else {
                 PendingIntent pi = getIdleRefreshIntent();
                 AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
@@ -287,12 +289,14 @@ public class ImapService extends Service {
             PendingIntent pi = getKickIdleConnectionPendingIntent();
             long due = SystemClock.elapsedRealtime() + KICK_IDLE_CONNECTION_TIMEOUT;
             long windowLength = KICK_IDLE_CONNECTION_MAX_DELAY;
+            LogUtils.d(LOG_TAG, "Scheduling IDLE connection kick for mailbox " + mMailbox.mId);
             AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
             am.setWindow(AlarmManager.ELAPSED_REALTIME_WAKEUP, due, windowLength, pi);
         }
 
         private void cancelKickIdleConnection() {
             AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+            LogUtils.d(LOG_TAG, "Canceling IDLE connection kick for mailbox " + mMailbox.mId);
             am.cancel(getKickIdleConnectionPendingIntent());
         }
 
@@ -792,6 +796,7 @@ public class ImapService extends Service {
                 @Override
                 public void run() {
                     ContentResolver cr = context.getContentResolver();
+                    List<Account> syncAccounts = new ArrayList<>();
                     Cursor c = null;
                     try {
                         c = cr.query(Account.CONTENT_URI, Account.CONTENT_PROJECTION,
@@ -806,6 +811,12 @@ public class ImapService extends Service {
                             // Only imap push accounts
                             if (account.getSyncInterval() == Account.CHECK_INTERVAL_PUSH
                                     && isLegacyImapProtocol(context, account)) {
+                                syncAccounts.add(account);
+                            }
+                        }
+                        if (!syncAccounts.isEmpty()
+                                && checkBatteryOptimizationsExemption(context)) {
+                            for (Account account : syncAccounts) {
                                 requestSyncForAccountMailboxesIfNotIdled(account);
                             }
                         }
@@ -890,6 +901,22 @@ public class ImapService extends Service {
         }
 
         return Service.START_STICKY;
+    }
+
+    private static boolean checkBatteryOptimizationsExemption(Context context) {
+        PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+        final NotificationController nc =
+                NotificationControllerCreatorHolder.getInstance(context);
+        if (pm.isIgnoringBatteryOptimizations(context.getPackageName())) {
+            nc.cancelIgnoreBatteryOptimizationsNotification();
+            return true;
+        }
+
+        Intent intent = new Intent(context, ImapService.class)
+                .setAction(ACTION_RESTART_ALL_IDLE_CONNECTIONS);
+        nc.showIgnoreBatteryOptimizationsNotification(
+                R.string.battery_optimization_notification_imap_text, intent);
+        return false;
     }
 
     private void requestSyncForAccountMailboxesIfNotIdled(Account account) {
