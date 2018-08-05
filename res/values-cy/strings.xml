@@ -19,8 +19,10 @@
     and read from resources -->
   <!-- Permissions label for reading attachments -->
   <!-- Permissions description for reading attachments -->
+  <string name="permission_read_attachment_desc">Mae\'n caniatáu i\'r ap ddarllen dy atodiadau e-bost.</string>
   <!-- Permissions label for accessing the main provider -->
   <!-- Permissions description for accessing the main provider -->
+  <string name="permission_access_provider_desc">Mae\'n caniatáu i\'r ap gael at gronfa ddata dy e-bost, gan gynnwys negeseuon wedi eu derbyn a\'i hanfon, enwau defnyddwyr a chyfrinachau.</string>
   <!-- Name of application on Home screen -->
   <!-- Actions will be used as buttons and in menu items -->
   <!--  Menu item used to create a new quick response [CHAR_LIMIT=16] -->
@@ -246,6 +248,7 @@
   <!-- On Settings screen, summmary for button that attempts to sync an account [CHAR LIMIT=64] -->
   <!-- On Settings screen, setting option name -->
   <!-- On Settings screen, setting option name -->
+  <string name="account_settings_name_label">Dy enw di</string>
   <!-- On Settings screen, setting option name. Allows user to modify saved quick responses
         for insertion in message body. [CHAR_LIMIT=24]-->
   <!-- On Settings screen, setting option summary [CHAR LIMIT=64] -->
