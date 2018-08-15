@@ -790,16 +790,13 @@ public class ImapService extends Service {
             // been changes while we lost connectivity. At the end of the sync
             // the IDLE connection will be re-established.
 
-            if (!checkBatteryOptimizationsExemption(this)) {
-                return START_STICKY;
-            }
-
             mIdleRefreshWakeLock.acquire();
 
             sExecutor.execute(new Runnable() {
                 @Override
                 public void run() {
                     ContentResolver cr = context.getContentResolver();
+                    List<Account> syncAccounts = new ArrayList<>();
                     Cursor c = null;
                     try {
                         c = cr.query(Account.CONTENT_URI, Account.CONTENT_PROJECTION,
@@ -814,6 +811,12 @@ public class ImapService extends Service {
                             // Only imap push accounts
                             if (account.getSyncInterval() == Account.CHECK_INTERVAL_PUSH
                                     && isLegacyImapProtocol(context, account)) {
+                                syncAccounts.add(account);
+                            }
+                        }
+                        if (!syncAccounts.isEmpty()
+                                && checkBatteryOptimizationsExemption(context)) {
+                            for (Account account : syncAccounts) {
                                 requestSyncForAccountMailboxesIfNotIdled(account);
                             }
                         }
