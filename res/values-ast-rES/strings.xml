@@ -48,6 +48,7 @@
   <!-- Label shown in the account selector to select "Combined view", which contains
          Combined Inbox, Combined Outbox, etc. [CHAR LIMIT=30] -->
   <!-- Header for forwarded original messages -->
+  <string name="message_compose_fwd_header_fmt">\n\n-------- Mensaxe orixinal --------\nAsuntu: <xliff:g id="subject">%1$s</xliff:g>\nDe: <xliff:g id="sender">%2$s</xliff:g>\nPa: <xliff:g id="to">%3$s</xliff:g>\nCC: <xliff:g id="cc">%4$s</xliff:g>\n\n</string>
   <!-- Title for dialog containing list of quick responses that user may insert
             into message body. [CHAR_LIMIT=30] -->
   <!-- Menu item for inserting quick responses into email compose activity. [CHAR_LIMIT=30] -->
@@ -58,6 +59,8 @@
   <!-- Notification ticker when a forwarded attachment couldn't be sent [CHAR LIMIT=none] -->
   <!-- Notification title when a forwarded attachment couldn't be sent [CHAR LIMIT=30]-->
   <!-- Notification ticker when email account authentication fails [CHAR LIMIT=none] -->
+  <string name="login_failed_ticker">
+        L\'aniciu de sesión de <xliff:g id="account_name">%s</xliff:g> nun tuvo ésitu.</string>
   <!-- Notification title when email account authentication fails [CHAR LIMIT=30]-->
   <!-- Title of screen when setting up new email account [CHAR LIMIT=45] -->
   <!-- Title of screen when trying to get oauth authentication -->
@@ -78,6 +81,7 @@
   <!-- hint for account email password text field -->
   <!--  On the "Setup up email" screen, label indicating what service we are signed in with [CHAR LIMIT=40] -->
   <!-- Label for the authentication section, should be uppercase where applicable [CHAR LIMIT=20] -->
+  <string name="authentication_label">AUTENTICACIÓN</string>
   <!-- Label for the add authentication icon [CHAR LIMIT=40] -->
   <!-- Label for the add authentication icon [CHAR LIMIT=40] -->
   <!-- Button name on "Set up email" screen, with action underlined using html [CHAR LIMIT=20] -->
@@ -85,19 +89,37 @@
   <!-- Toast when we can't build a URI from the given email & password -->
   <!-- Note, the error message in the toast is purposefully vague, because I *don't* know
         exactly what's wrong. -->
+  <string name="account_setup_username_password_toast">
+        Teclexa una direición de corréu y contraseña válidos.</string>
   <!-- Title of dialog shown when a duplicate account is created -->
   <!-- Message of dialog shown when a duplicate account is created.  The display name of
          the duplicate account is displayed. -->
+  <string name="account_duplicate_dlg_message_fmt">
+        Yá tas usando esti nome d\'usuariu pa la cuenta «<xliff:g id="duplicate">%s</xliff:g>».
+    </string>
   <!-- On check-settings screen, this is the initially-displayed message. -->
+  <string name="account_setup_check_settings_retr_info_msg">Recuperando la información de la cuenta...</string>
   <!-- Appears on screen while system is checking incoming server settings -->
+  <string name="account_setup_check_settings_check_incoming_msg">
+    Validando los axustes del sirvidor\u2026</string>
   <!-- Appears on screen while system is checking outgoing server settings -->
+  <string name="account_setup_check_settings_check_outgoing_msg">
+    Validando los axustes SMTP\u2026</string>
   <!-- Appears on screen while system is creating the account -->
+  <string name="account_setup_creating_account_msg">
+    Creando la cuenta\u2026</string>
   <!-- Headline text that appears on "Confirm account type" screen [CHAR LIMIT=none] -->
   <!-- Explanatory text that appears on the "Confirm account type" screen [CHAR LIMIT=none] -->
   <!-- Text that appears on "Set up email" screen after successfully setting up an account
         [CHAR LIMIT=none] -->
+  <string name="account_setup_names_headline">
+        ¡La cuenta ta configurada y el corréu va apaecer darréu!</string>
   <!-- On "Set up email" screen, label of text field -->
+  <string name="account_setup_names_account_name_label">
+        Da-y un nome a esta cuenta (opcional)</string>
   <!-- On "Set up email" screen, label of text field -->
+  <string name="account_setup_names_user_name_label">
+        El to nome (como va vese nos mensaxes unviaos)</string>
   <!-- Headline for the the account type selector (IMAP or POP3 or EAS) [CHAR LIMIT=none] -->
   <!-- "Add new email account" screen, text that appears on screen -->
   <!-- "Incoming server settings" screen, headline (text over divider) [CHAR LIMIT=none] -->
@@ -113,12 +135,16 @@
         the desire for an unencrypted session -->
   <!-- "Incoming server settings" screen, option for "Security type" pop-up menu indicating
         the desire for an encrypted session on the selected port, accepting all SSL certificates -->
+  <string name="account_setup_incoming_security_ssl_trust_certificates_label">
+        SSL/TLS (aceutar tolos certificaos)</string>
   <!-- "Incoming server settings" screen, option for "Security type" pop-up menu indicating
         the desire for an encrypted session on the selected port, including SSL certificate
         checks -->
   <!-- "Incoming server settings" screen, option for "Security type" pop-up menu indicating
         the desire for an encrypted session overlaid on a plain text session using the selected
         port, accepting all SSL certificates -->
+  <string name="account_setup_incoming_security_tls_trust_certificates_label">
+        STARTTLS (aceutar tolos certificaos)</string>
   <!-- "Incoming server settings" screen, option for "Security type" pop-up menu indicating
         the desire for an encrypted session overlaid on a plain text session on the selected
         port, including SSL certificate checks -->
@@ -161,6 +187,8 @@
   <!-- In Account setup options screen, optional check box to also sync contacts -->
   <!-- In Account setup options screen, check box to sync email -->
   <!-- In Account setup options screen, check box to auto-download attachments  [CHAR LIMIT=none] -->
+  <string name="account_setup_options_background_attachments_label">
+        Baxar automáticamente los axuntos cuando teas coneutáu a una Wi-Fi</string>
   <!-- Dialog title when "setup" could not finish -->
   <!-- In Account setup options screen, label for email lookback selector -->
   <!-- In account setup options & account settings screens (exchange), sync window length; this
@@ -188,6 +216,8 @@
   <!-- An error message presented to the user when the certificate they
          specified for connecting to a server is inaccessible [CHAR LIMIT=NONE] -->
   <!-- Dialog text for ambiguous setup failure; server error/bad credentials [CHAR LIMIT=none] -->
+  <string name="account_setup_failed_check_credentials_message">
+         El sirvidor respondió con un fallu. Comprueba\'l nome d\'usuariu y contraseña, darréu volvi tentalo.</string>
   <!-- "Setup could not finish" dialog text; e.g., Cannot connect to server -->
   <!-- "Setup could not finish" dialog text; e.g., Cannot connect to server\n(Connection timed out) -->
   <!-- Additional diagnostic text when TLS was required but the server doesn't support it -->
@@ -197,15 +227,28 @@
   <!-- Additional diagnostic text when server connection failed due to io error (connection) -->
   <!-- Additional diagnostic text when server connection failed due to our inability to support a
          required EAS protocol version [CHAR LIMIT=none] -->
+  <string name="account_setup_failed_protocol_unsupported">
+         Teclexesti una direición de sirvidor incorreuta o\'l sirvidor rique una versión de
+         protocolu que Corréu nun sofita.</string>
   <!-- Additional diagnostic text when server access was denied; the user should contact the
          administrator of the server for more information [CHAR LIMIT=none] -->
+  <string name="account_setup_failed_access_denied">
+         Nun tienes permisu pa sincronizar con esti sirvidor. Contauta col to
+         alministrador pa más información.</string>
   <!-- Dialog title when validation requires security provisioning (e.g. support
          for device lock PIN, or remote wipe.) and we ask the user permission before continuing -->
   <!-- Additional diagnostic text when validation requires security provisioning (e.g. support
          for device lock PIN, or remote wipe.) and we ask the user permission before continuing.
          [CHAR LIMIT=none] -->
+  <string name="account_setup_security_policies_required_fmt">
+         El sirvidor <xliff:g id="server">%s</xliff:g> rique que permitas controlar remotamente
+         dalgunes carauterístiques de seguranza del to preséu. ¿Quies finar la configuración
+         d\'esta cuenta?</string>
   <!-- Additional diagnostic text when validation failed due to required provisioning not
          being supported [CHAR LIMIT=none] -->
+  <string name="account_setup_failed_security_policies_unsupported">
+         Esti sirvidor rique carauterístiques de seguranza que\'l to preséu nun sofita,
+          incluyendo: <xliff:g id="error">%s</xliff:g></string>
   <!-- Warning given to users when they request disabling device administration (i.e. that their
          administered accounts will be deleted) [CHAR LIMIT=none] -->
   <!-- Dialog shown when the account requires some amount of device security provisioning,
@@ -215,9 +258,23 @@
   <!-- Additional diagnostic text when the account requires some amount of device security
          provisioning, just before jumping into system settings such as Device Policy grant,
          PIN/password, or encryption setup.  [CHAR LIMIT=none] -->
+  <string name="account_security_dialog_content_fmt">
+         <xliff:g id="account">%s</xliff:g> rique qu\'anueves los axustes de
+         seguranza.</string>
   <!-- Notification ticker when device security required (note: unused in Holo XL) -->
+  <string name="security_unsupported_ticker_fmt">
+            La cuenta «<xliff:g id="account">%s</xliff:g>» nun pue sincronizase pola
+    mor de los requirimientos de seguranza.</string>
   <!-- Notification ticker when device security required (note: unused in Holo XL) -->
+  <string name="security_needed_ticker_fmt">
+            La cuenta «<xliff:g id="account">%s</xliff:g>» rique un anovamientu de los
+            axustes de seguranza.
+    </string>
   <!-- Notification ticker when device security required (note: unused in Holo XL) -->
+  <string name="security_changed_ticker_fmt">
+            La cuenta «<xliff:g id="account">%s</xliff:g>» camudó los sos axustes de
+            seguranza. Nun se rique denguna aición del usuariu.
+    </string>
   <!-- Notification content title when device security required [CHAR_LIMIT=30] -->
   <string name="security_notification_content_update_title">Ríquense anovamientos de seguranza</string>
   <!-- Notification content title when device security policies have changed [CHAR_LIMIT=36] -->
@@ -229,18 +286,27 @@
   <!-- Additional diagnostic text when the email app asserts control of the phone.
         [CHAR LIMIT=none] -->
   <string name="account_security_policy_explanation_fmt">
-         El sirvidor <xliff:g id="server">%s</xliff:g> rique que-y deas permisu pa controlarrequires that you allow it to remotely control
-         remotamente delles carauterístiques de seguranza del to preséu Android.</string>
+         El sirvidor <xliff:g id="server">%s</xliff:g> rique que permitas controlar remotamente
+         dalgunes carauterístiques de seguranza del to preséu.</string>
   <!-- "Setup could not finish" dialog action button -->
   <!-- Notification ticker when device password is getting ready to expire [CHAR_LIMIT=80] -->
+  <string name="password_expire_warning_ticker_fmt">
+            «<xliff:g id="account">%s</xliff:g>» rique que camudes el PIN o contraseña
+            de la pantalla de bloquéu.</string>
   <!-- Notification content title when device password is getting ready to expire
             [CHAR_LIMIT=30] -->
   <!-- Notification ticker when device password has expired [CHAR_LIMIT=80] -->
   <!-- Notification content title when device password has expired [CHAR_LIMIT=28] -->
   <!-- Dialog title if device pin/password is going to expire soon. [CHAR_LIMIT=40] -->
   <!-- Dialog content device pin/password is going to expire soon. [CHAR_LIMIT=none] -->
+  <string name="password_expire_warning_dialog_content_fmt">
+         Ceo vas precisar camudar el PIN o contraseña de la pantalla de bloquéu, o van
+         desaniciase los datos de <xliff:g id="account">%s</xliff:g>. ¿Quies facelo agora?</string>
   <!-- Dialog title if device pin/password has already expired. [CHAR_LIMIT=40] -->
   <!-- Dialog content device pin/password has already expired. [CHAR_LIMIT=none] -->
+  <string name="password_expired_dialog_content_fmt">
+         Tán desaniciándose los datos de <xliff:g id="account">%s</xliff:g> del preséu.
+         Pues restauralos camudando\'l PIN o contraseña de la pantalla de bloquéu. ¿Quies facelo agora?</string>
   <!-- On AccountSettingsXL, dialog text if you try to exit in/out/eas fragment (server settings)
          without checking/saving [CHAR LIMIT=none]-->
   <string name="account_settings_exit_server_settings">¿Escartar los cambeos ensin guardar?</string>
@@ -255,8 +321,12 @@
   <!-- On Settings screen, setting option name and title of dialog box that opens -->
   <!-- On Settings screen, setting option name -->
   <!-- On Settings screen, setting option summary [CHAR LIMIT=64] -->
+  <string name="account_settings_incoming_summary">
+        El nome d\'usuariu, contraseña y otros axustes del sirvidor d\'entrada</string>
   <!-- On Settings screen, setting option name -->
   <!-- On Settings screen, setting option summary [CHAR LIMIT=64] -->
+  <string name="account_settings_outgoing_summary">
+        El nome d\'usuariu, contraseña y otros axustes del sirvidor de salida</string>
   <!-- On Settings screen, setting option name -->
   <!-- On Settings screen, setting option summary [CHAR LIMIT=64] -->
   <!-- On Settings screen, setting option name -->
@@ -268,6 +338,8 @@
   <!-- On Settings screen, setting option name. Allows user to modify saved quick responses
         for insertion in message body. [CHAR_LIMIT=24]-->
   <!-- On Settings screen, setting option summary [CHAR LIMIT=64] -->
+  <string name="account_settings_edit_quick_responses_summary">
+        Edita\'l testu qu\'inxertes davezu al escribir correos</string>
   <!-- On Settings screen, section heading -->
   <!-- On Settings screen, section heading for data usage [CHAR LIMIT=70] -->
   <!-- On Settings screen, section heading -->

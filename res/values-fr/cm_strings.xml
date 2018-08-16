@@ -28,4 +28,6 @@ Cette opération ne peut pas être annulée.\n\nContinuer ?</string>
   <string name="mailbox_notify_settings_activity_title_with_mailbox">Options de notification (<xliff:g id="mailbox_name" example="Family">%s </xliff:g>)</string>
   <!-- Name for preference entry which leads to the per-folder notification settings activity -->
   <string name="folder_notify_settings_pref_title">Paramètres de notification de dossier</string>
+  <string name="battery_optimization_notification_title">Fonctionnement en arrière-plan requis</string>
+  <string name="battery_optimization_notification_imap_text">Pour les notifications en push IMAP, l’application Email doit fonctionner en arrière plan. \nToucher ici pour permettre le fonctionnement en arrière plan.</string>
 </resources>

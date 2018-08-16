@@ -27,4 +27,6 @@
   <string name="mailbox_notify_settings_activity_title_with_mailbox">Možnosti oznámení (<xliff:g id="mailbox_name" example="Family">%s</xliff:g>)</string>
   <!-- Name for preference entry which leads to the per-folder notification settings activity -->
   <string name="folder_notify_settings_pref_title">Nastavení složky oznámení</string>
+  <string name="battery_optimization_notification_title">Je vyžadováno umožnit spuštění na pozadí</string>
+  <string name="battery_optimization_notification_imap_text">Pro upozornění z IMAP serverů vyžaduje aplikace Email spuštění na pozadí.\nDotykem zde umožníte spuštění na pozadí.</string>
 </resources>

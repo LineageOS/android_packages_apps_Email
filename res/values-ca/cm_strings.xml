@@ -27,4 +27,6 @@
   <string name="mailbox_notify_settings_activity_title_with_mailbox">Opcions de notificació (<xliff:g id="mailbox_name" example="Family">%s</xliff:g>)</string>
   <!-- Name for preference entry which leads to the per-folder notification settings activity -->
   <string name="folder_notify_settings_pref_title">Configuració de les notificacions de carpeta</string>
+  <string name="battery_optimization_notification_title">Es requereix l\'ús en segon pla</string>
+  <string name="battery_optimization_notification_imap_text">Per a les notificacions de tramesa automàtica IMAP, l\'aplicació Correu ha d\'executar-se en segon pla.\nToqueu aquí per permetre l\'ús en segon pla.</string>
 </resources>

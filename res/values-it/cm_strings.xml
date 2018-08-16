@@ -27,4 +27,6 @@
   <string name="mailbox_notify_settings_activity_title_with_mailbox">Opzioni notifica (<xliff:g id="mailbox_name" example="Family">%s</xliff:g>)</string>
   <!-- Name for preference entry which leads to the per-folder notification settings activity -->
   <string name="folder_notify_settings_pref_title">Impostazioni notifica cartella</string>
+  <string name="battery_optimization_notification_title">Esecuzione in background richiesta</string>
+  <string name="battery_optimization_notification_imap_text">Per le notifiche push IMAP, l\'app Email necessita del permesso per essere eseguita in background.\nTocca qui per consentire l\'utilizzo in background.</string>
 </resources>

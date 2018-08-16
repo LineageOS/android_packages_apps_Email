@@ -27,4 +27,6 @@
   <string name="mailbox_notify_settings_activity_title_with_mailbox">Opções de notificação (<xliff:g id="mailbox_name" example="Family">%s</xliff:g>)</string>
   <!-- Name for preference entry which leads to the per-folder notification settings activity -->
   <string name="folder_notify_settings_pref_title">Definições de notificação da pasta</string>
+  <string name="battery_optimization_notification_title">Utilização em segundo plano necessária</string>
+  <string name="battery_optimization_notification_imap_text">Para notificações push IMAP, a aplicação de E-mail necessita de correr em segundo plano.\nToque aqui para permitir a utilização em segundo plano.</string>
 </resources>
