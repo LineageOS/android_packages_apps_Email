@@ -27,4 +27,6 @@
   <string name="mailbox_notify_settings_activity_title_with_mailbox">Ilmoitusasetukset (<xliff:g id="mailbox_name" example="Family">%s</xliff:g>)</string>
   <!-- Name for preference entry which leads to the per-folder notification settings activity -->
   <string name="folder_notify_settings_pref_title">Kansion ilmoitusasetukset</string>
+  <string name="battery_optimization_notification_title">Taustatiedonsiirto tarvitaan</string>
+  <string name="battery_optimization_notification_imap_text">Sähköpostin pitää toimia taustalla käyttääksesi IMAP-ilmoituksia.\nPaina tästä salliaksesi tiedonsiirron taustalla.</string>
 </resources>

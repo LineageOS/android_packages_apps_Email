@@ -27,4 +27,6 @@
   <string name="mailbox_notify_settings_activity_title_with_mailbox">Настройки за известията (<xliff:g id="mailbox_name" example="Family">%s</xliff:g>)</string>
   <!-- Name for preference entry which leads to the per-folder notification settings activity -->
   <string name="folder_notify_settings_pref_title">Известия за папки</string>
+  <string name="battery_optimization_notification_title">Отмени</string>
+  <string name="battery_optimization_notification_imap_text">За IMAP известия приложението \"Имейл\" трябва да работи и във фонов режим.\n Докоснете тук, за да разрешите работа във фонов режим.</string>
 </resources>
