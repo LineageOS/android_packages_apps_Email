@@ -148,9 +148,12 @@
     <!-- In Account setup options & Account Settings screens, label for email check frequency option -->
     <!-- In Account setup options & Account Settings screens, email check frequency option -->
     <!-- In Account setup options & Account Settings screens, email check frequency option -->
+    <string name="account_setup_options_mail_check_frequency_10min">Pob 10 munud</string>
+    <!-- In Account setup options & Account Settings screens, email check frequency option -->
+    <string name="account_setup_options_mail_check_frequency_15min">Pob 15 munud</string>
     <!-- In Account setup options & Account Settings screens, email check frequency option -->
     <!-- In Account setup options & Account Settings screens, email check frequency option -->
-    <!-- In Account setup options & Account Settings screens, email check frequency option -->
+    <string name="account_setup_options_mail_check_frequency_1hour">Pob awr</string>
     <!-- In Account setup options & Account Settings screens, check box for new-mail notification -->
     <!-- In Account setup options screen, optional check box to also sync contacts -->
     <!-- In Account setup options screen, optional check box to also sync contacts -->
@@ -165,8 +168,10 @@
     <!-- A sync window length setting (i.e. load messages this far back) [CHAR LIMIT=25]  -->
     <string name="account_setup_options_mail_window_3days">Y tridiau diwethaf</string>
     <!-- A sync window length setting (i.e. load messages this far back) [CHAR LIMIT=25]  -->
+    <string name="account_setup_options_mail_window_1week">Yr wythnos diwethaf</string>
     <!-- A sync window length setting (i.e. load messages this far back) [CHAR LIMIT=25]  -->
     <!-- A sync window length setting (i.e. load messages this far back) [CHAR LIMIT=25]  -->
+    <string name="account_setup_options_mail_window_1month">Y mis diwethaf</string>
     <!-- A sync window length setting (i.e. load messages this far back) [CHAR LIMIT=25]  -->
     <!-- Per-mailbox sync window setting.  This means "use the account's sync window setting" [CHAR LIMIT=40] -->
     <!-- "Setup could not finish" dialog text; e.g., Username or password incorrect -->

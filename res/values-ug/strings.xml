@@ -387,7 +387,7 @@
     <!-- On Settings screen, setting option summary [CHAR LIMIT=64] -->
     <string name="account_settings_edit_quick_responses_summary">تورخەت يازغاندا دائىم قىستۇرىدىغان تېكىسنى تەھرىرلەڭ</string>
     <!-- On Settings screen, section heading -->
-    <string name="account_settings_notifications">ئوقتۇرۇش تەڭشىكى</string>
+    <string name="account_settings_notifications">ئوقتۇرۇش تەڭشىكى </string>
     <!-- On Settings screen, section heading for data usage [CHAR LIMIT=70] -->
     <string name="account_settings_data_usage">سانلىق مەلۇمات ئىشلىتىلىشى</string>
     <!-- On Settings screen, section heading -->

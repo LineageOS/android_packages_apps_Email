@@ -85,7 +85,7 @@
     <!-- Notification title when a forwarded attachment couldn't be sent [CHAR LIMIT=30]-->
     <string name="forward_download_failed_title">هاوپێچ به‌دوادانه‌که‌وت</string>
     <!-- Notification ticker when email account authentication fails [CHAR LIMIT=none] -->
-    <string name="login_failed_ticker"><xliff:g id="account_name">%s</xliff:g> چوونه‌ژووره‌وه‌ سه‌رکه‌وتوونه‌بوو.</string>
+    <string name="login_failed_ticker">        <xliff:g id="account_name">%s</xliff:g> چوونه‌ژووره‌وه‌ سه‌رکه‌وتوونه‌بوو.</string>
     <!-- Notification title when email account authentication fails [CHAR LIMIT=30]-->
     <string name="login_failed_title">نەتوانرا بچێتەژورەوە</string>
     <!-- Title of screen when setting up new email account [CHAR LIMIT=45] -->
@@ -99,7 +99,8 @@
         [CHAR LIMIT=none] -->
     <string name="account_setup_basics_headline">هه‌ژماری پۆستی ئه‌لیکترۆنی</string>
     <!-- On "Set up email" screen, enthusiastic welcome message. -->
-    <string name="accounts_welcome">ئه‌توانی هه‌ژماره‌که‌ت دابمه‌زرێنی به‌ چه‌ند هه‌نگاوێک.</string>
+    <string name="accounts_welcome">ئه‌توانی هه‌ژماره‌که‌ت دابمه‌زرێنی به‌ چه‌ند هه‌نگاوێک.
+        </string>
     <!-- On "Set up email" screen, hint for account email address text field -->
     <string name="account_setup_basics_email_label">پۆست</string>
     <!-- Label between OAuth and password authentication, indicating the user must do one or the other [CHAR LIMIT=40] -->
@@ -115,29 +116,30 @@
     <!-- Toast when we can't build a URI from the given email & password -->
     <!-- Note, the error message in the toast is purposefully vague, because I *don't* know
         exactly what's wrong. -->
-    <string name="account_setup_username_password_toast">پۆستی ئه‌لیکترۆنی ڕاست و وشه‌ی نهێنی ڕاست بنووسه‌.</string>
+    <string name="account_setup_username_password_toast">        پۆستی ئه‌لیکترۆنی ڕاست و وشه‌ی نهێنی ڕاست بنووسه‌.</string>
     <!-- Title of dialog shown when a duplicate account is created -->
     <string name="account_duplicate_dlg_title">هه‌ژماری دووباره‌</string>
     <!-- Message of dialog shown when a duplicate account is created.  The display name of
          the duplicate account is displayed. -->
-    <string name="account_duplicate_dlg_message_fmt">تۆ پێشتر ئه‌م ناوه‌ت به‌کارهێناوه‌ بۆ ئه‌م هه‌ژماره‌<xliff:g id="duplicate">%s</xliff:g></string>
+    <string name="account_duplicate_dlg_message_fmt">        تۆ پێشتر ئه‌م ناوه‌ت به‌کارهێناوه‌ بۆ ئه‌م هه‌ژماره‌<xliff:g id="duplicate">%s</xliff:g>
+    </string>
     <!-- On check-settings screen, this is the initially-displayed message. -->
-    <string name="account_setup_check_settings_retr_info_msg">وه‌رگرتنی زانیاری هه‌ژمار\u2026</string>
+    <string name="account_setup_check_settings_retr_info_msg">    وه‌رگرتنی زانیاری هه‌ژمار\u2026</string>
     <!-- Appears on screen while system is checking incoming server settings -->
-    <string name="account_setup_check_settings_check_incoming_msg">ڕاستکردنه‌وه‌ی ڕێکخستنی ڕاژه‌\u2026</string>
+    <string name="account_setup_check_settings_check_incoming_msg">    ڕاستکردنه‌وه‌ی ڕێکخستنی ڕاژه‌\u2026</string>
     <!-- Appears on screen while system is checking outgoing server settings -->
-    <string name="account_setup_check_settings_check_outgoing_msg">ڕاستکردنه‌وه‌ی ڕێکخستنی smtp \u2026</string>
+    <string name="account_setup_check_settings_check_outgoing_msg">    ڕاستکردنه‌وه‌ی ڕێکخستنی smtp \u2026</string>
     <!-- Appears on screen while system is creating the account -->
-    <string name="account_setup_creating_account_msg">دروستکردنی هه‌ژمار\u2026</string>
+    <string name="account_setup_creating_account_msg">    دروستکردنی هه‌ژمار\u2026</string>
     <!-- Headline text that appears on "Confirm account type" screen [CHAR LIMIT=none] -->
     <!-- Explanatory text that appears on the "Confirm account type" screen [CHAR LIMIT=none] -->
     <!-- Text that appears on "Set up email" screen after successfully setting up an account
         [CHAR LIMIT=none] -->
-    <string name="account_setup_names_headline">هه‌ژماره‌که‌ت دامه‌زرا و پۆستی ئه‌لیکترۆنی له‌ ڕێگایه‌!</string>
+    <string name="account_setup_names_headline">        هه‌ژماره‌که‌ت دامه‌زرا و پۆستی ئه‌لیکترۆنی له‌ ڕێگایه‌!</string>
     <!-- On "Set up email" screen, label of text field -->
-    <string name="account_setup_names_account_name_label">ناوێک بۆ هه‌ژماره‌که‌ دابنێ (ئاره‌زوومه‌ندانه‌یه‌)</string>
+    <string name="account_setup_names_account_name_label">        ناوێک بۆ هه‌ژماره‌که‌ دابنێ (ئاره‌زوومه‌ندانه‌یه‌)</string>
     <!-- On "Set up email" screen, label of text field -->
-    <string name="account_setup_names_user_name_label">ناوت(له‌ کاتی نامه‌ ڕۆشتن به‌دیده‌کرێت)</string>
+    <string name="account_setup_names_user_name_label">        ناوت(له‌ کاتی نامه‌ ڕۆشتن به‌دیده‌کرێت)</string>
     <!-- Headline for the the account type selector (IMAP or POP3 or EAS) [CHAR LIMIT=none] -->
     <string name="account_setup_account_type_headline">جۆری هه‌ژمار</string>
     <!-- "Add new email account" screen, text that appears on screen -->
@@ -155,7 +157,7 @@
     <string name="account_setup_incoming_security_none_label">هیچیان</string>
     <!-- "Incoming server settings" screen, option for "Security type" pop-up menu indicating
         the desire for an encrypted session on the selected port, accepting all SSL certificates -->
-    <string name="account_setup_incoming_security_ssl_trust_certificates_label">SSL/TLS (وه‌رگرتنی هه‌موو ناسنامه‌کان)</string>
+    <string name="account_setup_incoming_security_ssl_trust_certificates_label">        SSL/TLS (وه‌رگرتنی هه‌موو ناسنامه‌کان)</string>
     <!-- "Incoming server settings" screen, option for "Security type" pop-up menu indicating
         the desire for an encrypted session on the selected port, including SSL certificate
         checks -->
@@ -163,7 +165,7 @@
     <!-- "Incoming server settings" screen, option for "Security type" pop-up menu indicating
         the desire for an encrypted session overlaid on a plain text session using the selected
         port, accepting all SSL certificates -->
-    <string name="account_setup_incoming_security_tls_trust_certificates_label">STARTTLS (وه‌رگرتنی هه‌موو ناسنامه‌کان)</string>
+    <string name="account_setup_incoming_security_tls_trust_certificates_label">        STARTTLS (وه‌رگرتنی هه‌موو ناسنامه‌کان)</string>
     <!-- "Incoming server settings" screen, option for "Security type" pop-up menu indicating
         the desire for an encrypted session overlaid on a plain text session on the selected
         port, including SSL certificate checks -->
@@ -174,7 +176,7 @@
     <!-- "Incoming server settings" screen, options in pop-up menu for Delete email from server: -->
     <string name="account_setup_incoming_delete_policy_never_label">هیچکات</string>
     <!-- "Incoming server settings" screen, options in pop-up menu for Delete email from server: -->
-    <string name="account_setup_incoming_delete_policy_delete_label">کاتێک ده‌یسڕمه‌وه‌ له‌ سندوقی نامه‌ هاتووه‌کان</string>
+    <string name="account_setup_incoming_delete_policy_delete_label">        کاتێک ده‌یسڕمه‌وه‌ له‌ سندوقی نامه‌ هاتووه‌کان</string>
     <!-- "Incoming server settings" screen, label for setting IMAP path prefix: -->
     <string name="account_setup_incoming_imap_path_prefix_label">پێشگری ڕێڕه‌وی IMAP</string>
     <!-- "Incoming server settings" screen, hint for setting IMAP path prefix: -->
@@ -224,7 +226,7 @@
     <!-- In Account setup options screen, check box to sync email -->
     <string name="account_setup_options_sync_email_label">گواستنه‌وه‌ی پۆستی ئه‌لیکترۆنی له‌م هه‌ژماره‌وه‌</string>
     <!-- In Account setup options screen, check box to auto-download attachments  [CHAR LIMIT=none] -->
-    <string name="account_setup_options_background_attachments_label">خۆکارانه‌ داگرتنی هاوپێچ کاتێک په‌یوه‌ندی هه‌یه‌ له‌گه‌ڵ Wi-Fi</string>
+    <string name="account_setup_options_background_attachments_label">        خۆکارانه‌ داگرتنی هاوپێچ کاتێک په‌یوه‌ندی هه‌یه‌ له‌گه‌ڵ Wi-Fi</string>
     <!-- Dialog title when "setup" could not finish -->
     <string name="account_setup_failed_dlg_title">نه‌توانرا ته‌واوبکرێت</string>
     <!-- In Account setup options screen, label for email lookback selector -->
@@ -268,7 +270,7 @@
          specified for connecting to a server is inaccessible [CHAR LIMIT=NONE] -->
     <string name="account_setup_failed_certificate_inaccessible">ناسنامه‌ ڕاست نییه‌ یان نه‌گونجاوه‌.</string>
     <!-- Dialog text for ambiguous setup failure; server error/bad credentials [CHAR LIMIT=none] -->
-    <string name="account_setup_failed_check_credentials_message">ڕاژه‌که‌ وه‌لامی هه‌ڵه‌ی هه‌یه‌.تکایه‌ ناو و وشه‌ی نهێنی دڵنیابکه‌ره‌وه‌ و هه‌وڵبده‌ره‌وه‌.</string>
+    <string name="account_setup_failed_check_credentials_message">         ڕاژه‌که‌ وه‌لامی هه‌ڵه‌ی هه‌یه‌.تکایه‌ ناو و وشه‌ی نهێنی دڵنیابکه‌ره‌وه‌ و هه‌وڵبده‌ره‌وه‌.</string>
     <!-- "Setup could not finish" dialog text; e.g., Cannot connect to server -->
     <string name="account_setup_failed_dlg_server_message">نه‌توانرا په‌یوه‌ندی بکرێت به‌ ڕاژه‌.</string>
     <!-- "Setup could not finish" dialog text; e.g., Cannot connect to server\n(Connection timed out) -->
@@ -283,11 +285,11 @@
     <string name="account_setup_failed_ioerror">نه‌توانرا په‌یوه‌ندی بکرێته‌وه‌ بۆ ڕاژه‌.</string>
     <!-- Additional diagnostic text when server connection failed due to our inability to support a
          required EAS protocol version [CHAR LIMIT=none] -->
-    <string name="account_setup_failed_protocol_unsupported">تۆ ناونیشانی ڕاژه‌یه‌کی هه‌ڵه‌ت نوسیوه‌ یان ڕاژه‌که‌ پێویستی به‌ پرۆتۆکۆله‌ که‌ وه‌شانه‌که‌ی
+    <string name="account_setup_failed_protocol_unsupported">         تۆ ناونیشانی ڕاژه‌یه‌کی هه‌ڵه‌ت نوسیوه‌ یان ڕاژه‌که‌ پێویستی به‌ پرۆتۆکۆله‌ که‌ وه‌شانه‌که‌ی
          پۆستی ئه‌لیکترۆنی نه‌گونجاوه‌.</string>
     <!-- Additional diagnostic text when server access was denied; the user should contact the
          administrator of the server for more information [CHAR LIMIT=none] -->
-    <string name="account_setup_failed_access_denied">تۆ ده‌سته‌ڵاتت نییه‌ بۆ گواستنه‌وه‌ی ڕاژه‌. په‌یوه‌ندی بکه‌ به‌ ڕاژه‌کانه‌وه‌
+    <string name="account_setup_failed_access_denied">         تۆ ده‌سته‌ڵاتت نییه‌ بۆ گواستنه‌وه‌ی ڕاژه‌. په‌یوه‌ندی بکه‌ به‌ ڕاژه‌کانه‌وه‌
          ده‌سته‌ڵاتدار بۆ زانیاری زیاتر.</string>
     <!-- Dialog title when validation requires security provisioning (e.g. support
          for device lock PIN, or remote wipe.) and we ask the user permission before continuing -->
@@ -295,12 +297,12 @@
     <!-- Additional diagnostic text when validation requires security provisioning (e.g. support
          for device lock PIN, or remote wipe.) and we ask the user permission before continuing.
          [CHAR LIMIT=none] -->
-    <string name="account_setup_security_policies_required_fmt">ڕاژه‌که‌<xliff:g id="server">%s</xliff:g>پێویسته‌ ڕه‌زامه‌ندی هه‌بێت بۆ سه‌رپه‌رشتیکردی دووری
+    <string name="account_setup_security_policies_required_fmt">         ڕاژه‌که‌<xliff:g id="server">%s</xliff:g>پێویسته‌ ڕه‌زامه‌ندی هه‌بێت بۆ سه‌رپه‌رشتیکردی دووری
          هه‌ندێک پاراستن بۆ ئه‌ندرۆیده‌که‌ت.ئه‌ته‌وێ ته‌واوی بکه‌یت 
          له‌سه‌ر هه‌ژمار؟</string>
     <!-- Additional diagnostic text when validation failed due to required provisioning not
          being supported [CHAR LIMIT=none] -->
-    <string name="account_setup_failed_security_policies_unsupported">ئه‌م ڕاژه‌یه‌ پێویستی به‌ خزمه‌تگوزاری پاراستنه‌ که‌ ئه‌ندرۆیده‌که‌ت ناگونجێت،
+    <string name="account_setup_failed_security_policies_unsupported">         ئه‌م ڕاژه‌یه‌ پێویستی به‌ خزمه‌تگوزاری پاراستنه‌ که‌ ئه‌ندرۆیده‌که‌ت ناگونجێت،
           که‌ تێیدایه‌:<xliff:g id="error">%s</xliff:g></string>
     <!-- Warning given to users when they request disabling device administration (i.e. that their
          administered accounts will be deleted) [CHAR LIMIT=none] -->
@@ -314,16 +316,18 @@
     <!-- Additional diagnostic text when the account requires some amount of device security
          provisioning, just before jumping into system settings such as Device Policy grant,
          PIN/password, or encryption setup.  [CHAR LIMIT=none] -->
-    <string name="account_security_dialog_content_fmt"><xliff:g id="account">%s</xliff:g> پیویستی به‌ تازه‌کردنه‌وه‌یه‌ بۆ پارێزگاری
+    <string name="account_security_dialog_content_fmt">         <xliff:g id="account">%s</xliff:g> پیویستی به‌ تازه‌کردنه‌وه‌یه‌ بۆ پارێزگاری
          ڕێکخستن.</string>
     <!-- Notification ticker when device security required (note: unused in Holo XL) -->
-    <string name="security_unsupported_ticker_fmt">هه‌ژمار<xliff:g id="account">%s</xliff:g>ناتوانرێ بگوێزرێته‌وه‌ له‌کاتی پارێزگاری
+    <string name="security_unsupported_ticker_fmt">            هه‌ژمار<xliff:g id="account">%s</xliff:g>ناتوانرێ بگوێزرێته‌وه‌ له‌کاتی پارێزگاری
     پێویست.</string>
     <!-- Notification ticker when device security required (note: unused in Holo XL) -->
-    <string name="security_needed_ticker_fmt">هه‌ژمار <xliff:g id="account">%s</xliff:g> پێویستی به‌ نوێکردنه‌وه‌ی ڕێکخستن هه‌یه‌</string>
+    <string name="security_needed_ticker_fmt">            هه‌ژمار <xliff:g id="account">%s</xliff:g> پێویستی به‌ نوێکردنه‌وه‌ی ڕێکخستن هه‌یه‌
+    </string>
     <!-- Notification ticker when device security required (note: unused in Holo XL) -->
-    <string name="security_changed_ticker_fmt">هه‌ژمار <xliff:g id="account">%s</xliff:g> گۆڕدرا بۆ پارێزگاری ڕێکخستن؛ هیچ به‌کارهێنه‌رێک
-            پێویست نییه‌</string>
+    <string name="security_changed_ticker_fmt">            هه‌ژمار <xliff:g id="account">%s</xliff:g> گۆڕدرا بۆ پارێزگاری ڕێکخستن؛ هیچ به‌کارهێنه‌رێک
+            پێویست نییه‌
+    </string>
     <!-- Notification content title when device security required [CHAR_LIMIT=30] -->
     <string name="security_notification_content_update_title">نوێکردنه‌وه‌ی پارێزگاری پێویسته‌</string>
     <!-- Notification content title when device security policies have changed [CHAR_LIMIT=36] -->
@@ -336,12 +340,12 @@
     <string name="account_security_title">پارێزگاری ئامێر</string>
     <!-- Additional diagnostic text when the email app asserts control of the phone.
         [CHAR LIMIT=none] -->
-    <string name="account_security_policy_explanation_fmt">ڕاژه‌که‌<xliff:g id="server">%s</xliff:g>پێویستی به‌ ڕێگه‌دان هه‌یه‌ بۆ سه‌رپه‌رشتی دوور
+    <string name="account_security_policy_explanation_fmt">                  ڕاژه‌که‌<xliff:g id="server">%s</xliff:g>پێویستی به‌ ڕێگه‌دان هه‌یه‌ بۆ سه‌رپه‌رشتی دوور
          هه‌ندێ پارێزگاری بۆ ئه‌ندرۆیده‌که‌ت.</string>
     <!-- "Setup could not finish" dialog action button -->
     <string name="account_setup_failed_dlg_edit_details_action">ده‌ستکاریکردنی ڕوونکردنه‌وه‌کان</string>
     <!-- Notification ticker when device password is getting ready to expire [CHAR_LIMIT=80] -->
-    <string name="password_expire_warning_ticker_fmt"><xliff:g id="account">%s</xliff:g>پێویستی به‌ گۆڕان هه‌یه‌ له‌ قوفڵی ڕوونما
+    <string name="password_expire_warning_ticker_fmt">            <xliff:g id="account">%s</xliff:g>پێویستی به‌ گۆڕان هه‌یه‌ له‌ قوفڵی ڕوونما
             پی ئای ئێن یان وشه‌ی نهێنی.</string>
     <!-- Notification content title when device password is getting ready to expire
             [CHAR_LIMIT=30] -->
@@ -353,21 +357,21 @@
     <!-- Dialog title if device pin/password is going to expire soon. [CHAR_LIMIT=40] -->
     <string name="password_expire_warning_dialog_title">تێپەڕەوشەی داخەری ڕوونما بەرەو بەسەرچوون دەڕوات</string>
     <!-- Dialog content device pin/password is going to expire soon. [CHAR_LIMIT=none] -->
-    <string name="password_expire_warning_dialog_content_fmt">پێویسته‌ قوفڵه‌ ڕوونما بگۆڕیت به‌ زویی، ئه‌گه‌ر نا زانیارییه‌کانت بۆ
+    <string name="password_expire_warning_dialog_content_fmt">         پێویسته‌ قوفڵه‌ ڕوونما بگۆڕیت به‌ زویی، ئه‌گه‌ر نا زانیارییه‌کانت بۆ
          <xliff:g id="account">%s</xliff:g> ئه‌سڕدرێنه‌وه‌، ئه‌ته‌وێ بیگۆڕیت؟</string>
     <!-- Dialog title if device pin/password has already expired. [CHAR_LIMIT=40] -->
     <string name="password_expired_dialog_title">تێپەڕەوشەی داخەری ڕوونما بەسەرچوو</string>
     <!-- Dialog content device pin/password has already expired. [CHAR_LIMIT=none] -->
-    <string name="password_expired_dialog_content_fmt">زانیاری بۆ <xliff:g id="account">%s</xliff:g> ده‌سڕدرێته‌وه‌ له‌ ئامێره‌که‌ت.
+    <string name="password_expired_dialog_content_fmt">         زانیاری بۆ <xliff:g id="account">%s</xliff:g> ده‌سڕدرێته‌وه‌ له‌ ئامێره‌که‌ت.
          ئه‌توانی بیهێنیه‌ته‌وه‌ به‌ گۆڕینی قوفڵی ڕوونما.ئه‌ته‌وێ بیگۆڕی؟</string>
     <!-- On AccountSettingsXL, dialog text if you try to exit in/out/eas fragment (server settings)
          without checking/saving [CHAR LIMIT=none]-->
     <string name="account_settings_exit_server_settings">پاشه‌که‌وتنه‌کردنی گۆڕانه‌کان؟</string>
     <!-- On Settings screen, setting option name -->
     <!-- Title of account preference for downloading attachments in background [CHAR LIMIT=32] -->
-    <string name="account_settings_background_attachments_label">هاوپێچی داگرتن</string>
+    <string name="account_settings_background_attachments_label">        هاوپێچی داگرتن</string>
     <!-- Summary of account preference for downloading attachments in background [CHAR LIMIT=64] -->
-    <string name="account_settings_background_attachments_summary">خۆکارانه‌-داگرتنی هاوپێچ بۆ نامه‌کان له‌لایه‌ن Wi-Fi</string>
+    <string name="account_settings_background_attachments_summary">        خۆکارانه‌-داگرتنی هاوپێچ بۆ نامه‌کان له‌لایه‌ن Wi-Fi</string>
     <string name="account_settings_notify_label">ئاگاداری پۆستی ئه‌لیکترۆنی</string>
     <!-- On Settings screen, summary line when called via AccountManager for Exchange accounts
         [CHAR LIMIT=50] -->
@@ -383,7 +387,7 @@
     <!-- On Settings screen, setting option name -->
     <string name="account_settings_outgoing_label">ڕێکخستنی ڕۆشتن</string>
     <!-- On Settings screen, setting option summary [CHAR LIMIT=64] -->
-    <string name="account_settings_outgoing_summary">ناو، وشه‌ی نهێنی، وه‌ هاتنه‌کانی تر و ڕێکخستنه‌کانی</string>
+    <string name="account_settings_outgoing_summary">        ناو، وشه‌ی نهێنی، وه‌ هاتنه‌کانی تر و ڕێکخستنه‌کانی</string>
     <!-- On Settings screen, setting option name -->
     <string name="account_settings_enforced_label">به‌زۆرکردنی پارێزه‌ر</string>
     <!-- On Settings screen, setting option summary [CHAR LIMIT=64] -->
@@ -404,7 +408,7 @@
         for insertion in message body. [CHAR_LIMIT=24]-->
     <string name="account_settings_edit_quick_responses_label">وه‌ڵامە خێراکان</string>
     <!-- On Settings screen, setting option summary [CHAR LIMIT=64] -->
-    <string name="account_settings_edit_quick_responses_summary">ده‌ستکاریکردنی ده‌ق که‌ له‌م کۆتاییه‌دا هاورده‌ت کردوه‌ به‌ پۆستی ئه‌لیکترۆنی</string>
+    <string name="account_settings_edit_quick_responses_summary">        ده‌ستکاریکردنی ده‌ق که‌ له‌م کۆتاییه‌دا هاورده‌ت کردوه‌ به‌ پۆستی ئه‌لیکترۆنی</string>
     <!-- On Settings screen, section heading -->
     <string name="account_settings_notifications">ڕێکخستنی ئاگادارییه‌کان</string>
     <!-- On Settings screen, section heading for data usage [CHAR LIMIT=70] -->

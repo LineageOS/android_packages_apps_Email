@@ -173,7 +173,7 @@
     <string name="account_setup_incoming_security_none_label">Keen</string>
     <!-- "Incoming server settings" screen, option for "Security type" pop-up menu indicating
         the desire for an encrypted session on the selected port, accepting all SSL certificates -->
-    <string name="account_setup_incoming_security_ssl_trust_certificates_label">SSL/TLS (All Zertifikater acceptéieren)</string>
+    <string name="account_setup_incoming_security_ssl_trust_certificates_label">        SSL/TLS (All Zertifikater acceptéieren)</string>
     <!-- "Incoming server settings" screen, option for "Security type" pop-up menu indicating
         the desire for an encrypted session on the selected port, including SSL certificate
         checks -->
@@ -181,7 +181,7 @@
     <!-- "Incoming server settings" screen, option for "Security type" pop-up menu indicating
         the desire for an encrypted session overlaid on a plain text session using the selected
         port, accepting all SSL certificates -->
-    <string name="account_setup_incoming_security_tls_trust_certificates_label">STARTTLS (all Zertifikater acceptéieren)</string>
+    <string name="account_setup_incoming_security_tls_trust_certificates_label">        STARTTLS (all Zertifikater acceptéieren)</string>
     <!-- "Incoming server settings" screen, option for "Security type" pop-up menu indicating
         the desire for an encrypted session overlaid on a plain text session on the selected
         port, including SSL certificate checks -->
@@ -482,7 +482,7 @@
     <string name="policy_password_expiration">Oflaf vun de Passwierder erfuerderlech</string>
     <!-- A policy requiring a maximum amount of time the device can sit idle before the lock screen
         is activated [CHAR LIMIT=50] -->
-    <string name="policy_screen_timeout">Schiermspär bei inaktivem Apparat</string>
+    <string name="policy_screen_timeout">Schiermspär bei inaktivem Apparat </string>
     <!-- A policy limiting the number of old calendar events synced [CHAR LIMIT=50] -->
     <string name="policy_calendar_age">D\'Rendezvouse limitéieren déi synchroniséiert ginn</string>
     <!-- A policy limiting the number of emails synced [CHAR LIMIT=50] -->
