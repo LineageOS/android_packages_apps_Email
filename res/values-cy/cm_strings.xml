@@ -17,6 +17,7 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- Delete account -->
+    <string name="delete_account_confirmation_msg">Bydd hyn yn dileu holl osodiadau a negeseuon e-bost y cyfrif <xliff:g id="account">%s</xliff:g>. Ni fydd yn bosib dadwneud hyn.\n\nParhau?</string>
     <!-- Mailbox notification settings activity title [CHAR LIMIT=none] -->
     <!-- Mailbox settings activity title, with the target folder name [CHAR LIMIT=none] -->
     <!-- Name for preference entry which leads to the per-folder notification settings activity -->
