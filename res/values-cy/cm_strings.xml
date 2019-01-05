@@ -21,4 +21,5 @@
     <!-- Mailbox notification settings activity title [CHAR LIMIT=none] -->
     <!-- Mailbox settings activity title, with the target folder name [CHAR LIMIT=none] -->
     <!-- Name for preference entry which leads to the per-folder notification settings activity -->
+    <string name="battery_optimization_notification_title">Angen defnydd yn y cefndir</string>
 </resources>
