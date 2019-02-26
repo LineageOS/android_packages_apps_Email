@@ -295,7 +295,7 @@ public class MailboxSettings extends BasePreferenceActivity {
                 holder = new HeaderViewHolder();
                 holder.spacer = view.findViewById(R.id.spacer);
                 holder.icon = (ImageView) view.findViewById(R.id.icon);
-                holder.title = (TextView) view.findViewById(android.R.id.title);
+                holder.title = (TextView) view.findViewById(R.id.title);
                 holder.checkmark = view.findViewById(R.id.checkmark);
                 view.setTag(holder);
             } else {
