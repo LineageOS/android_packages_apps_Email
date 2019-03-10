@@ -16,10 +16,5 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <!-- Delete account -->
-  <string name="delete_account">Forigi konton</string>
-  <!-- Mailbox notification settings activity title [CHAR LIMIT=none] -->
-  <!-- Mailbox settings activity title, with the target folder name [CHAR LIMIT=none] -->
-  <!-- Name for preference entry which leads to the per-folder notification settings activity -->
-  <!-- On Settings screen, notification lights pop-up menu label -->
+    <string name="delete_account">Forigi konton</string>
 </resources>
