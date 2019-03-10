@@ -24,4 +24,5 @@
     <string name="mailbox_notify_settings_activity_title_with_mailbox">Dewisiadau hysbysiadau (<xliff:g id="mailbox_name" example="Family">%s</xliff:g>)</string>
     <string name="folder_notify_settings_pref_title">Gosodiadau hysbysiadau ffolder</string>
     <string name="battery_optimization_notification_title">Angen defnydd yn y cefndir</string>
+    <string name="battery_optimization_notification_imap_text">Er mwyn gwthio hysbysiadau IMAP, rhaid bod yr ap e-bost yn rhedeg yn y cefndir.\nCyffyrdda yma i alluogi defnydd yn y cefndir.</string>
 </resources>
