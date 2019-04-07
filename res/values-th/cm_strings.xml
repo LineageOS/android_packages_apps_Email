@@ -23,4 +23,6 @@
     <string name="mailbox_notify_settings_activity_title">ตัวเลือกการแจ้งเตือน</string>
     <string name="mailbox_notify_settings_activity_title_with_mailbox">ตัวเลือกการแจ้งเตือน (<xliff:g id="mailbox_name" example="Family">%s</xliff:g>)</string>
     <string name="folder_notify_settings_pref_title">ตั้งค่าการแจ้งเตือนโฟลเดอร์</string>
+    <string name="battery_optimization_notification_title">จำเป็นต้องทำงานในพื้นหลัง</string>
+    <string name="battery_optimization_notification_imap_text">สำหรับการแจ้งเตือน IMAP แอปอีเมลจะต้องทำงานในพื้นหลัง \n แตะที่นี่เพื่ออนุญาตการทำงานในพื้นหลัง</string>
 </resources>

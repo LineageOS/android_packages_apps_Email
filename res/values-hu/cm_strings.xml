@@ -23,4 +23,6 @@
     <string name="mailbox_notify_settings_activity_title">Értesítési beállítások</string>
     <string name="mailbox_notify_settings_activity_title_with_mailbox">Értesítési beállítások (<xliff:g id="mailbox_name" example="Family">%s</xliff:g>)</string>
     <string name="folder_notify_settings_pref_title">Mappa értesítési beállítások</string>
+    <string name="battery_optimization_notification_title">A hattérben való használati engedély szükséges</string>
+    <string name="battery_optimization_notification_imap_text">Az azonnali IMAP-értesítésekhez szükséges, hogy az e-mail alkalmazás a háttérben futhasson.\nÉrintse meg itt a háttérbenfutás engedélyezéséhez.</string>
 </resources>
