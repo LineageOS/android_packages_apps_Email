@@ -23,4 +23,6 @@
     <string name="mailbox_notify_settings_activity_title">Opsionet e njoftimeve</string>
     <string name="mailbox_notify_settings_activity_title_with_mailbox">Opsionet e njoftimeve (<xliff:g id="mailbox_name" example="Family">%s</xliff:g>)</string>
     <string name="folder_notify_settings_pref_title">Parametrat e njoftimeve të dosjeve</string>
+    <string name="battery_optimization_notification_title">Nevojitet përdorim nën sfond</string>
+    <string name="battery_optimization_notification_imap_text">Për njoftime të IMAP, aplikacioni i Email duhet të punojë në sfond.\nShtyp këtu për të lejuar përdorimin në sfond.</string>
 </resources>
