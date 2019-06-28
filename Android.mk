@@ -71,6 +71,8 @@ LOCAL_PROGUARD_FLAG_FILES += proguard-test.flags
 
 LOCAL_SDK_VERSION := current
 
+LOCAL_COMPATIBILITY_SUITE := general-tests
+
 include $(BUILD_PACKAGE)
 
 # only include rules to build other stuff for the original package, not the derived package.
