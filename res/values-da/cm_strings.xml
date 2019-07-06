@@ -17,7 +17,7 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="delete_account">Slet konto</string>
-    <string name="delete_account_confirmation_msg">Dette vil slette alle indstillinger og e-mails fra kontoen <xliff:g id="account">%s</xliff:g>. Denne handling kan ikke fortrydes.\n\nFortsæt?</string>
+    <string name="delete_account_confirmation_msg">Dette vil slette alle kontoens indstillinger og e-breve <xliff:g id="account">%s</xliff:g>. Denne opgave kan ikke fortrydes.\n\nFortsæt?</string>
     <string name="deleting_account_msg">Sletter konto\u2026</string>
     <string name="delete_account_failed">Kunne ikke slette kontoen</string>
     <string name="mailbox_notify_settings_activity_title">Notifikationsindstillinger</string>
