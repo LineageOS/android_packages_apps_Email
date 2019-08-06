@@ -256,9 +256,11 @@
     <string name="no_quick_responses">Nenguna disponible</string>
     <string name="gmail_name">Gmail</string>
     <string name="folder_sync_settings_pref_title">Axustes de sync de carpetes</string>
+    <string name="account_settings_sync_size_enable">Configurar tamañu de sincronización pa cada corréu</string>
     <string name="account_settings_sync_size_enable_summary">P\'aforrar datos, podríes configurar el tamañu de sincronización per corréu de la cuenta</string>
     <string name="account_settings_sync_size_label">Escoyer tamañu de sincronización</string>
     <string name="account_settings_sync_size_category_label">Axustes de tamañu de sincronización</string>
+    <string name="account_setup_options_mail_sync_size_all">Tou</string>
     <string name="account_setup_options_mail_sync_size_20k">20KB</string>
     <string name="account_setup_options_mail_sync_size_100k">100KB</string>
     <string name="account_setup_options_mail_sync_size_200k">200KB</string>
