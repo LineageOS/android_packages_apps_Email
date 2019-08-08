@@ -1319,8 +1319,10 @@ public class EmailProvider extends ContentProvider
                             uri.getQueryParameter(EmailContent.SUPPRESS_COMBINED_ACCOUNT_PARAM);
                     final boolean suppressCombined =
                             suppressParam != null && Boolean.parseBoolean(suppressParam);
-                    c = uiAccounts(projection, suppressCombined);
-                    return c;
+                    // TODO(rtenneti): Enable notifications.
+                    // c = uiAccounts(projection, suppressCombined);
+                    // return c;
+                    return null;
                 case UI_UNDO:
                     return uiUndo(projection);
                 case UI_SUBFOLDERS:
@@ -1348,8 +1350,10 @@ public class EmailProvider extends ContentProvider
                     c = uiQuery(match, uri, projection, unseenOnly);
                     return c;
                 case UI_FOLDERS:
-                    c = uiFolders(uri, projection);
-                    return c;
+                    // TODO(rtenneti): Enable notifications.
+                    // c = uiFolders(uri, projection);
+                    // return c;
+                    return null;
                 case UI_FOLDER_LOAD_MORE:
                     c = uiFolderLoadMore(getMailbox(uri));
                     return c;
@@ -1541,7 +1545,8 @@ public class EmailProvider extends ContentProvider
         }
 
         if ((c != null) && !isTemporary()) {
-            c.setNotificationUri(getContext().getContentResolver(), uri);
+            // TODO(rtenneti): Enable notifications.
+            // c.setNotificationUri(getContext().getContentResolver(), uri);
         }
         return c;
     }
@@ -2620,7 +2625,8 @@ public class EmailProvider extends ContentProvider
             final Set<Uri> notifications = getBatchNotificationsSet();
             setBatchNotificationsSet(null);
             for (final Uri uri : notifications) {
-                context.getContentResolver().notifyChange(uri, null);
+                // TODO(rtenneti): Enable notifications.
+                // context.getContentResolver().notifyChange(uri, null);
             }
         }
     }
@@ -2636,7 +2642,8 @@ public class EmailProvider extends ContentProvider
         @Override
         public void attachmentChanged(final Context context, final long id, final int flags) {
             // The default implementation delegates to the real service.
-            AttachmentService.attachmentChanged(context, id, flags);
+            // TODO(rtenneti): Enable AttachmentService.
+            // AttachmentService.attachmentChanged(context, id, flags);
         }
     };
     private EmailAttachmentService mAttachmentService = DEFAULT_ATTACHMENT_SERVICE;
@@ -4052,7 +4059,8 @@ public class EmailProvider extends ContentProvider
         } finally {
             accountIdCursor.close();
         }
-        mc.setNotificationUri(context.getContentResolver(), UIPROVIDER_ALL_ACCOUNTS_NOTIFIER);
+        // TODO(rtenneti): Enable notifications.
+        // mc.setNotificationUri(context.getContentResolver(), UIPROVIDER_ALL_ACCOUNTS_NOTIFIER);
 
         return mc;
     }
@@ -4723,8 +4731,9 @@ public class EmailProvider extends ContentProvider
                     // Return real and virtual mailboxes alike
                     final Cursor rawc = db.rawQuery(genQueryAccountAllMailboxes(uiProjection),
                             new String[] {id});
-                    rawc.setNotificationUri(context.getContentResolver(), notifyUri);
-                    vc.setNotificationUri(context.getContentResolver(), notifyUri);
+                    // TODO(rtenneti): Enable notifications.
+                    // rawc.setNotificationUri(context.getContentResolver(), notifyUri);
+                    // vc.setNotificationUri(context.getContentResolver(), notifyUri);
                     if (rawc.getCount() > 0) {
                         c = new MergeCursor(new Cursor[]{rawc, vc});
                     } else {
@@ -4868,7 +4877,8 @@ public class EmailProvider extends ContentProvider
                 break;
         }
         if (notifyUri != null) {
-            c.setNotificationUri(resolver, notifyUri);
+            // TODO(rtenneti): Enable notifications.
+            // c.setNotificationUri(resolver, notifyUri);
         }
         return c;
     }
@@ -5323,7 +5333,8 @@ public class EmailProvider extends ContentProvider
             mailPrefs.setConversationOverviewMode(overviewMode);
         }
 
-        c.getContentResolver().notifyChange(UIPROVIDER_ALL_ACCOUNTS_NOTIFIER, null, false);
+        // TODO(rtenneti): Enable notifications.
+        // c.getContentResolver().notifyChange(UIPROVIDER_ALL_ACCOUNTS_NOTIFIER, null, false);
 
         return 1;
     }
@@ -5800,7 +5811,8 @@ public class EmailProvider extends ContentProvider
         if (batchNotifications != null) {
             batchNotifications.add(notifyUri);
         } else {
-            getContext().getContentResolver().notifyChange(notifyUri, null);
+            // TODO(rtenneti): Enable notifications.
+            // getContext().getContentResolver().notifyChange(notifyUri, null);
         }
     }
 
