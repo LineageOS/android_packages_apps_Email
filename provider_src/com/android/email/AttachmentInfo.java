@@ -130,16 +130,6 @@ public class AttachmentInfo {
             canView = false;
         }
 
-        // Check for unacceptable attachments by filename extension
-        String extension = AttachmentUtilities.getFilenameExtension(mName);
-        if (!TextUtils.isEmpty(extension) &&
-                Utility.arrayContains(AttachmentUtilities.UNACCEPTABLE_ATTACHMENT_EXTENSIONS,
-                        extension)) {
-            canView = false;
-            canSave = false;
-            denyFlags |= DENY_MALWARE;
-        }
-
         // Check for policy restrictions on download
         if ((flags & Attachment.FLAG_POLICY_DISALLOWS_DOWNLOAD) != 0) {
             canView = false;
