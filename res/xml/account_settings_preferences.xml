@@ -33,8 +33,10 @@
     <EditTextPreference
         android:key="account_signature"
         android:title="@string/preferences_signature_title"
-        android:singleLine="false"
-        android:dialogTitle="@string/preferences_signature_dialog_title"  />
+		android:lines="5"
+		android:gravity="left|top"
+        android:dialogTitle="@string/preferences_signature_dialog_title"
+		android:inputType="textMultiLine" />
 
     <PreferenceScreen
         android:key="account_quick_responses"
