@@ -51,7 +51,8 @@ LOCAL_STATIC_ANDROID_LIBRARIES := \
     androidx.fragment_fragment \
     androidx.appcompat_appcompat \
     androidx.gridlayout_gridlayout \
-    androidx.legacy_legacy-support-v13
+    androidx.legacy_legacy-support-v13 \
+    androidx-constraintlayout_constraintlayout
 
 LOCAL_STATIC_JAVA_LIBRARIES := \
     androidx.annotation_annotation \
