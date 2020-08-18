@@ -97,7 +97,6 @@
 
         <!-- We can deal with all kinds of aspect ratios -->
         <meta-data android:name="android.max_aspect" android:value="0.0" />
-
         <uses-library android:name="org.apache.http.legacy" android:required="false" />
         <activity
             android:name="com.android.email.activity.ComposeActivityEmailExternal"
@@ -126,7 +125,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:scheme="mailto" />
             </intent-filter>
-
+            <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts"/>
         </activity>
 
         <!--
@@ -246,7 +245,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.APP_EMAIL" />
             </intent-filter>
-            <intent-filter>
+			
+			<meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts" />
+            
+			<intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.DEFAULT" />
