@@ -74,6 +74,8 @@
         android:protectionLevel="signature"
         android:label="@string/permission_update_widget_label"
         android:description="@string/permission_update_widget_desc"/>
+    <uses-permission
+        android:name="com.android.email.permission.GET_WIDGET_UPDATE"/>
 
     <!-- Grant permission to system apps to access provider (see provider below) -->
     <permission
