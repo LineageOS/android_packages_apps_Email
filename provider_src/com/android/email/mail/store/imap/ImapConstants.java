@@ -55,6 +55,7 @@ public final class ImapConstants {
     public static final String FLAG_DELETED = "\\DELETED";
     public static final String FLAG_FLAGGED = "\\FLAGGED";
     public static final String FLAG_NO_SELECT = "\\NOSELECT";
+    public static final String FLAG_NON_EXISTENT = "\\NONEXISTENT";
     public static final String FLAG_SEEN = "\\SEEN";
     public static final String FLAGS = "FLAGS";
     public static final String FLAGS_SILENT = "FLAGS.SILENT";
