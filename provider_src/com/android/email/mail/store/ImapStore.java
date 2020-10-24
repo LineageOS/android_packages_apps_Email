@@ -27,6 +27,7 @@ import com.android.email.LegacyConversions;
 import com.android.email.Preferences;
 import com.android.email.mail.Store;
 import com.android.email.mail.store.imap.ImapConstants;
+import com.android.email.mail.store.imap.ImapList;
 import com.android.email.mail.store.imap.ImapResponse;
 import com.android.email.mail.store.imap.ImapString;
 import com.android.email.mail.transport.MailTransport;
@@ -442,8 +443,7 @@ public class ImapStore extends Store {
                     if (ImapConstants.INBOX.equalsIgnoreCase(folderName)) continue;
 
                     // Parse attributes.
-                    boolean selectable =
-                        !response.getListOrEmpty(1).contains(ImapConstants.FLAG_NO_SELECT);
+                    boolean selectable = isFolderSelectable(response.getListOrEmpty(1));
                     String delimiter = response.getStringOrEmpty(2).getString();
                     char delimiterChar = '\0';
                     if (!TextUtils.isEmpty(delimiter)) {
@@ -482,6 +482,11 @@ public class ImapStore extends Store {
                 poolConnection(connection);
             }
         }
+    }
+
+    private boolean isFolderSelectable(ImapList folderAttributes) {
+        return !(folderAttributes.contains(ImapConstants.FLAG_NO_SELECT) ||
+                folderAttributes.contains(ImapConstants.FLAG_NON_EXISTENT));
     }
 
     @Override
