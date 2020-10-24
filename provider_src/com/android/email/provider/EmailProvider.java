@@ -3407,7 +3407,8 @@ public class EmailProvider extends ContentProvider
             caps =  UIProvider.FolderCapabilities.CAN_ACCEPT_MOVED_MESSAGES |
                     UIProvider.FolderCapabilities.ALLOWS_REMOVE_CONVERSATION |
                     UIProvider.FolderCapabilities.DELETE |
-                    UIProvider.FolderCapabilities.DELETE_ACTION_FINAL;
+                    UIProvider.FolderCapabilities.DELETE_ACTION_FINAL |
+                    UIProvider.FolderCapabilities.UNSEEN_COUNT_ONLY;
         }
         if (isVirtualMailbox(mailboxId)) {
             caps |= UIProvider.FolderCapabilities.IS_VIRTUAL;
