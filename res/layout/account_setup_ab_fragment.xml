@@ -17,34 +17,35 @@
 <!-- Fragment use to disambiguate between the user selecting protocol A and providers.xml
  indicating otherwise -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
     <TextView
-            android:id="@+id/ab_instructions"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/account_setup_ab_instructions_format"
-            style="@style/account_setup_info_text" />
+        android:id="@+id/ab_instructions"
+        style="@style/account_setup_info_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/account_setup_ab_instructions_format" />
     <!-- Spacer -->
     <View
-            android:layout_height="0dp"
-            android:layout_width="match_parent"
-            android:layout_weight="1" />
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
     <Button
-            android:id="@+id/ab_button_a"
-            android:layout_height="@dimen/setup_account_ab_button_height"
-            android:layout_width="@dimen/setup_account_ab_button_width"
-            android:layout_marginTop="@dimen/setup_account_ab_button_vertical_spacing"
-            android:minWidth="@dimen/setup_account_ab_button_min_width"
-            android:layout_gravity="center_horizontal"
-            />
+        android:id="@+id/ab_button_a"
+        android:layout_width="@dimen/setup_account_ab_button_width"
+        android:layout_height="@dimen/setup_account_ab_button_height"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/setup_account_ab_button_vertical_spacing"
+        android:minWidth="@dimen/setup_account_ab_button_min_width" />
+
     <Button
-            android:id="@+id/ab_button_b"
-            android:layout_height="@dimen/setup_account_ab_button_height"
-            android:layout_width="@dimen/setup_account_ab_button_width"
-            android:layout_marginTop="@dimen/setup_account_ab_button_vertical_spacing"
-            android:minWidth="@dimen/setup_account_ab_button_min_width"
-            android:layout_gravity="center_horizontal"
-            />
+        android:id="@+id/ab_button_b"
+        android:layout_width="@dimen/setup_account_ab_button_width"
+        android:layout_height="@dimen/setup_account_ab_button_height"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/setup_account_ab_button_vertical_spacing"
+        android:minWidth="@dimen/setup_account_ab_button_min_width" />
 </LinearLayout>
