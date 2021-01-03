@@ -18,9 +18,7 @@
 package com.android.emailcommon;
 
 import android.content.Context;
-import android.telephony.TelephonyManager;
 
-import com.android.emailcommon.utility.Utility;
 import com.android.mail.utils.LogUtils;
 
 import java.io.BufferedReader;
@@ -77,38 +75,9 @@ public class Device {
             }
         }
         BufferedWriter w = new BufferedWriter(new FileWriter(f), 128);
-        final String consistentDeviceId = getConsistentDeviceId(context);
-        if (consistentDeviceId != null) {
-            // Use different prefix from random IDs.
-            id = "androidc" + consistentDeviceId;
-        } else {
-            id = "android" + System.currentTimeMillis();
-        }
+        id = "android" + System.currentTimeMillis();
         w.write(id);
         w.close();
         return id;
-    }
-
-    /**
-     * @return Device's unique ID if available.  null if the device has no unique ID.
-     */
-    public static String getConsistentDeviceId(Context context) {
-        final String deviceId;
-        try {
-            TelephonyManager tm =
-                (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-            if (tm == null) {
-                return null;
-            }
-            deviceId = tm.getDeviceId();
-            if (deviceId == null) {
-                return null;
-            }
-        } catch (Exception e) {
-            LogUtils.d(Logging.LOG_TAG, "Error in TelephonyManager.getDeviceId(): "
-                    + e.getMessage());
-            return null;
-        }
-        return Utility.getSmallHash(deviceId);
     }
 }

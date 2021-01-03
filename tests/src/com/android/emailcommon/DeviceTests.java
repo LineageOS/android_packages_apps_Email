@@ -17,27 +17,18 @@
 
 package com.android.emailcommon;
 
-import android.content.Context;
-import android.telephony.TelephonyManager;
 import android.test.AndroidTestCase;
 import android.test.suitebuilder.annotation.SmallTest;
 
-import com.android.mail.utils.LogUtils;
+import java.io.IOException;
 
 @SmallTest
 public class DeviceTests extends AndroidTestCase {
 
-    public void testGetConsistentDeviceId() {
-        TelephonyManager tm =
-                (TelephonyManager) getContext().getSystemService(Context.TELEPHONY_SERVICE);
-        if (tm == null) {
-            LogUtils.w(Logging.LOG_TAG, "TelephonyManager not supported.  Skipping.");
-            return;
-        }
-
+    public void testGetDeviceId() throws IOException {
         // Note null is a valid return value.  But still it should be consistent.
-        final String deviceId = Device.getConsistentDeviceId(getContext());
-        final String deviceId2 = Device.getConsistentDeviceId(getContext());
+        final String deviceId = Device.getDeviceId(getContext());
+        final String deviceId2 = Device.getDeviceId(getContext());
         // Should be consistent.
         assertEquals(deviceId, deviceId2);
     }

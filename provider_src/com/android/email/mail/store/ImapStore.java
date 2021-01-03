@@ -19,7 +19,6 @@ package com.android.email.mail.store;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
-import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Base64;
 
@@ -185,7 +184,6 @@ public class ImapStore extends Store {
      *   os-version             "version; model; build-id"
      *   vendor                 Vendor of the client/server
      *   x-android-device-model Model (only revealed if release build)
-     *   x-android-net-operator Mobile network operator (if known)
      *   AGUID                  A device+account UID
      *
      * In addition, a vendor policy .apk can append key/value pairs.
@@ -201,14 +199,8 @@ public class ImapStore extends Store {
         // values in any IMAP ID message
         synchronized (ImapStore.class) {
             if (sImapId == null) {
-                TelephonyManager tm =
-                        (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-                String networkOperator = tm.getNetworkOperatorName();
-                if (networkOperator == null) networkOperator = "";
-
                 sImapId = makeCommonImapId(context.getPackageName(), Build.VERSION.RELEASE,
-                        Build.VERSION.CODENAME, Build.MODEL, Build.ID, Build.MANUFACTURER,
-                        networkOperator);
+                        Build.VERSION.CODENAME, Build.MODEL, Build.ID, Build.MANUFACTURER);
             }
         }
 
@@ -253,12 +245,11 @@ public class ImapStore extends Store {
      * @param model Build.MODEL
      * @param id Build.ID
      * @param vendor Build.MANUFACTURER
-     * @param networkOperator TelephonyManager.getNetworkOperatorName()
      * @return the static (never changes) portion of the IMAP ID
      */
     @VisibleForTesting
     static String makeCommonImapId(String packageName, String version,
-            String codeName, String model, String id, String vendor, String networkOperator) {
+            String codeName, String model, String id, String vendor) {
 
         // Before building up IMAP ID string, pre-filter the input strings for "legal" chars
         // This is using a fairly arbitrary char set intended to pass through most reasonable
@@ -272,7 +263,6 @@ public class ImapStore extends Store {
         model = p.matcher(model).replaceAll("");
         id = p.matcher(id).replaceAll("");
         vendor = p.matcher(vendor).replaceAll("");
-        networkOperator = p.matcher(networkOperator).replaceAll("");
 
         // "name" "com.android.email"
         StringBuilder sb = new StringBuilder("\"name\" \"");
@@ -311,13 +301,6 @@ public class ImapStore extends Store {
                 sb.append(model);
                 sb.append("\"");
             }
-        }
-
-        // "x-android-mobile-net-operator" "name of network operator"
-        if (networkOperator.length() > 0) {
-            sb.append(" \"x-android-mobile-net-operator\" \"");
-            sb.append(networkOperator);
-            sb.append("\"");
         }
 
         return sb.toString();

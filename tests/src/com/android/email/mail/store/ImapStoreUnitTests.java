@@ -140,8 +140,7 @@ public class ImapStoreUnitTests extends InstrumentationTestCase {
         Context realContext = getInstrumentation().getTargetContext();
         ImapStore.sImapId = ImapStore.makeCommonImapId(realContext.getPackageName(),
                         Build.VERSION.RELEASE, Build.VERSION.CODENAME,
-                        Build.MODEL, Build.ID, Build.MANUFACTURER,
-                        "FakeNetworkOperator");
+                        Build.MODEL, Build.ID, Build.MANUFACTURER);
         mTestContext = new SecondaryMockContext(
                 DBTestHelper.ProviderContextSetupHelper.getProviderContext(realContext),
                 realContext);
@@ -262,27 +261,25 @@ public class ImapStoreUnitTests extends InstrumentationTestCase {
 
         // simple API check - non-REL codename, non-empty version
         id = ImapStore.makeCommonImapId("packageName", "version", "codeName",
-                "model", "id", "vendor", "network-operator");
+                "model", "id", "vendor");
         map = tokenizeImapId(id);
         assertEquals("packageName", map.get("name"));
         assertEquals("android", map.get("os"));
         assertEquals("version; id", map.get("os-version"));
         assertEquals("vendor", map.get("vendor"));
         assertEquals(null, map.get("x-android-device-model"));
-        assertEquals("network-operator", map.get("x-android-mobile-net-operator"));
         assertEquals(null, map.get("AGUID"));
 
         // simple API check - codename is REL, so use model name.
         // also test empty version => 1.0 and empty network operator
         id = ImapStore.makeCommonImapId("packageName", "", "REL",
-                "model", "id", "vendor", "");
+                "model", "id", "vendor");
         map = tokenizeImapId(id);
         assertEquals("packageName", map.get("name"));
         assertEquals("android", map.get("os"));
         assertEquals("1.0; id", map.get("os-version"));
         assertEquals("vendor", map.get("vendor"));
         assertEquals("model", map.get("x-android-device-model"));
-        assertEquals(null, map.get("x-android-mobile-net-operator"));
         assertEquals(null, map.get("AGUID"));
     }
 
@@ -329,8 +326,7 @@ public class ImapStoreUnitTests extends InstrumentationTestCase {
                 "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
                 "0123456789", "codeName",
                 "model", "-_+=;:.,// ",
-                "v(e)n\"d\ro\nr",           // look for bad chars stripped out, leaving OK chars
-                "()\"");                    // look for bad chars stripped out, leaving nothing
+                "v(e)n\"d\ro\nr");           // look for bad chars stripped out, leaving OK chars
         HashMap<String, String> map = tokenizeImapId(id);
 
         assertEquals("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", map.get("name"));
