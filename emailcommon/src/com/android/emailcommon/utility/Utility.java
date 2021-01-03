@@ -371,29 +371,6 @@ public class Utility {
         }
     }
 
-    public static String getSmallHash(final String value) {
-        final MessageDigest sha;
-        try {
-            sha = MessageDigest.getInstance("SHA-1");
-        } catch (NoSuchAlgorithmException impossible) {
-            return null;
-        }
-        sha.update(Utility.toUtf8(value));
-        final int hash = getSmallHashFromSha1(sha.digest());
-        return Integer.toString(hash);
-    }
-
-    /**
-     * @return a non-negative integer generated from 20 byte SHA-1 hash.
-     */
-    /* package for testing */ static int getSmallHashFromSha1(byte[] sha1) {
-        final int offset = sha1[19] & 0xf; // SHA1 is 20 bytes.
-        return ((sha1[offset]  & 0x7f) << 24)
-                | ((sha1[offset + 1] & 0xff) << 16)
-                | ((sha1[offset + 2] & 0xff) << 8)
-                | ((sha1[offset + 3] & 0xff));
-    }
-
     /**
      * Try to make a date MIME(RFC 2822/5322)-compliant.
      *
