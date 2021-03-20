@@ -3160,7 +3160,7 @@ public class EmailProvider extends ContentProvider
             final MailPrefs mailPrefs = MailPrefs.get(context);
             for (Address sender : fromList) {
                 final String email = sender.getAddress();
-                if (mailPrefs.getDisplayImagesFromSender(email)) {
+                if (mailPrefs.shouldImagesBeDisplayedFor(email)) {
                     autoShowImages = 1;
                     break;
                 }
