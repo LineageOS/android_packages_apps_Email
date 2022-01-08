@@ -149,7 +149,7 @@
          nach cuir aplacaid nam post-d taic ris.</string>
     <string name="account_setup_failed_access_denied">         Chan eil cead agad airson sioncronachadh leis an fhrithealaiche seo. Cuir fios gu rianaire
          an fhrithealaichte agad airson barrachd fiosrachaidh.</string>
-    <string name="account_setup_security_required_title">Rianachd tèarainteachd cèin.</string>
+    <string name="account_setup_security_required_title">Rianachd tèarainteachd chèin</string>
     <string name="account_setup_security_policies_required_fmt">         Tha am frithealaiche <xliff:g id="server">%s</xliff:g> ag iarraidh gun leig thu leis cuid a ghleusan tèarainteachd dhen uidheam Android agad
          a stiùireadh aig astar. A bheil thu airson suidheachadh a’ chunntais seo
          a choileanadh?</string>
@@ -178,19 +178,19 @@
          a stiùireadh aig astar.</string>
     <string name="account_setup_failed_dlg_edit_details_action">Deasaich am fiosrachadh</string>
     <string name="password_expire_warning_ticker_fmt">            Tha “<xliff:g id="account">%s</xliff:g>” a’ sparradh ort gun atharraich thu PIN no facal-faire
-            na sgrìn-glasaidh agad.</string>
-    <string name="password_expire_warning_content_title">Tha an ùine a’ falbh air facal-faire na sgrìn-glasaidh</string>
-    <string name="password_expired_ticker">Dh’fhalbh an ùine air PIN no facal-faire na sgrìn-glasaidh agad.</string>
-    <string name="password_expired_content_title">Dh’fhalbh an ùine air facal-faire na sgrìn-glasaidh</string>
-    <string name="password_expire_warning_dialog_title">Tha an ùine a’ falbh air facal-faire na sgrìn-glasaidh</string>
-    <string name="password_expire_warning_dialog_content_fmt">         Feumaidh tu PIN no facal-faire na sgrìn-glasaidh agad atharrachadh a dh’aithghearr no thèid an dàta airson
+            na sgrìn-ghlasaidh agad.</string>
+    <string name="password_expire_warning_content_title">Tha an ùine a’ falbh air facal-faire na sgrìn-ghlasaidh</string>
+    <string name="password_expired_ticker">Dh’fhalbh an ùine air PIN no facal-faire na sgrìn-ghlasaidh agad.</string>
+    <string name="password_expired_content_title">Dh’fhalbh an ùine air facal-faire na sgrìn-ghlasaidh</string>
+    <string name="password_expire_warning_dialog_title">Tha an ùine a’ falbh air facal-faire na sgrìn-ghlasaidh</string>
+    <string name="password_expire_warning_dialog_content_fmt">         Feumaidh tu PIN no facal-faire na sgrìn-ghlasaidh agad atharrachadh a dh’aithghearr no thèid an dàta airson
          <xliff:g id="account">%s</xliff:g> a shuathadh bàn. A bheil thu airson atharrachadh an-dràsta?</string>
-    <string name="password_expired_dialog_title">Dh’fhalbh an ùine air facal-faire na sgrìn-glasaidh</string>
+    <string name="password_expired_dialog_title">Dh’fhalbh an ùine air facal-faire na sgrìn-ghlasaidh</string>
     <string name="password_expired_dialog_content_fmt">         Tha an dàta airson <xliff:g id="account">%s</xliff:g> ’ga shuathadh bàn on uidheam agad.
-         ’S urrainn dhut aiseag le atharrachadh PIN no facal-faire na sgrìn-glasaidh agad. A bheil thu airson atharrachadh an-dràsta?</string>
+         ’S urrainn dhut aiseag le atharrachadh PIN no facal-faire na sgrìn-ghlasaidh agad. A bheil thu airson atharrachadh an-dràsta?</string>
     <string name="account_settings_exit_server_settings">An tilg thu air falbh na h-atharraichean gun sàbhaladh?</string>
     <string name="account_settings_background_attachments_label">        Luchdaich a-nuas na ceanglachain</string>
-    <string name="account_settings_background_attachments_summary">        Luchdaich a-nuas na ceanglachain aig teachdaireachdan o chionn ghoirid gu fèin-obrachail slighe WiFi</string>
+    <string name="account_settings_background_attachments_summary">        Luchdaich a-nuas na ceanglachain aig teachdaireachdan o chionn goirid gu fèin-obrachail slighe WiFi</string>
     <string name="account_settings_notify_label">Brathan puist-d</string>
     <string name="account_settings_summary">Tricead an t-sioncronachaidh, nam brathan is msaa.</string>
     <string name="account_settings_notify_summary">Cuir brath nuair a thig post-d a-steach</string>
@@ -242,7 +242,7 @@
     <string name="device_admin_description">Cuiridh seo an comas na poileasaidhean tèarainteachd a shònraich am frithealaiche</string>
     <string name="policy_dont_allow_camera">Diùlt cleachdadh camara an uidheim seo</string>
     <string name="policy_require_password">Iarr facal-faire an uidheim</string>
-    <string name="policy_password_history">Cuingich ath-chleachdadh nam faclan-faire o chionn ghoirid</string>
+    <string name="policy_password_history">Cuingich ath-chleachdadh nam faclan-faire o chionn goirid</string>
     <string name="policy_password_expiration">Èignich gum falbh an ùine air na faclan-faire</string>
     <string name="policy_screen_timeout">Èignich gun glais uidheam ’na thàmh an sgrìn aige</string>
     <string name="policy_calendar_age">Cuingich àireamh nan tachartasan mìosachain a thèid a shioncronachadh</string>
@@ -251,10 +251,12 @@
     <string name="quick_2">Taghta!</string>
     <string name="quick_3">Leughaidh mi seo uaireigin eile is cluinnidh tu uam a dh’aithghearr.</string>
     <string name="quick_4">Nach cuir sinn coinneamh air dòigh airson bruidhinn mu dhèidhinn?</string>
+    <string name="confirm_response">A’ cur na freagairt…</string>
     <string name="imap_name">Pearsanta (IMAP)</string>
     <string name="pop3_name">Pearsanta (POP3)</string>
     <string name="trash_folder_selection_title">Tagh pasgan sgudal an fhrithealaiche airson <xliff:g id="account">%s</xliff:g></string>
     <string name="sent_folder_selection_title">Tagh pasgan puist chuirte an fhrithealaiche airson <xliff:g id="account">%s</xliff:g></string>
+    <string name="account_waiting_for_folders_msg">A’ luchdadh liosta nam pasgan…</string>
     <string name="no_quick_responses">Chan eil gin ann</string>
     <string name="gmail_name">Gmail</string>
     <string name="folder_sync_settings_pref_title">Roghainnean sioncronachaidh a’ phasgain</string>

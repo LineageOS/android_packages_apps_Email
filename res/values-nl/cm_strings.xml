@@ -22,4 +22,6 @@
     <string name="mailbox_notify_settings_activity_title">Instellingen meldingen</string>
     <string name="mailbox_notify_settings_activity_title_with_mailbox">Instellingen meldingen (<xliff:g id="mailbox_name" example="Family">%s</xliff:g>)</string>
     <string name="folder_notify_settings_pref_title">Instellingen mapmeldingen</string>
+    <string name="battery_optimization_notification_title">Achtergrond gebruik vereist</string>
+    <string name="battery_optimization_notification_imap_text">Voor IMAP push-notificaties moet de Email app aan staan op de achtergrond.\nKlik hier om achtergrond gebruik toe te staan.</string>
 </resources>

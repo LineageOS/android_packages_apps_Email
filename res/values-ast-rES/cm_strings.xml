@@ -23,5 +23,5 @@
     <string name="mailbox_notify_settings_activity_title_with_mailbox">Opciones d\'avisos (<xliff:g id="mailbox_name" example="Family">%s</xliff:g>)</string>
     <string name="folder_notify_settings_pref_title">Axustes d\'avisos de carpeta</string>
     <string name="battery_optimization_notification_title">Ríquese l\'usu en segundu planu</string>
-    <string name="battery_optimization_notification_imap_text">Pa les notificaciones IMAP automátiques, l\'aplicación de corréu necesita executase en segundu planu.\nCalca equí pa da-y permisu.</string>
+    <string name="battery_optimization_notification_imap_text">Pa los avisos d\'IMAP, l\'aplicación «Corréu» tien d\'executase en segundu planu.\nToca equí pa permitir l\'usu en segundu planu.</string>
 </resources>
