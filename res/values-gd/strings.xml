@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2008 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="permission_read_attachment_label">Leughadh cheanglachain puist-d</string>
+    <string name="permission_read_attachment_desc">Leigidh seo leis an aplacaid
+         ceanglachain nam post-d agad a leughadh.</string>
+    <string name="permission_access_provider_label">Inntrigeadh air dàta mu sholaraiche puist-d</string>
+    <string name="permission_access_provider_desc">Leigidh seo leis an aplacaid
+         stòr-dàta nam post-d agad inntrigeadh, a’ gabhail a-staigh na theachdaireachdan a fhuair no a chuir thu, ainmean-cleachdaiche agus faclan-faire.</string>
+    <string name="app_name">Post-d</string>
+    <string name="create_action">Cruthaich fear ùr</string>
+    <string name="quick_responses_empty_view">Chan eil grad-fhreagairt ann.</string>
+    <string name="account_settings_action">Roghainnean a’ chunntais</string>
+    <string name="mailbox_name_display_inbox">Am bogsa a-steach</string>
+    <string name="mailbox_name_display_outbox">Am bogsa a-mach</string>
+    <string name="mailbox_name_display_drafts">Dreachdan</string>
+    <string name="mailbox_name_display_trash">Cuir dhan sgudal</string>
+    <string name="mailbox_name_display_sent">Am post cuirte</string>
+    <string name="mailbox_name_display_junk">Truilleis</string>
+    <string name="mailbox_name_display_starred">Le rionnag ris</string>
+    <string name="mailbox_name_display_unread">Gun leughadh</string>
+    <string name="debug_title">Dì-bhugachadh</string>
+    <string name="mailbox_list_account_selector_combined_view">Sealladh co-aonaichte</string>
+    <string name="message_compose_fwd_header_fmt">\n\n-------- An teachdaireachd thùsail --------\nCuspair: <xliff:g id="subject">%1$s</xliff:g>\nO: <xliff:g id="sender">%2$s</xliff:g>\nGu: <xliff:g id="to">%3$s</xliff:g>\nCC: <xliff:g id="cc">%4$s</xliff:g>\n\n</string>
+    <string name="message_compose_insert_quick_response_list_title">Cuir grad-fhreagairt a-steach</string>
+    <string name="message_compose_insert_quick_response_menu_title">Cuir grad-fhreagairt a-steach</string>
+    <string name="message_view_attachment_background_load">Tha ceanglachan no dhà san teachdaireachd
+        ’ga sìneadh air adhart agad a thèid a luchdadh a-nuas mus dèid a cur.</string>
+    <string name="message_decode_error">Thachair mearachd le dì-chòdachadh na teachdaireachd.</string>
+    <string name="forward_download_failed_ticker">Tha ceanglachan no dhà nach b’ urrainn dhuinn an sìneadh air adhart.</string>
+    <string name="forward_download_failed_title">Cha deach an ceanglachan a shìneadh air adhart</string>
+    <string name="login_failed_ticker">        Dh’fhàillig le clàradh a-steach gu <xliff:g id="account_name">%s</xliff:g>.</string>
+    <string name="login_failed_title">Cha b’ urrainn dhuinn do chlàradh a-steach</string>
+    <string name="account_setup_basics_title">Suidheachadh a’ chunntais</string>
+    <string name="oauth_authentication_title">Ag iarraidh dearbhadh</string>
+    <string name="sign_in_title">Clàraich a-steach</string>
+    <string name="oauth_error_description">Cha ghabh a dhearbhadh</string>
+    <string name="password_warning_label">Chan eil an seòladh puist-d no am facal-faire mar bu chòir</string>
+    <string name="email_confirmation_label">Seòladh puist-d:</string>
+    <string name="account_setup_basics_headline">Cunntas puist-d</string>
+    <string name="accounts_welcome">Cha doir e ceum no dhà an cunntas agad a shuidheachadh.
+        </string>
+    <string name="account_setup_basics_email_label">Seòladh puist-d</string>
+    <string name="or_label">NO</string>
+    <string name="sign_in_with_google">Clàraich a-steach le Google</string>
+    <string name="account_setup_basics_password_label">FACAL-FAIRE</string>
+    <string name="password_hint">Facal-faire</string>
+    <string name="signed_in_with_service_label">Chaidh do chlàradh a-steach le %s</string>
+    <string name="authentication_label">DEARBHADH</string>
+    <string name="add_authentication_label">Cuir dearbhadh ris</string>
+    <string name="clear_authentication_label">Falamhaich an dearbhadh</string>
+    <string name="account_setup_basics_manual_setup_action">Suidheachadh a làimh</string>
+    <string name="account_setup_username_password_toast">        Cuir a-steach seòladh puist-d is facal-faire dligheach.</string>
+    <string name="account_duplicate_dlg_title">Cunntas dùbailte</string>
+    <string name="account_duplicate_dlg_message_fmt">        Tha thu a’ chleachdadh an t-ainm-cleachdaiche seo airson a’ chunntais “<xliff:g id="duplicate">%s</xliff:g>” mu thràth.
+    </string>
+    <string name="account_setup_check_settings_retr_info_msg">    A’ faighinn fiosrachadh a’ chunntais\u2026</string>
+    <string name="account_setup_check_settings_check_incoming_msg">    A’ dearbhadh roghainnean an fhrithealaiche\u2026</string>
+    <string name="account_setup_check_settings_check_outgoing_msg">    A’ dearbhadh nan roghainnean smtp\u2026</string>
+    <string name="account_setup_creating_account_msg">    A’ cruthachadh a’ chunntais\u2026</string>
+    <string name="account_setup_ab_headline">Dearbh seòrsa a’ chunntais</string>
+    <string name="account_setup_ab_instructions_format">Dh’innis thu gun chleachd <xliff:g id="email">%1$s</xliff:g> <xliff:g id="userProtocol">%2$s</xliff:g> ach dh’fhaoidte gun cleachd an cunntas <xliff:g id="providerProtocol">%3$s</xliff:g></string>
+    <string name="account_setup_names_headline">        Tha an cunntas agad deis ’s am post-d ri thighinn!</string>
+    <string name="account_setup_names_account_name_label">        Thoir ainm air a’ chunntas seo (roghainneil)</string>
+    <string name="account_setup_names_user_name_label">        D’ ainm (nochdaidh e air teachdaireachdan a-mach)</string>
+    <string name="account_setup_account_type_headline">Seòrsa a’ chunntais</string>
+    <string name="account_setup_account_type_instructions">Dè seòrsa cunntais a tha seo?</string>
+    <string name="account_setup_incoming_headline">Roghainnean an fhrithealaiche a-steach</string>
+    <string name="account_setup_incoming_username_label">AINM-CLEACHDAICHE</string>
+    <string name="account_setup_incoming_password_label">FACAL-FAIRE</string>
+    <string name="account_setup_password_subheading">Facal-faire</string>
+    <string name="account_setup_incoming_server_label">FRITHEALAICHE</string>
+    <string name="account_setup_incoming_port_label">PORT</string>
+    <string name="account_setup_incoming_security_label">SEÒRSA na TÈARAINTEACHD</string>
+    <string name="account_setup_incoming_security_none_label">Gun tèarainteachd</string>
+    <string name="account_setup_incoming_security_ssl_trust_certificates_label">        SSL/TLS (Gabh ris a h-uile teisteanas)</string>
+    <string name="account_setup_incoming_security_ssl_label">SSL/TLS</string>
+    <string name="account_setup_incoming_security_tls_trust_certificates_label">        STARTTLS (Gabh ris a h-uile teisteanas)</string>
+    <string name="account_setup_incoming_security_tls_label">STARTTLS</string>
+    <string name="account_setup_incoming_delete_policy_label">Sguab às puist-d on fhrithealaiche</string>
+    <string name="account_setup_incoming_delete_policy_never_label">Na sguab às idir</string>
+    <string name="account_setup_incoming_delete_policy_delete_label">        Nuair a sguabas mi às sa bhogsa a-steach iad</string>
+    <string name="account_setup_incoming_imap_path_prefix_label">Ro-leasachan na slighe IMAP</string>
+    <string name="account_setup_incoming_imap_path_prefix_hint">Roghainneil</string>
+    <string name="account_setup_outgoing_headline">Roghainnean an fhrithealaiche a-mach</string>
+    <string name="account_setup_outgoing_smtp_server_label">FRITHEALAICHE SMTP</string>
+    <string name="account_setup_outgoing_port_label">PORT</string>
+    <string name="account_setup_outgoing_security_label">SEÒRSA na TÈARAINTEACHD</string>
+    <string name="account_setup_outgoing_require_login_label">Iarr clàradh a-steach</string>
+    <string name="account_setup_outgoing_username_label">AINM-CLEACHDAICHE</string>
+    <string name="account_setup_exchange_certificate_title">TEISTEANAS a’ CHLIANT</string>
+    <string name="account_setup_exchange_select_certificate">Tagh</string>
+    <string name="account_setup_exchange_use_certificate">Cleachd teisteanas a’ chliant</string>
+    <string name="account_setup_exchange_remove_certificate">Thoir air falbh</string>
+    <string name="account_setup_exchange_no_certificate">Gun teisteanas</string>
+    <string name="account_setup_exchange_device_id_label">ID an UIDHEIM MOBILE</string>
+    <string name="account_setup_options_headline">Roghainnean cunntais</string>
+    <string name="account_setup_options_mail_check_frequency_label">Tricead an t-sioncronachaidh:</string>
+    <string name="account_setup_options_mail_check_frequency_never">Na sioncronaich idir</string>
+    <string name="account_setup_options_mail_check_frequency_push">Fèin-obrachail (Putadh)</string>
+    <string name="account_setup_options_mail_check_frequency_5min">Gach 5 mionaidean</string>
+    <string name="account_setup_options_mail_check_frequency_10min">Gach 10 mionaidean</string>
+    <string name="account_setup_options_mail_check_frequency_15min">Gach cairteal na h-uarach</string>
+    <string name="account_setup_options_mail_check_frequency_30min">Gach leth-uair a thìde</string>
+    <string name="account_setup_options_mail_check_frequency_1hour">Gach uair a thìde</string>
+    <string name="account_setup_options_notify_label">Thoir brath dhomh nuair a thig post-d a-steach</string>
+    <string name="account_setup_options_sync_contacts_label">Sioncronaich an luchd-aithne on chunntas seo</string>
+    <string name="account_setup_options_sync_calendar_label">Sioncronaich am mìosachan on chunntas seo</string>
+    <string name="account_setup_options_sync_email_label">Sioncronaich na puist-d on chunntas seo</string>
+    <string name="account_setup_options_background_attachments_label">        Luchdaich a-nuas na ceanglachain gu fèin-obrachail nuair a bhios ceangal ri WiFi ann</string>
+    <string name="account_setup_failed_dlg_title">Cha b’ urrainn dhuinn a choileanadh</string>
+    <string name="account_setup_options_mail_window_label">Sioncronaich na puist-d:</string>
+    <string name="account_setup_options_mail_window_auto">Gu fèin-obrachail</string>
+    <string name="account_setup_options_mail_window_1day">On latha mu dheireadh</string>
+    <string name="account_setup_options_mail_window_3days">O na trì làithean là seo chaidh</string>
+    <string name="account_setup_options_mail_window_1week">On t-seachdain seo chaidh</string>
+    <string name="account_setup_options_mail_window_2weeks">On dà sheachdain seo chaidh</string>
+    <string name="account_setup_options_mail_window_1month">On mhìos seo chaidh</string>
+    <string name="account_setup_options_mail_window_all">Na h-uile</string>
+    <string name="account_setup_options_mail_window_default">Cleachd bun-roghainn a’ chunntais</string>
+    <string name="account_setup_failed_dlg_auth_message">Tha an t-ainm-cleachdaiche no am facal-faire ceàrr.</string>
+    <string name="account_setup_autodiscover_dlg_authfail_title">Duilgheadas le suidheachadh a’ chunntais</string>
+    <string name="account_setup_autodiscover_dlg_authfail_message">Dearbh gu bheil an t-ainm-cleachdaiche, am facal-faire agus roghainnean a’ chunntais mar bu chòir.</string>
+    <string name="account_setup_failed_dlg_certificate_message">Cha ghabh ceangal ris an fhrithealaiche gu sàbhailte.</string>
+    <string name="account_setup_failed_dlg_certificate_message_fmt">Cha ghabh ceangal ris an fhrithealaiche gu sàbhailte.\n(<xliff:g id="error">%s</xliff:g>)</string>
+    <string name="account_setup_failed_certificate_required">Tha feum air teisteanas cliant. A bheil thu airson ceangal ris an fhrithealaiche le teisteanas cliant?</string>
+    <string name="account_setup_failed_certificate_inaccessible">Chan eil an teisteanas dligheach no cha ruig sinn e.</string>
+    <string name="account_setup_failed_check_credentials_message">         Dh’fhreagair am frithealaiche le mearachd. Thoir sùil air an ainm-chleachdaiche is an fhacal-fhaire agad is feuch ris a-rithist an uairsin.</string>
+    <string name="account_setup_failed_dlg_server_message">Chan urrainn dhuinn ceangal ris an fhrithealaiche.</string>
+    <string name="account_setup_failed_dlg_server_message_fmt">Chan urrainn dhuinn ceangal ris an fhrithealaiche.\n(<xliff:g id="error">%s</xliff:g>)</string>
+    <string name="account_setup_failed_tls_required">Chaidh TLS iarraidh ach cha chuir am frithealaiche taic ris.</string>
+    <string name="account_setup_failed_auth_required">Cha chuir am frithealaiche taic ris na dòighean dearbhaidh.</string>
+    <string name="account_setup_failed_security">Cha b’ urrainn dhuinn ceangal dhan fhrithealaiche fhosgladh ri linn mearachd tèarainteachd.</string>
+    <string name="account_setup_failed_ioerror">Cha b’ urrainn dhuinn ceangal dhan fhrithealaiche fhosgladh.</string>
+    <string name="account_setup_failed_protocol_unsupported">         Cha do chuir thu a-steach seòladh ceart an fhrithealaiche no tha am frithealaiche feumach air tionndadh dhen phròtacal
+         nach cuir aplacaid nam post-d taic ris.</string>
+    <string name="account_setup_failed_access_denied">         Chan eil cead agad airson sioncronachadh leis an fhrithealaiche seo. Cuir fios gu rianaire
+         an fhrithealaichte agad airson barrachd fiosrachaidh.</string>
+    <string name="account_setup_security_required_title">Rianachd tèarainteachd chèin</string>
+    <string name="account_setup_security_policies_required_fmt">         Tha am frithealaiche <xliff:g id="server">%s</xliff:g> ag iarraidh gun leig thu leis cuid a ghleusan tèarainteachd dhen uidheam Android agad
+         a stiùireadh aig astar. A bheil thu airson suidheachadh a’ chunntais seo
+         a choileanadh?</string>
+    <string name="account_setup_failed_security_policies_unsupported">         Tha am frithealaiche seo ag iarraidh gleusan tèarainteachd nach cuir an t-uidheam Android agad taic riutha,
+          a’ gabhail a-staigh: <xliff:g id="error">%s</xliff:g></string>
+    <string name="disable_admin_warning">RABHADH: Ma bheir thu an t-ùghdarras air falbh o aplacaid nam post-d ach nach dèan i rianachd air an uidheam agad tuilleadh,
+         sguabaidh sin às a h-uile cunntas puist-d a tha feumach air agus na puist-d,
+         an luchd-aithne, tachartasan a’ mhìosachain agus dàta eile aca cuideachd.</string>
+    <string name="account_security_dialog_title">Ùrachadh tèarainteachd</string>
+    <string name="account_security_dialog_content_fmt">         Tha <xliff:g id="account">%s</xliff:g> ag iarraidh gun ùraich thu na roghainnean tèarainteachd
+         agad.</string>
+    <string name="security_unsupported_ticker_fmt">            Cha ghabh an cunntas “<xliff:g id="account">%s</xliff:g>” a shioncronachadh ri linn riatanasan
+    tèarainteachd.</string>
+    <string name="security_needed_ticker_fmt">            Tha “<xliff:g id="account">%s</xliff:g>” feumach air ùrachadh nan roghainnean tèarainteachd.
+    </string>
+    <string name="security_changed_ticker_fmt">            Dh’atharraich an cunntas “<xliff:g id="account">%s</xliff:g>” na roghainnean tèarainteachd aige; cha leig thu leas
+            dad sam bith a dhèanamh.
+    </string>
+    <string name="security_notification_content_update_title">Tha feum air ùrachadh tèarainteachd</string>
+    <string name="security_notification_content_change_title">Tha poileasaidhean na tèarainteachd
+         air an atharrachadh</string>
+    <string name="security_notification_content_unsupported_title">Cha ghabh poileasaidhean na tèarainteachd
+         a choileanadh</string>
+    <string name="account_security_title">Tèarainteachd an uidheim</string>
+    <string name="account_security_policy_explanation_fmt">         Tha am frithealaiche <xliff:g id="server">%s</xliff:g> ag iarraidh gun leig thu leis cuid a ghleusan tèarainteachd dhen uidheam Android agad
+         a stiùireadh aig astar.</string>
+    <string name="account_setup_failed_dlg_edit_details_action">Deasaich am fiosrachadh</string>
+    <string name="password_expire_warning_ticker_fmt">            Tha “<xliff:g id="account">%s</xliff:g>” a’ sparradh ort gun atharraich thu PIN no facal-faire
+            na sgrìn-ghlasaidh agad.</string>
+    <string name="password_expire_warning_content_title">Tha an ùine a’ falbh air facal-faire na sgrìn-ghlasaidh</string>
+    <string name="password_expired_ticker">Dh’fhalbh an ùine air PIN no facal-faire na sgrìn-ghlasaidh agad.</string>
+    <string name="password_expired_content_title">Dh’fhalbh an ùine air facal-faire na sgrìn-ghlasaidh</string>
+    <string name="password_expire_warning_dialog_title">Tha an ùine a’ falbh air facal-faire na sgrìn-ghlasaidh</string>
+    <string name="password_expire_warning_dialog_content_fmt">         Feumaidh tu PIN no facal-faire na sgrìn-ghlasaidh agad atharrachadh a dh’aithghearr no thèid an dàta airson
+         <xliff:g id="account">%s</xliff:g> a shuathadh bàn. A bheil thu airson atharrachadh an-dràsta?</string>
+    <string name="password_expired_dialog_title">Dh’fhalbh an ùine air facal-faire na sgrìn-ghlasaidh</string>
+    <string name="password_expired_dialog_content_fmt">         Tha an dàta airson <xliff:g id="account">%s</xliff:g> ’ga shuathadh bàn on uidheam agad.
+         ’S urrainn dhut aiseag le atharrachadh PIN no facal-faire na sgrìn-ghlasaidh agad. A bheil thu airson atharrachadh an-dràsta?</string>
+    <string name="account_settings_exit_server_settings">An tilg thu air falbh na h-atharraichean gun sàbhaladh?</string>
+    <string name="account_settings_background_attachments_label">        Luchdaich a-nuas na ceanglachain</string>
+    <string name="account_settings_background_attachments_summary">        Luchdaich a-nuas na ceanglachain aig teachdaireachdan o chionn goirid gu fèin-obrachail slighe WiFi</string>
+    <string name="account_settings_notify_label">Brathan puist-d</string>
+    <string name="account_settings_summary">Tricead an t-sioncronachaidh, nam brathan is msaa.</string>
+    <string name="account_settings_notify_summary">Cuir brath nuair a thig post-d a-steach</string>
+    <string name="account_settings_mail_check_frequency_label">Tricead an t-sioncronachaidh</string>
+    <string name="account_settings_incoming_label">Roghainnean a-steach</string>
+    <string name="account_settings_incoming_summary">        Ainm-cleachdaiche, facal-faire is roghainnean eile an fhrithealaiche a-steach</string>
+    <string name="account_settings_outgoing_label">Roghainnean a-mach</string>
+    <string name="account_settings_outgoing_summary">        Ainm-cleachdaiche, facal-faire is roghainnean eile an fhrithealaiche a-mach</string>
+    <string name="account_settings_enforced_label">Poileasaidhean ’gan èigneachadh</string>
+    <string name="account_settings_enforced_summary">Chan eil gin</string>
+    <string name="account_settings_unsupported_label">Poileasaidhean gun taic riutha</string>
+    <string name="account_settings_unsupported_summary">Chan eil gin</string>
+    <string name="account_settings_retry_label">Feuch ri sioncronachadh</string>
+    <string name="account_settings_retry_summary">Thoir gnogag an-seo airson an cunntas seo a shioncronachadh</string>
+    <string name="account_settings_description_label">Ainm a’ chunntais</string>
+    <string name="account_settings_name_label">D’ ainm</string>
+    <string name="account_settings_edit_quick_responses_label">Grad-fhreagairtean</string>
+    <string name="account_settings_edit_quick_responses_summary">        Deasaich teacsa a chuireas tu a-steach gu tric nuair a sgrìobhas tu post-d</string>
+    <string name="account_settings_notifications">Roghainnean nam brathan</string>
+    <string name="account_settings_data_usage">Caitheamh dàta</string>
+    <string name="account_settings_policies">Poileasaidhean tèarainteachd</string>
+    <string name="system_folders_title">Pasganan an t-siostaim</string>
+    <string name="system_folders_trash_title">Pasgan an sgudail</string>
+    <string name="system_folders_trash_summary">Tagh pasgan sgudal an fhrithealaiche agad</string>
+    <string name="system_folders_trash_dlg">Tagh pasgan sgudal an fhrithealaiche agad</string>
+    <string name="system_folders_sent_title">Pasgan a’ phuist chuirte</string>
+    <string name="system_folders_sent_summary">Tagh pasgan puist chuirte an fhrithealaiche agad</string>
+    <string name="system_folders_sent_dlg">Tagh pasgan puist chuirte an fhrithealaiche agad</string>
+    <string name="edit_quick_response_dialog">Grad-fhreagairt</string>
+    <string name="save_action">Sàbhail</string>
+    <string name="account_settings_sync_contacts_enable">Sioncronaich an luchd-aithne</string>
+    <string name="account_settings_sync_contacts_summary">Sioncronaich an luchd-aithne aig a’ chunntas seo</string>
+    <string name="account_settings_sync_calendar_enable">Sioncronaich am mìosachan</string>
+    <string name="account_settings_sync_calendar_summary">Sioncronaich tachartas a’ mhìosachain aig a’ chunntas seo</string>
+    <string name="account_settings_sync_email_enable">Sioncronaich am post-d</string>
+    <string name="account_settings_sync_email_summary">Sioncronaich na puist-d aig a’ chunntas seo</string>
+    <string name="label_notification_vibrate_title">Dèan crith</string>
+    <string name="account_settings_ringtone">Tagh an t-seirm</string>
+    <string name="account_settings_servers">Roghainnean an fhrithealaiche</string>
+    <string name="mailbox_settings_activity_title">Roghainnean an t-sioncronachaidh</string>
+    <string name="mailbox_settings_activity_title_with_mailbox">Roghainnean an t-sioncronachaidh (<xliff:g id="mailboxx_name" example="Family">%s</xliff:g>)</string>
+    <string name="mailbox_settings_sync_enabled_label">Sioncronaich am pasgan seo</string>
+    <string name="mailbox_settings_sync_enabled_summary">Thèid na teachdaireachdan agad a luchdadh a-nuas nuair a nì thu ceangal</string>
+    <string name="mailbox_settings_mailbox_sync_window_label">Làithean de phost ri shioncronachadh</string>
+    <string name="provider_note_t_online">Mus suidhich thu an cunntas puist-d seo, tadhail air làrach-lìn T-Online agus cruthaich facal-faire airson inntrigeadh dhan phost-d le POP3.</string>
+    <string name="exchange_name_alternate">Microsoft Exchange ActiveSync</string>
+    <string name="system_account_create_failed">Cha b’ urrainn dhuinn an cunntas a chruthachadh. Feuch ris a-rithist.</string>
+    <string name="device_admin_label">Post-d</string>
+    <string name="device_admin_description">Cuiridh seo an comas na poileasaidhean tèarainteachd a shònraich am frithealaiche</string>
+    <string name="policy_dont_allow_camera">Diùlt cleachdadh camara an uidheim seo</string>
+    <string name="policy_require_password">Iarr facal-faire an uidheim</string>
+    <string name="policy_password_history">Cuingich ath-chleachdadh nam faclan-faire o chionn goirid</string>
+    <string name="policy_password_expiration">Èignich gum falbh an ùine air na faclan-faire</string>
+    <string name="policy_screen_timeout">Èignich gun glais uidheam ’na thàmh an sgrìn aige</string>
+    <string name="policy_calendar_age">Cuingich àireamh nan tachartasan mìosachain a thèid a shioncronachadh</string>
+    <string name="policy_email_age">Cuingich àireamh nam post-d a thèid a shioncronachadh</string>
+    <string name="quick_1">Mòran taing!</string>
+    <string name="quick_2">Taghta!</string>
+    <string name="quick_3">Leughaidh mi seo uaireigin eile is cluinnidh tu uam a dh’aithghearr.</string>
+    <string name="quick_4">Nach cuir sinn coinneamh air dòigh airson bruidhinn mu dhèidhinn?</string>
+    <string name="confirm_response">A’ cur na freagairte…</string>
+    <string name="imap_name">Pearsanta (IMAP)</string>
+    <string name="pop3_name">Pearsanta (POP3)</string>
+    <string name="trash_folder_selection_title">Tagh pasgan sgudal an fhrithealaiche airson <xliff:g id="account">%s</xliff:g></string>
+    <string name="sent_folder_selection_title">Tagh pasgan puist chuirte an fhrithealaiche airson <xliff:g id="account">%s</xliff:g></string>
+    <string name="account_waiting_for_folders_msg">A’ luchdadh liosta nam pasgan…</string>
+    <string name="no_quick_responses">Chan eil gin ann</string>
+    <string name="gmail_name">Gmail</string>
+    <string name="folder_sync_settings_pref_title">Roghainnean sioncronachaidh a’ phasgain</string>
+</resources>
