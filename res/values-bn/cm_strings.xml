@@ -15,7 +15,7 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="deleting_account_msg">Desaniciando la cuenta\u2026</string>
-    <string name="delete_account_failed">Nun se pudo desaniciar la cuenta</string>
-    <string name="battery_optimization_notification_imap_text">Pa los avisos d\'IMAP, l\'aplicación «Corréu» tien d\'executase en segundu planu.\nToca equí pa permitir l\'usu en segundu planu.</string>
+    <string name="delete_account">অ্যাকাউন্ট মুছে ফেলুন</string>
+    <string name="deleting_account_msg">অ্যাকাউন্ট মুছে ফেলা হচ্ছে\u2026</string>
+    <string name="delete_account_failed">অ্যাকাউন্টটি মোছা যাবে না</string>
 </resources>
