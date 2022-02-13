@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2008 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="permission_read_attachment_label">Leghe alligongiados de is messàgios de posta</string>
+    <string name="permission_read_attachment_desc">Permitit a s\'aplicatzione de lèghere is alligongiados
+        de sa posta eletrònica.</string>
+    <string name="permission_access_provider_label">Atzede a is datos de su frunidore de posta eletrònica</string>
+    <string name="permission_access_provider_desc">Permitit a s\'aplicatzione de atzèdere a sa base de datos
+        de sa posta, includende messàgios retzidos e imbiados, nùmenes utente e craes.</string>
+    <string name="app_name">Posta eletrònica</string>
+    <string name="create_action">Crea·nde una noa</string>
+    <string name="quick_responses_empty_view">Non b\'at rispostas lestras.</string>
+    <string name="account_settings_action">Impostatziones de contu</string>
+    <string name="mailbox_name_display_inbox">Posta retzida</string>
+    <string name="mailbox_name_display_outbox">In essida</string>
+    <string name="mailbox_name_display_drafts">Brutacòpias</string>
+    <string name="mailbox_name_display_trash">Àliga</string>
+    <string name="mailbox_name_display_sent">Posta imbiada</string>
+    <string name="mailbox_name_display_junk">Posta no agradèssida</string>
+    <string name="mailbox_name_display_starred">Preferidos</string>
+    <string name="mailbox_name_display_unread">Non lèghidu</string>
+    <string name="mailbox_list_account_selector_combined_view">Vista cumbinada</string>
+    <string name="message_compose_fwd_header_fmt">\n\n-------- Messàgiu originale --------\nChistione: <xliff:g id="subject">%1$s</xliff:g>\nDae: <xliff:g id="sender">%2$s</xliff:g>\nA: <xliff:g id="to">%3$s</xliff:g>\nCC: <xliff:g id="cc">%4$s</xliff:g>\n\n</string>
+    <string name="message_compose_insert_quick_response_list_title">Inserta risposta lestra</string>
+    <string name="message_compose_insert_quick_response_menu_title">Inserta risposta lestra</string>
+    <string name="message_view_attachment_background_load">Unu o prus alligongiados in su messàgiu
+        inoltradu ant a èssere iscarrigados prima de s\'imbiu.</string>
+    <string name="message_decode_error">B\'at àpidu un\'errore in sa decodìfica de su messàgiu.</string>
+    <string name="forward_download_failed_ticker">No at fatu a inoltrare unu o prus alligongiados.</string>
+    <string name="forward_download_failed_title">Alligongiados no inoltrados</string>
+    <string name="login_failed_ticker">        Errore in s\'atzessu <xliff:g id="account_name">%s</xliff:g>.</string>
+    <string name="login_failed_title">No at fatu a atzèdere</string>
+    <string name="account_setup_basics_title">Impostatziones de su contu</string>
+    <string name="oauth_authentication_title">Pedende autorizatzione</string>
+    <string name="oauth_error_description">No at fatu a s\'autenticare</string>
+    <string name="password_warning_label">Indiritzu de posta eletrònica o crae isballiada</string>
+    <string name="email_confirmation_label">Indiritzu de posta eletrònica:</string>
+    <string name="account_setup_basics_headline">Contu de posta eletrònica</string>
+    <string name="accounts_welcome">Podes cunfigurare su contu tuo sighende pagos passos.
+        </string>
+    <string name="account_setup_basics_email_label">Indiritzu de posta eletrònica</string>
+    <string name="or_label">O</string>
+    <string name="sign_in_with_google">Intra cun Google</string>
+    <string name="account_setup_basics_password_label">CRAE</string>
+    <string name="password_hint">Crae</string>
+    <string name="signed_in_with_service_label">Atzessu cun %s</string>
+    <string name="authentication_label">AUTENTICATZIONE</string>
+    <string name="add_authentication_label">Agiunghe autenticatzione</string>
+    <string name="clear_authentication_label">Lìmpia autenticatzione</string>
+    <string name="account_setup_basics_manual_setup_action">Impostatzione a manu</string>
+    <string name="account_setup_username_password_toast">        Iscrie un\'indiritzu de posta e una crae bàlida.</string>
+    <string name="account_duplicate_dlg_title">Dùplica contu</string>
+    <string name="account_duplicate_dlg_message_fmt">        Ses giai impreende custu nùmene utente pro su contu \"<xliff:g id="duplicate">%s</xliff:g>\".
+    </string>
+    <string name="account_setup_check_settings_retr_info_msg">    Recuperende informatziones de su contu\u2026</string>
+    <string name="account_setup_check_settings_check_incoming_msg">    Balidende impostatziones de su serbidore\u2026</string>
+    <string name="account_setup_check_settings_check_outgoing_msg">    Balidende impostatziones smtp\u2026</string>
+    <string name="account_setup_creating_account_msg">    Creende su contu\u2026</string>
+    <string name="account_setup_ab_headline">Cunfirma genia de contu</string>
+    <string name="account_setup_ab_instructions_format">As inditadu <xliff:g id="email">%1$s</xliff:g> uses <xliff:g id="userProtocol">%2$s</xliff:g>, ma su contu diat pòdere impreare <xliff:g id="providerProtocol">%3$s</xliff:g></string>
+    <string name="account_setup_names_headline">        Su contu tuo est cunfiguradu e sa posta est giai pronta!</string>
+    <string name="account_setup_names_account_name_label">        Dona unu nùmene a custu contu (a praghere)</string>
+    <string name="account_setup_names_user_name_label">        Su nùmene tuo (mustradu in is messàgios in essida)</string>
+    <string name="account_setup_account_type_headline">Genia de contu</string>
+    <string name="account_setup_account_type_instructions">Ite genia de contu est custu?</string>
+    <string name="account_setup_incoming_headline">Impostatziones de su serbidore de intrada</string>
+    <string name="account_setup_incoming_username_label">NÙMENE UTENTE</string>
+    <string name="account_setup_incoming_password_label">CRAE</string>
+    <string name="account_setup_password_subheading">Crae</string>
+    <string name="account_setup_incoming_server_label">SERBIDORE</string>
+    <string name="account_setup_incoming_port_label">PORTA</string>
+    <string name="account_setup_incoming_security_label">GENIA DE SEGURESA</string>
+    <string name="account_setup_incoming_security_none_label">Perunu</string>
+    <string name="account_setup_incoming_security_ssl_trust_certificates_label">        SSL/TLS (atzeta totu is tzertificados)</string>
+    <string name="account_setup_incoming_security_ssl_label">SSL/TLS</string>
+    <string name="account_setup_incoming_security_tls_trust_certificates_label">        STARTTLS (atzeta totu is tzertificados)</string>
+    <string name="account_setup_incoming_security_tls_label">STARTTLS</string>
+    <string name="account_setup_incoming_delete_policy_label">Cantzella posta eletrònica dae su serbidore</string>
+    <string name="account_setup_incoming_delete_policy_never_label">Mai</string>
+    <string name="account_setup_incoming_delete_policy_delete_label">        Cando cantzello messàgios</string>
+    <string name="account_setup_incoming_imap_path_prefix_label">Prefissu de percursu IMAP</string>
+    <string name="account_setup_incoming_imap_path_prefix_hint">A praghere</string>
+    <string name="account_setup_outgoing_headline">Impostatziones de serbidore in essida</string>
+    <string name="account_setup_outgoing_smtp_server_label">SERBIDORE SMTP</string>
+    <string name="account_setup_outgoing_port_label">PORTA</string>
+    <string name="account_setup_outgoing_security_label">GENIA DE SEGURESA</string>
+    <string name="account_setup_outgoing_require_login_label">Rechede atzessu</string>
+    <string name="account_setup_outgoing_username_label">NÙMENE UTENTE</string>
+    <string name="account_setup_exchange_certificate_title">TZERTIFICADU CLIENTE</string>
+    <string name="account_setup_exchange_select_certificate">Seletziona</string>
+    <string name="account_setup_exchange_use_certificate">Imprea tzertificadu cliente</string>
+    <string name="account_setup_exchange_remove_certificate">Boga</string>
+    <string name="account_setup_exchange_no_certificate">Perunu</string>
+    <string name="account_setup_exchange_device_id_label">ID DE SU DISPOSITIVU MÒBILE</string>
+    <string name="account_setup_options_headline">Sèberos de su contu</string>
+    <string name="account_setup_options_mail_check_frequency_label">Frecuèntzia de sincronizatzione:</string>
+    <string name="account_setup_options_mail_check_frequency_never">Mai</string>
+    <string name="account_setup_options_mail_check_frequency_push">Verìfica automàtica</string>
+    <string name="account_setup_options_mail_check_frequency_1hour">Ogni ora</string>
+    <string name="account_setup_options_notify_label">Notìfica a s\'arribu de unu messàgiu de posta</string>
+    <string name="account_setup_options_sync_contacts_label">Sincroniza cuntatos dae custu contu</string>
+    <string name="account_setup_options_sync_calendar_label">Sincroniza calendàriu dae custu contu</string>
+    <string name="account_setup_options_sync_email_label">Sincroniza posta eletrònica dae custu contu</string>
+    <string name="account_setup_options_background_attachments_label">        Iscàrriga in automàticu alligongiados cando ses in connessione cun Wi-Fi</string>
+    <string name="account_setup_failed_dlg_title">No at fatu a dd\'agabbare</string>
+    <string name="account_setup_options_mail_window_label">Sincroniza messàgios de posta dae:</string>
+    <string name="account_setup_options_mail_window_auto">Automàticu</string>
+    <string name="account_setup_options_mail_window_1day">Ùrtima die</string>
+    <string name="account_setup_options_mail_window_3days">Ùrtimas tres dies</string>
+    <string name="account_setup_options_mail_window_1week">Sa chida colada</string>
+    <string name="account_setup_options_mail_window_2weeks">Ùrtimas duas chidas</string>
+    <string name="account_setup_options_mail_window_1month">Su mese passadu</string>
+    <string name="account_setup_options_mail_window_all">Totu</string>
+    <string name="account_setup_options_mail_window_default">Imprea balores predefinidos de su contu</string>
+    <string name="account_setup_failed_dlg_auth_message">Nùmene utente o crae isballiada.</string>
+    <string name="account_setup_autodiscover_dlg_authfail_title">Problema cun sa cunfiguratzione de su contu</string>
+    <string name="account_setup_autodiscover_dlg_authfail_message">Is impostatziones de su contu, de sa crae e de su nùmene utente de cunfirma sunt curretos.</string>
+    <string name="account_setup_failed_dlg_certificate_message">Non faghet a si collegare a su serbidore in manera segura.</string>
+    <string name="account_setup_failed_dlg_certificate_message_fmt">Non faghet a si collegare a su serbidore in manera segura.\n(<xliff:g id="error">%s</xliff:g>)</string>
+    <string name="account_setup_failed_certificate_required">Est rechertu unu tzertificadu cliente. Ti boles collegare a su serbidore cun unu tzertificadu cliente?</string>
+    <string name="account_setup_failed_certificate_inaccessible">Su tzertificadu no est bàlidu o no est atzessìbile.</string>
+    <string name="account_setup_failed_check_credentials_message">         Su serbidore at rispostu cun un\'errore. Controlla su nùmene utente e sa crae, luego torra a proare.</string>
+    <string name="account_setup_failed_dlg_server_message">Non faghet a si collegare a su serbidore.</string>
+    <string name="account_setup_failed_dlg_server_message_fmt">Non faghet a si collegare a su serbidore.\n(<xliff:g id="error">%s</xliff:g>)</string>
+    <string name="account_setup_failed_tls_required">TLS rechertu ma non suportadu dae su serbidore.</string>
+    <string name="account_setup_failed_auth_required">Mètodos de autenticatzione non suportados dae su serbidore.</string>
+    <string name="account_setup_failed_security">No at fatu a abèrrere sa connessione a su serbidore pro un\'errore de seguresa.</string>
+    <string name="account_setup_failed_ioerror">No at fatu a abèrrere sa connessione a su serbidore.</string>
+    <string name="account_setup_failed_protocol_unsupported">         As iscritu un\'indiritzu de serbidore isballiadu o su serbidore rechedet una versione de protocollu non suportadu
+         dae Posta eletrònica.</string>
+    <string name="account_setup_failed_access_denied">         Non tenes permissos pro sincronizare cun su serbidore. Cuntata s\'amministratzione
+         de su serbidore pro àteras informatziones.</string>
+    <string name="account_setup_security_required_title">Amministratzione de seguresa remota</string>
+    <string name="account_setup_security_policies_required_fmt">         Su serbidore <xliff:g id="server">%s</xliff:g> bolet chi ddi permitas su controllu remotu
+         de funtziones de seguridade de su dispositivu Android tuo. Boles agabbare cun sa cunfiguratzione de
+         custu contu?</string>
+    <string name="account_setup_failed_security_policies_unsupported">         Custu serbidore rechedet funtziones de seguresa chi su dispositivu Android tuo non suportat,
+          comente: <xliff:g id="error">%s</xliff:g></string>
+    <string name="disable_admin_warning">ATENTZIONE: disativende su permissu de s\'aplicatzione Posta eletrònica
+         pro amministrare su dispositivu, s\'ant a cantzellare totu is contos de posta eletrònica chi ddu rechedent, impares cun
+         is messàgios, is cuntatos, is eventos de su calendàriu, e àteros datos.</string>
+    <string name="account_security_dialog_title">Agiornamentu de seguresa</string>
+    <string name="account_security_dialog_content_fmt">         <xliff:g id="account">%s</xliff:g> rechedet chi agiornes is impostatziones
+         de seguresa.</string>
+    <string name="security_unsupported_ticker_fmt">            Su contu \"<xliff:g id="account">%s</xliff:g>\" non faghet a ddu sincronizare pro chistiones
+    de seguresa.</string>
+    <string name="security_needed_ticker_fmt">            Su contu \"<xliff:g id="account">%s</xliff:g>\" rechedet un\'agiornamentu de is impostatziones de seguresa.
+    </string>
+    <string name="security_changed_ticker_fmt">            Su contu \"<xliff:g id="account">%s</xliff:g>\" at cambiadu is impostatziones de seguresa; peruna
+            atzione recherta a s\'utente.
+    </string>
+    <string name="security_notification_content_update_title">Agiornamentu de seguresa rechertu</string>
+    <string name="security_notification_content_change_title">Sa normativa de seguresa est
+         cambiada</string>
+    <string name="security_notification_content_unsupported_title">Errore in is normativas de
+         seguresa</string>
+    <string name="account_security_title">Seguresa de su dispositivu</string>
+    <string name="account_security_policy_explanation_fmt">         Su serbidore <xliff:g id="server">%s</xliff:g> bolet chi ddi permitas su controllu remotu de
+         funtziones de seguresa de su dispositivu tuo Android.</string>
+    <string name="account_setup_failed_dlg_edit_details_action">Modìfica detàllios</string>
+    <string name="password_expire_warning_ticker_fmt">            \"<xliff:g id="account">%s</xliff:g>\" bolet chi càmbies su PIN o sa crae de
+            s\'ischermada de blocu.</string>
+    <string name="password_expire_warning_content_title">Sa crae de s\'ischermada de blocu est iscadende</string>
+    <string name="password_expired_ticker">Su PIN o sa crae de s\'ischermada de blocu est iscadida.</string>
+    <string name="password_expired_content_title">Sa crae de s\'ischermada de blocu est iscadida</string>
+    <string name="password_expire_warning_dialog_title">Sa crae de s\'ischermada de blocu est iscadende</string>
+    <string name="password_expire_warning_dialog_content_fmt">         Depes cambiare su PIN o sa crae de s\'ischermada de blocu, si nono s\'ant a cantzellare is datos de
+         <xliff:g id="account">%s</xliff:g>. Ddu boles fàghere immoe?</string>
+    <string name="password_expired_dialog_title">Sa crae de s\'ischermada de blocu est iscadida</string>
+    <string name="password_expired_dialog_content_fmt">         Is datos de <xliff:g id="account">%s</xliff:g> si sunt cantzellende dae su dispositivu.
+         Ddos podes ripristinare cambiende su PIN o sa crae de s\'ischermada de blocu. Ddu boles fàghere immoe?</string>
+    <string name="account_settings_exit_server_settings">Boles iscartare is modìficas non sarvadas?</string>
+    <string name="account_settings_background_attachments_label">        Iscàrriga alligongiados</string>
+    <string name="account_settings_background_attachments_summary">        Iscàrriga in automàticu is alligongiados de messàgios reghentes cun Wi-Fi</string>
+    <string name="account_settings_notify_label">Notìficas de posta eletrònica</string>
+    <string name="account_settings_summary">Frecuèntzia de sincronizatzione, notìficas, etc.</string>
+    <string name="account_settings_notify_summary">Imbia notìfica cando arribat unu messàgiu</string>
+    <string name="account_settings_mail_check_frequency_label">Frecuèntzia de sincronizatzione</string>
+    <string name="account_settings_incoming_label">Impostatziones in intrada</string>
+    <string name="account_settings_incoming_summary">        Nùmene utente, crae, e àteras impostatziones de su serbidore in intrada</string>
+    <string name="account_settings_outgoing_label">Impostatziones in essida</string>
+    <string name="account_settings_outgoing_summary">        Nùmene utente, crae, e àteras impostatziones de su serbidore in essida</string>
+    <string name="account_settings_enforced_label">Normativas aplicadas</string>
+    <string name="account_settings_enforced_summary">Perunu</string>
+    <string name="account_settings_unsupported_label">Normativas non suportadas</string>
+    <string name="account_settings_unsupported_summary">Perunu</string>
+    <string name="account_settings_retry_label">Tentare sincronizatzione</string>
+    <string name="account_settings_retry_summary">Toca inoghe pro sincronizare custu contu</string>
+    <string name="account_settings_description_label">Nùmene de su contu</string>
+    <string name="account_settings_name_label">Su nùmene tuo</string>
+    <string name="account_settings_edit_quick_responses_label">Rispostas lestras</string>
+    <string name="account_settings_edit_quick_responses_summary">        Modìfica su testu chi insertas a s\'ispissu cando iscries messàgios de posta</string>
+    <string name="account_settings_notifications">Impostatziones de notìfica</string>
+    <string name="account_settings_data_usage">Impreu de datos</string>
+    <string name="account_settings_policies">Normativas de seguresa</string>
+    <string name="system_folders_title">Cartellas de sistema</string>
+    <string name="system_folders_trash_title">Cartella de s\'àliga</string>
+    <string name="system_folders_trash_summary">Seletziona sa cartella de s\'àliga de su serbidore</string>
+    <string name="system_folders_trash_dlg">Seletziona sa cartella de s\'àliga de su serbidore</string>
+    <string name="system_folders_sent_title">Cartella de elementos imbiados</string>
+    <string name="system_folders_sent_summary">Seletziona sa cartella de elementos imbiados de su serbidore</string>
+    <string name="system_folders_sent_dlg">Seletziona sa cartella de elementos imbiados de su serbidore</string>
+    <string name="edit_quick_response_dialog">Risposta lestra</string>
+    <string name="save_action">Sarva</string>
+    <string name="account_settings_sync_contacts_enable">Sincroniza cuntatos</string>
+    <string name="account_settings_sync_contacts_summary">Sincroniza cuntatos pro custu contu</string>
+    <string name="account_settings_sync_calendar_enable">Sincroniza calendàriu</string>
+    <string name="account_settings_sync_calendar_summary">Sincroniza eventos de su calendàriu pro custu contu</string>
+    <string name="account_settings_sync_email_enable">Sincroniza posta eletrònica</string>
+    <string name="account_settings_sync_email_summary">Sincroniza posta eletrònica pro custu contu</string>
+    <string name="label_notification_vibrate_title">Vibra</string>
+    <string name="account_settings_ringtone">Sèbera tonu de mutida</string>
+    <string name="account_settings_servers">Impostatziones de su serbidore</string>
+    <string name="mailbox_settings_activity_title">Optziones de sincronizatzione</string>
+    <string name="mailbox_settings_activity_title_with_mailbox">Sèberos de sincronizatzione (<xliff:g id="mailboxx_name" example="Family">%s</xliff:g>)</string>
+    <string name="mailbox_settings_sync_enabled_label">Sincroniza custa cartella</string>
+    <string name="mailbox_settings_sync_enabled_summary">Is messàgios s\'ant a iscarrigare cun sa connessione</string>
+    <string name="mailbox_settings_mailbox_sync_window_label">Dies pro sincronizare sa posta</string>
+    <string name="provider_note_t_online">Pro cunfigurare custu contu de posta eletrònica, bae a su situ T-Online e crea una crae pro atzèdere a sa posta eletrònica POP3.</string>
+    <string name="exchange_name_alternate">Microsoft Exchange ActiveSync</string>
+    <string name="system_account_create_failed">No at fatu a creare su contu. Torra a proare.</string>
+    <string name="device_admin_label">Posta eletrònica</string>
+    <string name="device_admin_description">Ativat sa normativa se seguresa ispetzìfica pro su serbidore</string>
+    <string name="policy_dont_allow_camera">Non permitit s\'impreu de sa fotocàmera de su dispositivu</string>
+    <string name="policy_require_password">Rechede sa crae de su dispositivu</string>
+    <string name="policy_password_history">Lìmita s\'impreu de craes reghentes</string>
+    <string name="policy_password_expiration">Rechede s\'iscadèntzia de is craes</string>
+    <string name="policy_screen_timeout">Rechede dispositivu no ativu pro blocare s\'ischermu</string>
+    <string name="policy_calendar_age">Lìmita su nùmeru de eventos de su calendàriu sincronizados</string>
+    <string name="policy_email_age">Lìmita su nùmeru de messàgios de posta sincronizados</string>
+    <string name="quick_1">Gràtzias!</string>
+    <string name="quick_2">Andat bene!</string>
+    <string name="quick_3">Prus a tardu dd\'apo a lèghere e t\'apo a rispòndere.</string>
+    <string name="quick_4">Organizamus una riunione pro nde chistionare.</string>
+    <string name="imap_name">Personale (IMAP)</string>
+    <string name="pop3_name">Personale (POP3)</string>
+    <string name="trash_folder_selection_title">Seletziona s\'àliga de su serbidore de <xliff:g id="account">%s</xliff:g></string>
+    <string name="sent_folder_selection_title">Seletziona cartella de elementos imbiados de <xliff:g id="account">%s</xliff:g></string>
+    <string name="no_quick_responses">Peruna a disponimentu</string>
+    <string name="gmail_name">Gmail</string>
+    <string name="folder_sync_settings_pref_title">Impostatziones sincronizatzione cartellas</string>
+</resources>
