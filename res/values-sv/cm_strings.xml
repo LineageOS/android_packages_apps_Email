@@ -22,4 +22,6 @@
     <string name="mailbox_notify_settings_activity_title">Meddelandeaviseringar</string>
     <string name="mailbox_notify_settings_activity_title_with_mailbox">Meddelandeaviseringar (<xliff:g id="mailbox_name" example="Family">%s </xliff:g>)</string>
     <string name="folder_notify_settings_pref_title">Aviseringsinställningar för mapp</string>
+    <string name="battery_optimization_notification_title">Bakgrundsanvändning krävs</string>
+    <string name="battery_optimization_notification_imap_text">För push-aviseringar med IMAP behöver e-postappen köras i bakgrunden.\nTryck här att tillåta användning i bakgrunden.</string>
 </resources>

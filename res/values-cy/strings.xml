@@ -37,7 +37,7 @@
     <string name="message_compose_insert_quick_response_menu_title">Mewnosod ateb cyflym</string>
     <string name="message_view_attachment_background_load">Caiff un neu\'n rhagor o atodiadau i dy neges wedi ei anfon ymlaen eu lawrlwytho cyn ei anfon.</string>
     <string name="message_decode_error">Roedd gwall wrth ddadgodio\'r neges.</string>
-    <string name="forward_download_failed_ticker">Methwyd anfon un atodiad neu fwy.</string>
+    <string name="forward_download_failed_ticker">Methwyd anfon un neu ragor o atodiadau.</string>
     <string name="forward_download_failed_title">Atodiad heb ei anfon ymlaen</string>
     <string name="login_failed_ticker">Methwyd mewngofnodi <xliff:g id="account_name">%s</xliff:g>.</string>
     <string name="login_failed_title">Methwyd â mewngofnodi</string>

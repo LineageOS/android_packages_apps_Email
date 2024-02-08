@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2008 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="permission_read_attachment_label">Lei lis zontis de e-mail</string>
+    <string name="permission_read_attachment_desc">Al permet ae apliazion di lei lis
+        zontis de tô pueste eletroniche.</string>
+    <string name="permission_access_provider_label">Acedi ai dâts dal furnidôr di pueste eletroniche</string>
+    <string name="permission_access_provider_desc">Al permet ae aplicazion di acedi ae base
+        di dâts de tô e-mail, includûts i messaçs ricevûts, chei inviâts, i nons utent e lis passwords.</string>
+    <string name="app_name">E-mail</string>
+    <string name="create_action">Cree gnove</string>
+    <string name="quick_responses_empty_view">Nissune rispueste rapide.</string>
+    <string name="account_settings_action">Impostazions dal account</string>
+    <string name="mailbox_name_display_inbox">Pueste in jentrade</string>
+    <string name="mailbox_name_display_outbox">In jessude</string>
+    <string name="mailbox_name_display_drafts">Stampons</string>
+    <string name="mailbox_name_display_trash">Scovacere</string>
+    <string name="mailbox_name_display_sent">Inviade</string>
+    <string name="mailbox_name_display_junk">Malvolude</string>
+    <string name="mailbox_name_display_starred">Speciâl</string>
+    <string name="mailbox_name_display_unread">Di lei</string>
+    <string name="debug_title">Debug</string>
+    <string name="mailbox_list_account_selector_combined_view">Viodude cumbinade</string>
+    <string name="message_compose_fwd_header_fmt">\n\n-------- Messaç origjinâl --------\nOgjet: <xliff:g id="subject">%1$s</xliff:g>\nDi: <xliff:g id="sender">%2$s</xliff:g>\nA: <xliff:g id="to">%3$s</xliff:g>\nCC: <xliff:g id="cc">%4$s</xliff:g>\n\n</string>
+    <string name="message_compose_insert_quick_response_list_title">Inserìs rispueste rapide</string>
+    <string name="message_compose_insert_quick_response_menu_title">Inserìs rispueste rapide</string>
+    <string name="message_view_attachment_background_load">Une o plui zontis tal to messaç
+        mandât indenant a vignaran discjariadis prime de spedizion.</string>
+    <string name="message_decode_error">Al è capitât un erôr intant che il messaç al vignive decodificât.</string>
+    <string name="forward_download_failed_ticker">Nol è stât pussibil mandâ indeant une o plui zontis.</string>
+    <string name="forward_download_failed_title">Zonte no mandade indenant</string>
+    <string name="login_failed_ticker">        Acès di <xliff:g id="account_name">%s</xliff:g> lât strucj.</string>
+    <string name="login_failed_title">Nol è stât pussibil jentrâ</string>
+    <string name="account_setup_basics_title">Configurazion dal account</string>
+    <string name="oauth_authentication_title">Daûr a domandâ la autorizazion</string>
+    <string name="sign_in_title">Jentre</string>
+    <string name="oauth_error_description">Impussibil autenticâ</string>
+    <string name="password_warning_label">La direzion o la password de e-mail no son justis</string>
+    <string name="email_confirmation_label">Direzion e-mail:</string>
+    <string name="account_setup_basics_headline">Account de e-mail</string>
+    <string name="accounts_welcome">Tu puedis configurâ il tô account in pôcs passaçs.
+        </string>
+    <string name="account_setup_basics_email_label">Direzion e-mail</string>
+    <string name="or_label">O</string>
+    <string name="sign_in_with_google">Jentre cun Google</string>
+    <string name="account_setup_basics_password_label">PASSWORD</string>
+    <string name="password_hint">Password</string>
+    <string name="signed_in_with_service_label">Acès eseguît cun %s</string>
+    <string name="authentication_label">AUTENTICAZION</string>
+    <string name="add_authentication_label">Zonte autenticazion</string>
+    <string name="clear_authentication_label">Nete autenticazion</string>
+    <string name="account_setup_basics_manual_setup_action">Configurazion manuâl</string>
+    <string name="account_setup_username_password_toast">        Scrîf une direzion e-mail valide e une password.</string>
+    <string name="account_duplicate_dlg_title">Dupliche account</string>
+    <string name="account_duplicate_dlg_message_fmt">        Tu stâs za doprant chest non utent pal account \"<xliff:g id="duplicate">%s</xliff:g>\".
+    </string>
+    <string name="account_setup_check_settings_retr_info_msg">    Daûr a recuperâ lis informazions dal account\u2026</string>
+    <string name="account_setup_check_settings_check_incoming_msg">    Daûr a convalidâ lis impostazions dal servidôr\u2026</string>
+    <string name="account_setup_check_settings_check_outgoing_msg">    Daûr a convalidâ lis impostazions smtp\u2026</string>
+    <string name="account_setup_creating_account_msg">    Creazion dal account\u2026</string>
+    <string name="account_setup_ab_headline">Conferme gjenar di account</string>
+    <string name="account_setup_ab_instructions_format">Tu âs indicât che <xliff:g id="email">%1$s</xliff:g> al dopre <xliff:g id="userProtocol">%2$s</xliff:g>, ma l\'account al podarès doprâ <xliff:g id="providerProtocol">%3$s</xliff:g></string>
+    <string name="account_setup_names_headline">        Il to account al è configurât e al è in vore!</string>
+    <string name="account_setup_names_account_name_label">        Da un non a che account (facoltatîf)</string>
+    <string name="account_setup_names_user_name_label">        Il to non (visualizât sui messaçs in jessude)</string>
+    <string name="account_setup_account_type_headline">Gjenar di account</string>
+    <string name="account_setup_account_type_instructions">Ce gjenar di account isal chest?</string>
+    <string name="account_setup_incoming_headline">Impostazion servidôr in jentrade</string>
+    <string name="account_setup_incoming_username_label">NON UTENT</string>
+    <string name="account_setup_incoming_password_label">PASSWORD</string>
+    <string name="account_setup_password_subheading">Password</string>
+    <string name="account_setup_incoming_server_label">SERVIDÔR</string>
+    <string name="account_setup_incoming_port_label">PUARTE</string>
+    <string name="account_setup_incoming_security_label">GJENAR DI SIGURECE</string>
+    <string name="account_setup_incoming_security_none_label">Nissune</string>
+    <string name="account_setup_incoming_security_ssl_trust_certificates_label">        SSL/TLS (Acete ducj i certificâts)</string>
+    <string name="account_setup_incoming_security_ssl_label">SSL/TLS</string>
+    <string name="account_setup_incoming_security_tls_trust_certificates_label">        STARTTLS (acete ducj i certificâts)</string>
+    <string name="account_setup_incoming_security_tls_label">STARTTLS</string>
+    <string name="account_setup_incoming_delete_policy_label">Elimine la pueste dal servidôr</string>
+    <string name="account_setup_incoming_delete_policy_never_label">Mai</string>
+    <string name="account_setup_incoming_delete_policy_delete_label">        Cuant che o elimini di \"Pueste in jentrade\"</string>
+    <string name="account_setup_incoming_imap_path_prefix_label">Prefìs percors IMAP</string>
+    <string name="account_setup_incoming_imap_path_prefix_hint">Facoltatîf</string>
+    <string name="account_setup_outgoing_headline">Impostazion servidôr in jessude</string>
+    <string name="account_setup_outgoing_smtp_server_label">SERVIDÔR SMTP</string>
+    <string name="account_setup_outgoing_port_label">PUARTE</string>
+    <string name="account_setup_outgoing_security_label">GJENAR DI SIGURECE</string>
+    <string name="account_setup_outgoing_require_login_label">Necessari jentrâ</string>
+    <string name="account_setup_outgoing_username_label">NON UTENT</string>
+    <string name="account_setup_exchange_certificate_title">CERTIFICÂT DAL CLIENT</string>
+    <string name="account_setup_exchange_select_certificate">Selezione</string>
+    <string name="account_setup_exchange_use_certificate">Dopre certificât di client</string>
+    <string name="account_setup_exchange_remove_certificate">Gjave</string>
+    <string name="account_setup_exchange_no_certificate">Nissun</string>
+    <string name="account_setup_exchange_device_id_label">ID DISPOSITÎF MOBIL</string>
+    <string name="account_setup_options_headline">Opzions dal account</string>
+    <string name="account_setup_options_mail_check_frequency_label">Frecuence di sincronizazion:</string>
+    <string name="account_setup_options_mail_check_frequency_never">Mai</string>
+    <string name="account_setup_options_mail_check_frequency_push">Automatic (Push)</string>
+    <string name="account_setup_options_mail_check_frequency_5min">Ogni 5 minûts</string>
+    <string name="account_setup_options_mail_check_frequency_10min">Ogni 10 minûts</string>
+    <string name="account_setup_options_mail_check_frequency_15min">Ogni 15 minûts</string>
+    <string name="account_setup_options_mail_check_frequency_30min">Ogni 30 minûts</string>
+    <string name="account_setup_options_mail_check_frequency_1hour">Ogni ore</string>
+    <string name="account_setup_options_notify_label">Notifichimi se e rive pueste</string>
+    <string name="account_setup_options_sync_contacts_label">Sincronize i contats di chest account</string>
+    <string name="account_setup_options_sync_calendar_label">Sincronize il calendari di chest account</string>
+    <string name="account_setup_options_sync_email_label">Sincronize la pueste eletroniche di chest account</string>
+    <string name="account_setup_options_background_attachments_label">        Discjame in automatic lis zontis se conetût cun Wi-Fi</string>
+    <string name="account_setup_failed_dlg_title">Nol è stât pussibil completâ</string>
+    <string name="account_setup_options_mail_window_label">Sincronize lis e-mails di:</string>
+    <string name="account_setup_options_mail_window_auto">Automatic</string>
+    <string name="account_setup_options_mail_window_1day">Ultin dì</string>
+    <string name="account_setup_options_mail_window_3days">Ultins trê dîs</string>
+    <string name="account_setup_options_mail_window_1week">Ultime setemane</string>
+    <string name="account_setup_options_mail_window_2weeks">Ultimis dôs setemanis</string>
+    <string name="account_setup_options_mail_window_1month">Ultin mês</string>
+    <string name="account_setup_options_mail_window_all">Dut</string>
+    <string name="account_setup_options_mail_window_default">Dopre il valôr predefinît dal accoun</string>
+    <string name="account_setup_failed_dlg_auth_message">Non utent o password sbaliâts.</string>
+    <string name="account_setup_autodiscover_dlg_authfail_title">Probleme cu la configurazion dal account</string>
+    <string name="account_setup_autodiscover_dlg_authfail_message">Conferme che il non utent, la password e lis impostazions dal account a sedin juscj.</string>
+    <string name="account_setup_failed_dlg_certificate_message">Impussibil conetisi in maniere sigure al servidôr.</string>
+    <string name="account_setup_failed_dlg_certificate_message_fmt">Impussibil conetisi in maniere sigure al servidôr.\n<xliff:g id="error">%s</xliff:g></string>
+    <string name="account_setup_failed_certificate_required">Al è necessari un certificât di client. Desideristu conetiti al servidôr cuntun certificât di client?</string>
+    <string name="account_setup_failed_certificate_inaccessible">Il certificât nol è valit o nol è acessibil.</string>
+    <string name="account_setup_failed_check_credentials_message">         Il servidôr al à rispuindût cuntun erôr. Controle il to non utent e la password, dopo torne prove.</string>
+    <string name="account_setup_failed_dlg_server_message">Impussibil conetisi al servidôr.</string>
+    <string name="account_setup_failed_dlg_server_message_fmt">Impussibil conetisi al serivdôr.\n(<xliff:g id="error">%s</xliff:g>)</string>
+    <string name="account_setup_failed_tls_required">TLS necessari ma no supuartât dal servidôr.</string>
+    <string name="account_setup_failed_auth_required">I metodis di autenticazion no son supuartâts dal servidôr.</string>
+    <string name="account_setup_failed_security">Nol è stât pussibil vierzi la conession al servidôr par vie di un erôr di sigurece.</string>
+    <string name="account_setup_failed_ioerror">Nol è stât pussibil vierzi la conession al servidôr.</string>
+    <string name="account_setup_failed_protocol_unsupported">         Tu âs scrit une direzion di servidôr sbaliade o il servidôr al à bisugne di une version di
+         protocol che E-mail nol supuarte.</string>
+    <string name="account_setup_failed_access_denied">         No tu âs i permès par sincronizâti cun chest servidôr. Contate l\'aministradôr
+         dal to servidôr par vê plui informazions.</string>
+    <string name="account_setup_security_required_title">Aministrazion di sigurece di lontan</string>
+    <string name="account_setup_security_policies_required_fmt">         Il servidôr <xliff:g id="server">%s</xliff:g> al à bisugne che tu i permetis di controlâ di lontan
+         cualchi funzion di sigurece dal to dispositîf Android. Vûstu finî di configurâ chest
+         account?</string>
+    <string name="account_setup_failed_security_policies_unsupported">         Chest servidôr al à bisugne di funzions di sigurece che il to dispositîf Android nol
+          supuarte, includût: <xliff:g id="error">%s</xliff:g></string>
+    <string name="disable_admin_warning">ATENZION: la disativazion de autoritât de aplicazion E-mail
+         a ministrâ il to dispositîf e eliminarà ducj i accounts e-mail che le domandin, adun
+         cu lis lôr e-mails, contats, events di calendari e altris dâts.</string>
+    <string name="account_security_dialog_title">Inzornament di sigurece</string>
+    <string name="account_security_dialog_content_fmt">         <xliff:g id="account">%s</xliff:g> al à bisugne che tu inzornis lis tôs impostazions di
+         sigurece.</string>
+    <string name="security_unsupported_ticker_fmt">            Nol è pussibil sincronizâ l\'account \"<xliff:g id="account">%s</xliff:g>\" par vie di
+    recuisîts di sigurece.</string>
+    <string name="security_needed_ticker_fmt">            L\'account \"<xliff:g id="account">%s</xliff:g>\" al à bisugne di un inzornament des
+            impostazions di sigurece.
+    </string>
+    <string name="security_changed_ticker_fmt">            L\'account \"<xliff:g id="account">%s</xliff:g>\" al à cambiât lis sôs impostazions di
+            sigurece; no coventin azions de bande dal utent.
+    </string>
+    <string name="security_notification_content_update_title">Inzornament di sigurece necessari</string>
+    <string name="security_notification_content_change_title">Politichis di sigurece
+         cambiadis</string>
+    <string name="security_notification_content_unsupported_title">Impussibil sodisfâ lis politichis
+         di sigurece</string>
+    <string name="account_security_title">Sigurece dal dispositîf</string>
+    <string name="account_security_policy_explanation_fmt">         Il servidôr <xliff:g id="server">%s</xliff:g> al à bisugne che tu i permetis di controlâ di lontan
+         cualchi funzion di sigurece dal to dispositîf Android.</string>
+    <string name="account_setup_failed_dlg_edit_details_action">Modifiche detais</string>
+    <string name="password_expire_warning_ticker_fmt">            \"<xliff:g id="account">%s</xliff:g>\" al à bisugne che tu cambis il to PIN o la tô
+            password dal bloc dal schermi.</string>
+    <string name="password_expire_warning_content_title">Password bloc schermi in scjadince</string>
+    <string name="password_expired_ticker">Il PIN o la password dal to bloc dal schermi al è scjadût.</string>
+    <string name="password_expired_content_title">Password bloc schermi scjadude</string>
+    <string name="password_expire_warning_dialog_title">Password bloc schermi in scjadince</string>
+    <string name="password_expire_warning_dialog_content_fmt">         Tu scugnis cambiâ daurman il PIN o la password dal bloc dal schermi, in câs contrari
+         i dâts par <xliff:g id="account">%s</xliff:g> a vignaran scancelâts. Cambiâle cumò?</string>
+    <string name="password_expired_dialog_title">Password dal bloc dal schermi scjadude</string>
+    <string name="password_expired_dialog_content_fmt">         I dâts par <xliff:g id="account">%s</xliff:g> a vegnin eliminâts dal to dispositîf.
+         Tu puedis ripristinâju cambiant il PIN o la password dal bloc dal schermi. Desideristu cambiâle cumò?</string>
+    <string name="account_settings_exit_server_settings">Scartâ lis modifichis che no son stadis salvadis?</string>
+    <string name="account_settings_background_attachments_label">        Discjame lis zontis</string>
+    <string name="account_settings_background_attachments_summary">        Auto-discjame lis zontis dai messaçs resints vie Wi-Fi</string>
+    <string name="account_settings_notify_label">Notifichis di pueste eletroniche</string>
+    <string name="account_settings_summary">Frecuence di sincronizazion, notifichis e v.i.</string>
+    <string name="account_settings_notify_summary">Invie une notifiche se e rive une e-mail</string>
+    <string name="account_settings_mail_check_frequency_label">Frecuence di sincronizazion</string>
+    <string name="account_settings_incoming_label">Impostazions in jentrade</string>
+    <string name="account_settings_incoming_summary">        Non utent, password e altris impostazions dal servidôr in jentrade</string>
+    <string name="account_settings_outgoing_label">Impostazions in jessude</string>
+    <string name="account_settings_outgoing_summary">        Non utent, password e altris impostazions dal servidôr in jessude</string>
+    <string name="account_settings_enforced_label">Politichis aplicadis</string>
+    <string name="account_settings_enforced_summary">Nissune</string>
+    <string name="account_settings_unsupported_label">Politichis no supuartadis</string>
+    <string name="account_settings_unsupported_summary">Nissune</string>
+    <string name="account_settings_retry_label">Tente sincronizazion</string>
+    <string name="account_settings_retry_summary">Tocje achì par sincronizâ chest account</string>
+    <string name="account_settings_description_label">Non dal account</string>
+    <string name="account_settings_name_label">Il to non</string>
+    <string name="account_settings_edit_quick_responses_label">Rispuestis rapidis</string>
+    <string name="account_settings_edit_quick_responses_summary">        Scrîf il test che tu inserissis dispès tes e-mail che tu componis</string>
+    <string name="account_settings_notifications">Impostazions des notifichis</string>
+    <string name="account_settings_data_usage">Utilizazion dâts</string>
+    <string name="account_settings_policies">Politichis di sigurece</string>
+    <string name="system_folders_title">Cartelis di sisteme</string>
+    <string name="system_folders_trash_title">Cartele de scovacere</string>
+    <string name="system_folders_trash_summary">Selezione la cartele de scovacere dal servidôr</string>
+    <string name="system_folders_trash_dlg">Selezione la cartele de scovacere dal to servidôr</string>
+    <string name="system_folders_sent_title">Cartele dai elements inviâts</string>
+    <string name="system_folders_sent_summary">Selezione la cartele dai elements inviâts dal servidôr</string>
+    <string name="system_folders_sent_dlg">Selezione la cartele dai elements inviâts dal to servidôr</string>
+    <string name="edit_quick_response_dialog">Rispueste rapide</string>
+    <string name="save_action">Salve</string>
+    <string name="account_settings_sync_contacts_enable">Sincronize contats</string>
+    <string name="account_settings_sync_contacts_summary">Sincronize contats par chest account</string>
+    <string name="account_settings_sync_calendar_enable">Sincronize calendari</string>
+    <string name="account_settings_sync_calendar_summary">Sincronize i events di calendari par chest account</string>
+    <string name="account_settings_sync_email_enable">Sincronize e-mail</string>
+    <string name="account_settings_sync_email_summary">Sincronize e-mails par chest account</string>
+    <string name="label_notification_vibrate_title">Vibre</string>
+    <string name="account_settings_ringtone">Sielç la sunarie</string>
+    <string name="account_settings_servers">Impostazions servidôr</string>
+    <string name="mailbox_settings_activity_title">Opzions di sincronizazion</string>
+    <string name="mailbox_settings_activity_title_with_mailbox">Opzions di sincronizazion (<xliff:g id="mailboxx_name" example="Family">%s</xliff:g>)</string>
+    <string name="mailbox_settings_sync_enabled_label">Sincronize cheste cartele</string>
+    <string name="mailbox_settings_sync_enabled_summary">I messaçs a vignaran discjariâts ae conession</string>
+    <string name="mailbox_settings_mailbox_sync_window_label">Dîs di pueste di sincronizâ</string>
+    <string name="provider_note_t_online">Prime di configurâ chest account di pueste, visite il sît web T-Online e cree une password pal acès POP3 de e-mail.</string>
+    <string name="exchange_name_alternate">Microsoft Exchange ActiveSync</string>
+    <string name="system_account_create_failed">Nol è stât pussibil creâ l\'account. Torne prove.</string>
+    <string name="device_admin_label">E-mail</string>
+    <string name="device_admin_description">Al abilite lis politichis di sigurece specificadis dal servidôr</string>
+    <string name="policy_dont_allow_camera">Dinee l\'ûs de fotocjamare dal dispositîf</string>
+    <string name="policy_require_password">Pretint la password dal dispositîf</string>
+    <string name="policy_password_history">Limite il tornâ a doprâ lis passwords resintis</string>
+    <string name="policy_password_expiration">Pretint che lis passwords a scjadin</string>
+    <string name="policy_screen_timeout">Pretint il bloc schermi par un dispositîf in polse</string>
+    <string name="policy_calendar_age">Limite il numar di events di calendari sincronizâts</string>
+    <string name="policy_email_age">Limite il numar di e-mails sincronizadis</string>
+    <string name="quick_1">Graciis!</string>
+    <string name="quick_2">Mi pâr just!</string>
+    <string name="quick_3">Lu learai plui tart e ti fasarai savê.</string>
+    <string name="quick_4">Fasìn une cunvigne par discuti in merit.</string>
+    <string name="confirm_response">Daûr a inviâ la rispueste…</string>
+    <string name="imap_name">Personâl (IMAP)</string>
+    <string name="pop3_name">Personâl (POP3)</string>
+    <string name="trash_folder_selection_title">Selezione la cartele dal servidôr pe scovacere par <xliff:g id="account">%s</xliff:g></string>
+    <string name="sent_folder_selection_title">Selezione la cartele dal servidôr pai elements inviâts par <xliff:g id="account">%s</xliff:g></string>
+    <string name="account_waiting_for_folders_msg">Daûr a cjariâ la liste des cartelis…</string>
+    <string name="no_quick_responses">Nissune disponibile</string>
+    <string name="gmail_name">Gmail</string>
+    <string name="folder_sync_settings_pref_title">Impostazions sincronizazion des cartelis</string>
+</resources>
